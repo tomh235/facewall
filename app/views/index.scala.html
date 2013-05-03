@@ -3,22 +3,24 @@
 <html>
 <head>
     <title>Welcome to the facewall app</title>
-    <link rel="stylesheet" media="screen" href="@routes.Assets.at(" stylesheets/main.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
 </head>
 <body>
 
-<h1>Facewall</h1>
+<h1 class="text-center page-header">Facewall</h1>
 
-<div class="row">
-    @people.map { person =>
-        <img src="@person.picture"/>
-    }
-</div>
+<div class="container">
+    <ul class="thumbnails">
+        @people.map { person =>
+        <li class="span4">
+            <div class="thumbnail">
+                <img src="@person.picture"/>
 
-<div class="row">
-    @people.map { person =>
-        @person.name
-    }
+                <h3 class="text-center">@person.name</h3>
+            </div>
+        </li>
+        }
+    </ul>
 </div>
 
 </body>
