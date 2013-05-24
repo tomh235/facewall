@@ -1,3 +1,3 @@
 package domain
 
-case class Person(picture: String, name: String)
+case class Person(name: String, picture: String)

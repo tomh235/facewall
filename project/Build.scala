@@ -11,14 +11,21 @@ object ApplicationBuild extends Build {
         // Add your project dependencies here,
         jdbc,
         anorm,
-        "org.scalatest" % "scalatest_2.10" % "1.9.1" % "test",
-        "com.michaelpollmeier" % "gremlin-scala" % "2.3.0",
-        "com.tinkerpop.blueprints" % "blueprints-neo4j-graph" % "2.3.0"
+        "org.scala-lang" % "scala-compiler" % "2.10.0",
+        "org.scalatest" %% "scalatest" % "1.9.1" % "test",
+        "org.neo4j" % "neo4j-scala" % "0.2.0-M2-SNAPSHOT"
     )
 
-
     val main = play.Project(appName, appVersion, appDependencies).settings(
-        // Add your own project settings here
+        resolvers ++= Seq(
+            "deneb"             at "http://deneb.dev.o2.co.uk:8081/nexus/content/groups/public",
+            "deneb-third-party" at "http://deneb.dev.o2.co.uk:8081/nexus/content/repositories/thirdparty",
+            "maven"             at "http://repo1.maven.org/maven2",
+            "fakod-releases"    at "https://raw.github.com/FaKod/fakod-mvn-repo/master/releases",
+            "fakod-snapshots"   at "https://raw.github.com/FaKod/fakod-mvn-repo/master/snapshots"
+
+            //TODO: Close, but no cigar. FaKod's mvn repo doesn't contain a copy of a dependency (neo4j-rest-graphdb;1.8) Should probably upload a copy of everything to our nexus.
+        )
     )
 
 }

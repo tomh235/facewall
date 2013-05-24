@@ -1,19 +1,30 @@
 package repository
 
 import org.scalatest.FunSuite
-import com.tinkerpop.blueprints.Vertex
 import com.tinkerpop.blueprints.impls.tg.{TinkerGraph, TinkerGraphFactory}
 import com.tinkerpop.gremlin.scala.ScalaGraph
+import domain.Person
+import com.tinkerpop.blueprints.Graph
 
-class PersonRepoTest extends FunSuite {
+trait InMemoryGraph {
+    val hugo = Person("Hugo", "hugo.img")
+    val fahran = Person("Fahran", "fahran.img")
 
-    val repo = PersonRepo()
-    
-    test("Hugo and Fahran should be in the database.") {
-
-        val scalaGraph = ScalaGraph.wrap(repo.neo4jDB)
-        scalaGraph.addV()
-        println(scalaGraph.V("name", "Hugo"))
+    val graph: Graph = {
+        val graph = new TinkerGraph()
+        graph.addVertex()
+        graph.addVertex()
+        graph
     }
+}
 
+class PersonRepoTest extends FunSuite with InMemoryGraph {
+
+    val repo = PersonRepo(graph)
+    
+    test("getEveryone should get Hugo and Fahran") {
+        val hugo = Person("Hugo", "hugo.img")
+        val fahran = Person("Fahran", "fahran.img")
+        assert(repo.getEveryone == List(hugo, fahran), "Hugo and Fahran should have been everyone.")
+    }
 }
