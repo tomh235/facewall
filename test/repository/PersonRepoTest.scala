@@ -10,6 +10,7 @@ trait InMemoryGraph {
     val hugo = Person("Hugo", "hugo.img")
     val fahran = Person("Fahran", "fahran.img")
 
+
     val graph: Graph = {
         val graph = new TinkerGraph()
         graph.addVertex()
@@ -21,7 +22,7 @@ trait InMemoryGraph {
 class PersonRepoTest extends FunSuite with InMemoryGraph {
 
     val repo = PersonRepo(graph)
-    
+
     test("getEveryone should get Hugo and Fahran") {
         val hugo = Person("Hugo", "hugo.img")
         val fahran = Person("Fahran", "fahran.img")
