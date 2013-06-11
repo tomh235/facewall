@@ -13,7 +13,9 @@ object ApplicationBuild extends Build {
         anorm,
         "org.scala-lang" % "scala-compiler" % "2.10.0",
         "org.scalatest" %% "scalatest" % "1.9.1" % "test",
-        "org.anormcypher" %% "anormcypher" % "0.4.1"
+        "org.anormcypher" %% "anormcypher" % "0.4.1",
+        "org.neo4j" % "neo4j" % "1.9",
+        "org.neo4j" % "neo4j-kernel" % "1.9"
     )
 
     val main = play.Project(appName, appVersion, appDependencies).settings(

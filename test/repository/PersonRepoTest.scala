@@ -1,22 +1,14 @@
 package repository
 
 import org.scalatest.FunSuite
-import com.tinkerpop.blueprints.impls.tg.{TinkerGraph, TinkerGraphFactory}
-import com.tinkerpop.gremlin.scala.ScalaGraph
 import domain.Person
-import com.tinkerpop.blueprints.Graph
 
 trait InMemoryGraph {
     val hugo = Person("Hugo", "hugo.img")
     val fahran = Person("Fahran", "fahran.img")
 
 
-    val graph: Graph = {
-        val graph = new TinkerGraph()
-        graph.addVertex()
-        graph.addVertex()
-        graph
-    }
+    val graph = new TestGraphDatabaseFactory().newImpermanentDatabase()
 }
 
 class PersonRepoTest extends FunSuite with InMemoryGraph {
