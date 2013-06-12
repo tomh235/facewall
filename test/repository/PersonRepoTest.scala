@@ -3,26 +3,28 @@ package repository
 import org.scalatest.FunSuite
 import domain.Person
 import org.specs2.specification.BeforeAfter
-import org.neo4j.test.TestGraphDatabaseFactory
+import org.neo4j.test.{ImpermanentGraphDatabase, TestGraphDatabaseFactory}
 import org.neo4j.server.WrappingNeoServerBootstrapper
 
 trait InMemoryGraph {
     val hugo = Person("Hugo", "hugo.img")
     val fahran = Person("Fahran", "fahran.img")
 
-
-    def graphDb = new TestGraphDatabaseFactory().newImpermanentDatabase()
+    def graphDb = new ImpermanentGraphDatabase("test-data/impermanent-db")
 }
 
 class PersonRepoTest extends FunSuite with InMemoryGraph with BeforeAfter {
 
     val repo = PersonRepo()
-    var dbWrappingSevrver = null
+    var dbWrappingServer: WrappingNeoServerBootstrapper = null
 
-    def after: Any = ???
+    def after: Any = {
+        dbWrappingServer.stop()
+    }
 
     def before: Any = {
-        dbWrappingSevrver = new WrappingNeoServerBootstrapper(graphDb)
+        dbWrappingServer = new WrappingNeoServerBootstrapper(graphDb)
+        dbWrappingServer.start()
     }
 
     test("getEveryone should get Hugo and Fahran") {
