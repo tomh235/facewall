@@ -13,15 +13,17 @@ object ApplicationBuild extends Build {
         anorm,
         "org.scala-lang" % "scala-compiler" % "2.10.0",
         "org.anormcypher" %% "anormcypher" % "0.4.1",
-        "org.neo4j" % "neo4j" % "1.9",
+        "org.neo4j.app" % "neo4j-server" % "1.9",
+        //        "org.neo4j" % "neo4j" % "1.9",
 
         "org.scalatest" %% "scalatest" % "1.9.1" % "test",
-        "org.neo4j" % "neo4j-kernel" % "1.9" % "test" classifier "tests"
+        "org.neo4j" % "neo4j-kernel" % "1.9" classifier "tests",
+        "org.neo4j.app" % "neo4j-server" % "1.9" classifier "static-web"
     )
 
     val main = play.Project(appName, appVersion, appDependencies).settings(
         resolvers ++= Seq(
-            "maven"             at "http://repo1.maven.org/maven2",
+            "maven" at "http://repo1.maven.org/maven2",
             "anormcypher" at "http://repo.anormcypher.org/",
             "Mandubian repository snapshots" at "https://github.com/mandubian/mandubian-mvn/raw/master/snapshots/",
             "Mandubian repository releases" at "https://github.com/mandubian/mandubian-mvn/raw/master/releases/"
