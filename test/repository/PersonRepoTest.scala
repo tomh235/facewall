@@ -25,12 +25,11 @@ class PersonRepoTest extends FunSuite with InMemoryGraph with BeforeAfter {
     def before: Any = {
         dbWrappingServer = new WrappingNeoServerBootstrapper(graphDb)
         dbWrappingServer.start()
-    }   
+    }
 
     test("getEveryone should get Hugo and Fahran") {
         val hugo = Person("Hugo", "hugo.img")
         val fahran = Person("Fahran", "fahran.img")
         assert(repo.getEveryone == List(hugo, fahran), "Hugo and Fahran should have been everyone.")
     }
-
 }
