@@ -14,10 +14,6 @@ object ApplicationBuild extends Build {
         "org.scala-lang" % "scala-compiler" % "2.10.0",
         "org.anormcypher" %% "anormcypher" % "0.4.1",
         "org.neo4j.app" % "neo4j-server" % "1.9",
-        "com.fasterxml.jackson.module" % "jackson-module-scala_2.10" % "2.2.1",
-        "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.12",
-        "org.codehaus.jackson" % "jackson-core-asl" % "1.9.12",
-        //        "org.neo4j" % "neo4j" % "1.9",
 
         "org.scalatest" %% "scalatest" % "1.9.1" % "test",
         "org.neo4j" % "neo4j-kernel" % "1.9" classifier "tests",
