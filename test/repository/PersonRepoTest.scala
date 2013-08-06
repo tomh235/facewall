@@ -9,7 +9,6 @@ trait TestGraph {
   val fahran = Map("name" -> "Fahran", "picture" -> "fahran.img")
 
   def setUpGraph() {
-    Neo4jREST.setServer("localhost", 7474)
     Cypher(
       """
         |START n=node(*)
@@ -27,13 +26,17 @@ class PersonRepoTest extends FunSuite with TestGraph with BeforeAndAfter {
   var repo: PersonRepo = _
 
   before {
-      setUpGraph()
+      Neo4jTestDatabaseServer.start()
+  }
+
+  after {
+      Neo4jTestDatabaseServer.stop()
   }
 
   test("getEveryone should get Hugo and Fahran") {
     val hugo = Person("Hugo", "hugo.img")
     val fahran = Person("Fahran", "fahran.img")
-    repo = PersonRepo()
+    repo = PersonRepo(5555)
 
     val result = repo.getEveryone
     assert(result == List(hugo, fahran), s"Hugo and Fahran should have been everyone, got $result")
