@@ -1,8 +1,8 @@
 package repository
 
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import org.scalatest.BeforeAndAfter
 import domain.Person
-import org.anormcypher.{Cypher, Neo4jREST}
+import org.anormcypher.Cypher
 
 trait TestGraph {
     val hugo = Map("name" -> "Hugo", "picture" -> "hugo.img")
@@ -22,21 +22,14 @@ trait TestGraph {
     }
 }
 
-class PersonRepoTest extends FunSuite with TestGraph with BeforeAndAfter {
+class PersonRepoTest extends TemporaryDatabaseSuite with TestGraph with BeforeAndAfter {
     var repo: PersonRepo = _
 
-    before {
-        Neo4jTestDatabaseServer.start()
-    }
-
-    after {
-        Neo4jTestDatabaseServer.stop()
-    }
-
     test("getEveryone should get Hugo and Fahran") {
+        setUpGraph()
         val hugo = Person("Hugo", "hugo.img")
         val fahran = Person("Fahran", "fahran.img")
-        repo = PersonRepo(5555, "/")
+        repo = PersonRepo()
 
         val result = repo.getEveryone
         assert(result == List(hugo, fahran), s"Hugo and Fahran should have been everyone, got $result")
