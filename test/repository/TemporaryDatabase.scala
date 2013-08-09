@@ -9,6 +9,7 @@ import java.net.ServerSocket
 import java.io.IOException
 import org.neo4j.server.configuration.{ServerConfigurator, Configurator}
 import org.anormcypher.Neo4jREST
+import java.util
 
 
 trait TemporaryDatabase {
@@ -18,13 +19,14 @@ trait TemporaryDatabase {
         config.applyChanges(newConfig)
     }
 
-    val port = findFreePort(Range(49152, 65535))
-
-    private val bootstrapper = {
+    def startNewTestBootstrapper: (WrappingNeoServerBootstrapper, Int) = {
         val graphDb = new ImpermanentGraphDatabaseAPI()
         val config = new ServerConfigurator(graphDb)
+        val port = findFreePort(Range(49152, 65535))
         config.configuration().addProperty(Configurator.WEBSERVER_PORT_PROPERTY_KEY, port)
-        new WrappingNeoServerBootstrapper(graphDb, config)
+        val bootstrapper: WrappingNeoServerBootstrapper = new WrappingNeoServerBootstrapper(graphDb, config)
+        bootstrapper.start()
+        (bootstrapper, port)
     }
 
     private def findFreePort(portRange: Range): Int = {
@@ -38,10 +40,4 @@ trait TemporaryDatabase {
             }
         }.getOrElse( throw new IOException("No free port found for Test Database"))
     }
-
-    def start() = {
-        bootstrapper.start()
-    }
-
-    def stop() = bootstrapper.stop()
 }

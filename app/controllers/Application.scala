@@ -1,12 +1,12 @@
 package controllers
 
 import play.api.mvc._
-import repository.PersonRepo
+import repository.Repository
 
 object Application extends Controller {
-    val repository = new PersonRepo()
+    val repository = new Repository()
 
     def index = Action {
-        Ok(views.html.index(repository.getEveryone))
+        Ok(views.html.index(repository.listPersons))
     }
 }
