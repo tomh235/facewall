@@ -4,9 +4,7 @@ import domain.{Team, Person}
 import org.anormcypher.{NeoNode, Cypher, Neo4jREST}
 import play.api.libs.json.Json
 
-case class Repository(port: Int = 7474) {
-    Neo4jREST.setServer("localhost", port)
-
+case class Repository() {
     def findTeamForPerson(person: Person): Option[Team] = Cypher(
         """
           |START person = node(*)

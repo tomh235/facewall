@@ -9,24 +9,25 @@ import java.net.ServerSocket
 import java.io.IOException
 import org.neo4j.server.configuration.{ServerConfigurator, Configurator}
 import org.anormcypher.Neo4jREST
-import java.util
+import org.scalatest.FunSuite
 
 
-trait TemporaryDatabase {
+trait TemporaryDatabaseSuite extends FunSuite {
     class ImpermanentGraphDatabaseAPI() extends ImpermanentGraphDatabase with GraphDatabaseAPI {
         var newConfig = mutable.Map[String, String](config.getParams.toSeq:_*)
         newConfig.put("ephemeral", "true")
         config.applyChanges(newConfig)
     }
 
-    def startNewTestBootstrapper: (WrappingNeoServerBootstrapper, Int) = {
+    def startNewTestDatabaseRestServerBootstrapper = {
         val graphDb = new ImpermanentGraphDatabaseAPI()
         val config = new ServerConfigurator(graphDb)
         val port = findFreePort(Range(49152, 65535))
         config.configuration().addProperty(Configurator.WEBSERVER_PORT_PROPERTY_KEY, port)
-        val bootstrapper: WrappingNeoServerBootstrapper = new WrappingNeoServerBootstrapper(graphDb, config)
+        val bootstrapper = new WrappingNeoServerBootstrapper(graphDb, config)
         bootstrapper.start()
-        (bootstrapper, port)
+        Neo4jREST.setServer("localhost", port)
+        bootstrapper
     }
 
     private def findFreePort(portRange: Range): Int = {

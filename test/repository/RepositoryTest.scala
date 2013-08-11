@@ -2,7 +2,7 @@ package repository
 
 import org.scalatest.{FunSuite, BeforeAndAfter}
 import domain.{Team, Person}
-import org.anormcypher.{Neo4jREST, Cypher}
+import org.anormcypher.Cypher
 import org.neo4j.server.WrappingNeoServerBootstrapper
 
 trait TestGraph {
@@ -11,8 +11,7 @@ trait TestGraph {
     val checkout = Map("id" -> "3", "name" -> "Checkout")
     val productResources = Map("id" -> "4", "name" -> "ProductResources")
 
-    def setUpGraph(port: Int) {
-        Neo4jREST.setServer("localhost", port)
+    def setUpGraph() {
         def addNode(node: Map[String, Any]) { Cypher("CREATE ({node})").on("node" -> node)() }
         def addRelationship(nodeOutId: Any, nodeInId: Any) {
             Cypher(
@@ -29,37 +28,34 @@ trait TestGraph {
     }
 }
 
-class RepositoryTest extends FunSuite with TemporaryDatabase with TestGraph {
+class RepositoryTest extends FunSuite with BeforeAndAfter with TemporaryDatabaseSuite with TestGraph {
     var repo: Repository = _
+    var bootstrapper: WrappingNeoServerBootstrapper = _
+
+    before {
+        bootstrapper = startNewTestDatabaseRestServerBootstrapper
+        setUpGraph()
+    }
+
+    after {
+        bootstrapper.stop()
+    }
 
     test("listPersons should get Hugo and Fahran") {
-        val pairOfBootstrapperAndPort: (WrappingNeoServerBootstrapper, Int) = startNewTestBootstrapper
-        val port = pairOfBootstrapperAndPort._2
-        setUpGraph(port)
-
         val hugo = Person("1", "Hugo", "hugo.img")
         val fahran = Person("2", "Fahran", "fahran.img")
-        repo = Repository(port)
+        repo = Repository()
 
         val result = repo.listPersons
         assert(result == List(hugo, fahran), s"expected Hugo and Fahran, got $result")
-
-        pairOfBootstrapperAndPort._1.stop()
     }
 
     test("findTeam should find Team that Person is member of") {
-        val pairOfBootstrapperAndPort: (WrappingNeoServerBootstrapper, Int) = startNewTestBootstrapper
-        val port = pairOfBootstrapperAndPort._2
-        setUpGraph(port)
-
         val hugo = Person("1", "Hugo", "hugo.img")
         val productResources = Team("4", "ProductResources")
-        repo = Repository(port)
+        repo = Repository()
 
         val result = repo.findTeamForPerson(hugo)
         assert(result == Some(productResources), s"expected ProductResources, got $result")
-
-        pairOfBootstrapperAndPort._1.stop()
-
     }
 }
