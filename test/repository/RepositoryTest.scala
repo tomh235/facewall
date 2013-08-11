@@ -6,10 +6,10 @@ import org.anormcypher.Cypher
 import org.neo4j.server.WrappingNeoServerBootstrapper
 
 trait TestGraph {
-    val hugo = Map("id" -> "1", "name" -> "Hugo", "picture" -> "hugo.img")
-    val fahran = Map("id" -> "2", "name" -> "Fahran", "picture" -> "fahran.img")
-    val checkout = Map("id" -> "3", "name" -> "Checkout")
-    val productResources = Map("id" -> "4", "name" -> "ProductResources")
+    private val hugo = Map("id" -> "1", "name" -> "Hugo", "picture" -> "hugo.img")
+    private val fahran = Map("id" -> "2", "name" -> "Fahran", "picture" -> "fahran.img")
+    private val checkout = Map("id" -> "3", "name" -> "Checkout")
+    private val productResources = Map("id" -> "4", "name" -> "ProductResources")
 
     def setUpGraph() {
         def addNode(node: Map[String, Any]) { Cypher("CREATE ({node})").on("node" -> node)() }
@@ -29,8 +29,13 @@ trait TestGraph {
 }
 
 class RepositoryTest extends FunSuite with BeforeAndAfter with TemporaryDatabaseSuite with TestGraph {
-    var repo: Repository = _
+    var repo: Repository = Repository()
     var bootstrapper: WrappingNeoServerBootstrapper = _
+
+    val hugo = Person("1", "Hugo", "hugo.img")
+    val fahran = Person("2", "Fahran", "fahran.img")
+    val checkout = Team("3", "Checkout")
+    val productResources = Team("4", "ProductResources")
 
     before {
         bootstrapper = startNewTestDatabaseRestServerBootstrapper
@@ -42,20 +47,22 @@ class RepositoryTest extends FunSuite with BeforeAndAfter with TemporaryDatabase
     }
 
     test("listPersons should get Hugo and Fahran") {
-        val hugo = Person("1", "Hugo", "hugo.img")
-        val fahran = Person("2", "Fahran", "fahran.img")
-        repo = Repository()
-
         val result = repo.listPersons
         assert(result == List(hugo, fahran), s"expected Hugo and Fahran, got $result")
     }
 
-    test("findTeam should find Team that Person is member of") {
-        val hugo = Person("1", "Hugo", "hugo.img")
-        val productResources = Team("4", "ProductResources")
-        repo = Repository()
-
+    test("findTeamForPerson should find Team that Person is member of") {
         val result = repo.findTeamForPerson(hugo)
         assert(result == Some(productResources), s"expected ProductResources, got $result")
+    }
+
+    test("listTeams should get Checkout and ProductResources") {
+        val result = repo.listTeams
+        assert (result == List(checkout, productResources), s"expected Checkout and ProductResources, got $result")
+    }
+
+    test("findPersonsForTeam should find Persons that are members of the Team") {
+        val result = repo.findPersonsForTeam(checkout)
+        assert (result == List(fahran), s"expected Fahran, got $result")
     }
 }

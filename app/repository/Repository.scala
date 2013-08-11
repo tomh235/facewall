@@ -25,4 +25,28 @@ case class Repository() {
         val jsonValue = Json.toJson(nodeAsMap)(Neo4jREST.mapFormat)
         jsonValue.asOpt[Person]
     }.toList
+
+    def listTeams: List[Team] = Cypher(
+        """
+          |START team = node(*)
+          |MATCH person-[:TEAMMEMBER_OF]->team
+          |RETURN team
+        """.stripMargin
+    )().flatMap { row =>
+        val nodeAsMap = row[NeoNode]("team").props
+        val jsonValue = Json.toJson(nodeAsMap)(Neo4jREST.mapFormat)
+        jsonValue.asOpt[Team]
+    }.toList
+
+    def findPersonsForTeam(team: Team): List[Person] = Cypher(
+        """
+          |START person = node(*)
+          |MATCH person-[:TEAMMEMBER_OF]->team
+          |WHERE team.id! = {teamId}
+          |RETURN person
+        """.stripMargin).on("teamId" -> team.id)().flatMap { row =>
+        val nodeAsMap = row[NeoNode]("person").props
+        val jsonValue = Json.toJson(nodeAsMap)(Neo4jREST.mapFormat)
+        jsonValue.asOpt[Person]
+    }.toList
 }
