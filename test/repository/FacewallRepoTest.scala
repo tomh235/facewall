@@ -28,14 +28,14 @@ trait TestGraph {
     }
 }
 
-class RepositoryTest extends FunSuite with BeforeAndAfter with TemporaryDatabaseSuite with TestGraph {
+class FacewallRepoTest extends FunSuite with BeforeAndAfter with TemporaryDatabaseSuite with TestGraph {
     var repo: FacewallRepo = new FacewallRepo()
     var bootstrapper: WrappingNeoServerBootstrapper = _
 
     val hugo = Person("1", "Hugo", "hugo.img", repo)
     val fahran = Person("2", "Fahran", "fahran.img", repo)
-    val checkout = Team("3", "Checkout")
-    val productResources = Team("4", "ProductResources")
+    val checkout = Team("3", "Checkout", repo)
+    val productResources = Team("4", "ProductResources", repo)
 
     before {
         bootstrapper = startNewTestDatabaseRestServerBootstrapper

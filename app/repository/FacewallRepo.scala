@@ -14,11 +14,17 @@ class FacewallRepo extends Repository {
     }
 
     implicit private val personReads: Reads[Person] = (
-            (__ \ 'id).read[String] and
+        (__ \ 'id).read[String] and
             (__ \ 'name).read[String] and
             (__ \ 'picture).read[String] and
             repositoryReads
         )(Person)
+
+    implicit private val teamReads: Reads[Team] = (
+        (__ \ 'id).read[String] and
+            (__ \ 'name).read[String] and
+            repositoryReads
+        )(Team)
 
     def findTeamForPerson(person: Person): Option[Team] = Cypher(
         """
