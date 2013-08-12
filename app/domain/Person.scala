@@ -1,10 +1,7 @@
 package domain
 
-import play.api.libs.json._
-import play.api.libs.functional.syntax._
+import repository.Repository
 
-case class Person(id: String, name: String, picture: String)
-
-object Person {
-    implicit val personReads = Json.reads[Person]
+case class Person(id: String, name: String, picture: String, repository: Repository) {
+    def getTeam = ???
 }

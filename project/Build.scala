@@ -17,6 +17,7 @@ object ApplicationBuild extends Build {
         "com.sun.jersey" % "jersey-core" % "1.9",
 
         "org.scalatest" %% "scalatest" % "1.9.1" % "test",
+        "org.scalamock" %% "scalamock-scalatest-support" % "3.0.1" % "test",
         "org.neo4j" % "neo4j-kernel" % "1.9" classifier "tests",
         "org.neo4j.app" % "neo4j-server" % "1.9" classifier "static-web"
     )

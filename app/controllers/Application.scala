@@ -1,10 +1,10 @@
 package controllers
 
 import play.api.mvc._
-import repository.Repository
+import repository.FacewallRepo
 
 object Application extends Controller {
-    val repository = new Repository()
+    val repository = new FacewallRepo()
 
     def index = Action {
         Ok(views.html.index(repository.listPersons))
