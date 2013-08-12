@@ -1,4 +1,4 @@
-@(people: List[domain.Person])
+@(teams: List[model.TeamOverview])
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +11,7 @@
 
 <div class="container">
     <ul class="thumbnails">
-        @people.map { person =>
+        @teams.flatMap { _.members }.map { person =>
         <li class="span4">
             <div class="thumbnail">
                 <img src="@person.picture"/>
