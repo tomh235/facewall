@@ -17,6 +17,10 @@ class FacewallFacadeTest extends FunSuite {
             .toReturn(List(mockPerson, mockPerson))
             .toReturn(List(mockPerson))
 
+        stub(mockTeam.name)
+            .toReturn("team1")
+            .toReturn("team2")
+
         stub(mockPerson.name)
             .toReturn("person1")
             .toReturn("person2")
@@ -29,9 +33,11 @@ class FacewallFacadeTest extends FunSuite {
 
         val expected = List(
             TeamOverview(
+                "team1",
                 List(PersonOverview("person1", "person1 pic"), PersonOverview("person2", "person2 pic"))
             ),
             TeamOverview(
+                "team2",
                 List(PersonOverview("person3", "person3 pic"))
             )
         )

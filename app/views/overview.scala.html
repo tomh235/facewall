@@ -11,14 +11,20 @@
 
 <div class="container">
     <ul class="thumbnails">
-        @teams.flatMap { _.members }.map { person =>
-        <li class="span4">
-            <div class="thumbnail">
-                <img src="@person.picture"/>
+        @teams.map { team =>
+        <div class="span5 thumbnail">
+            <p>@team.name</p>
 
-                <h3 class="text-center">@person.name</h3>
-            </div>
-        </li>
+            @team.members.map { person =>
+            <li class="span4">
+                <div class="thumbnail">
+                    <img src="@person.picture"/>
+
+                    <h3 class="text-center">@person.name</h3>
+                </div>
+            </li>
+            }
+        </div>
         }
     </ul>
 </div>

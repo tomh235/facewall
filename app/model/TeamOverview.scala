@@ -1,3 +1,3 @@
 package model
 
-case class TeamOverview(members: List[PersonOverview])
+case class TeamOverview(name: String, members: List[PersonOverview])
