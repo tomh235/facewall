@@ -1,13 +1,20 @@
 package domain
 
 import org.scalatest.FunSuite
-import org.scalamock.scalatest.MockFactory
 import repository.Repository
+import org.scalatest.mock.MockitoSugar.mock
+import org.mockito.Mockito.stub
+import org.mockito.Mockito.verify
 
-class PersonTest extends FunSuite with MockFactory {
+class PersonTest extends FunSuite {
     val mockRepo = mock[Repository]
-    val person = Person("id", "hugo", "hugo.img", mockRepo)
+    val person = Person("1", "hugo", "hugo.img", mockRepo)
     test("getTeam should get team from repository") {
-//        mockRepo expects 'findTeamforPerson withArgs (person)
+        val expected = Some(Team("2", "team"))
+        stub(mockRepo.findTeamForPerson(person)).toReturn(expected)
+
+        val result = person.getTeam
+        verify(mockRepo).findTeamForPerson(person)
+        assert (result == expected, s"expected team, got $result")
     }
 }
