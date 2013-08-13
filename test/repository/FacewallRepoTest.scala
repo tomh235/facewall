@@ -8,6 +8,7 @@ import org.neo4j.server.WrappingNeoServerBootstrapper
 trait TestGraph {
     private val hugo = Map("id" -> "1", "name" -> "Hugo", "picture" -> "hugo.img")
     private val fahran = Map("id" -> "2", "name" -> "Fahran", "picture" -> "fahran.img")
+    private val person3 = Map("id" -> "5", "name" -> "Person 3", "picture" -> "Person 3.img")
     private val checkout = Map("id" -> "3", "name" -> "Checkout")
     private val productResources = Map("id" -> "4", "name" -> "ProductResources")
 
@@ -21,10 +22,11 @@ trait TestGraph {
                   |CREATE nodeOut-[:TEAMMEMBER_OF]->nodeIn
                 """.stripMargin).on("nodeOutId" -> nodeOutId, "nodeInId" -> nodeInId)()
         }
-        val nodes = List(hugo, fahran, checkout, productResources)
+        val nodes = List(hugo, fahran, person3, checkout, productResources)
         nodes.foreach(addNode)
         addRelationship(hugo("id"), productResources("id"))
         addRelationship(fahran("id"), checkout("id"))
+        addRelationship(person3("id"), checkout("id"))
     }
 }
 
@@ -34,6 +36,7 @@ class FacewallRepoTest extends FunSuite with BeforeAndAfter with TemporaryDataba
 
     val hugo = Person("1", "Hugo", "hugo.img", repo)
     val fahran = Person("2", "Fahran", "fahran.img", repo)
+    val person3 = Person("5", "Person 3", "Person 3.img", repo)
     val checkout = Team("3", "Checkout", repo)
     val productResources = Team("4", "ProductResources", repo)
 
@@ -46,9 +49,9 @@ class FacewallRepoTest extends FunSuite with BeforeAndAfter with TemporaryDataba
         bootstrapper.stop()
     }
 
-    test("listPersons should get Hugo and Fahran") {
+    test("listPersons should get all persons") {
         val result = repo.listPersons
-        assert(result == List(hugo, fahran), s"expected Hugo and Fahran, got $result")
+        assert(result == List(hugo, fahran, person3), s"expected Hugo, Fahran and Person 3, got $result")
     }
 
     test("findTeamForPerson should find Team that Person is member of") {
@@ -63,6 +66,6 @@ class FacewallRepoTest extends FunSuite with BeforeAndAfter with TemporaryDataba
 
     test("findPersonsForTeam should find Persons that are members of the Team") {
         val result = repo.findPersonsForTeam(checkout)
-        assert (result == List(fahran), s"expected Fahran, got $result")
+        assert (result == List(fahran, person3), s"expected Fahran and Person 3, got $result")
     }
 }

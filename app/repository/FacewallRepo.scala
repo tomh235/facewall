@@ -51,7 +51,7 @@ class FacewallRepo extends Repository {
         """
           |START team = node(*)
           |MATCH person-[:TEAMMEMBER_OF]->team
-          |RETURN team
+          |RETURN distinct team
         """.stripMargin
     )().flatMap { row =>
         val nodeAsMap = row[NeoNode]("team").props

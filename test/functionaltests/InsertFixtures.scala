@@ -6,12 +6,24 @@ import org.scalatest.FunSuite
 class InsertFixtures extends FunSuite {
     Neo4jREST.setServer("localhost", 7474)
 
-    val nodes = List(
-        Map("id" -> "1", "name" -> "Hugo Wainwright", "picture" -> "https://fbcdn-sphotos-c-a.akamaihd.net/hphotos-ak-frc1/300430_4471674470606_1745866994_n.jpg"),
-        Map("id" -> "2", "name" -> "Fahran Wallace", "picture" -> "http://withhomeandgarden.com/wp-content/uploads/2011/01/cat-200x300.jpg"),
-        Map("id" -> "3", "name" -> "ProductResources"),
-        Map("id" -> "4", "name" -> "Checkout")
-    )
+    var id = 5
+
+    val hugo: Map[String, String] = Map("id" -> "1", "name" -> "Hugo Wainwright", "picture" -> "https://fbcdn-sphotos-c-a.akamaihd.net/hphotos-ak-frc1/300430_4471674470606_1745866994_n.jpg")
+    val fahran: Map[String, String] = Map("id" -> "2", "name" -> "Fahran Wallace", "picture" -> "http://withhomeandgarden.com/wp-content/uploads/2011/01/cat-200x300.jpg")
+    val productResources: Map[String, String] = Map("id" -> "3", "name" -> "ProductResources")
+    val checkout: Map[String, String] = Map("id" -> "4", "name" -> "Checkout")
+
+    def person: Map[String, String] = { id += 1; Map("id" -> id.toString, "name" -> s"person ${id.toString}", "picture" -> "img.png") }
+    def team: Map[String, String] = { id += 1; Map("id" -> id.toString, "name" -> s"team ${id.toString}") }
+
+    val nodes = {
+        List(
+            hugo,
+            fahran,
+            productResources,
+            checkout
+        )
+    }
 
     def clearDatabase() {
         Cypher(
@@ -34,10 +46,17 @@ class InsertFixtures extends FunSuite {
                   |CREATE nodeOut-[:TEAMMEMBER_OF]->nodeIn
                 """.stripMargin).on("nodeOutId" -> nodeOutId, "nodeInId" -> nodeInId)()
         }
-
         nodes.foreach(addNode)
         addRelationship(nodes(0)("id"), nodes(2)("id"))
         addRelationship(nodes(1)("id"), nodes(3)("id"))
+
+        Range(1, 20).foreach { _ => addNode(person) }
+        Range(1, 5).foreach { _ => addNode(team) }
+
+        Range(5, 10).foreach { id: Int => addRelationship(id.toString, "3") }
+        Range(11, 15).foreach { id: Int => addRelationship(id.toString, "4") }
+        Range(16, 21).foreach { id: Int => addRelationship(id.toString, "26") }
+        Range(22, 24).foreach { id: Int => addRelationship(id.toString, "27") }
     }
 
     test("reset fixtures") {
