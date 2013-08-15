@@ -10,7 +10,7 @@ class PersonTest extends FunSuite {
     val mockRepo = mock[Repository]
     val person = Person("1", "hugo", "hugo.img", mockRepo)
     test("getTeam should get team from repository") {
-        val expected = Some(Team("2", "team", mockRepo))
+        val expected = Some(Team("2", "team", "colour", mockRepo))
         stub(mockRepo.findTeamForPerson(person)).toReturn(expected)
 
         val result = person.getTeam

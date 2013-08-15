@@ -2,6 +2,7 @@ package functionaltests
 
 import org.anormcypher.{Neo4jREST, Cypher}
 import org.scalatest.FunSuite
+import scala.util.Random
 
 class InsertFixtures extends FunSuite {
     Neo4jREST.setServer("localhost", 7474)
@@ -10,12 +11,11 @@ class InsertFixtures extends FunSuite {
 
     val hugo: Map[String, String] = Map("id" -> "1", "name" -> "Hugo Wainwright", "picture" -> "https://fbcdn-sphotos-c-a.akamaihd.net/hphotos-ak-frc1/300430_4471674470606_1745866994_n.jpg")
     val fahran: Map[String, String] = Map("id" -> "2", "name" -> "Fahran Wallace", "picture" -> "http://withhomeandgarden.com/wp-content/uploads/2011/01/cat-200x300.jpg")
-    val productResources: Map[String, String] = Map("id" -> "3", "name" -> "ProductResources")
-    val checkout: Map[String, String] = Map("id" -> "4", "name" -> "Checkout")
+    val productResources: Map[String, String] = Map("id" -> "3", "name" -> "ProductResources", "colour" -> "3355ff")
+    val checkout: Map[String, String] = Map("id" -> "4", "name" -> "Checkout", "colour" -> "88aa44")
 
     def person: Map[String, String] = { id += 1; Map("id" -> id.toString, "name" -> s"person ${id.toString}", "picture" -> "img.png") }
-    def team: Map[String, String] = { id += 1; Map("id" -> id.toString, "name" -> s"team ${id.toString}") }
-
+    def team: Map[String, String] = { id += 1; Map("id" -> id.toString, "name" -> s"team ${id.toString}", "colour" -> (Random.nextInt() % 999999).toString) }
     val nodes = {
         List(
             hugo,

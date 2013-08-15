@@ -3,12 +3,13 @@ package controllers
 import play.api.mvc._
 import repository.FacewallRepo
 import facade.FacewallFacade
+import play.api.templates.Html
 
 object FacewallController extends Controller {
-    val repository = new FacewallRepo()
-    val facade = new FacewallFacade()
+    val facade = new FacewallFacade(new FacewallRepo())
 
     def overview = Action {
-        Ok(views.html.overview(facade.mapTeamOverviewModel(repository.listTeams)))
+        val view: Html = views.html.overview(facade.createOverviewModel)
+        Ok(view)
     }
 }

@@ -1,4 +1,4 @@
-@(teams: List[model.TeamOverview])
+@(entries: List[model.OverviewEntry])
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,21 +11,17 @@
 
 <div class="container">
     <ul class="thumbnails">
-        @teams.map { team =>
-        <div class="span5 thumbnail">
-            <p>@team.name</p>
-
-            @team.members.map { person =>
+        @entries.map { entry =>
             <li class="span4">
-                <div class="thumbnail">
-                    <img src="@person.picture"/>
+                <div class="thumbnail" style="background-color:#@entry.colour">
+                    <h5>@entry.teamHeader</h5>
+                    <img src="@entry.picture"/>
 
-                    <h3 class="text-center">@person.name</h3>
+                    <h3 class="text-center">@entry.name</h3>
                 </div>
             </li>
             }
         </div>
-        }
     </ul>
 </div>
 

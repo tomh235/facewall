@@ -23,6 +23,7 @@ class FacewallRepo extends Repository {
     implicit private val teamReads: Reads[Team] = (
         (__ \ 'id).read[String] and
             (__ \ 'name).read[String] and
+            (__ \ 'colour).read[String] and
             repositoryReads
         )(Team)
 

@@ -8,7 +8,7 @@ import org.mockito.Mockito.verify
 
 class TeamTest extends FunSuite {
     val mockRepo = mock[Repository]
-    val team = Team("1", "team", mockRepo)
+    val team = Team("1", "team", "colour", mockRepo)
 
     test("getMembers should get the list of members from the repository") {
         val expectedList = List(Person("2", "person1", "person1.img", mockRepo), Person("3", "person2", "person2.img", mockRepo))

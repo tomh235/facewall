@@ -9,8 +9,8 @@ trait TestGraph {
     private val hugo = Map("id" -> "1", "name" -> "Hugo", "picture" -> "hugo.img")
     private val fahran = Map("id" -> "2", "name" -> "Fahran", "picture" -> "fahran.img")
     private val person3 = Map("id" -> "5", "name" -> "Person 3", "picture" -> "Person 3.img")
-    private val checkout = Map("id" -> "3", "name" -> "Checkout")
-    private val productResources = Map("id" -> "4", "name" -> "ProductResources")
+    private val checkout = Map("id" -> "3", "name" -> "Checkout", "colour" -> "88aa44")
+    private val productResources = Map("id" -> "4", "name" -> "ProductResources", "colour" -> "3355ff")
 
     def setUpGraph() {
         def addNode(node: Map[String, Any]) { Cypher("CREATE ({node})").on("node" -> node)() }
@@ -37,8 +37,8 @@ class FacewallRepoTest extends FunSuite with BeforeAndAfter with TemporaryDataba
     val hugo = Person("1", "Hugo", "hugo.img", repo)
     val fahran = Person("2", "Fahran", "fahran.img", repo)
     val person3 = Person("5", "Person 3", "Person 3.img", repo)
-    val checkout = Team("3", "Checkout", repo)
-    val productResources = Team("4", "ProductResources", repo)
+    val checkout = Team("3", "Checkout", "88aa44", repo)
+    val productResources = Team("4", "ProductResources", "3355ff", repo)
 
     before {
         bootstrapper = startNewTestDatabaseRestServerBootstrapper
