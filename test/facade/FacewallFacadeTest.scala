@@ -50,38 +50,4 @@ class FacewallFacadeTest extends FunSuite with BeforeAndAfter {
         val result = facewallFacade.createOverviewModel
         assert (result == expected, s"expected $expected, got $result")
     }
-
-    test("should invert ordering of overviews every other row of 3") {
-        mockRepo.teams += (Team("1", "ecom", "blue", mockRepo), Team("2", "productResources", "green", mockRepo))
-        mockRepo.persons += (
-            Person("3", "ecom_member", "pic1.img", mockRepo),
-            Person("4", "ecom_member", "pic1.img", mockRepo),
-            Person("5", "ecom_member", "pic1.img", mockRepo),
-            Person("6", "ecom_member", "pic1.img", mockRepo),
-            Person("7", "pr_member", "pic2.img", mockRepo),
-            Person("8", "pr_member", "pic2.img", mockRepo),
-            Person("9", "pr_member", "pic2.img", mockRepo)
-        )
-        mockRepo.relationships += (
-            ("3", "1"),
-            ("4", "1"),
-            ("5", "1"),
-            ("6", "1"),
-            ("7", "2"),
-            ("8", "2"),
-            ("9", "2")
-        )
-        val expected = List(
-            OverviewEntry("ecom", "ecom_member", "pic1.img", "blue"),
-            OverviewEntry("ecom", "ecom_member", "pic1.img", "blue"),
-            OverviewEntry("ecom", "ecom_member", "pic1.img", "blue"),
-            OverviewEntry("productResources", "pr_member", "pic2.img", "green"),
-            OverviewEntry("productResources", "pr_member", "pic2.img", "green"),
-            OverviewEntry("ecom", "ecom_member", "pic1.img", "blue"),
-            OverviewEntry("productResources", "pr_member", "pic2.img", "green")
-        )
-
-        val result = facewallFacade.createOverviewModel
-        assert (result == expected, s"expected $expected, got $result")
-    }
 }

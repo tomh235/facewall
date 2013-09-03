@@ -13,18 +13,9 @@ class FacewallFacade(val repository: Repository) {
             else person1.name < person2.name
         }
 
-        def invertEveryOtherRowOf3(list: List[OverviewEntry]) = {
-            list.grouped(6).toList.map { row =>
-                val splitRow = row.splitAt(3)
-                splitRow._1 ++ splitRow._2.reverse
-            }.flatten
-        }
-
         val sortedPersons = repository.listPersons.sortWith(alphabeticallyByTeamNameThenName)
-        val sortedOverviews = sortedPersons.map { person =>
+        sortedPersons.map { person =>
             OverviewEntry(person.getTeam.fold("")(_.name), person.name, person.picture, person.getTeam.fold("")(_.colour))
         }
-
-        invertEveryOtherRowOf3(sortedOverviews)
     }
 }

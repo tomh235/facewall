@@ -4,6 +4,8 @@
 <head>
     <title>Welcome to the facewall app</title>
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+    <script src="assets/javascripts/jquery-1.9.0.min.js"></script>
+    <script src="assets/javascripts/snake-order.js"></script>
 </head>
 <body>
 
@@ -23,6 +25,12 @@
         }
     </ul>
 </div>
+
+<script>
+    var overviewEntries = $("li");
+    var snakeOrdered = snakeOrder(overviewEntries.get(), 3);
+    overviewEntries.each(function(i) { $(this).replaceWith(snakeOrdered[i]); });
+</script>
 
 </body>
 </html>
