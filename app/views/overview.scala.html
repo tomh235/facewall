@@ -27,9 +27,9 @@
 </div>
 
 <script>
-    var overviewEntries = $("li");
+    var overviewEntries = $("li").detach();
     var snakeOrdered = snakeOrder(overviewEntries.get(), 3);
-    overviewEntries.each(function(i) { $(this).replaceWith(snakeOrdered[i]); });
+    $("ul").append(snakeOrdered);
 </script>
 
 </body>

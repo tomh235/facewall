@@ -17,7 +17,7 @@ function snakeOrder(array, rowSize) {
 function groupBy (array, groupSize) {
     var result = [];
     for (i = 0; i < array.length; i += groupSize) {
-        result.push(array.slice(i, groupSize));
+        result.push(array.slice(i, i + groupSize));
     }
     return result;
 }
