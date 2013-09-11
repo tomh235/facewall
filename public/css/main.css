@@ -1,0 +1,17 @@
+@import "bootstrap.css";
+
+.thumbnail > img {
+  margin-top: 15px;
+  width: 200px;
+  height: 300px;
+  .border-radius(10px);
+}
+
+.page-header {
+    background-color: #3b5998;
+    color: #ffffff;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+}
