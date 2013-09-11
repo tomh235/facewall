@@ -12,4 +12,9 @@ object FacewallController extends Controller {
         val view: Html = views.html.overview(facade.createOverviewModel)
         Ok(view)
     }
+
+    def search = Action {
+        val view: Html = views.html.search()
+        Ok(view)
+    }
 }
