@@ -1,7 +1,7 @@
 package repository
 
 import org.scalatest.{FunSuite, BeforeAndAfter}
-import domain.{Team, Person}
+import domain.{MockTeam, MockPerson, Team, Person}
 import org.anormcypher.Cypher
 import org.neo4j.server.WrappingNeoServerBootstrapper
 
@@ -34,11 +34,16 @@ class FacewallRepoTest extends FunSuite with BeforeAndAfter with TemporaryDataba
     var repo: FacewallRepo = new FacewallRepo()
     var bootstrapper: WrappingNeoServerBootstrapper = _
 
-    val hugo = Person("1", "Hugo", "hugo.img", repo)
-    val fahran = Person("2", "Fahran", "fahran.img", repo)
-    val person3 = Person("5", "Person 3", "Person 3.img", repo)
-    val checkout = Team("3", "Checkout", "88aa44", repo)
-    val productResources = Team("4", "ProductResources", "3355ff", repo)
+    val hugo: Person = new MockPerson("1", "Hugo", "hugo.img")
+    val fahran: Person = new MockPerson("2", "Fahran", "fahran.img")
+    val person3: Person = new MockPerson("5", "Person 3", "Person 3.img")
+
+    val checkout: Team = MockTeam("3", "Checkout", "88aa44", List(fahran, person3))
+    val productResources: Team = MockTeam("4", "ProductResources", "3355ff", List(hugo))
+
+    hugo.asInstanceOf[MockPerson].setTeam(productResources)
+    fahran.asInstanceOf[MockPerson].setTeam(checkout)
+    person3.asInstanceOf[MockPerson].setTeam(checkout)
 
     before {
         bootstrapper = startNewTestDatabaseRestServerBootstrapper

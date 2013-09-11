@@ -1,7 +1,8 @@
 package domain
 
-import repository.Repository
-
-case class Person(id: String, name: String, picture: String, repository: Repository) {
-    def getTeam = repository.findTeamForPerson(this)
+trait Person {
+    def id: String
+    def name: String
+    def picture: String
+    def team: Option[Team]
 }

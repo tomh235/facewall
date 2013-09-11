@@ -22,7 +22,7 @@ trait TemporaryDatabaseSuite extends FunSuite {
     def startNewTestDatabaseRestServerBootstrapper = {
         val graphDb = new ImpermanentGraphDatabaseAPI()
         val config = new ServerConfigurator(graphDb)
-        val port = findFreePort(Range(49152, 65535))
+        val port = findFreePort(Range(49153, 65535))
         config.configuration().addProperty(Configurator.WEBSERVER_PORT_PROPERTY_KEY, port)
         val bootstrapper = new WrappingNeoServerBootstrapper(graphDb, config)
         bootstrapper.start()

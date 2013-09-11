@@ -1,11 +1,20 @@
 package repository
 
-import domain.{Team, Person}
+import domain.{Query, Team, Person}
 import org.anormcypher.{NeoNode, Cypher, Neo4jREST}
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
 class FacewallRepo extends Repository {
+
+    private case class DefaultPersonImplementation(id: String, name: String, picture: String) extends Person {
+        def team = FacewallRepo.this.findTeamForPerson(this)
+    }
+
+    private case class DefaultTeamImplementation(id: String, name: String, colour: String) extends Team {
+        def members = FacewallRepo.this.findPersonsForTeam(this)
+    }
+
     private val self = this
     implicit private val repositoryReads: Reads[FacewallRepo] = new Reads[FacewallRepo] {
         def reads(json: JsValue): JsResult[FacewallRepo] = {
@@ -16,16 +25,14 @@ class FacewallRepo extends Repository {
     implicit private val personReads: Reads[Person] = (
         (__ \ 'id).read[String] and
             (__ \ 'name).read[String] and
-            (__ \ 'picture).read[String] and
-            repositoryReads
-        )(Person)
+            (__ \ 'picture).read[String]
+        )(DefaultPersonImplementation)
 
     implicit private val teamReads: Reads[Team] = (
         (__ \ 'id).read[String] and
             (__ \ 'name).read[String] and
-            (__ \ 'colour).read[String] and
-            repositoryReads
-        )(Team)
+            (__ \ 'colour).read[String]
+        )(DefaultTeamImplementation)
 
     def findTeamForPerson(person: Person): Option[Team] = Cypher(
         """
@@ -71,4 +78,6 @@ class FacewallRepo extends Repository {
         val jsonValue = Json.toJson(nodeAsMap)(Neo4jREST.mapFormat)
         jsonValue.asOpt[Person]
     }.toList
+
+    def queryPersons(query: Query): List[Person] = ???
 }
