@@ -1,20 +1,6 @@
 @(entries: List[model.OverviewEntry])
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Welcome to the facewall app</title>
-    <link rel="stylesheet" media="screen" href="assets/css/main.css">
-    <script src="assets/javascripts/jquery-1.9.0.min.js"></script>
-    <script src="assets/javascripts/snake-order.js"></script>
-</head>
-<body>
 
-<div class="jumbotron">
-    <div class="container">
-        <h1 class="text-center">Facewall</h1>
-    </div>
-</div>
-
+@main("Welcome to the facewall app", 0) {
 <div class="container">
     <div class="row">
         @entries.map { entry =>
@@ -35,6 +21,4 @@
     var snakeOrdered = snakeOrder(overviewEntries.get(), 3);
     $("div.row").append(snakeOrdered);
 </script>
-
-</body>
-</html>
+}

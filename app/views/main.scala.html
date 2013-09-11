@@ -1,15 +1,16 @@
-@(title: String)(content: Html)
+@(title: String, activeTabIndex: Int)(content: Html)
 
 <!DOCTYPE html>
 
 <html>
     <head>
         <title>@title</title>
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-        <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
+        <link rel="stylesheet" media="screen" href="assets/css/main.css">
+        <script src="assets/javascripts/jquery-1.9.0.min.js"></script>
+        <script src="assets/javascripts/snake-order.js"></script>
     </head>
     <body>
+        @navbar(activeTabIndex)
         @content
     </body>
 </html>

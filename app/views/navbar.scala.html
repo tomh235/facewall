@@ -1,0 +1,15 @@
+@(activeTabIndex: Int)
+
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="text-center">Facewall</h1>
+        <ul class="nav nav-tabs nav-justified">
+            <li><a href="#">Overview</a></li>
+            <li><a href="#">Search</a></li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    $("ul.nav").children().eq(@activeTabIndex).addClass("active");
+</script>
