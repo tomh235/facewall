@@ -6,7 +6,8 @@ import org.anormcypher.Cypher
 import org.neo4j.server.WrappingNeoServerBootstrapper
 import org.hamcrest.{Matcher, Description}
 import util.CollectionMatcher.contains
-import org.hamcrest.MatcherAssert._
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.is
 import org.junit.internal.matchers.TypeSafeMatcher
 
 trait TestGraph {
@@ -44,9 +45,9 @@ class FacewallRepoTest extends FunSuite with BeforeAndAfter with TemporaryDataba
         def matchesSafely(hugo: Person): Boolean =
             hugo.id == "1" &&
                 hugo.name == "Hugo" &&
-                hugo.picture == "hugo.img" &&
+                hugo.picture == "person3.img" &&
                 hugo.team.fold(false) {
-                    team => team.name == "productResources"
+                    team => team.name == "ProductResources"
                 }
 
         def describeTo(description: Description) {
@@ -60,7 +61,7 @@ class FacewallRepoTest extends FunSuite with BeforeAndAfter with TemporaryDataba
                 fahran.name == "Fahran" &&
                 fahran.picture == "person3.img" &&
                 fahran.team.fold(false) {
-                    team => team.name == "checkout"
+                    team => team.name == "Checkout"
                 }
 
         def describeTo(description: Description) {
@@ -72,9 +73,9 @@ class FacewallRepoTest extends FunSuite with BeforeAndAfter with TemporaryDataba
         def matchesSafely(person3: Person): Boolean =
             person3.id == "5" &&
                 person3.name == "Person 3" &&
-                person3.picture == "person3.img" &&
+                person3.picture == "Person 3.img" &&
                 person3.team.fold(false) {
-                    team => team.name == "checkout"
+                    team => team.name == "Checkout"
                 }
 
         def describeTo(description: Description) {
@@ -114,13 +115,13 @@ class FacewallRepoTest extends FunSuite with BeforeAndAfter with TemporaryDataba
     }
 
     test("listPersons should get all persons") {
-        val result: Iterable[Person] = repo.listPersons
+        val result = repo.listPersons
         assertThat(result, contains(hugo, fahran, person3))
     }
 
     test("findTeamForPerson should find Team that Person is member of") {
-        val result: Iterable[Team] = repo.findTeamForPerson(new MockPerson("1", "hugo", "hugo.img"))
-        assertThat(result, contains(productResources))
+        val result = repo.findTeamForPerson(new MockPerson("1", "hugo", "hugo.img")).get
+        assertThat(result, is(productResources))
     }
 
     test("listTeams should get Checkout and ProductResources") {

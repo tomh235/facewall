@@ -1,6 +1,7 @@
 package util
 
-import org.hamcrest.{Description, TypeSafeMatcher, Matcher}
+import org.hamcrest.{Description, Matcher}
+import org.junit.internal.matchers.TypeSafeMatcher
 
 object CollectionMatcher {
     def contains[T](elementMatchers: Matcher[T]*): Matcher[Iterable[T]] = new TypeSafeMatcher[Iterable[T]]() {
@@ -8,7 +9,11 @@ object CollectionMatcher {
             (targets, elementMatchers).zipped.forall { (target, matcher) => matcher.matches(target) }
 
         def describeTo(description: Description) {
-            description.appendText("should contain -\n")
+            description.appendText("should contain -")
+            elementMatchers.foreach { matcher =>
+                description.appendText("\n")
+                matcher.describeTo(description)
+            }
         }
     }
 }

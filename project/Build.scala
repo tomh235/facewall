@@ -16,7 +16,7 @@ object ApplicationBuild extends Build {
         "com.sun.jersey.contribs" % "jersey-simple-server" % "1.9.1",
         "com.sun.jersey" % "jersey-core" % "1.9",
 
-        "org.hamcrest" % "hamcrest-all" % "1.3" % "test",
+        "org.hamcrest" % "hamcrest-all" % "1.1" % "test",
         "org.scalatest" %% "scalatest" % "1.9.1" % "test",
         "org.mockito" % "mockito-core" % "1.9.5" % "test",
         "org.neo4j" % "neo4j-kernel" % "1.9" classifier "tests",
