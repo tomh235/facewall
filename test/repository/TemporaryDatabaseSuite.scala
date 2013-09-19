@@ -4,7 +4,6 @@ import org.neo4j.test.ImpermanentGraphDatabase
 import org.neo4j.kernel.GraphDatabaseAPI
 import org.neo4j.server.WrappingNeoServerBootstrapper
 import scala.collection.mutable
-import collection.JavaConversions._
 import java.net.ServerSocket
 import java.io.IOException
 import org.neo4j.server.configuration.{ServerConfigurator, Configurator}

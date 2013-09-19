@@ -80,4 +80,5 @@ class FacewallRepo extends Repository {
     }.toList
 
     def queryPersons(query: Query): List[Person] = ???
+    def queryTeams(query: Query): List[Team] = ???
 }

@@ -1,7 +1,7 @@
 package facade
 
-import model.OverviewEntry
-import domain.Person
+import model.{SearchResultsModel, OverviewEntry}
+import domain.{Person, Query}
 import repository.Repository
 
 class FacewallFacade(val repository: Repository) {
@@ -18,4 +18,6 @@ class FacewallFacade(val repository: Repository) {
             OverviewEntry(person.team.fold("")(_.name), person.name, person.picture, person.team.fold("")(_.colour))
         }
     }
+
+    def createSearchResultsModel(query: Query): SearchResultsModel = ???
 }

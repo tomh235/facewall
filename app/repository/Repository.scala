@@ -8,4 +8,5 @@ trait Repository {
     def listTeams: List[Team]
     def findPersonsForTeam(team: Team): List[Person]
     def queryPersons(query: Query): List[Person]
+    def queryTeams(query: Query): List[Team]
 }
