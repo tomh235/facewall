@@ -6,6 +6,7 @@ import org.neo4j.server.WrappingNeoServerBootstrapper
 import scala.collection.mutable
 import java.net.ServerSocket
 import java.io.IOException
+import collection.JavaConversions._
 import org.neo4j.server.configuration.{ServerConfigurator, Configurator}
 import org.anormcypher.Neo4jREST
 import org.scalatest.FunSuite

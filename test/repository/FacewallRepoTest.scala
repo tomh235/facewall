@@ -1,14 +1,14 @@
 package repository
 
 import org.scalatest.{FunSuite, BeforeAndAfter}
-import domain.{MockTeam, MockPerson, Team, Person}
+import domain.{MockTeam, MockPerson, Person}
+import domain.TeamMatcher.aTeam
+import domain.PersonMatcher.aPerson
 import org.anormcypher.Cypher
 import org.neo4j.server.WrappingNeoServerBootstrapper
-import org.hamcrest.{Matcher, Description}
 import util.CollectionMatcher.contains
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.is
-import org.junit.internal.matchers.TypeSafeMatcher
 
 trait TestGraph {
     private val hugo = Map("id" -> "1", "name" -> "Hugo", "picture" -> "person3.img")
@@ -41,69 +41,16 @@ class FacewallRepoTest extends FunSuite with BeforeAndAfter with TemporaryDataba
     var repo: FacewallRepo = new FacewallRepo()
     var bootstrapper: WrappingNeoServerBootstrapper = _
 
-    val hugo: Matcher[Person] = new TypeSafeMatcher[Person]() {
-        def matchesSafely(hugo: Person): Boolean =
-            hugo.id == "1" &&
-                hugo.name == "Hugo" &&
-                hugo.picture == "person3.img" &&
-                hugo.team.fold(false) {
-                    team => team.name == "ProductResources"
-                }
+    val hugo = aPerson.withId("1").named("Hugo").withPicture("person3.img").inTeam(aTeam.named("ProductResources"))
+    val fahran = aPerson.withId("2").named("Fahran").withPicture("person3.img").inTeam(aTeam.named("Checkout"))
+    val person3 = aPerson.withId("5").named("Person 3").withPicture("Person 3.img").inTeam(aTeam.named("Checkout"))
 
-        def describeTo(description: Description) {
-            description.appendText("should be Hugo")
-        }
-    }
-
-    val fahran: Matcher[Person] = new TypeSafeMatcher[Person]() {
-        def matchesSafely(fahran: Person): Boolean =
-            fahran.id == "2" &&
-                fahran.name == "Fahran" &&
-                fahran.picture == "person3.img" &&
-                fahran.team.fold(false) {
-                    team => team.name == "Checkout"
-                }
-
-        def describeTo(description: Description) {
-            description.appendText("should be Fahran")
-        }
-    }
-
-    val person3: Matcher[Person] = new TypeSafeMatcher[Person]() {
-        def matchesSafely(person3: Person): Boolean =
-            person3.id == "5" &&
-                person3.name == "Person 3" &&
-                person3.picture == "Person 3.img" &&
-                person3.team.fold(false) {
-                    team => team.name == "Checkout"
-                }
-
-        def describeTo(description: Description) {
-            description.appendText("should be Person 3")
-        }
-    }
-
-    val checkout = new TypeSafeMatcher[Team]() {
-        def matchesSafely(checkout: Team): Boolean =
-            checkout.id == "3" &&
-                checkout.name == "Checkout" &&
-                checkout.colour == "88aa44"
-
-        def describeTo(description: Description) {
-            description.appendText("should be Checkout")
-        }
-    }
-
-    val productResources = new TypeSafeMatcher[Team]() {
-        def matchesSafely(checkout: Team): Boolean =
-            checkout.id == "4" &&
-                checkout.name == "ProductResources" &&
-                checkout.colour == "3355ff"
-
-        def describeTo(description: Description) {
-            description.appendText("should be ProductResources")
-        }
-    }
+    val checkout = aTeam.withId("3").named("Checkout").withColour("88aa44").whereMembers(contains(
+        aPerson.named("Fahran"), aPerson.named("Person 3")
+    ))
+    val productResources = aTeam.withId("4").named("ProductResources").withColour("3355ff").whereMembers(contains(
+        aPerson.named("Hugo")
+    ))
 
     before {
         bootstrapper = startNewTestDatabaseRestServerBootstrapper
