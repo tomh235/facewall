@@ -2,17 +2,20 @@ package facade
 
 import org.scalatest.{BeforeAndAfter, FunSuite}
 import org.mockito.Mockito._
-import model.{PersonSearchResultMatcher, OverviewEntry}
+import model.{SearchResultsModel, PersonSearchResultMatcher, OverviewEntry}
 import model.PersonSearchResultMatcher.aPersonSearchResult
-import domain.{MockTeam, MockPerson, Team, Query}
+import domain._
 import org.scalatest.mock.MockitoSugar.mock
 import repository.Repository
 import util.CollectionMatcher.contains
 import org.hamcrest.MatcherAssert.assertThat
+import facade.modelmapper.SearchResultsModelMapper
+import domain.MockTeam
 
 class FacewallFacadeTest extends FunSuite with BeforeAndAfter {
     val mockRepo = mock[Repository]
-    val facewallFacade = new FacewallFacade(mockRepo)
+    val mockSearchResultsModelMapper = mock[SearchResultsModelMapper]
+    val facewallFacade = new FacewallFacade(mockRepo, mockSearchResultsModelMapper)
 
     test("should map from domain objects from repo into team overview model") {
 
@@ -67,25 +70,20 @@ class FacewallFacadeTest extends FunSuite with BeforeAndAfter {
 
     test("should find persons and teams matching a query extracted from a web request and map them into a search results model") {
         val query = mock[Query]
-        val fred1 = new MockPerson("1", "fred smith", "pic1.img")
-        val fred2 = new MockPerson("2", "fred bailey", "pic3.img")
+        val mockPerson = mock[Person]
+        val mockTeam = mock[Team]
 
-        val frederationMember = new MockPerson("3", "frederation member", "img")
-        val frederation = new MockTeam("4", "frederation", "blue", List(frederationMember))
+        when(mockRepo.queryPersons(query)).thenReturn(List(mockPerson, mockPerson))
+        when(mockRepo.queryTeams(query)).thenReturn(List(mockTeam))
 
-        val ecom = new MockTeam("5", "ecom", "teal", List(fred1, fred2))
-
-        fred1.setTeam(ecom)
-        fred2.setTeam(ecom)
-
-        when(mockRepo.queryPersons(query)).thenReturn(List(fred1, fred2))
-        when(mockRepo.queryTeams(query)).thenReturn(List(frederation))
+        val expectedResult = mock[SearchResultsModel]
+        when(mockSearchResultsModelMapper.map(List(mockPerson, mockPerson), List(mockTeam))).thenReturn(expectedResult)
 
         val result = facewallFacade.createSearchResultsModel(query)
+        assert(result == expectedResult, "the result should be whatever the mapper returned")
 
-        assertThat(result.persons, contains(
-            aPersonSearchResult.named("fred smith"),
-            aPersonSearchResult.named("fred bailey")
-        ))
+        verify(mockRepo).queryPersons(query)
+        verify(mockRepo).queryTeams(query)
+        verify(mockSearchResultsModelMapper).map(List(mockPerson, mockPerson), List(mockTeam))
     }
 }

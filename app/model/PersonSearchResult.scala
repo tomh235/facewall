@@ -1,3 +1,3 @@
 package model
 
-case class PersonSearchResult(name: String, team: String, image: String)
+case class PersonSearchResult(name: String, teamName: String, picture: String)

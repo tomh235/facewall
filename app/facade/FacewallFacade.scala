@@ -3,8 +3,9 @@ package facade
 import model.{SearchResultsModel, OverviewEntry}
 import domain.{Person, Query}
 import repository.Repository
+import facade.modelmapper.SearchResultsModelMapper
 
-class FacewallFacade(val repository: Repository) {
+class FacewallFacade(val repository: Repository, val searchResultsModelMapper: SearchResultsModelMapper) {
     def createOverviewModel: List[OverviewEntry] = {
         val alphabeticallyByTeamNameThenName: (Person, Person) => Boolean = { (person1, person2) =>
             val person1TeamName = person1.team.fold("zzzzzzzz")(_.name)
@@ -19,5 +20,10 @@ class FacewallFacade(val repository: Repository) {
         }
     }
 
-    def createSearchResultsModel(query: Query): SearchResultsModel = ???
+    def createSearchResultsModel(query: Query): SearchResultsModel = {
+        val persons = repository.queryPersons(query)
+        val teams = repository.queryTeams(query)
+
+        searchResultsModelMapper.map(persons, teams)
+    }
 }

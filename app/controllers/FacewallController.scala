@@ -5,9 +5,10 @@ import repository.FacewallRepo
 import facade.FacewallFacade
 import play.api.templates.Html
 import controllers.requestmapper.QueryMapper
+import facade.modelmapper.SearchResultsModelMapper
 
 object FacewallController extends Controller {
-    val facade = new FacewallFacade(new FacewallRepo())
+    val facade = new FacewallFacade(new FacewallRepo(), new SearchResultsModelMapper())
     val queryMapper = new QueryMapper()
 
     def overview = Action {
@@ -22,8 +23,8 @@ object FacewallController extends Controller {
 
     def searchResults = Action { request: Request[AnyContent] =>
         val query = queryMapper.map(request)
-      val createSearchResultsModel = facade.createSearchResultsModel(query)
+        val createSearchResultsModel = facade.createSearchResultsModel(query)
         val view = views.html.searchresults(createSearchResultsModel)
-      Ok(view)
+        Ok(view)
     }
 }

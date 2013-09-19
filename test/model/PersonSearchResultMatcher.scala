@@ -14,6 +14,24 @@ class PersonSearchResultMatcher extends CompositeMatcher[PersonSearchResult] {
         })
         this
     }
+
+    def withPicture(picture: String): PersonSearchResultMatcher = {
+        add(new TypeSafeMatcher[PersonSearchResult] {
+          def matchesSafely(target: PersonSearchResult): Boolean = target.picture == picture
+
+          def describeTo(description: Description) { description.appendText(s"with picture $picture")}
+        })
+        this
+    }
+
+    def inTeam(teamName: String): PersonSearchResultMatcher = {
+        add(new TypeSafeMatcher[PersonSearchResult] {
+          def matchesSafely(target: PersonSearchResult): Boolean = target.teamName == teamName
+
+          def describeTo(description: Description) { description.appendText(s"in the team, $teamName")}
+        })
+        this
+    }
 }
 
 object PersonSearchResultMatcher {
