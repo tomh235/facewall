@@ -14,14 +14,14 @@ class QueryMapperTest extends FunSuite {
 
     test("should map from request into query") {
         val request = mock[Request[AnyContent]]
-        val body = AnyContentAsFormUrlEncoded(Map("keywords" -> List("hello")))
-        when(request.body).thenReturn(body)
+        val queryString = Map("keywords" -> Seq("hello"))
+        when(request.queryString).thenReturn(queryString)
 
         val result = queryMapper.map(request)
         val expectedQuery = new TypeSafeMatcher[Query]() {
-            def matchesSafely(target: Query): Boolean = target.toRegEx == "hello"
+            def matchesSafely(target: Query): Boolean = target.toRegEx == ".*hello.*"
 
-            def describeTo(description: Description) { description.appendText("regEx should be 'hello'") }
+            def describeTo(description: Description) { description.appendText("regEx should be '.*hello.*'") }
         }
 
         assertThat(result, is(expectedQuery))

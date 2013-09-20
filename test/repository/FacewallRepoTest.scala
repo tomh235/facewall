@@ -1,7 +1,7 @@
 package repository
 
 import org.scalatest.{FunSuite, BeforeAndAfter}
-import domain.{MockTeam, MockPerson, Person}
+import domain.{Query, MockTeam, MockPerson, Person}
 import domain.TeamMatcher.aTeam
 import domain.PersonMatcher.aPerson
 import org.anormcypher.Cypher
@@ -9,6 +9,8 @@ import org.neo4j.server.WrappingNeoServerBootstrapper
 import util.CollectionMatcher.contains
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.is
+import org.scalatest.mock.MockitoSugar.mock
+import org.mockito.Mockito._
 
 trait TestGraph {
     private val hugo = Map("id" -> "1", "name" -> "Hugo", "picture" -> "person3.img")
@@ -79,5 +81,19 @@ class FacewallRepoTest extends FunSuite with BeforeAndAfter with TemporaryDataba
     test("findPersonsForTeam should find Persons that are members of the Team") {
         val result = repo.findPersonsForTeam(MockTeam("3", "Checkout", "blue", List.empty[Person]))
         assertThat(result, contains(fahran, person3))
+    }
+
+    test("queryPersons should find persons matching query") {
+        val query = mock[Query]
+        when(query.toRegEx).thenReturn("Hugo")
+        val result = repo.queryPersons(query)
+        assertThat(result, contains(hugo))
+    }
+
+    test("queryTeams should find teams matching query") {
+        val query = mock[Query]
+        when(query.toRegEx).thenReturn(".*Product.*")
+        val result = repo.queryTeams(query)
+        assertThat(result, contains(productResources))
     }
 }

@@ -79,6 +79,27 @@ class FacewallRepo extends Repository {
         jsonValue.asOpt[Person]
     }.toList
 
-    def queryPersons(query: Query): List[Person] = ???
-    def queryTeams(query: Query): List[Team] = ???
+    def queryPersons(query: Query): List[Person] = Cypher(
+        """
+          |START n = node(*)
+          |WHERE n.name! =~ {regex}
+          |RETURN n;
+        """.stripMargin).on("regex" -> query.toRegEx)().flatMap { row =>
+        val nodeAsMap = row[NeoNode]("n").props
+        val jsonValue = Json.toJson(nodeAsMap)(Neo4jREST.mapFormat)
+        jsonValue.asOpt[Person]
+    }.toList
+
+    def queryTeams(query: Query): List[Team] = Cypher(
+        """
+          |START team = node(*)
+          |MATCH person-[:TEAMMEMBER_OF]->team
+          |WHERE team.name! =~ {regex}
+          |RETURN distinct team
+        """.stripMargin
+    ).on("regex" -> query.toRegEx)().flatMap { row =>
+        val nodeAsMap = row[NeoNode]("team").props
+        val jsonValue = Json.toJson(nodeAsMap)(Neo4jREST.mapFormat)
+        jsonValue.asOpt[Team]
+    }.toList
 }
