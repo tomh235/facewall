@@ -1,17 +1,36 @@
 @(results: model.SearchResultsModel)
 
-<!DOCTYPE html>
-
-<html>
-
-<body>
 <div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            @results.toString()
-        </div>
+    @if(!results.persons.isEmpty) {
+    <div>
+        <h1><small>People</small></h1>
     </div>
-</div>
-</body>
+    <div class="row">
+        @results.persons.map { result =>
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <h5>@result.teamName</h5>
+                <img src="@result.picture"/>
 
-</html>
+                <h3 class="text-center">@result.name</h3>
+            </div>
+        </div>
+        }
+    </div>
+    }
+
+    @if(!results.teams.isEmpty) {
+    <div>
+        <h1><small>Teams</small></h1>
+    </div>
+    <div class="row">
+        @results.teams.map { result =>
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <h3 class="text-center">@result.name</h3>
+            </div>
+        </div>
+        }
+    </div>
+    }
+</div>

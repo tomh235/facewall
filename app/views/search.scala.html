@@ -4,12 +4,22 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="input-group input-group-lg">
-                <input type="text" class="form-control" placeholder="search keywords">
-                <span class="input-group-btn">
-                    <button class="btn btn-default icon-search" type="button"></button>
-                </span>
+                    <input id="search" type="text" name="keywords" class="form-control" placeholder="search keywords">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default icon-search" type="button"></button>
+                    </span>
             </div>
         </div>
     </div>
+    <div id="result"></div>
+    <div></div>
 </div>
+
+<script src="assets/javascripts/search-box.js"></script>
+<script>
+    var searchInput = $("#search");
+    var result = $("#result");
+
+    autoSearchOnKeyUp(searchInput, "search-results", result);
+</script>
 }

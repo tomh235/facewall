@@ -1,7 +1,4 @@
-test("a basic test example", function() {
-    var value = "hello";
-    equal(value, "hello", "We expect value to be hello");
-});
+module("snake order tests");
 
 test("reverse second row of 2 full rows", function() {
     var rowSize = 3;

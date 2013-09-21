@@ -4,6 +4,7 @@ import org.scalatest.FunSuite
 import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar.mock
 import domain.Query
+import domain.QueryMatcher.aQuery
 import play.api.mvc.{AnyContent, AnyContentAsFormUrlEncoded, Request}
 import org.hamcrest.{Description, TypeSafeMatcher}
 import org.hamcrest.MatcherAssert.assertThat
@@ -18,12 +19,15 @@ class QueryMapperTest extends FunSuite {
         when(request.queryString).thenReturn(queryString)
 
         val result = queryMapper.map(request)
-        val expectedQuery = new TypeSafeMatcher[Query]() {
-            def matchesSafely(target: Query): Boolean = target.toRegEx == ".*hello.*"
+        assertThat(result, is(aQuery.withRegEx("(?i).*hello.*")))
+    }
 
-            def describeTo(description: Description) { description.appendText("regEx should be '.*hello.*'") }
-        }
+    test("should map empty keywords into empty regex") {
+        val request = mock[Request[AnyContent]]
+        val queryString = Map("keywords" -> Seq(""))
+        when(request.queryString).thenReturn(queryString)
 
-        assertThat(result, is(expectedQuery))
+        val result = queryMapper.map(request)
+        assertThat(result, is(aQuery.withRegEx("")))
     }
 }

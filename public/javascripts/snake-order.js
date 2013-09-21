@@ -1,4 +1,12 @@
 function snakeOrder(array, rowSize) {
+    var groupBy = function (array, groupSize) {
+        var result = [];
+        for (i = 0; i < array.length; i += groupSize) {
+          result.push(array.slice(i, i + groupSize));
+        }
+        return result;
+    }
+
     var sizeOfTwoRows = rowSize * 2;
     var twoRowGroups = groupBy(array, sizeOfTwoRows);
     var reverseSecondRow = function(group, index, array) {
@@ -14,10 +22,3 @@ function snakeOrder(array, rowSize) {
     return [].concat.apply([], orderedGroups)
 }
 
-function groupBy (array, groupSize) {
-    var result = [];
-    for (i = 0; i < array.length; i += groupSize) {
-        result.push(array.slice(i, i + groupSize));
-    }
-    return result;
-}
