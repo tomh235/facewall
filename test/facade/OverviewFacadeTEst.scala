@@ -12,14 +12,11 @@ import org.hamcrest.MatcherAssert.assertThat
 import facade.modelmapper.SearchResultsModelMapper
 import domain.MockTeam
 
-class FacewallFacadeTest extends FunSuite with BeforeAndAfter {
+class OverviewFacadeTest extends FunSuite with BeforeAndAfter {
     val mockRepo = mock[Repository]
-    val mockSearchResultsModelMapper = mock[SearchResultsModelMapper]
-    val facewallFacade = new FacewallFacade(mockRepo, mockSearchResultsModelMapper)
+    val facewallFacade = new OverviewFacade(mockRepo)
 
     test("should map from domain objects from repo into team overview model") {
-
-
         val ecom_member1 = new MockPerson("3", "ecom_member1", "pic1.img")
         val ecom_member2 = new MockPerson("4", "ecom_member2", "pic2.img")
         val pr_member = new MockPerson("5", "pr_member", "pic3.img")
@@ -66,24 +63,5 @@ class FacewallFacadeTest extends FunSuite with BeforeAndAfter {
 
         val result = facewallFacade.createOverviewModel
         assert (result == expected, s"expected $expected, got $result")
-    }
-
-    test("should find persons and teams matching a query extracted from a web request and map them into a search results model") {
-        val query = mock[Query]
-        val mockPerson = mock[Person]
-        val mockTeam = mock[Team]
-
-        when(mockRepo.queryPersons(query)).thenReturn(List(mockPerson, mockPerson))
-        when(mockRepo.queryTeams(query)).thenReturn(List(mockTeam))
-
-        val expectedResult = mock[SearchResultsModel]
-        when(mockSearchResultsModelMapper.map(List(mockPerson, mockPerson), List(mockTeam))).thenReturn(expectedResult)
-
-        val result = facewallFacade.createSearchResultsModel(query)
-        assert(result == expectedResult, "the result should be whatever the mapper returned")
-
-        verify(mockRepo).queryPersons(query)
-        verify(mockRepo).queryTeams(query)
-        verify(mockSearchResultsModelMapper).map(List(mockPerson, mockPerson), List(mockTeam))
     }
 }
