@@ -1,31 +1,19 @@
-var numTimesKeyUp = 0;
-
 var autoSearchOnKeyUp = function (input, target, result) {
+    var recentness = 0;
+
     input.keyup(function () {
-        var params = {}
-        params[input.attr("name")] = input.val()
+        recentness++;
+        var requestRecentness = recentness;
+        var params = {};
+        params[input.attr("name")] = input.val();
 
-        var doIfLatestKeyUp = function(curTimesKeyUp, task) {
-            return function(data) {
-                if (curTimesKeyUp == numTimesKeyUp) {
-                    task(data);
-                }
-            };
+        var updateResultWithMostRecent = function (data) {
+            if (recentness == requestRecentness) {
+                result.empty();
+                result.append(data);
+            }
         };
 
-        var updateResult = function (data) {
-            result.empty();
-            result.append(data);
-        };
-
-        var emptyResult = function (data) {
-            result.empty();
-        };
-
-        numTimesKeyUp += 1;
-
-        $.get(target, params)
-            .done(doIfLatestKeyUp(numTimesKeyUp, updateResult))
-            .fail(doIfLatestKeyUp(numTimesKeyUp, emptyResult));
+        $.get(target, params).done(updateResultWithMostRecent);
     });
 };
