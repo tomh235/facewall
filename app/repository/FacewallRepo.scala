@@ -15,13 +15,6 @@ class FacewallRepo extends Repository {
         def members = FacewallRepo.this.findPersonsForTeam(this)
     }
 
-    private val self = this
-    implicit private val repositoryReads: Reads[FacewallRepo] = new Reads[FacewallRepo] {
-        def reads(json: JsValue): JsResult[FacewallRepo] = {
-            JsSuccess[FacewallRepo](self)
-        }
-    }
-
     implicit private val personReads: Reads[Person] = (
         (__ \ 'id).read[String] and
             (__ \ 'name).read[String] and
@@ -49,7 +42,7 @@ class FacewallRepo extends Repository {
         case result => result.headOption
     }
 
-    def listPersons: List[Person] = Cypher("START n = node(*) RETURN n;")().flatMap { row =>
+    def listPersons: List[Person] = Cypher("START n = node(*) RETURN n")().flatMap { row =>
         val nodeAsMap = row[NeoNode]("n").props
         val jsonValue = Json.toJson(nodeAsMap)(Neo4jREST.mapFormat)
         jsonValue.asOpt[Person]
