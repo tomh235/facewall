@@ -11,12 +11,13 @@ object CollectionMatcher {
             }
 
         def describeTo(description: Description) {
-            description.appendText("should contain -")
-            elementMatchers.foreach {
-                matcher =>
-                    description.appendText("\n")
-                    matcher.describeTo(description)
+            description.appendText("should contain: -\n")
+            description.appendDescriptionOf(elementMatchers.headOption.getOrElse { return })
+            elementMatchers.tail.foreach { matcher =>
+                description.appendText("\n,\n")
+                description.appendDescriptionOf(matcher)
             }
+            description.appendText("\n.")
         }
     }
 }

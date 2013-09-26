@@ -8,8 +8,6 @@ object QueryMatcher {
 }
 
 class QueryMatcher extends CompositeMatcher[Query] {
-    val typeName = "a Query"
-
     def withRegEx(regex: String) = {
         add(new TypeSafeMatcher[Query]() {
             def matchesSafely(query: Query): Boolean = query.toRegEx == regex

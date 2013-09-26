@@ -15,3 +15,5 @@ dist
 /RUNNING_PID
 /.settings
 .shell_history
+project/target
+target/

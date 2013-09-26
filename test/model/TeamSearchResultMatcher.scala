@@ -8,8 +8,6 @@ object TeamSearchResultMatcher {
 }
 
 class TeamSearchResultMatcher extends CompositeMatcher[TeamSearchResult] {
-    val typeName = "a team search result"
-
     def named(name: String): TeamSearchResultMatcher = {
         add(new TypeSafeMatcher[TeamSearchResult] () {
             def matchesSafely(team: TeamSearchResult): Boolean = team.name == name

@@ -8,8 +8,6 @@ object PersonMatcher {
 }
 
 class PersonMatcher extends CompositeMatcher[Person] {
-    override val typeName = "a Person"
-
     def withId(id: String) = {
         add(new TypeSafeMatcher[Person]{
             def matchesSafely(target: Person): Boolean = target.id == id

@@ -4,8 +4,6 @@ import util.CompositeMatcher
 import org.hamcrest.{Matcher, Description, TypeSafeMatcher}
 
 class TeamMatcher extends CompositeMatcher[Team] {
-    override val typeName = "a Team"
-
     def withId(id: String) = {
         add(new TypeSafeMatcher[Team] {
             def matchesSafely(target: Team): Boolean = target.id == id
