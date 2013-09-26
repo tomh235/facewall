@@ -1,6 +1,6 @@
 package facade
 
-import model.{SearchResultsModel, OverviewEntry}
+import model.{DefaultSearchResultsModel, OverviewEntry}
 import domain.{Person, Query}
 import repository.Repository
 import facade.modelmapper.SearchResultsModelMapper
@@ -19,5 +19,4 @@ class OverviewFacade(val repository: Repository) {
             OverviewEntry(person.team.fold("")(_.name), person.name, person.picture, person.team.fold("")(_.colour))
         }
     }
-
 }

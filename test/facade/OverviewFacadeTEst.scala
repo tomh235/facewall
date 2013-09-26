@@ -2,7 +2,7 @@ package facade
 
 import org.scalatest.{BeforeAndAfter, FunSuite}
 import org.mockito.Mockito._
-import model.{SearchResultsModel, PersonSearchResultMatcher, OverviewEntry}
+import model.{DefaultSearchResultsModel, PersonSearchResultMatcher, OverviewEntry}
 import model.PersonSearchResultMatcher.aPersonSearchResult
 import domain._
 import org.scalatest.mock.MockitoSugar.mock

@@ -1,10 +1,10 @@
 package facade.modelmapper
 
 import domain.{Team, Person}
-import model.{PersonSearchResult, TeamSearchResult, SearchResultsModel}
+import model.{PersonSearchResult, TeamSearchResult, DefaultSearchResultsModel}
 
 class SearchResultsModelMapper {
-    def map(persons: List[Person], teams :List[Team]): SearchResultsModel = SearchResultsModel(
+    def map(persons: List[Person], teams :List[Team]): DefaultSearchResultsModel = DefaultSearchResultsModel(
         persons.map { person => PersonSearchResultMapper.map(person) },
         teams.map { team => TeamSearchResultMapper.map(team) }
     )
