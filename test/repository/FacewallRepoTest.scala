@@ -6,7 +6,7 @@ import domain.TeamMatcher.aTeam
 import domain.PersonMatcher.aPerson
 import org.anormcypher.Cypher
 import org.neo4j.server.WrappingNeoServerBootstrapper
-import util.CollectionMatcher.contains
+import util.ScalaCollectionMatcher.contains
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.is
 import org.scalatest.mock.MockitoSugar.mock

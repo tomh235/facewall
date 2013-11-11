@@ -2,14 +2,10 @@ package facade
 
 import org.scalatest.{BeforeAndAfter, FunSuite}
 import org.mockito.Mockito._
-import model.{DefaultSearchResultsModel, PersonSearchResultMatcher, OverviewEntry}
-import model.PersonSearchResultMatcher.aPersonSearchResult
+import model.OverviewEntry
 import domain._
 import org.scalatest.mock.MockitoSugar.mock
 import repository.Repository
-import util.CollectionMatcher.contains
-import org.hamcrest.MatcherAssert.assertThat
-import facade.modelmapper.SearchResultsModelMapper
 import domain.MockTeam
 
 class OverviewFacadeTest extends FunSuite with BeforeAndAfter {
