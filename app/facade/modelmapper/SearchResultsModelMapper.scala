@@ -11,7 +11,7 @@ class SearchResultsModelMapper {
     )
 
     object PersonSearchResultMapper {
-        def map(person: Person): PersonSearchResult = PersonSearchResult(
+        def map(person: Person): PersonSearchResult = new PersonSearchResult(
             person.name,
             person.team.fold("") { team => team.name },
             person.picture
@@ -19,6 +19,6 @@ class SearchResultsModelMapper {
     }
 
     object TeamSearchResultMapper {
-        def map(team: Team): TeamSearchResult = TeamSearchResult(team.name)
+        def map(team: Team): TeamSearchResult = new TeamSearchResult(team.name)
     }
 }

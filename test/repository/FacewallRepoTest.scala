@@ -12,6 +12,8 @@ import org.hamcrest.Matchers.is
 import org.scalatest.mock.MockitoSugar.mock
 import org.mockito.Mockito._
 
+import scala.collection.JavaConverters._
+
 trait TestGraph {
     private val hugo = Map("id" -> "1", "name" -> "Hugo", "picture" -> "person3.img")
     private val fahran = Map("id" -> "2", "name" -> "Fahran", "picture" -> "person3.img")
@@ -79,7 +81,7 @@ class FacewallRepoTest extends FunSuite with BeforeAndAfter with TemporaryDataba
     }
 
     test("findPersonsForTeam should find Persons that are members of the Team") {
-        val result = repo.findPersonsForTeam(MockTeam("3", "Checkout", "blue", List.empty[Person]))
+        val result = repo.findPersonsForTeam(new MockTeam("3", "Checkout", "blue", List.empty[Person].asJava))
         assertThat(result, contains(fahran, person3))
     }
 

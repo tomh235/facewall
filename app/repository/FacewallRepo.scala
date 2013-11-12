@@ -5,6 +5,8 @@ import org.anormcypher.{NeoNode, Cypher, Neo4jREST}
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
+import scala.collection.JavaConverters._
+
 class FacewallRepo extends Repository {
 
     private case class DefaultPersonImplementation(id: String, name: String, picture: String) extends Person {
@@ -12,7 +14,7 @@ class FacewallRepo extends Repository {
     }
 
     private case class DefaultTeamImplementation(id: String, name: String, colour: String) extends Team {
-        def members = FacewallRepo.this.findPersonsForTeam(this)
+      def members = FacewallRepo.this.findPersonsForTeam(this).asJava
     }
 
     implicit private val personReads: Reads[Person] = (

@@ -3,11 +3,13 @@ package facade.modelmapper
 import org.scalatest.FunSuite
 import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar.mock
-import domain.{Team, MockTeam, MockPerson}
+import domain.{Person, Team, MockTeam, MockPerson}
 import util.CollectionMatcher.contains
 import org.hamcrest.MatcherAssert.assertThat
 import model.PersonSearchResultMatcher.aPersonSearchResult
 import model.TeamSearchResultMatcher.aTeamSearchResult
+
+import scala.collection.JavaConverters._
 
 class SearchResultsModelMapperTest extends FunSuite {
     val searchResultsModelMapper = new SearchResultsModelMapper()
@@ -28,8 +30,8 @@ class SearchResultsModelMapperTest extends FunSuite {
     }
 
     test("should map teams into team search results") {
-        val ecom = new MockTeam("1", "Ecom", "blue", Nil)
-        val anotherTeam = new MockTeam("2", "another team", "red", Nil)
+        val ecom = new MockTeam("1", "Ecom", "blue", List.empty[Person].asJava)
+        val anotherTeam = new MockTeam("2", "another team", "red", List.empty[Person].asJava)
 
         val result = searchResultsModelMapper.map(Nil, List(ecom, anotherTeam))
         assertThat(result.teams, contains(
