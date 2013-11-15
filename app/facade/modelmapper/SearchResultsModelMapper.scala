@@ -13,7 +13,7 @@ class SearchResultsModelMapper {
     object PersonSearchResultMapper {
         def map(person: Person): PersonSearchResult = new PersonSearchResult(
             person.name,
-            person.team.fold("") { team => team.name },
+            person.team.name(),
             person.picture
         )
     }

@@ -3,7 +3,7 @@ package facade.modelmapper
 import org.scalatest.FunSuite
 import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar.mock
-import domain.{Person, Team, MockTeam, MockPerson}
+import domain.{MockPerson, Person, Team, MockTeam}
 import util.CollectionMatcher.contains
 import org.hamcrest.MatcherAssert.assertThat
 import model.PersonSearchResultMatcher.aPersonSearchResult
@@ -18,8 +18,8 @@ class SearchResultsModelMapperTest extends FunSuite {
         val team = mock[Team]
         when(team.name).thenReturn("a team")
 
-        val fred1 = new MockPerson("1", "fred smith", "pic1.img", Some(team))
-        val fred2 = new MockPerson("2", "fred bailey", "pic3.img", Some(team))
+        val fred1 = new MockPerson("1", "fred smith", "pic1.img", team)
+        val fred2 = new MockPerson("2", "fred bailey", "pic3.img", team)
 
         val result = searchResultsModelMapper.map(List(fred1, fred2), Nil)
         assert(result.teams.isEmpty, "should map empty list of teams as empty list")
@@ -41,7 +41,10 @@ class SearchResultsModelMapperTest extends FunSuite {
     }
 
     test("should map person's team name as empty string if person is not in a team") {
-        val teamless = new MockPerson("1", "teamless", "teamless.img", None)
+        val team = mock[Team]
+        when(team.name).thenReturn("")
+
+        val teamless = new MockPerson("1", "teamless", "teamless.img", team)
 
         val result = searchResultsModelMapper.map(List(teamless), Nil)
         assertThat(result.persons, contains(

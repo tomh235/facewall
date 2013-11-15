@@ -10,7 +10,7 @@ class PersonDetailsModelMapperTest extends FunSuite {
     val personDetailsModelMapper = new PersonDetailsModelMapper()
 
     test("should map person") {
-        val person = new MockPerson("id", "Hello World", "picture")
+        val person = new MockPerson("id", "Hello World", "picture", null)
         val result = personDetailsModelMapper.map(person)
 
         assertThat(result, is(aPersonDetailsModel.named("Hello World")))

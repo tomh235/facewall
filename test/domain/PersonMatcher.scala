@@ -43,7 +43,7 @@ class PersonMatcher extends CompositeMatcher[Person] {
 
     def inTeam(team: Matcher[Team]) = {
         add(new TypeSafeMatcher[Person]{
-            def matchesSafely(target: Person): Boolean = team.matches(target.team.getOrElse { return false } )
+            def matchesSafely(target: Person): Boolean = team.matches(target.team())
 
             def describeTo(description: Description) {
                 description.appendText(s"whose team matches ")

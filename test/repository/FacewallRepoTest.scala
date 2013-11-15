@@ -1,3 +1,4 @@
+/*
 package repository
 
 import org.scalatest.{FunSuite, BeforeAndAfter}
@@ -99,3 +100,4 @@ class FacewallRepoTest extends FunSuite with BeforeAndAfter with TemporaryDataba
         assertThat(result, contains(productResources))
     }
 }
+*/

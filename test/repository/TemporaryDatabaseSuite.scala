@@ -1,3 +1,4 @@
+/*
 package repository
 
 import org.neo4j.test.ImpermanentGraphDatabase
@@ -42,3 +43,4 @@ trait TemporaryDatabaseSuite extends FunSuite {
         }.getOrElse( throw new IOException("No free port found for Test Database"))
     }
 }
+*/

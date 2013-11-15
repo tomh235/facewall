@@ -6,6 +6,7 @@ import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
 import scala.collection.JavaConverters._
+import java.util
 
 class FacewallRepo extends Repository {
 
@@ -14,7 +15,16 @@ class FacewallRepo extends Repository {
     }
 
     private case class DefaultTeamImplementation(id: String, name: String, colour: String) extends Team {
-      def members = FacewallRepo.this.findPersonsForTeam(this).asJava
+        def members = FacewallRepo.this.findPersonsForTeam(this).asJava
+    }
+
+    private val noTeam: Team = new Team {
+        def members(): util.List[Person] = Nil.asJava.asInstanceOf[java.util.List[Person]]
+        def name(): String = ""
+        def id(): String = {
+          throw new UnsupportedOperationException("cannot get the id of no team")
+        }
+        def colour(): String = "grey"
     }
 
     implicit private val personReads: Reads[Person] = (
@@ -29,7 +39,7 @@ class FacewallRepo extends Repository {
             (__ \ 'colour).read[String]
         )(DefaultTeamImplementation)
 
-    def findTeamForPerson(person: Person): Option[Team] = Cypher(
+    def findTeamForPerson(person: Person): Team = Cypher(
         """
           |START person = node(*)
           |MATCH person-[:TEAMMEMBER_OF]->team
@@ -40,15 +50,16 @@ class FacewallRepo extends Repository {
         val jsonValue = Json.toJson(nodeAsMap)(Neo4jREST.mapFormat)
         jsonValue.asOpt[Team]
     } match {
-        case result if result.size > 1 => throw new IllegalStateException(s"Found more than one team for person, ${person.id}")
-        case result => result.headOption
+        case result if result.size > 1 => throw new IllegalStateException("Found more than one team for person, ${person.id}")
+        case result if result.isEmpty => noTeam
+        case result => result.headOption.get
     }
 
-    def listPersons: List[Person] = Cypher("START n = node(*) RETURN n")().flatMap { row =>
+    def listPersons: java.util.List[Person] = Cypher("START n = node(*) RETURN n")().flatMap { row =>
         val nodeAsMap = row[NeoNode]("n").props
         val jsonValue = Json.toJson(nodeAsMap)(Neo4jREST.mapFormat)
         jsonValue.asOpt[Person]
-    }.toList
+    }.toList.asJava
 
     def listTeams: List[Team] = Cypher(
         """

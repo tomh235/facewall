@@ -2,22 +2,25 @@ package domain;
 
 import java.util.List;
 
-public class MockTeam implements Team{
+public class MockTeam implements Team {
     public final String id;
     public final String name;
     public final String colour;
-    public final List<Person> members;
+    public List<Person> members;
 
-    public String id(){
+    public String id() {
         return id;
     }
-    public String name(){
+
+    public String name() {
         return name;
     }
-    public String colour(){
+
+    public String colour() {
         return colour;
     }
-    public List<Person> members(){
+
+    public List<Person> members() {
         return members;
     }
 
