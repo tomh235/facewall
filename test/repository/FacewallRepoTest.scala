@@ -1,4 +1,3 @@
-/*
 package repository
 
 import org.scalatest.{FunSuite, BeforeAndAfter}
@@ -68,11 +67,11 @@ class FacewallRepoTest extends FunSuite with BeforeAndAfter with TemporaryDataba
 
     test("listPersons should get all persons") {
         val result = repo.listPersons
-        assertThat(result, contains(hugo, fahran, person3))
+        assertThat(result.asScala, contains(hugo, fahran, person3))
     }
 
     test("findTeamForPerson should find Team that Person is member of") {
-        val result = repo.findTeamForPerson(new MockPerson("1", "hugo", "hugo.img")).get
+        val result = repo.findTeamForPerson(new MockPerson("1", "hugo", "hugo.img", null))
         assertThat(result, is(productResources))
     }
 
@@ -90,14 +89,13 @@ class FacewallRepoTest extends FunSuite with BeforeAndAfter with TemporaryDataba
         val query = mock[Query]
         when(query.toRegEx).thenReturn("Hugo")
         val result = repo.queryPersons(query)
-        assertThat(result, contains(hugo))
+        assertThat(result.asScala, contains(hugo))
     }
 
     test("queryTeams should find teams matching query") {
         val query = mock[Query]
         when(query.toRegEx).thenReturn(".*Product.*")
         val result = repo.queryTeams(query)
-        assertThat(result, contains(productResources))
+        assertThat(result.asScala, contains(productResources))
     }
 }
-*/

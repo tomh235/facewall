@@ -1,6 +1,7 @@
 package facade.modelmapper;
 
 import domain.Person;
+import model.OverviewEntryModel;
 
 public class OverviewModelMapper {
     public OverviewEntryModel map(Person person){

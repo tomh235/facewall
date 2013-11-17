@@ -2,6 +2,7 @@ package facade;
 
 import domain.Person;
 import facade.modelmapper.OverviewModelMapper;
+import model.OverviewEntryModel;
 import repository.Repository;
 
 import java.util.*;
@@ -46,6 +47,7 @@ public class OverviewFacade {
         List<Person> personList = SortAllPersons();
         OverviewModelMapper overviewModelMapper = new OverviewModelMapper();
         List<OverviewEntryModel> overviewEntryModelList = new ArrayList <>();
+
         for(Person person : personList){
            overviewEntryModelList.add(overviewModelMapper.map(person));
         }

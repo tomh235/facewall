@@ -7,6 +7,6 @@ trait Repository {
     def listPersons: java.util.List[Person]
     def listTeams: List[Team]
     def findPersonsForTeam(team: Team): List[Person]
-    def queryPersons(query: Query): List[Person]
-    def queryTeams(query: Query): List[Team]
+    def queryPersons(query: Query): java.util.List[Person]
+    def queryTeams(query: Query): java.util.List[Team]
 }

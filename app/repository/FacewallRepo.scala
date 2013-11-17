@@ -85,7 +85,7 @@ class FacewallRepo extends Repository {
         jsonValue.asOpt[Person]
     }.toList
 
-    def queryPersons(query: Query): List[Person] = Cypher(
+    def queryPersons(query: Query): java.util.List[Person] = Cypher(
         """
           |START n = node(*)
           |WHERE n.name! =~ {regex}
@@ -94,9 +94,9 @@ class FacewallRepo extends Repository {
         val nodeAsMap = row[NeoNode]("n").props
         val jsonValue = Json.toJson(nodeAsMap)(Neo4jREST.mapFormat)
         jsonValue.asOpt[Person]
-    }.toList
+    }.toList.asJava
 
-    def queryTeams(query: Query): List[Team] = Cypher(
+    def queryTeams(query: Query): java.util.List[Team] = Cypher(
         """
           |START team = node(*)
           |MATCH person-[:TEAMMEMBER_OF]->team
@@ -107,5 +107,5 @@ class FacewallRepo extends Repository {
         val nodeAsMap = row[NeoNode]("team").props
         val jsonValue = Json.toJson(nodeAsMap)(Neo4jREST.mapFormat)
         jsonValue.asOpt[Team]
-    }.toList
+    }.toList.asJava
 }

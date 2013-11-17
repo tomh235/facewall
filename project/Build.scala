@@ -12,6 +12,7 @@ object ApplicationBuild extends Build {
         anorm,
         "org.scala-lang" % "scala-compiler" % "2.10.0",
         "org.anormcypher" %% "anormcypher" % "0.4.1",
+        "com.google.guava" % "guava" % "12.0",
         "org.neo4j.app" % "neo4j-server" % "1.9",
         "com.sun.jersey.contribs" % "jersey-simple-server" % "1.9.1",
         "com.sun.jersey" % "jersey-core" % "1.9",
