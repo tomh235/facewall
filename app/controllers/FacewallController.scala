@@ -8,6 +8,9 @@ import play.api.templates.Html
 import controllers.requestmapper.QueryMapper
 import facade.modelmapper.{PersonDetailsModelMapper, SearchResultsModelMapper}
 import model.{PersonDetailsModel, DefaultSearchResultsModel}
+import play.api.data._
+import play.api.data.Forms._
+import views.html.helper.form
 
 object FacewallController extends Controller {
     val repo = new FacewallRepo()
@@ -34,15 +37,18 @@ object FacewallController extends Controller {
         Ok(view)
     }
 
-    def newUser = Action {
-        val view: Html = views.html.newuser()
-        Ok(view)
-    }
-
-    def newUserSubmit = Action {
-        val view: Html = views.html.overview(overviewFacade.createOverviewModel)
-        Ok(view)
-    }
+//    def newUser = Action {
+//        val view: Html = views.html.newuser()
+//        Ok(view)
+//    }
+//
+//    def newUserSubmit = Action {
+//      val userForm = form(classOf[model.User])
+//      val user = userForm.bindFromRequest().get()
+//      model.User user = userForm.bindFromRequest().get();
+//        val view: Html = views.html.overview(overviewFacade.createOverviewModel)
+//        Ok(view)
+//    }
 
 
 
