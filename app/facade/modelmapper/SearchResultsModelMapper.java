@@ -15,11 +15,11 @@ public class SearchResultsModelMapper {
         List<PersonSearchResult> personSearchResultsList = new ArrayList<>();
         List<TeamSearchResult> teamSearchResultsList = new ArrayList<>();
 
-        for(Person person: personsList) {
+        for (Person person : personsList) {
             personSearchResultsList.add(PersonSearchResultMapper.map(person));
         }
 
-        for(Team team: teamsList) {
+        for (Team team : teamsList) {
             teamSearchResultsList.add(TeamSearchResultMapper.map(team));
         }
 
@@ -28,7 +28,7 @@ public class SearchResultsModelMapper {
 
     private static class PersonSearchResultMapper {
         public static PersonSearchResult map(Person person) {
-            return new PersonSearchResult(person.name(),person.team().name(), person.picture());
+            return new PersonSearchResult(person.name(), person.team().name(), person.picture());
         }
     }
 

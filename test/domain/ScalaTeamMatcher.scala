@@ -3,7 +3,7 @@ package domain
 import util.CompositeMatcher
 import org.hamcrest.{Matcher, Description, TypeSafeMatcher}
 
-class TeamMatcher extends CompositeMatcher[Team] {
+class ScalaTeamMatcher extends CompositeMatcher[Team] {
     def withId(id: String) = {
         add(new TypeSafeMatcher[Team] {
             def matchesSafely(target: Team): Boolean = target.id == id
@@ -50,6 +50,6 @@ class TeamMatcher extends CompositeMatcher[Team] {
     }
 }
 
-object TeamMatcher {
+object ScalaTeamMatcher {
     def aTeam: TeamMatcher = new TeamMatcher()
 }

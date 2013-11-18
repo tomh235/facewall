@@ -1,12 +1,12 @@
 package data
 
 import org.scalatest.{FunSuite, BeforeAndAfter}
-import domain.{Query, MockTeam, MockPerson, Person}
-import domain.TeamMatcher.aTeam
+import domain._
 import domain.PersonMatcher.aPerson
+import domain.TeamMatcher.aTeam
 import org.anormcypher.Cypher
 import org.neo4j.server.WrappingNeoServerBootstrapper
-import util.ScalaCollectionMatcher.contains
+import util.CollectionMatcher.contains
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.is
 import org.scalatest.mock.MockitoSugar.mock
@@ -45,9 +45,9 @@ class FacewallScalaRepoTest extends FunSuite with BeforeAndAfter with TemporaryD
     var repo: FacewallScalaRepo = new FacewallScalaRepo()
     var bootstrapper: WrappingNeoServerBootstrapper = _
 
-    val hugo = aPerson.withId("1").named("Hugo").withPicture("person3.img").inTeam(aTeam.named("ProductResources"))
-    val fahran = aPerson.withId("2").named("Fahran").withPicture("person3.img").inTeam(aTeam.named("Checkout"))
-    val person3 = aPerson.withId("5").named("Person 3").withPicture("Person 3.img").inTeam(aTeam.named("Checkout"))
+    val hugo = aPerson.withId("1").named("Hugo").withPicture("person3.img").inTeam(aTeam().named("ProductResources"))
+    val fahran = aPerson.withId("2").named("Fahran").withPicture("person3.img").inTeam(aTeam().named("Checkout"))
+    val person3 = aPerson.withId("5").named("Person 3").withPicture("Person 3.img").inTeam(aTeam().named("Checkout"))
 
     val checkout = aTeam.withId("3").named("Checkout").withColour("88aa44").whereMembers(contains(
         aPerson.named("Fahran"), aPerson.named("Person 3")
@@ -67,21 +67,23 @@ class FacewallScalaRepoTest extends FunSuite with BeforeAndAfter with TemporaryD
 
     test("listPersons should get all persons") {
         val result = repo.listPersons
-        assertThat(result.asScala, contains(hugo, fahran, person3))
+        assertThat(result, contains(hugo, fahran, person3))
     }
 
+    // BROKEN
     test("findTeamForPerson should find Team that Person is member of") {
         val result = repo.findTeamForPerson(new MockPerson("1", "hugo", "hugo.img", null))
         assertThat(result, is(productResources))
     }
 
+    // BROKEN
     test("listTeams should get Checkout and ProductResources") {
         val result = repo.listTeams
         assertThat(result, contains(checkout, productResources))
     }
 
     test("findPersonsForTeam should find Persons that are members of the Team") {
-        val result = repo.findPersonsForTeam(new MockTeam("3", "Checkout", "blue", List.empty[Person].asJava))
+        val result = repo.findPersonsForTeam(new MockTeam("3", "Checkout", "blue", List.empty[Person].asJava)).asJava
         assertThat(result, contains(fahran, person3))
     }
 
@@ -89,13 +91,14 @@ class FacewallScalaRepoTest extends FunSuite with BeforeAndAfter with TemporaryD
         val query = mock[Query]
         when(query.toRegEx).thenReturn("Hugo")
         val result = repo.queryPersons(query)
-        assertThat(result.asScala, contains(hugo))
+        assertThat(result, contains(hugo))
     }
 
+    // BROKEN
     test("queryTeams should find teams matching query") {
         val query = mock[Query]
         when(query.toRegEx).thenReturn(".*Product.*")
         val result = repo.queryTeams(query)
-        assertThat(result.asScala, contains(productResources))
+        assertThat(result, contains(productResources))
     }
 }

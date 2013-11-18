@@ -16,12 +16,16 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class OverviewFacadeTest {
+<<<<<<< Updated upstream
 
     ScalaRepository mockRepo = mock(ScalaRepository.class);
+=======
+    Repository mockRepo = mock(Repository.class);
+>>>>>>> Stashed changes
     OverviewFacade facewallFacade = new OverviewFacade(mockRepo);
 
     @Test
-    public void mapRepoToDomainObjectsToOverviewModelTest(){
+    public void mapRepoToDomainObjectsToOverviewModelTest() {
         MockPerson ecom_member1 = new MockPerson("3", "ecom_member1", "pic1.img", null);
         MockPerson ecom_member2 = new MockPerson("4", "ecom_member2", "pic2.img", null);
         MockPerson pr_member    = new MockPerson("5", "pr_member", "pic3.img", null);

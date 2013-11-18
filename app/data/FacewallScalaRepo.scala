@@ -22,7 +22,7 @@ class FacewallScalaRepo extends ScalaRepository {
         def members(): util.List[Person] = Nil.asJava.asInstanceOf[java.util.List[Person]]
         def name(): String = ""
         def id(): String = {
-          throw new UnsupportedOperationException("cannot get the id of no team")
+            throw new UnsupportedOperationException("cannot get the id of no team")
         }
         def colour(): String = "grey"
     }
@@ -39,7 +39,7 @@ class FacewallScalaRepo extends ScalaRepository {
             (__ \ 'colour).read[String]
         )(DefaultTeamImplementation)
 
-    def findTeamForPerson(person: Person): Team = Cypher(
+  def findTeamForPerson(person: Person): Team = Cypher(
         """
           |START person = node(*)
           |MATCH person-[:TEAMMEMBER_OF]->team

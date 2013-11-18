@@ -14,17 +14,18 @@ public class OverviewFacade {
     public OverviewFacade(ScalaRepository repository) {
         this.repository = repository;
     }
+
     private class TeamNameThenNameComparator implements Comparator<Person> {
         @Override
-        public int compare(Person person1, Person person2){
+        public int compare(Person person1, Person person2) {
             String person1TeamName = person1.team().name();
             String person2TeamName = person2.team().name();
 
-            if(person1TeamName.equals("")){
+            if (person1TeamName.equals("")) {
                 return -1;
             }
             int namesCompared = person1TeamName.compareTo(person2TeamName);
-            if(namesCompared == 0) {
+            if (namesCompared == 0) {
                 return namesCompared;
             }
             else {
@@ -33,22 +34,21 @@ public class OverviewFacade {
                 return person1Name.compareTo(person2Name);
             }
         }
-
     }
 
-    private List<Person> SortAllPersons() {
+    private List<Person> sortAllPersons() {
         List<Person> personList = repository.listPersons();
         List<Person> sortableList = new ArrayList<>(personList);
         Collections.sort(sortableList, new TeamNameThenNameComparator());
         return sortableList;
     }
 
-    public List<OverviewEntryModel> createOverviewModel(){
-        List<Person> personList = SortAllPersons();
+    public List<OverviewEntryModel> createOverviewModel() {
+        List<Person> personList = sortAllPersons();
         OverviewModelMapper overviewModelMapper = new OverviewModelMapper();
-        List<OverviewEntryModel> overviewEntryModelList = new ArrayList <>();
+        List<OverviewEntryModel> overviewEntryModelList = new ArrayList <> ();
 
-        for(Person person : personList){
+        for(Person person : personList) {
            overviewEntryModelList.add(overviewModelMapper.map(person));
         }
         return overviewEntryModelList;

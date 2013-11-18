@@ -44,13 +44,14 @@ public class SearchFacadeTest {
         verify(mockRepo).queryTeams(query);
         verify(mockSearchResultsModelMapper).map(new ArrayList<>(Arrays.asList(mockPerson, mockPerson)), new ArrayList<>(Arrays.asList(mockTeam)));
     }
+
      // should return person details model if query returns only one person and no teams
     @Test
     public void OnePersonNoTeamsResultToPersonDetailsModelTest() {
         Query query = mock(Query.class);
         Person mockPerson = mock(Person.class);
 
-        when(mockRepo.queryPersons(query)).thenReturn(new ArrayList<Person>(Arrays.asList(mockPerson)));
+        when(mockRepo.queryPersons(query)).thenReturn(new ArrayList<>(Arrays.asList(mockPerson)));
         when(mockRepo.queryTeams(query)).thenReturn(new ArrayList<Team>());
 
         PersonDetailsModel expectedResult = mock(PersonDetailsModel.class);

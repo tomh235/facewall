@@ -9,7 +9,7 @@ object PersonMatcher {
 
 class PersonMatcher extends CompositeMatcher[Person] {
     def withId(id: String) = {
-        add(new TypeSafeMatcher[Person]{
+        add(new TypeSafeMatcher[Person] {
             def matchesSafely(target: Person): Boolean = target.id == id
 
             def describeTo(description: Description) {
@@ -20,7 +20,7 @@ class PersonMatcher extends CompositeMatcher[Person] {
     }
 
     def named(name: String) = {
-        add(new TypeSafeMatcher[Person]{
+        add(new TypeSafeMatcher[Person] {
             def matchesSafely(target: Person): Boolean = target.name == name
 
             def describeTo(description: Description) {
@@ -31,7 +31,7 @@ class PersonMatcher extends CompositeMatcher[Person] {
     }
 
     def withPicture(picture: String) = {
-        add(new TypeSafeMatcher[Person]{
+        add(new TypeSafeMatcher[Person] {
             def matchesSafely(target: Person): Boolean = target.picture == picture
 
             def describeTo(description: Description) {
@@ -42,7 +42,7 @@ class PersonMatcher extends CompositeMatcher[Person] {
     }
 
     def inTeam(team: Matcher[Team]) = {
-        add(new TypeSafeMatcher[Person]{
+        add(new TypeSafeMatcher[Person] {
             def matchesSafely(target: Person): Boolean = team.matches(target.team())
 
             def describeTo(description: Description) {
