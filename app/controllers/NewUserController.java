@@ -1,18 +1,14 @@
 package controllers;
 
-import model.User;
-import facade.OverviewFacade;
-import play.api.templates.Html;
-import play.data.DynamicForm;
-import play.data.Form;
-import play.mvc.Action;
-import play.mvc.Controller;
-import play.mvc.Http;
-import play.mvc.Result;
 import data.FacewallScalaRepo;
-import views.html.*;
+import facade.OverviewFacade;
+import model.User;
+import play.data.Form;
+import play.mvc.Controller;
+import play.mvc.Result;
+import views.html.newuser;
+import views.html.overview;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
