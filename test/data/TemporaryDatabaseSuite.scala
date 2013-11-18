@@ -1,4 +1,4 @@
-  package repository
+  package data
 
   import org.neo4j.test.ImpermanentGraphDatabase
   import org.neo4j.kernel.GraphDatabaseAPI

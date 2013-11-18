@@ -6,15 +6,15 @@ import domain.Team;
 import facade.modelmapper.PersonDetailsModelMapper;
 import facade.modelmapper.SearchResultsModelMapper;
 import model.SearchResultsModel;
-import repository.Repository;
+import data.ScalaRepository;
 import java.util.List;
 
 public class SearchFacade {
-    Repository repository;
+    ScalaRepository repository;
     SearchResultsModelMapper searchResultsModelMapper;
     PersonDetailsModelMapper personDetailsModelMapper;
 
-    public SearchFacade(Repository repository, SearchResultsModelMapper searchResultsModelMapper, PersonDetailsModelMapper personDetailsModelMapper) {
+    public SearchFacade(ScalaRepository repository, SearchResultsModelMapper searchResultsModelMapper, PersonDetailsModelMapper personDetailsModelMapper) {
         this.repository = repository;
         this.searchResultsModelMapper = searchResultsModelMapper;
         this.personDetailsModelMapper = personDetailsModelMapper;

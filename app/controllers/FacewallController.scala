@@ -1,7 +1,7 @@
 package controllers
 
 import play.api.mvc._
-import repository.FacewallRepo
+import data.FacewallScalaRepo
 import facade.OverviewFacade
 import facade.SearchFacade
 import play.api.templates.Html
@@ -13,7 +13,7 @@ import play.api.data.Forms._
 import views.html.helper.form
 
 object FacewallController extends Controller {
-    val repo = new FacewallRepo()
+    val repo = new FacewallScalaRepo()
     val overviewFacade = new OverviewFacade(repo)
     val searchFacade = new SearchFacade(repo, new SearchResultsModelMapper(), new PersonDetailsModelMapper())
     val queryMapper = new QueryMapper()

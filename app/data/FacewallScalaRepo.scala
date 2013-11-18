@@ -1,4 +1,4 @@
-package repository
+package data
 
 import domain.{Query, Team, Person}
 import org.anormcypher.{NeoNode, Cypher, Neo4jREST}
@@ -8,14 +8,14 @@ import play.api.libs.functional.syntax._
 import scala.collection.JavaConverters._
 import java.util
 
-class FacewallRepo extends Repository {
+class FacewallScalaRepo extends ScalaRepository {
 
     private case class DefaultPersonImplementation(id: String, name: String, picture: String) extends Person {
-        def team = FacewallRepo.this.findTeamForPerson(this)
+        def team = FacewallScalaRepo.this.findTeamForPerson(this)
     }
 
     private case class DefaultTeamImplementation(id: String, name: String, colour: String) extends Team {
-        def members = FacewallRepo.this.findPersonsForTeam(this).asJava
+        def members = FacewallScalaRepo.this.findPersonsForTeam(this).asJava
     }
 
     private val noTeam: Team = new Team {

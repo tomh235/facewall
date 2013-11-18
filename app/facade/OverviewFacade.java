@@ -3,15 +3,15 @@ package facade;
 import domain.Person;
 import facade.modelmapper.OverviewModelMapper;
 import model.OverviewEntryModel;
-import repository.Repository;
+import data.ScalaRepository;
 
 import java.util.*;
 
 public class OverviewFacade {
 
-    private final Repository repository;
+    private final ScalaRepository repository;
 
-    public OverviewFacade(Repository repository) {
+    public OverviewFacade(ScalaRepository repository) {
         this.repository = repository;
     }
     private class TeamNameThenNameComparator implements Comparator<Person> {

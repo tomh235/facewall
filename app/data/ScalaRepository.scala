@@ -1,8 +1,8 @@
-package repository
+package data
 
 import domain.{Team, Person, Query}
 
-trait Repository {
+trait ScalaRepository {
     def findTeamForPerson(person: Person): Team
     def listPersons: java.util.List[Person]
     def listTeams: List[Team]

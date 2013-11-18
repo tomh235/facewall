@@ -6,7 +6,7 @@ import domain.Person;
 import domain.Team;
 import model.OverviewEntryModel;
 import org.junit.Test;
-import repository.Repository;
+import data.ScalaRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,7 +17,7 @@ import static org.mockito.Mockito.*;
 
 public class OverviewFacadeTest {
 
-    Repository mockRepo = mock(Repository.class);
+    ScalaRepository mockRepo = mock(ScalaRepository.class);
     OverviewFacade facewallFacade = new OverviewFacade(mockRepo);
 
     @Test

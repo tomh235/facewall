@@ -1,4 +1,4 @@
-package repository
+package data
 
 import org.scalatest.{FunSuite, BeforeAndAfter}
 import domain.{Query, MockTeam, MockPerson, Person}
@@ -41,8 +41,8 @@ trait TestGraph {
     }
 }
 
-class FacewallRepoTest extends FunSuite with BeforeAndAfter with TemporaryDatabaseSuite with TestGraph {
-    var repo: FacewallRepo = new FacewallRepo()
+class FacewallScalaRepoTest extends FunSuite with BeforeAndAfter with TemporaryDatabaseSuite with TestGraph {
+    var repo: FacewallScalaRepo = new FacewallScalaRepo()
     var bootstrapper: WrappingNeoServerBootstrapper = _
 
     val hugo = aPerson.withId("1").named("Hugo").withPicture("person3.img").inTeam(aTeam.named("ProductResources"))

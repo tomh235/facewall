@@ -9,7 +9,7 @@ import model.DefaultSearchResultsModel;
 import model.PersonDetailsModel;
 import model.SearchResultsModel;
 import org.junit.Test;
-import repository.Repository;
+import data.ScalaRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class SearchFacadeTest {
-    Repository mockRepo = mock(Repository.class);
+    ScalaRepository mockRepo = mock(ScalaRepository.class);
     SearchResultsModelMapper mockSearchResultsModelMapper = mock(SearchResultsModelMapper.class);
     PersonDetailsModelMapper mockPersonDetailsModelMapper = mock(PersonDetailsModelMapper.class);
     SearchFacade searchFacade = new SearchFacade(mockRepo, mockSearchResultsModelMapper, mockPersonDetailsModelMapper);
