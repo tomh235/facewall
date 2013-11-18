@@ -10,15 +10,9 @@ import data.ScalaRepository;
 import java.util.List;
 
 public class SearchFacade {
-<<<<<<< Updated upstream
-    ScalaRepository repository;
-    SearchResultsModelMapper searchResultsModelMapper;
-    PersonDetailsModelMapper personDetailsModelMapper;
-=======
-    private final Repository repository;
+    private final ScalaRepository repository;
     private final SearchResultsModelMapper searchResultsModelMapper;
     private final PersonDetailsModelMapper personDetailsModelMapper;
->>>>>>> Stashed changes
 
     public SearchFacade(ScalaRepository repository, SearchResultsModelMapper searchResultsModelMapper, PersonDetailsModelMapper personDetailsModelMapper) {
         this.repository = repository;

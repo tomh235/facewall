@@ -16,12 +16,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class OverviewFacadeTest {
-<<<<<<< Updated upstream
-
     ScalaRepository mockRepo = mock(ScalaRepository.class);
-=======
-    Repository mockRepo = mock(Repository.class);
->>>>>>> Stashed changes
     OverviewFacade facewallFacade = new OverviewFacade(mockRepo);
 
     @Test
