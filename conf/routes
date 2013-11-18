@@ -15,4 +15,5 @@ GET     /search-results                     controllers.FacewallController.searc
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 # Form
-GET     /form                       controllers.FacewallController.form
+GET     /newuser                       controllers.FacewallController.newUser
+POST    /newuser                       controllers.FacewallController.newUserSubmit

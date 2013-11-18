@@ -34,8 +34,16 @@ object FacewallController extends Controller {
         Ok(view)
     }
 
-    def form = Action {
-        val view: Html = views.html.form()
+    def newUser = Action {
+        val view: Html = views.html.newuser()
         Ok(view)
     }
+
+    def newUserSubmit = Action {
+        val view: Html = views.html.overview(overviewFacade.createOverviewModel)
+        Ok(view)
+    }
+
+
+
 }
