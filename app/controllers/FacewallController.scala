@@ -33,4 +33,9 @@ object FacewallController extends Controller {
         }
         Ok(view)
     }
+
+    def form = Action {
+        val view: Html = views.html.form()
+        Ok(view)
+    }
 }

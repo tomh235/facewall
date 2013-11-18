@@ -1,6 +1,12 @@
 @import "bootstrap.css";
 @import "font-awesome.css";
 
+body { padding-bottom: 50px;}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+}
+
 .thumbnail > img {
   margin-top: 15px;
   width: 200px;
@@ -17,8 +23,8 @@
     background-color: #ffffff;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-weight: bold;
-}
-
 .entry { height: 406px;}
+
+form[role=form] .submit{
+    text-align: center;
+}
