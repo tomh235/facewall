@@ -70,15 +70,13 @@ class FacewallScalaRepoTest extends FunSuite with BeforeAndAfter with TemporaryD
         assertThat(result, contains(hugo, fahran, person3))
     }
 
-    // BROKEN
     test("findTeamForPerson should find Team that Person is member of") {
-        val result = repo.findTeamForPerson(new MockPerson("1", "hugo", "hugo.img", null))
+        val result = repo.findTeamForPerson(new MockPerson("1", "hugo", "hugo.img",null))
         assertThat(result, is(productResources))
     }
 
-    // BROKEN
     test("listTeams should get Checkout and ProductResources") {
-        val result = repo.listTeams
+        val result = repo.listTeams.asJava
         assertThat(result, contains(checkout, productResources))
     }
 
@@ -94,7 +92,6 @@ class FacewallScalaRepoTest extends FunSuite with BeforeAndAfter with TemporaryD
         assertThat(result, contains(hugo))
     }
 
-    // BROKEN
     test("queryTeams should find teams matching query") {
         val query = mock[Query]
         when(query.toRegEx).thenReturn(".*Product.*")

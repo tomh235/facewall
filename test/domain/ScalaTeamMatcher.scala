@@ -3,6 +3,7 @@ package domain
 import util.CompositeMatcher
 import org.hamcrest.{Matcher, Description, TypeSafeMatcher}
 
+@deprecated("deprecated, use java Teammatcher", "18/11/13")
 class ScalaTeamMatcher extends CompositeMatcher[Team] {
     def withId(id: String) = {
         add(new TypeSafeMatcher[Team] {
@@ -50,6 +51,7 @@ class ScalaTeamMatcher extends CompositeMatcher[Team] {
     }
 }
 
+@deprecated("deprecated, use java Teammatcher", "18/11/13")
 object ScalaTeamMatcher {
-    def aTeam: TeamMatcher = new TeamMatcher()
+    def aTeam: ScalaTeamMatcher = new ScalaTeamMatcher()
 }

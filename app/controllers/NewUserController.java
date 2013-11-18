@@ -9,7 +9,7 @@ import play.mvc.Action;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
-import repository.FacewallRepo;
+import data.FacewallScalaRepo;
 import views.html.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +20,7 @@ import static play.data.Form.form;
 
 public class NewUserController extends Controller {
 
-    private static FacewallRepo repo = new FacewallRepo();
+    private static FacewallScalaRepo repo = new FacewallScalaRepo();
     private static OverviewFacade overviewFacade = new OverviewFacade(repo);
     private static Form<User> userForm = form(User.class);
     private static Map<String,Object> formData = new HashMap();

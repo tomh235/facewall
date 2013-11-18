@@ -70,7 +70,7 @@ public class TeamMatcher extends CompositeMatcher<Team> {
 
             @Override
             public boolean matchesSafely(Team target) {
-                return target.members().equals(members.matches(target.members()));
+                return members.matches(target.members());
             }
 
             @Override
