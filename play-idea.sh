@@ -1,1 +1,1 @@
-play "idea no-sbt-build-module"
+play "idea with-sources=yes no-sbt-build-module"
