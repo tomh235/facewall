@@ -22,17 +22,11 @@ public class NewUserController extends Controller {
     private static Map<String,Object> formData = new HashMap();
 
     public static Result newUser() {
-//        throw new RuntimeException("not implemented");
         return ok(newuser.render());
     }
 
     public static Result newUserSubmit() {
-
         User user = userForm.bindFromRequest().get();
-
-        //formData.put("name", .getAttribute("name");
-        //System.out.println(request.getAttribute("name").toString());
-        //User user = userForm.bind(formData).get();
         return ok(overview.render(overviewFacade.createOverviewModel()));
     }
 }
