@@ -36,6 +36,5 @@ public class SearchResultsModelMapper {
         public static TeamSearchResult map(Team team) {
             return new TeamSearchResult(team.name());
         }
-
     }
 }
