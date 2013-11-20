@@ -12,10 +12,11 @@ object ApplicationBuild extends Build {
         jdbc,
         anorm,
         "org.scala-lang" % "scala-compiler" % "2.10.0",
-        "com.google.guava" % "guava" % "12.0",
+        "com.google.guava" % "guava" % "15.0",
         "com.sun.jersey.contribs" % "jersey-simple-server" % "1.9.1",
         "com.sun.jersey" % "jersey-core" % "1.9",
         "org.neo4j" % "neo4j-rest-graphdb" % "1.9",
+        "com.fasterxml.jackson.core" % "jackson-databind" % "2.2.3",
 
         "org.hamcrest" % "hamcrest-all" % "1.1" % "test",
         "org.scalatest" %% "scalatest" % "1.9.1" % "test",
