@@ -22,10 +22,13 @@ public class OverviewFacade {
             String person2TeamName = person2.team().name();
 
             if (person1TeamName.equals("")) {
+                return 1;
+            }
+            else if (person2TeamName.equals("")){
                 return -1;
             }
             int namesCompared = person1TeamName.compareTo(person2TeamName);
-            if (namesCompared == 0) {
+            if (namesCompared != 0) {
                 return namesCompared;
             }
             else {
