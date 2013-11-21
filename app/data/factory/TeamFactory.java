@@ -29,6 +29,7 @@ public class TeamFactory {
             this.colour = colour;
         }
 
+        @Deprecated
         @Override public String id() {
             throw new UnsupportedOperationException("This field is deprecated, and no longer supported");
         }

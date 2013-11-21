@@ -25,7 +25,7 @@ public class SearchFacadeTest {
 
     // should find persons and teams matching a query extracted from a web request and map them into a search results model
     @Test
-    public void FindPersonsAndTeamsQueryFromWebThenMapToSearchResultsModelTest() {
+    public void find_persons_and_teams_query_from_web_then_map_to_search_results_model_test() {
         Query query = mock(Query.class);
         Person mockPerson = mock(Person.class);
         Team mockTeam = mock(Team.class);
@@ -47,7 +47,7 @@ public class SearchFacadeTest {
 
      // should return person details model if query returns only one person and no teams
     @Test
-    public void OnePersonNoTeamsResultToPersonDetailsModelTest() {
+    public void one_person_no_teams_result_to_person_details_model_test() {
         Query query = mock(Query.class);
         Person mockPerson = mock(Person.class);
 

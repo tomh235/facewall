@@ -44,6 +44,7 @@ public class FacewallDAOTest {
 
     @Test
     public void fetchPerson_found() {
+
     }
 
     private static IndexHits<Node> createMockIndexHit(Node node) {

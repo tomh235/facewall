@@ -23,7 +23,7 @@ public class OverviewFacadeTest extends CollectionMatcher{
     OverviewFacade facewallFacade = new OverviewFacade(mockRepo);
 
     @Test
-    public void mapRepoToDomainObjectsToOverviewModelTest() {
+    public void map_repo_to_domain_objects_to_overview_model_test() {
         MockPerson ecom_member1 = new MockPerson("3", "ecom_member1", "pic1.img", null);
         MockPerson ecom_member2 = new MockPerson("4", "ecom_member2", "pic2.img", null);
         MockPerson pr_member    = new MockPerson("5", "pr_member", "pic3.img", null);
@@ -49,7 +49,7 @@ public class OverviewFacadeTest extends CollectionMatcher{
     }
 
     @Test
-    public void ordersOverviewAlphabeticallyByNameWithSameTeam(){
+    public void orders_overview_alphabetically_by_name_when_same_team(){
         MockPerson ecom_member1 = new MockPerson("3", "bob", "pic1.img", null);
         MockPerson ecom_member2 = new MockPerson("4", "dave", "pic2.img", null);
         MockPerson ecom_member3 = new MockPerson("4", "dave2", "pic2.img", null);
@@ -78,7 +78,7 @@ public class OverviewFacadeTest extends CollectionMatcher{
     }
 
     @Test
-    public void ordersOverviewsAlphabeticallyByTeam(){
+    public void orders_overviews_alphabetically_by_team_test() {
         MockPerson ecom_member1 = new MockPerson("3", "ecom_member1", "pic1.img", null);
         MockPerson ecom_member2 = new MockPerson("7", "ecom_member2", "pic5.img", null);
         MockPerson pr_member = new MockPerson("4", "pr_member", "pic2.img", null);
@@ -104,7 +104,7 @@ public class OverviewFacadeTest extends CollectionMatcher{
     }
 
     @Test
-    public void orderOverviewsAlphabeticallyByTeamWithTeamlessLastTest() {
+    public void orders_overview_alphabetically_by__team_with_teamless_last_test() {
         MockPerson ecom_member1 = new MockPerson("3", "ecom_member1", "pic1.img", null);
         MockPerson ecom_member2 = new MockPerson("7", "ecom_member2", "pic5.img", null);
         MockPerson pr_member = new MockPerson("4", "pr_member", "pic2.img", null);

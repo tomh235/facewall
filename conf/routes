@@ -9,11 +9,11 @@ GET     /                           controllers.FacewallController.overview
 GET     /search                     controllers.FacewallController.search
 
 # Search Results page
-GET     /search-results                     controllers.FacewallController.searchResults
+GET     /search-results             controllers.FacewallController.searchResults
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 # Form
-GET     /newuser                       controllers.NewUserController.newUser
-POST    /newuser                       controllers.NewUserController.newUserSubmit
+GET     /newuser                    controllers.NewUserController.newUser
+POST    /newuser                    controllers.NewUserController.newUserSubmit
