@@ -5,17 +5,20 @@ import domain.MockTeam;
 import domain.Person;
 import domain.Team;
 import model.OverviewEntryModel;
+import model.OverviewEntryModelMatcher;
 import org.junit.Test;
 import data.ScalaRepository;
+import util.CollectionMatcher;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
+import static model.OverviewEntryModelMatcher.*;
 
-public class OverviewFacadeTest {
+public class OverviewFacadeTest extends CollectionMatcher{
     ScalaRepository mockRepo = mock(ScalaRepository.class);
     OverviewFacade facewallFacade = new OverviewFacade(mockRepo);
 
@@ -35,14 +38,67 @@ public class OverviewFacadeTest {
         List<Person> persons = new ArrayList<Person>(Arrays.asList(ecom_member1, ecom_member2, pr_member));
         when(mockRepo.listPersons()).thenReturn(persons);
 
-        List<OverviewEntryModel> expectedResult = new ArrayList<>(Arrays.asList(
-                new OverviewEntryModel("ecom", "ecom_member1", "pic1.img", "blue"),
-                new OverviewEntryModel("ecom", "ecom_member2", "pic2.img", "blue"),
-                new OverviewEntryModel("productResources", "pr_member", "pic3.img", "green")
-        ));
+        OverviewEntryModelMatcher ecom1Matcher = anOverviewEntryModel().withTeamHeader("ecom").named("ecom_member1");
+        OverviewEntryModelMatcher ecom2Matcher = anOverviewEntryModel().withTeamHeader("ecom").named("ecom_member2");
+        OverviewEntryModelMatcher productResourcesMatcher = anOverviewEntryModel().withTeamHeader("productResources").named("pr_member");
 
         List<OverviewEntryModel> result = facewallFacade.createOverviewModel();
-        assertEquals("expected: " + expectedResult + "\ngot: " + result + ".", expectedResult, result);
+        assertThat(result, contains(ecom1Matcher,ecom2Matcher,productResourcesMatcher));
+
+        verify(mockRepo).listPersons();
+    }
+
+    @Test
+    public void ordersOverviewAlphabeticallyByNameWithSameTeam(){
+        MockPerson ecom_member1 = new MockPerson("3", "bob", "pic1.img", null);
+        MockPerson ecom_member2 = new MockPerson("4", "dave", "pic2.img", null);
+        MockPerson ecom_member3 = new MockPerson("4", "dave2", "pic2.img", null);
+        MockPerson ecom_member4 = new MockPerson("7", "rick", "pic5.img", null);
+
+        Team ecom = new MockTeam("1", "ecom", "blue", new ArrayList<Person>(Arrays.asList(ecom_member1)));
+
+        ecom_member1.setTeam(ecom);
+        ecom_member2.setTeam(ecom);
+        ecom_member3.setTeam(ecom);
+        ecom_member4.setTeam(ecom);
+
+        List<Person> persons = new ArrayList<Person>(Arrays.asList(ecom_member3,ecom_member2,ecom_member1,ecom_member4));
+        when(mockRepo.listPersons()).thenReturn(persons);
+
+        OverviewEntryModelMatcher ecom1Matcher = anOverviewEntryModel().withTeamHeader("ecom").named("bob");
+        OverviewEntryModelMatcher ecom2Matcher = anOverviewEntryModel().withTeamHeader("ecom").named("dave");
+        OverviewEntryModelMatcher ecom3Matcher = anOverviewEntryModel().withTeamHeader("ecom").named("dave2");
+        OverviewEntryModelMatcher ecom4Matcher = anOverviewEntryModel().withTeamHeader("ecom").named("rick");
+
+        List<OverviewEntryModel> result = facewallFacade.createOverviewModel();
+        assertThat(result, contains(ecom1Matcher,ecom2Matcher,ecom3Matcher,ecom4Matcher));
+
+        verify(mockRepo).listPersons();
+
+    }
+
+    @Test
+    public void ordersOverviewsAlphabeticallyByTeam(){
+        MockPerson ecom_member1 = new MockPerson("3", "ecom_member1", "pic1.img", null);
+        MockPerson ecom_member2 = new MockPerson("7", "ecom_member2", "pic5.img", null);
+        MockPerson pr_member = new MockPerson("4", "pr_member", "pic2.img", null);
+
+        Team ecom = new MockTeam("1", "ecom", "blue", new ArrayList<Person>(Arrays.asList(ecom_member1)));
+        Team productResources = new MockTeam("2", "productResources", "green", new ArrayList<Person>(Arrays.asList(pr_member)));
+
+        ecom_member1.setTeam(ecom);
+        ecom_member2.setTeam(ecom);
+        pr_member.setTeam(productResources);
+
+        List<Person> persons = new ArrayList<Person>(Arrays.asList(ecom_member2, pr_member, ecom_member1));
+        when(mockRepo.listPersons()).thenReturn(persons);
+
+        OverviewEntryModelMatcher ecom1Matcher = anOverviewEntryModel().withTeamHeader("ecom").named("ecom_member1");
+        OverviewEntryModelMatcher ecom2Matcher = anOverviewEntryModel().withTeamHeader("ecom").named("ecom_member2");
+        OverviewEntryModelMatcher productResourcesMatcher = anOverviewEntryModel().withTeamHeader("productResources").named("pr_member");
+
+        List<OverviewEntryModel> result = facewallFacade.createOverviewModel();
+        assertThat(result, contains(ecom1Matcher,ecom2Matcher,productResourcesMatcher));
 
         verify(mockRepo).listPersons();
     }
@@ -65,19 +121,17 @@ public class OverviewFacadeTest {
         teamless_member1.setTeam(noTeam);
         teamless_member2.setTeam(noTeam);
 
-        List<Person> persons = new ArrayList<Person>(Arrays.asList(teamless_member1, ecom_member2, teamless_member2, pr_member, ecom_member1));
+        List<Person> persons = new ArrayList<Person>(Arrays.asList(teamless_member1, ecom_member1, teamless_member2, ecom_member2, pr_member));
         when(mockRepo.listPersons()).thenReturn(persons);
 
-        List<OverviewEntryModel> expectedResult = new ArrayList<>(Arrays.asList(
-                new OverviewEntryModel("ecom",              "ecom_member1",     "pic1.img", "blue"),
-                new OverviewEntryModel("ecom",              "ecom_member2",     "pic5.img", "blue"),
-                new OverviewEntryModel("productResources",  "pr_member",        "pic2.img", "green"),
-                new OverviewEntryModel("",                  "teamless_member1", "pic3.img", "grey"),
-                new OverviewEntryModel("",                  "teamless_member2", "pic4.img", "grey")
-        ));
+        OverviewEntryModelMatcher ecom1Matcher = anOverviewEntryModel().withTeamHeader("ecom").named("ecom_member1");
+        OverviewEntryModelMatcher ecom2Matcher = anOverviewEntryModel().withTeamHeader("ecom").named("ecom_member2");
+        OverviewEntryModelMatcher productResourcesMatcher = anOverviewEntryModel().withTeamHeader("productResources").named("pr_member");
+        OverviewEntryModelMatcher teamless1Matcher = anOverviewEntryModel().withTeamHeader("").named("teamless_member1");
+        OverviewEntryModelMatcher teamless2Matcher = anOverviewEntryModel().withTeamHeader("").named("teamless_member2");
 
         List<OverviewEntryModel> result = facewallFacade.createOverviewModel();
-        assertEquals("expected: \n" + expectedResult + "\ngot: \n" + result + ".", expectedResult, result);
+        assertThat(result, contains(ecom1Matcher,ecom2Matcher,productResourcesMatcher,teamless1Matcher,teamless2Matcher));
 
         verify(mockRepo).listPersons();
     }
