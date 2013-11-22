@@ -27,6 +27,6 @@ public class PersonDTOBuilder {
     }
 
     public PersonDTO build() {
-        return new PersonDTO(id, name, picture);
+        return new PersonDTO(id, name, picture) {};
     }
 }

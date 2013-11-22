@@ -27,6 +27,6 @@ public class TeamDTOBuilder {
     }
 
     public TeamDTO build() {
-        return new TeamDTO(id, name, colour);
+        return new TeamDTO(id, name, colour) {};
     }
 }

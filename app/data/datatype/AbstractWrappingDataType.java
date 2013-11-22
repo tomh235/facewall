@@ -1,7 +1,7 @@
 package data.datatype;
 
 abstract class AbstractWrappingDataType<T> {
-    final T value;
+    public final T value;
 
     protected AbstractWrappingDataType(T value) {
         this.value = value;

@@ -1,6 +1,6 @@
 package data.dto;
 
-public class TeamDTO {
+public abstract class TeamDTO {
     public final String id;
     public final String name;
     public final String colour;

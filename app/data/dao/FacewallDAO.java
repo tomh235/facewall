@@ -1,26 +1,40 @@
 package data.dao;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import data.dao.database.FacewallDB;
+import data.dao.database.IndexQuery;
 import data.datatype.PersonId;
 import data.datatype.TeamId;
 import data.dto.PersonDTO;
 import data.dto.TeamDTO;
-import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.Node;
+
+import static data.dao.FacewallDBObjectMapper.convertValue;
+import static data.dao.database.FacewallDB.NodeIndex.Persons;
+import static data.dao.database.FacewallDB.NodeIndex.Teams;
+import static data.dao.database.IndexQuery.anIndexLookup;
 
 public class FacewallDAO {
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private final FacewallDB facewallDb;
 
-    private final GraphDatabaseService db;
-
-    public FacewallDAO(GraphDatabaseService db) {
-        this.db = db;
+    public FacewallDAO(FacewallDB facewallDb) {
+        this.facewallDb = facewallDb;
     }
 
     public PersonDTO fetchPerson(PersonId id) {
-        return null;
+        Node node = facewallDb.retrieveNodeFromIndex(anIndexLookup()
+                .onIndex(Persons)
+                .forValue(id.value)
+                .build()
+        );
+        return convertValue(node, JacksonMappedPersonDTO.class);
     }
 
     public TeamDTO fetchTeam(TeamId id) {
-        return null;
+        Node node = facewallDb.retrieveNodeFromIndex(anIndexLookup()
+                .onIndex(Teams)
+                .forValue(id.value)
+                .build()
+        );
+        return convertValue(node, JacksonMappedTeamDTO.class);
     }
 }

@@ -7,8 +7,7 @@ import data.dto.TeamDTO;
 
 public class JacksonMappedTeamDTO extends TeamDTO {
 
-    @JsonCreator
-    JacksonMappedTeamDTO(
+    @JsonCreator JacksonMappedTeamDTO(
             @JsonProperty("id") String id,
             @JsonProperty("name") String name,
             @JsonProperty("colour") String colour)
