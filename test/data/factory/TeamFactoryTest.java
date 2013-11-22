@@ -22,7 +22,8 @@ import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TeamFactoryTest {
-    @Mock TraversingRepository mockRepository;
+    @Mock
+    TraversingPersonRepository mockRepository;
     private TeamFactory teamFactory;
 
     @Before
@@ -57,7 +58,7 @@ public class TeamFactoryTest {
     @Test
     public void team_members_delegates_to_repository() {
         List<Person> expectedMembers = mock(List.class);
-        when(mockRepository.findMembersOfTeam(any(TeamId.class))).thenReturn(expectedMembers);
+        when(mockRepository.findMembersOfTeam(any(TeamId.class), any(Team.class))).thenReturn(expectedMembers);
 
         Team result = teamFactory.createTeam(newTeamDTO().build());
         assertThat(result.members(), sameInstance(expectedMembers));
@@ -69,8 +70,9 @@ public class TeamFactoryTest {
             .withId("expected id")
             .build();
 
-        teamFactory.createTeam(dto).members();
+        Team team = teamFactory.createTeam(dto);
+        team.members();
 
-        verify(mockRepository).findMembersOfTeam(new TeamId("expected id"));
+        verify(mockRepository).findMembersOfTeam(new TeamId("expected id"), team);
     }
 }

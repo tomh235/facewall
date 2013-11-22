@@ -20,7 +20,8 @@ import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PersonFactoryTest {
-    @Mock TraversingRepository mockRepository;
+    @Mock
+    TraversingTeamRepository mockRepository;
     private PersonFactory personFactory;
 
     @Before

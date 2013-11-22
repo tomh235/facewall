@@ -7,11 +7,12 @@ import domain.Team;
 
 import java.util.List;
 
-class TraversingRepository {
+class TraversingTeamRepository {
 
+    private final TeamFactory teamFactory;
 
-    public List<Person> findMembersOfTeam(TeamId id) {
-        return null;
+    TraversingTeamRepository(TeamFactory teamFactory) {
+        this.teamFactory = teamFactory;
     }
 
     public Team findTeamForPerson(PersonId id) {

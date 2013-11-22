@@ -8,42 +8,24 @@ import domain.Team;
 import java.util.List;
 
 public class TeamFactory {
-    final TraversingRepository traversingRepo;
+    final TraversingPersonRepository traversingPersonRepo;
 
-    public TeamFactory(TraversingRepository traversingRepo) {
-        this.traversingRepo = traversingRepo;
+    public TeamFactory(TraversingPersonRepository traversingPersonRepo) {
+        this.traversingPersonRepo = traversingPersonRepo;
     }
 
     public Team createTeam(TeamDTO teamDTO) {
         return new DefaultTeam(new TeamId(teamDTO.id), teamDTO.name, teamDTO.colour);
     }
 
-    private class DefaultTeam implements Team {
-        final TeamId id;
-        final String name;
-        final String colour;
+    private class DefaultTeam extends AbstractTeam {
 
-        private DefaultTeam(TeamId id, String name, String colour) {
-            this.id = id;
-            this.name = name;
-            this.colour = colour;
-        }
-
-        @Deprecated
-        @Override public String id() {
-            throw new UnsupportedOperationException("This field is deprecated, and no longer supported");
-        }
-
-        @Override public String name() {
-            return name;
-        }
-
-        @Override public String colour() {
-            return colour;
+        protected DefaultTeam(TeamId id, String name, String colour) {
+            super(id, name, colour);
         }
 
         @Override public List<Person> members() {
-            return traversingRepo.findMembersOfTeam(id);
+            return traversingPersonRepo.findMembersOfTeam(id, this);
         }
     }
 }
