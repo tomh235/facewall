@@ -15,10 +15,13 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsSame.sameInstance;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyList;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -37,43 +40,41 @@ public class FacewallRepositoryTest {
 
     @Test
     public void fetch_person_delegates_to_factory() {
-        Person expectedPerson = mock(Person.class);
-        when(mockPersonFactory.createPerson(any(PersonDTO.class))).thenReturn(expectedPerson);
+        List<Person> expectedPersons = mock(List.class);
+        when(mockPersonFactory.createPersons(anyList())).thenReturn(expectedPersons);
 
-        Person result = repository.findPerson(new PersonId("person"));
-        assertThat(result, is(sameInstance(expectedPerson)));
+        List<Person> result = repository.listPersons();
+        assertThat(result, is(sameInstance(expectedPersons)));
     }
 
     @Test
     public void fetch_person_verifyInteractions() {
-        PersonDTO expectedDTO = mock(PersonDTO.class);
-        PersonId expectedId = new PersonId("expected id");
-        when(mockDao.fetchPerson(any(PersonId.class))).thenReturn(expectedDTO);
+        List<PersonDTO> expectedDTOs = mock(List.class);
+        when(mockDao.fetchPersons()).thenReturn(expectedDTOs);
 
-        repository.findPerson(expectedId);
+        repository.listPersons();
 
-        verify(mockDao).fetchPerson(expectedId);
-        verify(mockPersonFactory).createPerson(expectedDTO);
+        verify(mockDao).fetchPersons();
+        verify(mockPersonFactory).createPersons(expectedDTOs);
     }
 
     @Test
     public void fetch_team_delegates_to_factory() {
-        Team expectedTeam = mock(Team.class);
-        when(mockTeamFactory.createTeam(any(TeamDTO.class))).thenReturn(expectedTeam);
+        List<Team> expectedTeams = mock(List.class);
+        when(mockTeamFactory.createTeams(anyList())).thenReturn(expectedTeams);
 
-        Team result = repository.findTeam(new TeamId("team"));
-        assertThat(result, is(sameInstance(expectedTeam)));
+        List<Team> result = repository.listTeams();
+        assertThat(result, is(sameInstance(expectedTeams)));
     }
 
     @Test
     public void fetch_team_verifyInteractions() {
-        TeamDTO expectedDTO = mock(TeamDTO.class);
-        TeamId expectedId = new TeamId("expected id");
-        when(mockDao.fetchTeam(any(TeamId.class))).thenReturn(expectedDTO);
+        List<TeamDTO> expectedDTOs = mock(List.class);
+        when(mockDao.fetchTeams()).thenReturn(expectedDTOs);
 
-        repository.findTeam(expectedId);
+        repository.listTeams();
 
-        verify(mockDao).fetchTeam(expectedId);
-        verify(mockTeamFactory).createTeam(expectedDTO);
+        verify(mockDao).fetchTeams();
+        verify(mockTeamFactory).createTeams(expectedDTOs);
     }
 }

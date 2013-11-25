@@ -8,6 +8,6 @@ import domain.Team;
 import java.util.List;
 
 public interface Repository {
-    public Person findPerson(PersonId personId);
-    public Team findTeam(TeamId teamId);
+    public List<Person> listPersons();
+    public List<Team> listTeams();
 }
