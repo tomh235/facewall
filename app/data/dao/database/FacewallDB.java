@@ -64,8 +64,7 @@ public class FacewallDB {
     }
 
     private Node nodeFromIndex(IndexQuery query) {
-        Node result;Index<Node> index = db.index().forNodes(query.indexName);
-        result = index.get(query.keyName, query.queriedValue).getSingle();
-        return result;
+        Index<Node> index = db.index().forNodes(query.indexName);
+        return index.get(query.keyName, query.queriedValue).getSingle();
     }
 }
