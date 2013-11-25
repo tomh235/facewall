@@ -11,6 +11,7 @@ object ApplicationBuild extends Build {
     val appDependencies = Seq(
         jdbc,
         anorm,
+        javaCore,
         "org.scala-lang" % "scala-compiler" % "2.10.0",
         "com.google.guava" % "guava" % "15.0",
         "com.sun.jersey.contribs" % "jersey-simple-server" % "1.9.1",

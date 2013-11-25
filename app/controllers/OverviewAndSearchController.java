@@ -31,6 +31,7 @@ public class OverviewAndSearchController extends Controller {
     public static Result searchResults() {
         Query query = queryMapper.map(request());
         SearchResultsModel searchResultsModel = searchFacade.createSearchResultsModel(query);
+
         if(searchResultsModel instanceof DefaultSearchResultsModel) {
             return ok(views.html.searchresults.render((DefaultSearchResultsModel) searchResultsModel));
         }

@@ -5,10 +5,9 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 
-import static play.data.Form.form;
 
-public class SignupController extends Controller {
-    private static final Form<User> signUpForm = form(User.class);
+public class SignUpController extends Controller {
+    private static final Form<User> signUpForm = Form.form(User.class);
 
         public static Result blankSignUpForm() {
             return ok(views.html.signupform.render());
