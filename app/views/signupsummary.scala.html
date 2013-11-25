@@ -1,0 +1,67 @@
+@(user: model.User)
+@main("Summary of new user information", 2){
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4 text-center">
+                <h2>Your account</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-2">
+
+            <h3>Username</h3>
+            <p>
+                @user.name
+            </p>
+
+            <h3>Email</h3>
+            <p>
+                @user.email
+            </p>
+
+            <h3>Role</h3>
+            <p>
+                @user.role
+            </p>
+
+            <h3>Location</h3>
+            <p>
+                @user.location
+            </p>
+
+            <h3>Team</h3>
+            <p>
+                @if(user.team == null || user.scrum == "") {
+                <em>Not specified</em>
+                } else {
+                @user.team
+                }
+            </p>
+
+            <h3>Scrum</h3>
+            <p>
+                @if(user.scrum== null || user.scrum == "") {
+                <em>Not specified</em>
+                } else {
+                @user.scrum
+                }
+            </p>
+        </div>
+
+        <div class="col-md-4">
+
+            <h3>Picture</h3>
+            <h5>url:</h5>
+            <p>
+                @user.imglink
+            </p>
+
+            <a href="#">
+                <img class="thumbnail" src="@user.imglink" alt="">
+            </a>
+
+        </div>
+    </div>
+</div>
+}

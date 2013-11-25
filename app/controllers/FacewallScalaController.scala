@@ -9,7 +9,7 @@ import controllers.requestmapper.QueryMapper
 import facade.modelmapper.{PersonDetailsModelMapper, SearchResultsModelMapper}
 import model.{PersonDetailsModel, DefaultSearchResultsModel}
 
-object FacewallController extends Controller {
+object FacewallScalaController extends Controller {
     val repo = new FacewallScalaRepo()
     val overviewFacade = new OverviewFacade(repo)
     val searchFacade = new SearchFacade(repo, new SearchResultsModelMapper(), new PersonDetailsModelMapper())
