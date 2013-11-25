@@ -1,13 +1,13 @@
 package data.dto;
 
-public abstract class PersonDTO {
-    public final String id;
-    public final String name;
-    public final String picture;
+import org.neo4j.graphdb.Node;
 
-    protected PersonDTO(String id, String name, String picture) {
-        this.id = id;
-        this.name = name;
-        this.picture = picture;
+public class PersonDTO {
+    public final Node personNode;
+    public final Node teamNode;
+
+    public PersonDTO(Node personNode, Node teamNode) {
+        this.personNode = personNode;
+        this.teamNode = teamNode;
     }
 }

@@ -1,13 +1,15 @@
 package data.dto;
 
-public abstract class TeamDTO {
-    public final String id;
-    public final String name;
-    public final String colour;
+import org.neo4j.graphdb.Node;
 
-    public TeamDTO(String id, String name, String colour) {
-        this.id = id;
-        this.name = name;
-        this.colour = colour;
+import java.util.List;
+
+public abstract class TeamDTO {
+    public final Node teamNode;
+    public final List<Node> memberNodes;
+
+    protected TeamDTO(Node teamNode, List<Node> memberNodes) {
+        this.teamNode = teamNode;
+        this.memberNodes = memberNodes;
     }
 }

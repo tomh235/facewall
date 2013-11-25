@@ -10,6 +10,8 @@ import data.factory.TeamFactory;
 import domain.Person;
 import domain.Team;
 
+import java.util.List;
+
 class FacewallRepository implements Repository {
     final PersonFactory personFactory;
     final TeamFactory teamFactory;
@@ -22,13 +24,13 @@ class FacewallRepository implements Repository {
         this.dao = dao;
     }
 
-    @Override public Person findPerson(PersonId personId) {
-        PersonDTO dto = dao.fetchPerson(personId);
-        return personFactory.createPerson(dto);
+    @Override public List<Person> listPersons() {
+        List<PersonDTO> dto = dao.fetchPersons();
+        return personFactory.createPersons(dto);
     }
 
-    @Override public Team findTeam(TeamId teamId) {
-        TeamDTO dto = dao.fetchTeam(teamId);
-        return teamFactory.createTeam(dto);
+    @Override public List<Team> listTeams() {
+        List<TeamDTO> dto = dao.fetchTeams();
+        return teamFactory.createTeams(dto);
     }
 }

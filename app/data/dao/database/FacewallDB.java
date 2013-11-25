@@ -1,10 +1,13 @@
 package data.dao.database;
 
+import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.index.Index;
-import org.neo4j.graphdb.index.IndexHits;
+
+import static data.dao.database.RelationshipTypes.TEAMMEMBER_OF;
+import static org.neo4j.graphdb.Direction.OUTGOING;
 
 public class FacewallDB {
     public enum NodeIndex {
@@ -27,19 +30,42 @@ public class FacewallDB {
         this.db = db;
     }
 
-    public Node retrieveNodeFromIndex(IndexQuery query) {
-        Transaction tx = db.beginTx();
+    public Node retrieveNodeFromIndex(IndexQuery indexQuery) {
+        Node result;
 
-        IndexHits<Node> hits;
+        Transaction tx = db.beginTx();
         try {
-            Index<Node> index = db.index().forNodes(query.indexName);
-            hits = index.get(query.keyName, query.queriedValue);
+            result = nodeFromIndex(indexQuery);
 
             tx.success();
         } finally {
             tx.finish();
         }
 
-        return hits.getSingle();
+        return result;
+    }
+
+    //This could have a better name, couldn't think of one
+    //Possibly a sign that there is an abstraction here that isn't actually abstracting enough.
+    public Node retrieveSingleRelatedNodeForNodeFromIndex(IndexQuery indexQuery) {
+        Node result;
+
+        Transaction tx = db.beginTx();
+        try {
+            Node indexedNode = nodeFromIndex(indexQuery);
+            result = indexedNode.getSingleRelationship(TEAMMEMBER_OF, OUTGOING).getEndNode();
+
+            tx.success();
+        } finally {
+            tx.finish();
+        }
+
+        return result;
+    }
+
+    private Node nodeFromIndex(IndexQuery query) {
+        Node result;Index<Node> index = db.index().forNodes(query.indexName);
+        result = index.get(query.keyName, query.queriedValue).getSingle();
+        return result;
     }
 }
