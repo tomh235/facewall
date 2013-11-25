@@ -1,5 +1,6 @@
 package data.dao.database;
 
+import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,16 +11,17 @@ import org.neo4j.graphdb.index.Index;
 import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.graphdb.index.IndexManager;
 
+import java.util.List;
+
 import static data.dao.database.FacewallDB.NodeIndex.Persons;
 import static data.dao.database.IndexQuery.anIndexLookup;
-import static data.dao.database.RelationshipTypes.TEAMMEMBER_OF;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
-import static org.neo4j.graphdb.Direction.OUTGOING;
+import static util.CollectionMatcher.contains;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FacewallDBTest {
@@ -42,100 +44,84 @@ public class FacewallDBTest {
     }
 
     @Test
-    public void node_from_index_lookup() {
-        Node node = mock(Node.class);
-        IndexHits<Node> mockIndexHit = createMockIndexHit(node);
-        when(mockIndex.get(anyString(), any())).thenReturn(mockIndexHit);
+    public void beginTransaction_delegates_to_graphDb() {
+        when(mockDb.beginTx()).thenReturn(mockTransaction);
 
-        Node result = facewallDB.retrieveNodeFromIndex(anIndexLookup()
+        Transaction result = facewallDB.beginTransaction();
+        assertThat(result, is(sameInstance(mockTransaction)));
+    }
+
+    @Test
+    public void beginTransaction_verify_interactions() {
+        facewallDB.beginTransaction();
+        verify(mockDb).beginTx();
+    }
+
+    @Test
+    public void node_from_index_lookup() {
+        IndexHits<Node> expectedHits = mock(IndexHits.class);
+        when(mockIndex.get(anyString(), any())).thenReturn(expectedHits);
+
+        IndexHits<Node> result = facewallDB.lookupNodesInIndex(anIndexLookup()
                 .onIndex(Persons)
                 .forValue("1")
                 .build()
         );
-        assertThat(result, is(sameInstance(node)));
+        assertThat(result, is(sameInstance(expectedHits)));
     }
 
     @Test
     public void node_from_index_lookup_verifyInteractions() {
-        IndexHits<Node> mockIndexHit = createMockIndexHit(mock(Node.class));
-        when(mockIndex.get(anyString(), any())).thenReturn(mockIndexHit);
-
         IndexQuery query = anIndexLookup()
                 .onIndex(Persons)
                 .forValue("expectedValue")
                 .build();
 
-        facewallDB.retrieveNodeFromIndex(query);
-
-        verify(mockDb).beginTx();
+        facewallDB.lookupNodesInIndex(query);
 
         verify(mockDb).index();
         verify(mockIndexManager).forNodes(query.indexName);
         verify(mockIndex).get(query.keyName, query.queriedValue);
-        verify(mockIndexHit).getSingle();
-
-        verify(mockTransaction).success();
-        verify(mockTransaction).finish();
     }
 
     @Test
-    public void single_related_node_to_node_from_index_lookup() {
-        Node indexedNode = mock(Node.class);
-
-        IndexHits<Node> mockIndexHit = createMockIndexHit(indexedNode);
-        when(mockIndex.get(anyString(), any())).thenReturn(mockIndexHit);
-
+    public void all_nodes_related_to_given_node() {
         Relationship mockRelationship = mock(Relationship.class);
-        when(indexedNode.getSingleRelationship(any(RelationshipType.class), any(Direction.class)))
-                .thenReturn(mockRelationship);
+        Iterable<Relationship> relationships = ImmutableList.of(mockRelationship, mockRelationship);
 
-        Node relatedNode = mock(Node.class);
-        when(mockRelationship.getEndNode()).thenReturn(relatedNode);
+        Node mockNode = mock(Node.class);
+        when(mockNode.getRelationships()).thenReturn(relationships);
 
-        Node result = facewallDB.retrieveSingleRelatedNodeForNodeFromIndex(anIndexLookup()
-                .onIndex(Persons)
-                .forValue("1")
-                .build()
-        );
-        assertThat(result, is(sameInstance(relatedNode)));
+        Node expectedNode1 = mock(Node.class);
+        Node expectedNode2 = mock(Node.class);
+
+        when(mockRelationship.getOtherNode(any(Node.class)))
+                .thenReturn(expectedNode1)
+                .thenReturn(expectedNode2);
+
+        List<Node> result = facewallDB.findRelatedNodes(mockNode);
+
+        assertThat(result, contains(
+                sameInstance(expectedNode1),
+                sameInstance(expectedNode2)
+        ));
     }
 
     @Test
-    public void single_related_node_to_node_from_index_lookup_verifyInteractions() {
-        Node indexedNode = mock(Node.class);
-
-        IndexHits<Node> mockIndexHit = createMockIndexHit(indexedNode);
-        when(mockIndex.get(anyString(), any())).thenReturn(mockIndexHit);
-
+    public void all_nodes_related_to_given_node_verifyInteractions() {
         Relationship mockRelationship = mock(Relationship.class);
-        when(indexedNode.getSingleRelationship(any(RelationshipType.class), any(Direction.class)))
-                .thenReturn(mockRelationship);
+        Iterable<Relationship> relationships = ImmutableList.of(mockRelationship, mockRelationship);
 
-        when(mockRelationship.getEndNode()).thenReturn(mock(Node.class));
-        IndexQuery query = anIndexLookup()
-                .onIndex(Persons)
-                .forValue("expectedValue")
-                .build();
+        Node mockNode = mock(Node.class);
+        when(mockNode.getRelationships()).thenReturn(relationships);
 
-        facewallDB.retrieveSingleRelatedNodeForNodeFromIndex(query);
+        when(mockRelationship.getOtherNode(any(Node.class)))
+                .thenReturn(mock(Node.class))
+                .thenReturn(mock(Node.class));
 
-        verify(mockDb).beginTx();
+        facewallDB.findRelatedNodes(mockNode);
 
-        verify(mockDb).index();
-        verify(mockIndexManager).forNodes(query.indexName);
-        verify(mockIndex).get(query.keyName, query.queriedValue);
-        verify(mockIndexHit).getSingle();
-
-        verify(indexedNode).getSingleRelationship(TEAMMEMBER_OF, OUTGOING);
-        verify(mockRelationship).getEndNode();
-
-        verify(mockTransaction).success();
-        verify(mockTransaction).finish();
-    }
-
-    private static IndexHits<Node> createMockIndexHit(Node node) {
-        IndexHits<Node> mockIndexHit = mock(IndexHits.class);
-        when(mockIndexHit.getSingle()).thenReturn(node);
-        return mockIndexHit;
+        verify(mockNode).getRelationships();
+        verify(mockRelationship, times(2)).getOtherNode(mockNode);
     }
 }

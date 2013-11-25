@@ -1,7 +1,5 @@
 package data.dao;
 
-import data.datatype.PersonId;
-import data.datatype.TeamId;
 import data.dto.PersonDTO;
 import data.dto.TeamDTO;
 

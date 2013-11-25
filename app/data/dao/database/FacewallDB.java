@@ -1,13 +1,16 @@
 package data.dao.database;
 
-import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.index.Index;
+import org.neo4j.graphdb.index.IndexHits;
 
-import static data.dao.database.RelationshipTypes.TEAMMEMBER_OF;
-import static org.neo4j.graphdb.Direction.OUTGOING;
+import java.util.List;
+
+import static com.google.common.collect.ImmutableList.copyOf;
+import static com.google.common.collect.Lists.newArrayList;
 
 public class FacewallDB {
     public enum NodeIndex {
@@ -30,41 +33,21 @@ public class FacewallDB {
         this.db = db;
     }
 
-    public Node retrieveNodeFromIndex(IndexQuery indexQuery) {
-        Node result;
-
-        Transaction tx = db.beginTx();
-        try {
-            result = nodeFromIndex(indexQuery);
-
-            tx.success();
-        } finally {
-            tx.finish();
-        }
-
-        return result;
+    public Transaction beginTransaction() {
+        return db.beginTx();
     }
 
-    //This could have a better name, couldn't think of one
-    //Possibly a sign that there is an abstraction here that isn't actually abstracting enough.
-    public Node retrieveSingleRelatedNodeForNodeFromIndex(IndexQuery indexQuery) {
-        Node result;
-
-        Transaction tx = db.beginTx();
-        try {
-            Node indexedNode = nodeFromIndex(indexQuery);
-            result = indexedNode.getSingleRelationship(TEAMMEMBER_OF, OUTGOING).getEndNode();
-
-            tx.success();
-        } finally {
-            tx.finish();
-        }
-
-        return result;
+    public IndexHits<Node> lookupNodesInIndex(IndexQuery indexQuery) {
+        Index<Node> index = db.index().forNodes(indexQuery.indexName);
+        return index.get(indexQuery.keyName, indexQuery.queriedValue);
     }
 
-    private Node nodeFromIndex(IndexQuery query) {
-        Index<Node> index = db.index().forNodes(query.indexName);
-        return index.get(query.keyName, query.queriedValue).getSingle();
+    public List<Node> findRelatedNodes(Node node) {
+        List<Node> relatedNodes = newArrayList();
+        for (Relationship relationship : node.getRelationships()) {
+            relatedNodes.add(relationship.getOtherNode(node));
+        }
+
+        return copyOf(relatedNodes);
     }
 }
