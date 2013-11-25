@@ -3,13 +3,13 @@
 # ~~~~
 
 # Home page (Overview Page)
-GET     /                           controllers.FacewallScalaController.overview
+GET     /                           controllers.OverviewAndSearchController.overview
 
 # Search page
-GET     /search                     controllers.FacewallScalaController.search
+GET     /search                     controllers.OverviewAndSearchController.search
 
 # Search Results page
-GET     /search-results             controllers.FacewallScalaController.searchResults
+GET     /search-results             controllers.OverviewAndSearchController.searchResults
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
@@ -17,6 +17,3 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 # New user registration form
 GET     /signupform                 controllers.SignupController.blankSignUpForm
 POST    /signupform                 controllers.SignupController.signUpFormSubmit
-
-# New user registration summary
-#GET    /signupsummary              controllers.SignupController.signUpFormSubmit

@@ -1,4 +1,3 @@
-/*
 package domain;
 
 import org.hamcrest.Description;
@@ -19,15 +18,14 @@ public class QueryMatcher extends CompositeMatcher<Query> {
         add(new TypeSafeMatcher<Query>() {
             @Override
             public boolean matchesSafely(Query query){
-                return query.toRegEx.equals(regEx);
+                return query.toRegEx().equals(regEx);
             }
 
             @Override
             public void describeTo(Description description) {
                 description.appendText("Where the target is " + regEx);
             }
-        })
+        });
         return this;
     }
 }
-*/

@@ -3,7 +3,8 @@ package controllers.requestmapper
 import domain.Query
 import play.api.mvc.{AnyContentAsFormUrlEncoded, AnyContent, Request}
 
-protected [controllers] class QueryMapper {
+@Deprecated
+protected [controllers] class ScalaQueryMapper {
     def map(request: Request[AnyContent]): Query = {
         val keywords = request.queryString("keywords")(0)
         keywords match {
