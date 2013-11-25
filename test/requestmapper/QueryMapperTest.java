@@ -22,13 +22,13 @@ public class QueryMapperTest {
     QueryMapper queryMapper = new QueryMapper();
 
     @Test
-    public void should_map_no_query_params_into_empty_regex() {
+    public void should_map_no_query_params_into_wildcard_regex() {
         Map<String, String[]> queryString = Collections.emptyMap();
         when(request.queryString()).thenReturn(queryString);
 
         Query result = queryMapper.map(request);
 
-        assertThat(result, is(aQuery().withRegEx("")));
+        assertThat(result, is(aQuery().withRegEx(".*")));
     }
 
     @Test
@@ -42,7 +42,7 @@ public class QueryMapperTest {
     }
 
     @Test
-    public void should_map_from_request_to_query() {
+    public void should_map_from_request_to_query_regex() {
         Map<String, String[]> queryString = ImmutableMap.of("keywords", new String[] {"hello"});
         when(request.queryString()).thenReturn(queryString);
 
