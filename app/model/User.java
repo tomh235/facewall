@@ -21,6 +21,9 @@ public class User {
     @Email
     public String email;
 
+    @Required
     public String team;
+
+    @Required
     public String scrum;
 }

@@ -15,8 +15,8 @@ GET     /search-results             controllers.FacewallScalaController.searchRe
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 # New user registration form
-GET     /signupform                 blankSignUpForm
+GET     /signupform                 controllers.SignupController.blankSignUpForm
 POST    /signupform                 controllers.SignupController.signUpFormSubmit
 
 # New user registration summary
-#GET    /signupsummary              controllers.SignupController.
+#GET    /signupsummary              controllers.SignupController.signUpFormSubmit

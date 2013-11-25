@@ -27,7 +27,7 @@ public class SignupControllerTest {
 
     @Test
     public void new_user_form_submission_should_redirect_to_summary_page() {
-        mockForm.fill()
+
         result = (PlainResult) SignupController.signUpFormSubmit().getWrappedResult();
         assert (result.header().status() == 200);
     }
