@@ -7,6 +7,7 @@ import facade.OverviewFacade;
 import facade.SearchFacade;
 import facade.modelmapper.PersonDetailsModelMapper;
 import facade.modelmapper.SearchResultsModelMapper;
+import facade.modelmapper.TeamDetailsModelMapper;
 import model.DefaultSearchResultsModel;
 import model.PersonDetailsModel;
 import model.SearchResultsModel;
@@ -17,7 +18,7 @@ import requestmapper.QueryMapper;
 public class OverviewAndSearchController extends Controller {
     private static final ScalaRepository repo = new FacewallScalaRepo();
     private static final OverviewFacade overviewFacade = new OverviewFacade(repo);
-    private static final SearchFacade searchFacade = new SearchFacade(repo, new SearchResultsModelMapper(), new PersonDetailsModelMapper());
+    private static final SearchFacade searchFacade = new SearchFacade(repo, new SearchResultsModelMapper(), new PersonDetailsModelMapper(), new TeamDetailsModelMapper());
     private static final QueryMapper queryMapper = new QueryMapper();
 
     public static Result overview() {

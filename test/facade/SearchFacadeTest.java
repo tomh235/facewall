@@ -5,9 +5,11 @@ import domain.Query;
 import domain.Team;
 import facade.modelmapper.PersonDetailsModelMapper;
 import facade.modelmapper.SearchResultsModelMapper;
+import facade.modelmapper.TeamDetailsModelMapper;
 import model.DefaultSearchResultsModel;
 import model.PersonDetailsModel;
 import model.SearchResultsModel;
+import model.TeamDetailsModel;
 import org.junit.Test;
 import data.ScalaRepository;
 
@@ -21,9 +23,9 @@ public class SearchFacadeTest {
     ScalaRepository mockRepo = mock(ScalaRepository.class);
     SearchResultsModelMapper mockSearchResultsModelMapper = mock(SearchResultsModelMapper.class);
     PersonDetailsModelMapper mockPersonDetailsModelMapper = mock(PersonDetailsModelMapper.class);
-    SearchFacade searchFacade = new SearchFacade(mockRepo, mockSearchResultsModelMapper, mockPersonDetailsModelMapper);
+    TeamDetailsModelMapper teamDetailsModelMapper = mock(TeamDetailsModelMapper.class);
+    SearchFacade searchFacade = new SearchFacade(mockRepo, mockSearchResultsModelMapper, mockPersonDetailsModelMapper, teamDetailsModelMapper);
 
-    // should find persons and teams matching a query extracted from a web request and map them into a search results model
     @Test
     public void find_persons_and_teams_query_from_web_then_map_to_search_results_model_test() {
         Query query = mock(Query.class);
@@ -45,7 +47,6 @@ public class SearchFacadeTest {
         verify(mockSearchResultsModelMapper).map(new ArrayList<>(Arrays.asList(mockPerson, mockPerson)), new ArrayList<>(Arrays.asList(mockTeam)));
     }
 
-     // should return person details model if query returns only one person and no teams
     @Test
     public void one_person_no_teams_result_to_person_details_model_test() {
         Query query = mock(Query.class);
@@ -58,11 +59,26 @@ public class SearchFacadeTest {
         when(mockPersonDetailsModelMapper.map(mockPerson)).thenReturn(expectedResult);
 
         SearchResultsModel result = searchFacade.createSearchResultsModel(query);
-        assertEquals ("the result should be a person details model, got:" + result.getClass(), expectedResult, result);
+        assertEquals ("the result should be a person details model, got: " + result.getClass(), expectedResult, result);
 
         verify(mockRepo).queryPersons(query);
         verify(mockRepo).queryTeams(query);
         verify(mockPersonDetailsModelMapper).map(mockPerson);
+    }
+
+    @Test
+    public void no_person_one_team_result_to_team_details_model_test() {
+        Query query = mock(Query.class);
+        Team mockTeam = mock(Team.class);
+
+        when(mockRepo.queryPersons(query)).thenReturn(new ArrayList<Person>());
+        when(mockRepo.queryTeams(query)).thenReturn(new ArrayList<>(Arrays.asList(mockTeam)));
+
+        TeamDetailsModel expectedResult = mock(TeamDetailsModel.class);
+        when(teamDetailsModelMapper.map(mockTeam)).thenReturn(expectedResult);
+
+        SearchResultsModel result = searchFacade.createSearchResultsModel(query);
+        assertEquals ("the result should be a team details model, got: " + result.getClass(), expectedResult, result);
     }
 }
 
