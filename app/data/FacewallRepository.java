@@ -12,13 +12,13 @@ import domain.Team;
 
 import java.util.List;
 
-class FacewallRepository implements Repository {
+public class FacewallRepository implements Repository {
     final PersonFactory personFactory;
     final TeamFactory teamFactory;
 
     final FacewallDAO dao;
 
-    FacewallRepository(PersonFactory personFactory, TeamFactory teamFactory, FacewallDAO dao) {
+    public FacewallRepository(PersonFactory personFactory, TeamFactory teamFactory, FacewallDAO dao) {
         this.personFactory = personFactory;
         this.teamFactory = teamFactory;
         this.dao = dao;
@@ -32,5 +32,9 @@ class FacewallRepository implements Repository {
     @Override public List<Team> listTeams() {
         List<TeamDTO> dto = dao.fetchTeams();
         return teamFactory.createTeams(dto);
+    }
+
+    @Override public void addPerson(Person person) {
+        dao.writePerson();
     }
 }

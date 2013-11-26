@@ -3,13 +3,13 @@ package model;
 import org.hibernate.validator.constraints.URL;
 import play.data.validation.Constraints.*;
 
-public class User {
+public class UserModel {
     @Required
     public String name;
 
     @Required
     @URL
-    public String imglink;
+    public String imgURL;
 
     @Required
     public String role;
@@ -24,6 +24,5 @@ public class User {
     @Required
     public String team;
 
-    @Required
     public String scrum;
 }

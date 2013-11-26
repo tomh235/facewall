@@ -15,6 +15,24 @@ public class OverviewFacade {
         this.repository = repository;
     }
 
+    public List<OverviewEntryModel> createOverviewModel() {
+        List<Person> personList = sortAllPersons();
+        OverviewModelMapper overviewModelMapper = new OverviewModelMapper();
+        List<OverviewEntryModel> overviewEntryModelList = new ArrayList <> ();
+
+        for(Person person : personList) {
+            overviewEntryModelList.add(overviewModelMapper.map(person));
+        }
+        return overviewEntryModelList;
+    }
+
+    private List<Person> sortAllPersons() {
+        List<Person> personList = repository.listPersons();
+        List<Person> sortableList = new ArrayList<>(personList);
+        Collections.sort(sortableList, new TeamNameThenNameComparator());
+        return sortableList;
+    }
+
     private class TeamNameThenNameComparator implements Comparator<Person> {
         @Override
         public int compare(Person person1, Person person2) {
@@ -37,23 +55,5 @@ public class OverviewFacade {
                 return person1Name.compareTo(person2Name);
             }
         }
-    }
-
-    private List<Person> sortAllPersons() {
-        List<Person> personList = repository.listPersons();
-        List<Person> sortableList = new ArrayList<>(personList);
-        Collections.sort(sortableList, new TeamNameThenNameComparator());
-        return sortableList;
-    }
-
-    public List<OverviewEntryModel> createOverviewModel() {
-        List<Person> personList = sortAllPersons();
-        OverviewModelMapper overviewModelMapper = new OverviewModelMapper();
-        List<OverviewEntryModel> overviewEntryModelList = new ArrayList <> ();
-
-        for(Person person : personList) {
-           overviewEntryModelList.add(overviewModelMapper.map(person));
-        }
-        return overviewEntryModelList;
     }
 }

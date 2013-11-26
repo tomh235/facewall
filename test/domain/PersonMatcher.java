@@ -59,7 +59,7 @@ public class PersonMatcher extends CompositeMatcher<Person> {
 
             @Override
             public void describeTo(Description description) {
-                description.appendText("with has colour " + picture);
+                description.appendText("with picture URL " + picture);
             }
         });
         return this;

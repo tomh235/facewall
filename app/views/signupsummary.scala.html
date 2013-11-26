@@ -1,5 +1,5 @@
-@(user: model.User)
-@main("Summary of new user information", 2){
+@(userModel: model.UserModel)
+@main("Summary of new userModel information", 2){
 
 <div class="container">
     <div class="row">
@@ -12,39 +12,39 @@
 
             <h3>Username</h3>
             <p>
-                @user.name
+                @userModel.name
             </p>
 
             <h3>Email</h3>
             <p>
-                @user.email
+                @userModel.email
             </p>
 
             <h3>Role</h3>
             <p>
-                @user.role
+                @userModel.role
             </p>
 
             <h3>Location</h3>
             <p>
-                @user.location
+                @userModel.location
             </p>
 
             <h3>Team</h3>
             <p>
-                @if(user.team == null || user.scrum == "") {
+                @if(userModel.team == null || userModel.scrum == "") {
                 <em>Not specified</em>
                 } else {
-                @user.team
+                @userModel.team
                 }
             </p>
 
             <h3>Scrum</h3>
             <p>
-                @if(user.scrum== null || user.scrum == "") {
+                @if(userModel.scrum== null || userModel.scrum == "") {
                 <em>Not specified</em>
                 } else {
-                @user.scrum
+                @userModel.scrum
                 }
             </p>
         </div>
@@ -54,11 +54,11 @@
             <h3>Picture</h3>
             <h5>url:</h5>
             <p>
-                @user.imglink
+                @userModel.imglink
             </p>
 
             <a href="#">
-                <img class="thumbnail" src="@user.imglink" alt="">
+                <img class="thumbnail" src="@userModel.imglink" alt="">
             </a>
 
         </div>

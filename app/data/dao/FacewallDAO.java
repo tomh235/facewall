@@ -14,4 +14,8 @@ public class FacewallDAO {
     public List<TeamDTO> fetchTeams() {
         return null;  //To change body of created methods use File | Settings | File Templates.
     }
+
+    public void writePerson() {
+
+    }
 }

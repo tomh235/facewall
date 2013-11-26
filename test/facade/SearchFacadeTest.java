@@ -12,6 +12,9 @@ import model.SearchResultsModel;
 import model.TeamDetailsModel;
 import org.junit.Test;
 import data.ScalaRepository;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
