@@ -10,14 +10,14 @@ public class SignUpController extends Controller {
     private static final Form<UserModel> signUpForm = Form.form(UserModel.class);
 
         public static Result blankSignUpForm() {
-            return ok(views.html.signupform.render());
+            return ok(views.html.signupform.render(signUpForm));
         }
 
         public static Result signUpFormSubmit() {
             Form<UserModel> filledSignUpForm = signUpForm.bindFromRequest();
 
             if(filledSignUpForm.hasErrors()) {
-                return badRequest(views.html.signupform.render());
+                return badRequest(views.html.signupform.render(filledSignUpForm));
             }
             else {
                 UserModel newUserModel = filledSignUpForm.get();

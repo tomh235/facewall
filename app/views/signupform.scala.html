@@ -1,29 +1,60 @@
+@(userForm: Form[model.UserModel])
 @main("Input your details", 2) {
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3 form">
             <form role="form" method="post" action="/signupform">
                 <div class="form-group">
+
+                    @for(error <- userForm("name").error) {
+                    <h4>@(error.message)</h4>
+                    }
+
                     <label>Full name</label>
                     <input class="form-control" type="text" name="name" placeholder="Enter name" required>
                 </div>
                 <div class="form-group">
+
+                    @for(error <- userForm("imgURL").error) {
+                    <h4>@(error.message)</h4>
+                    }
+
                     <label>Url to picture</label>
-                    <input class="form-control" type="url" name="imglink" placeholder="Enter url" required>
+                    <input class="form-control" type="url" name="imgURL" placeholder="Enter url" required>
                 </div>
                 <div class="form-group">
+
+                    @for(error <- userForm("email").error) {
+                    <h4>@(error.message)</h4>
+                    }
+
                     <label>Email address</label>
                     <input class="form-control" type="email" name="email" placeholder="Enter email" required>
                 </div>
                 <div class="form-group">
+
+                    @for(error <- userForm("team").error) {
+                    <h4>@(error.message)</h4>
+                    }
+
                     <label>Team name</label>
                     <input class="form-control" type="text" name="team" placeholder="Enter team name" required>
                 </div>
                 <div class="form-group">
+
+                    @for(error <- userForm("scrum").error) {
+                    <h4>@(error.message)</h4>
+                    }
+
                     <label>Scrum name</label>
                     <input class="form-control" type="text" name="scrum" placeholder="Enter scrum name" required>
                 </div>
                 <div class="form-group">
+
+                    @for(error <- userForm("role").error) {
+                    <h4>@(error.message)</h4>
+                    }
+
                     <label>Job role</label>
                     <select class="form-control" name="role" required>
                         <option value="ba">Business Analyst</option>
@@ -34,6 +65,11 @@
                     </select>
                 </div>
                 <div class="form-group">
+
+                    @for(error <- userForm("location").error) {
+                    <h4>@(error.message)</h4>
+                    }
+
                     <label>Work location</label>
                     <select class="form-control" name="location" required >
                         <option value="bath_road">Bath road</option>
