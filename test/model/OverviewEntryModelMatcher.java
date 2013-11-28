@@ -16,12 +16,10 @@ public class OverviewEntryModelMatcher extends CompositeMatcher<OverviewEntryMod
 
     public OverviewEntryModelMatcher withTeamHeader(final String teamHeader) {
         add(new TypeSafeMatcher<OverviewEntryModel>() {
-
             @Override
             public boolean matchesSafely(OverviewEntryModel target) {
                 return target.teamHeader.equals(teamHeader);
             }
-
             @Override
             public void describeTo(Description description) {
                 description.appendText("with a teamHead of " + teamHeader);
@@ -32,12 +30,10 @@ public class OverviewEntryModelMatcher extends CompositeMatcher<OverviewEntryMod
 
     public OverviewEntryModelMatcher named(final String name) {
         add(new TypeSafeMatcher<OverviewEntryModel>() {
-
             @Override
             public boolean matchesSafely(OverviewEntryModel target) {
                 return target.name.equals(name);
             }
-
             @Override
             public void describeTo(Description description) {
                 description.appendText("with name " + name);
@@ -48,12 +44,10 @@ public class OverviewEntryModelMatcher extends CompositeMatcher<OverviewEntryMod
 
     public OverviewEntryModelMatcher withPicture(final String picture) {
         add(new TypeSafeMatcher<OverviewEntryModel>() {
-
             @Override
             public boolean matchesSafely(OverviewEntryModel target) {
                 return target.picture.equals(picture);
             }
-
             @Override
             public void describeTo(Description description) {
                 description.appendText("with has picture " + picture);
@@ -64,12 +58,10 @@ public class OverviewEntryModelMatcher extends CompositeMatcher<OverviewEntryMod
 
     public OverviewEntryModelMatcher withColour(final String colour) {
         add(new TypeSafeMatcher<OverviewEntryModel>() {
-
             @Override
             public boolean matchesSafely(OverviewEntryModel target) {
                 return target.colour.equals(colour);
             }
-
             @Override
             public void describeTo(Description description) {
                 description.appendText("with has colour " + colour);
