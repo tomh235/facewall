@@ -11,6 +11,7 @@ import facade.modelmapper.TeamDetailsModelMapper;
 import model.DefaultSearchResultsModel;
 import model.PersonDetailsModel;
 import model.SearchResultsModel;
+import model.TeamDetailsModel;
 import play.mvc.Controller;
 import play.mvc.Result;
 import requestmapper.QueryMapper;
@@ -30,15 +31,19 @@ public class OverviewAndSearchController extends Controller {
     }
 
     public static Result searchResults() {
+        Result result;
         Query query = queryMapper.map(request());
         SearchResultsModel searchResultsModel = searchFacade.createSearchResultsModel(query);
 
         if(searchResultsModel instanceof DefaultSearchResultsModel) {
-            return ok(views.html.searchresults.render((DefaultSearchResultsModel) searchResultsModel));
+            result = ok(views.html.searchresults.render((DefaultSearchResultsModel) searchResultsModel));
+        } else if(searchResultsModel instanceof PersonDetailsModel) {
+            result = ok(views.html.persondetails.render((PersonDetailsModel) searchResultsModel));
+        } else if(searchResultsModel instanceof TeamDetailsModel) {
+            result = ok(views.html.teamdetails.render((TeamDetailsModel) searchResultsModel));
+        } else {
+            result = internalServerError("Query not recognized");
         }
-        else if(searchResultsModel instanceof PersonDetailsModel) {
-            return ok(views.html.persondetails.render((PersonDetailsModel) searchResultsModel));
-        }
-        return internalServerError("Query not recognized");
+        return result;
     }
 }
