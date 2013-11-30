@@ -10,10 +10,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.index.IndexHits;
 
-import java.util.Collections;
 import java.util.List;
 
 import static data.dao.database.IndexQueryMatcher.anIndexQuery;
@@ -29,21 +27,15 @@ import static org.mockito.Mockito.*;
 import static util.CollectionMatcher.contains;
 
 @RunWith(MockitoJUnitRunner.class)
-public class FacewallDAOTest {
+public class FacewallDAOTest extends DAOTest {
 
     @Mock FacewallDB mockDb;
-
-    @Mock Transaction mockTransaction;
-    @Mock IndexHits<Node> stubNodeIndexHits;
-
     private FacewallDAO facewallDAO;
 
     @Before
     public void setUp() throws Exception {
         facewallDAO = new FacewallDAO(mockDb);
         when(mockDb.beginTransaction()).thenReturn(mockTransaction);
-
-        when(stubNodeIndexHits.iterator()).thenReturn(Collections.<Node>emptyList().iterator());
     }
 
     @Test
@@ -200,11 +192,5 @@ public class FacewallDAOTest {
 
     private void stubOutMocks() {
         when(mockDb.lookupNodesInIndex(any(IndexQuery.class))).thenReturn(stubNodeIndexHits);
-    }
-
-    private void verifyTransactionComplete() {
-        verify(mockDb).beginTransaction();
-        verify(mockTransaction).success();
-        verify(mockTransaction).finish();
     }
 }

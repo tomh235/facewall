@@ -61,7 +61,7 @@ public class FacewallDBTest {
     }
 
     @Test
-    public void node_from_index_lookup() {
+    public void nodes_from_index_lookup() {
         IndexHits<Node> expectedHits = mock(IndexHits.class);
         when(mockIndex.get(anyString(), any())).thenReturn(expectedHits);
 
@@ -71,6 +71,22 @@ public class FacewallDBTest {
                 .build()
         );
         assertThat(result, is(sameInstance(expectedHits)));
+    }
+
+    @Test
+    public void single_node_from_index_lookup() {
+        IndexHits<Node> expectedHits = mock(IndexHits.class);
+        when(mockIndex.get(anyString(), any())).thenReturn(expectedHits);
+
+        Node expectedNode = mock(Node.class);
+        when(expectedHits.getSingle()).thenReturn(expectedNode);
+
+        Node result = facewallDB.lookupSingleNodeInIndex(anIndexLookup()
+                .onIndex(Persons)
+                .forValue("1")
+                .build()
+        );
+        assertThat(result, is(sameInstance(expectedNode)));
     }
 
     @Test

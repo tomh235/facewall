@@ -40,6 +40,10 @@ public class FacewallDB {
         return index.get(indexQuery.keyName, indexQuery.queriedValue);
     }
 
+    public Node lookupSingleNodeInIndex(IndexQuery indexQuery) {
+        return lookupNodesInIndex(indexQuery).getSingle();
+    }
+
     public List<Node> findRelatedNodes(Node node) {
         List<Node> relatedNodes = new ArrayList<>();
         for (Relationship relationship : node.getRelationships()) {
