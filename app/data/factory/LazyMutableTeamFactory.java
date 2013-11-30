@@ -1,6 +1,7 @@
 package data.factory;
 
 import data.dao.FacewallDAO;
+import data.dao.TraversingDAO;
 import data.mapper.MutablePerson;
 import data.mapper.MutableTeam;
 import data.mapper.PersonMapper;
@@ -12,11 +13,11 @@ import java.util.List;
 import static data.factory.DefaultMutablePerson.newMutablePersonInTeam;
 
 public class LazyMutableTeamFactory {
-    private final FacewallDAO dao;
+    private final TraversingDAO dao;
     private final PersonMapper personMapper;
 
-    public LazyMutableTeamFactory(FacewallDAO dao, PersonMapper personMapper) {
-        this.dao = dao;
+    public LazyMutableTeamFactory(TraversingDAO traversingDAO, PersonMapper personMapper) {
+        this.dao = traversingDAO;
         this.personMapper = personMapper;
     }
 

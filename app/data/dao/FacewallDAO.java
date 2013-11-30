@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static data.dao.database.FacewallDB.NodeIndex.Persons;
+import static data.dao.database.FacewallDB.NodeIndex.Teams;
 import static data.dao.database.IndexQuery.anIndexLookup;
 
 public class FacewallDAO {
@@ -47,18 +48,29 @@ public class FacewallDAO {
     }
 
     public List<TeamDTO> fetchTeams() {
-        return null;  //To change body of created methods use File | Settings | File Templates.
+        List<TeamDTO> dtos = new ArrayList<>();
+
+        Transaction tx = db.beginTransaction();
+        try {
+            IndexQuery query = anIndexLookup()
+                .onIndex(Teams)
+                .forAllValues()
+                .build();
+
+            for (Node teamNode : db.lookupNodesInIndex(query)) {
+                List<Node> membersNodes = db.findRelatedNodes(teamNode);
+
+                dtos.add(new TeamDTO(teamNode, membersNodes));
+            }
+            tx.success();
+        } finally {
+            tx.finish();
+        }
+
+        return dtos;
     }
 
     public void writePerson() {
 
-    }
-
-    public List<Node> fetchTeamMembers(TeamId id) {
-        return null;
-    }
-
-    public Node fetchTeamForPerson(PersonId personId) {
-        return null;
     }
 }

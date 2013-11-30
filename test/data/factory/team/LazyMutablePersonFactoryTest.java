@@ -1,6 +1,7 @@
 package data.factory.team;
 
 import data.dao.FacewallDAO;
+import data.dao.TraversingDAO;
 import data.datatype.PersonId;
 import data.factory.LazyMutablePersonFactory;
 import data.factory.LazyMutableTeamFactory;
@@ -25,7 +26,7 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class LazyMutablePersonFactoryTest {
 
-    @Mock FacewallDAO mockDAO;
+    @Mock TraversingDAO mockDAO;
     @Mock LazyMutableTeamFactory mockLazyMutableTeamFactory;
     @Mock TeamMapper mockTeamMapper;
     private LazyMutablePersonFactory lazyMutablePersonFactory;

@@ -1,6 +1,7 @@
 package data.factory.person;
 
 import data.dao.FacewallDAO;
+import data.dao.TraversingDAO;
 import data.datatype.TeamId;
 import data.factory.LazyMutableTeamFactory;
 import data.mapper.MutablePerson;
@@ -28,7 +29,7 @@ import static util.CollectionMatcher.contains;
 @RunWith(MockitoJUnitRunner.class)
 public class LazyMutableTeamFactoryTest {
 
-    @Mock FacewallDAO mockDAO;
+    @Mock TraversingDAO mockDAO;
     @Mock PersonMapper mockPersonMapper;
     private LazyMutableTeamFactory lazyMutableTeamFactory;
 
@@ -74,8 +75,8 @@ public class LazyMutableTeamFactoryTest {
         Node expectedPersonNode1 = mock(Node.class);
         Node expectedPersonNode2 = mock(Node.class);
         when(mockDAO.fetchTeamMembers(any(TeamId.class))).thenReturn(asList(
-                expectedPersonNode1,
-                expectedPersonNode2
+            expectedPersonNode1,
+            expectedPersonNode2
         ));
 
         lazyMutableTeamFactory.createLazyMutableTeam().members();
