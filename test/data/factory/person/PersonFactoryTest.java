@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static data.mapper.MutablePersonMatcher.aMutablePerson;
+import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsSame.sameInstance;
@@ -47,7 +48,7 @@ public class PersonFactoryTest {
         when(mockPersonMapper.map(any(MutablePerson.class), any(Node.class)))
             .thenReturn(expectedPerson1)
             .thenReturn(expectedPerson2);
-        List<PersonDTO> dtos = Arrays.asList(
+        List<PersonDTO> dtos = asList(
             mock(PersonDTO.class), mock(PersonDTO.class)
         );
         List<Person> result = personFactory.createPersons(dtos);
@@ -71,7 +72,7 @@ public class PersonFactoryTest {
             .thenReturn(expectedMutableTeam)
             .thenReturn(expectedMutableTeam);
 
-        List<PersonDTO> dtos = Arrays.asList(
+        List<PersonDTO> dtos = asList(
             new PersonDTO(expectedPersonNode1, expectedTeamNode1),
             new PersonDTO(expectedPersonNode2, expectedTeamNode2)
         );
@@ -91,7 +92,7 @@ public class PersonFactoryTest {
         Team expectedTeam = mock(Team.class);
         when(mockTeamMapper.map(any(MutableTeam.class), any(Node.class))).thenReturn(expectedTeam);
 
-        List<PersonDTO> dtos = Arrays.asList(mock(PersonDTO.class));
+        List<PersonDTO> dtos = asList(mock(PersonDTO.class));
         personFactory.createPersons(dtos);
 
         verify(mockPersonMapper).map(
