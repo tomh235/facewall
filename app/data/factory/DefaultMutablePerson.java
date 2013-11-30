@@ -1,4 +1,4 @@
-package data.factory.person;
+package data.factory;
 
 import data.mapper.MutablePerson;
 import domain.Team;

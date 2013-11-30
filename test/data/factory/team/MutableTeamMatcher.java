@@ -17,7 +17,7 @@ public class MutableTeamMatcher extends CompositeMatcher<MutableTeam> {
         return new MutableTeamMatcher();
     }
 
-    public MutableTeamMatcher whoseMembers(final Matcher<List<Person>> membersMatcher) {
+    public MutableTeamMatcher whoseMembersAre(final Matcher<List<Person>> membersMatcher) {
         add(new TypeSafeMatcher<MutableTeam>() {
             @Override public boolean matchesSafely(MutableTeam mutableTeam) {
                 return membersMatcher.matches(mutableTeam.members());

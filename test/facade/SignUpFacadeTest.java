@@ -2,8 +2,8 @@ package facade;
 
 import data.FacewallRepository;
 import data.dao.FacewallDAO;
-import data.factory.person.PersonFactory;
-import data.factory.team.TeamFactory;
+import data.factory.PersonFactory;
+import data.factory.TeamFactory;
 import domain.Person;
 import model.UserModel;
 import org.junit.Test;

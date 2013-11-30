@@ -3,8 +3,8 @@ package data;
 import data.dao.FacewallDAO;
 import data.dto.PersonDTO;
 import data.dto.TeamDTO;
-import data.factory.person.PersonFactory;
-import data.factory.team.TeamFactory;
+import data.factory.PersonFactory;
+import data.factory.TeamFactory;
 import domain.Person;
 import domain.Team;
 

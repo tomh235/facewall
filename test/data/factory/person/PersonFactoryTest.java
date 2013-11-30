@@ -1,6 +1,9 @@
 package data.factory.person;
 
 import data.dto.PersonDTO;
+import data.factory.DefaultMutablePerson;
+import data.factory.LazyMutableTeamFactory;
+import data.factory.PersonFactory;
 import data.mapper.MutablePerson;
 import data.mapper.MutableTeam;
 import data.mapper.PersonMapper;
@@ -14,7 +17,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.neo4j.graphdb.Node;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static data.mapper.MutablePersonMatcher.aMutablePerson;

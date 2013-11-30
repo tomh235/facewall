@@ -1,4 +1,4 @@
-package data.factory.person;
+package data.factory;
 
 import data.dto.PersonDTO;
 import data.mapper.MutableTeam;
@@ -10,7 +10,7 @@ import domain.Team;
 import java.util.ArrayList;
 import java.util.List;
 
-import static data.factory.person.DefaultMutablePerson.newMutablePersonInTeam;
+import static data.factory.DefaultMutablePerson.newMutablePersonInTeam;
 
 public class PersonFactory {
 

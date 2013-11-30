@@ -1,9 +1,10 @@
 package data.factory.team;
 
 import data.dto.TeamDTO;
-import data.mapper.MutablePerson;
+import data.factory.DefaultMutableTeam;
+import data.factory.MembersFactory;
+import data.factory.TeamFactory;
 import data.mapper.MutableTeam;
-import data.mapper.PersonMapper;
 import data.mapper.TeamMapper;
 import domain.Person;
 import domain.Team;
@@ -30,14 +31,13 @@ import static util.CollectionMatcher.contains;
 public class TeamFactoryTest {
 
     @Mock TeamMapper mockTeamMapper;
-    @Mock PersonMapper mockPersonMapper;
-    @Mock LazyMutablePersonFactory mockLazyMutablePersonFactory;
+    @Mock MembersFactory mockMembersFactory;
 
     private TeamFactory teamFactory;
 
     @Before
     public void setUp() throws Exception {
-        teamFactory = new TeamFactory(mockTeamMapper, mockPersonMapper, mockLazyMutablePersonFactory);
+        teamFactory = new TeamFactory(mockTeamMapper, mockMembersFactory);
     }
 
     @Test
@@ -48,9 +48,9 @@ public class TeamFactoryTest {
         when(mockTeamMapper.map(any(MutableTeam.class), any(Node.class)))
             .thenReturn(expectedTeam1)
             .thenReturn(expectedTeam2);
+
         List<TeamDTO> dtos = asList(
-            new TeamDTO(mock(Node.class), Collections.<Node>emptyList()),
-            new TeamDTO(mock(Node.class), Collections.<Node>emptyList())
+            mock(TeamDTO.class), mock(TeamDTO.class)
         );
         List<Team> result = teamFactory.createTeams(dtos);
 
@@ -76,49 +76,17 @@ public class TeamFactoryTest {
     }
 
     @Test
-    public void create_team_maps_members() {
-        Node expectedPersonNode1 = mock(Node.class);
-        List<Node> expectedPersonNodesList1 = asList(expectedPersonNode1);
+    public void create_members_delegated_to_member_factory() {
+        List<Person> expectedMembers = mock(List.class);
+        when(mockMembersFactory.createMembers(any(List.class))).thenReturn(expectedMembers);
 
-        Node expectedPersonNode2 = mock(Node.class);
-        Node expectedPersonNode3 = mock(Node.class);
-        List<Node> expectedPersonNodesList2 = asList(expectedPersonNode2, expectedPersonNode3);
-
-        List<TeamDTO> dtos = asList(
-            new TeamDTO(mock(Node.class), expectedPersonNodesList1),
-            new TeamDTO(mock(Node.class), expectedPersonNodesList2)
-        );
-        teamFactory.createTeams(dtos);
-
-        verify(mockLazyMutablePersonFactory, times(3)).createLazyMutablePerson();
-
-        verify(mockPersonMapper).map(any(MutablePerson.class), eq(expectedPersonNode1));
-
-        verify(mockPersonMapper).map(any(MutablePerson.class), eq(expectedPersonNode2));
-        verify(mockPersonMapper).map(any(MutablePerson.class), eq(expectedPersonNode3));
-    }
-
-    @Test
-    public void create_team_sets_team_on_defaultTeamBuilder() {
-        Person expectedPerson1 = mock(Person.class);
-        Person expectedPerson2 = mock(Person.class);
-        when(mockPersonMapper.map(any(MutablePerson.class), any(Node.class)))
-            .thenReturn(expectedPerson1)
-            .thenReturn(expectedPerson2);
-
-        List<TeamDTO> dtos = asList(
-            new TeamDTO(mock(Node.class), asList(
-                mock(Node.class), mock(Node.class)
-            )
-            ));
+        List<TeamDTO> dtos = asList(mock(TeamDTO.class));
         teamFactory.createTeams(dtos);
 
         verify(mockTeamMapper).map(
             argThat(is(aMutableTeam()
-                .whoseMembers(contains(
-                        sameInstance(expectedPerson1),
-                        sameInstance(expectedPerson2)
-                    )))
+                .whoseMembersAre(
+                    sameInstance(expectedMembers)))
             ), any(Node.class)
         );
     }
