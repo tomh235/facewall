@@ -1,12 +1,14 @@
 package data.dao.database;
 
-import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.neo4j.graphdb.*;
+import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Relationship;
+import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.index.Index;
 import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.graphdb.index.IndexManager;
@@ -15,6 +17,7 @@ import java.util.List;
 
 import static data.dao.database.FacewallDB.NodeIndex.Persons;
 import static data.dao.database.IndexQuery.anIndexLookup;
+import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.hamcrest.core.Is.is;
@@ -87,7 +90,7 @@ public class FacewallDBTest {
     @Test
     public void all_nodes_related_to_given_node() {
         Relationship mockRelationship = mock(Relationship.class);
-        Iterable<Relationship> relationships = ImmutableList.of(mockRelationship, mockRelationship);
+        Iterable<Relationship> relationships = asList(mockRelationship, mockRelationship);
 
         Node mockNode = mock(Node.class);
         when(mockNode.getRelationships()).thenReturn(relationships);
@@ -110,7 +113,7 @@ public class FacewallDBTest {
     @Test
     public void all_nodes_related_to_given_node_verifyInteractions() {
         Relationship mockRelationship = mock(Relationship.class);
-        Iterable<Relationship> relationships = ImmutableList.of(mockRelationship, mockRelationship);
+        Iterable<Relationship> relationships = asList(mockRelationship, mockRelationship);
 
         Node mockNode = mock(Node.class);
         when(mockNode.getRelationships()).thenReturn(relationships);

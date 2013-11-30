@@ -38,5 +38,10 @@ public class IndexQuery {
             this.queriedValue = value;
             return this;
         }
+
+        public Builder forAllValues() {
+            this.queriedValue = "*";
+            return this;
+        }
     }
 }

@@ -7,10 +7,8 @@ import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.index.Index;
 import org.neo4j.graphdb.index.IndexHits;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import static com.google.common.collect.ImmutableList.copyOf;
-import static com.google.common.collect.Lists.newArrayList;
 
 public class FacewallDB {
     public enum NodeIndex {
@@ -43,11 +41,11 @@ public class FacewallDB {
     }
 
     public List<Node> findRelatedNodes(Node node) {
-        List<Node> relatedNodes = newArrayList();
+        List<Node> relatedNodes = new ArrayList<>();
         for (Relationship relationship : node.getRelationships()) {
             relatedNodes.add(relationship.getOtherNode(node));
         }
 
-        return copyOf(relatedNodes);
+        return relatedNodes;
     }
 }
