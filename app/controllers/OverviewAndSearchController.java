@@ -16,6 +16,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import requestmapper.QueryMapper;
 
+//Split these up into two controllers
 public class OverviewAndSearchController extends Controller {
     private static final ScalaRepository repo = new FacewallScalaRepo();
     private static final OverviewFacade overviewFacade = new OverviewFacade(repo);
@@ -35,6 +36,8 @@ public class OverviewAndSearchController extends Controller {
         Query query = queryMapper.map(request());
         SearchResultsModel searchResultsModel = searchFacade.createSearchResultsModel(query);
 
+        //This looks like scala code that has been translated into java. That's fine, but this kind of java code
+        //should be avoided if possible.
         if(searchResultsModel instanceof DefaultSearchResultsModel) {
             result = ok(views.html.searchresults.render((DefaultSearchResultsModel) searchResultsModel));
         } else if(searchResultsModel instanceof PersonDetailsModel) {

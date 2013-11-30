@@ -1,7 +1,5 @@
 package data;
 
-import data.datatype.PersonId;
-import data.datatype.TeamId;
 import domain.Person;
 import domain.Team;
 

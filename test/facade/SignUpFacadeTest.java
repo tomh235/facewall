@@ -2,10 +2,9 @@ package facade;
 
 import data.FacewallRepository;
 import data.dao.FacewallDAO;
-import data.factory.PersonFactory;
-import data.factory.TeamFactory;
+import data.factory.person.PersonFactory;
+import data.factory.team.TeamFactory;
 import domain.Person;
-import junit.framework.Assert;
 import model.UserModel;
 import org.junit.Test;
 import org.junit.runner.RunWith;
