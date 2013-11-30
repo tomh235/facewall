@@ -1,4 +1,4 @@
-package data.factory;
+package data.factory.team;
 
 import data.dto.TeamDTO;
 import domain.Team;

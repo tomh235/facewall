@@ -1,12 +1,10 @@
 package data;
 
 import data.dao.FacewallDAO;
-import data.datatype.PersonId;
-import data.datatype.TeamId;
 import data.dto.PersonDTO;
 import data.dto.TeamDTO;
-import data.factory.PersonFactory;
-import data.factory.TeamFactory;
+import data.factory.person.PersonFactory;
+import data.factory.team.TeamFactory;
 import domain.Person;
 import domain.Team;
 import org.junit.Before;

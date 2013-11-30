@@ -22,12 +22,12 @@ public class PersonMatcher extends CompositeMatcher<Person> {
 
             @Override
             public boolean matchesSafely(Person target) {
-                return target.id().equals(id);
+                return id.equals(target.id());
             }
 
             @Override
             public void describeTo(Description description) {
-                description.appendText("with an id of " + id);
+                description.appendText("with an id of ").appendValue(id);
             }
         });
         return this;
@@ -43,7 +43,7 @@ public class PersonMatcher extends CompositeMatcher<Person> {
 
             @Override
             public void describeTo(Description description) {
-                description.appendText("with name " + name);
+                description.appendText("named ").appendValue(name);
             }
         });
         return this;
@@ -54,27 +54,29 @@ public class PersonMatcher extends CompositeMatcher<Person> {
 
             @Override
             public boolean matchesSafely(Person target) {
-                return target.picture().equals(picture);
+                return picture.equals(target.picture());
             }
 
             @Override
             public void describeTo(Description description) {
-                description.appendText("with picture URL " + picture);
+                description.appendText("whose picture is at ").appendValue(picture);
             }
         });
         return this;
 
-    }    public PersonMatcher inTeam(final TeamMatcher team) {
+    }
+
+    public PersonMatcher inTeam(final Matcher<Team> team) {
         add(new TypeSafeMatcher<Person>() {
 
             @Override
             public boolean matchesSafely(Person target) {
-                return target.team().equals(team);
+                return team.matches(target.team());
             }
 
             @Override
             public void describeTo(Description description) {
-                description.appendText("in the team " + team);
+                description.appendText("in: ").appendDescriptionOf(team);
             }
         });
         return this;
