@@ -10,7 +10,7 @@ import domain.Team;
 
 import java.util.List;
 
-public class FacewallRepository implements Repository {
+class FacewallRepository implements Repository {
     final PersonFactory personFactory;
     final TeamFactory teamFactory;
 

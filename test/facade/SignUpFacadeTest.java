@@ -1,9 +1,6 @@
 package facade;
 
-import data.FacewallRepository;
-import data.dao.FacewallDAO;
-import data.factory.PersonFactory;
-import data.factory.TeamFactory;
+import data.Repository;
 import domain.Person;
 import model.UserModel;
 import org.junit.Test;
@@ -18,13 +15,10 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SignUpFacadeTest {
-    @Mock PersonFactory mockPersonFactory;
-    @Mock TeamFactory mockTeamFactory;
-    @Mock FacewallDAO mockFacewallDAO;
-    @Mock UserModelToPersonMapper userModelToPersonMapper;
 
-    FacewallRepository facewallRepository = new FacewallRepository(mockPersonFactory, mockTeamFactory, mockFacewallDAO);
-    SignUpFacade signUpFacade = new SignUpFacade(facewallRepository);
+    @Mock UserModelToPersonMapper userModelToPersonMapper;
+    @Mock Repository repo;
+    private SignUpFacade signUpFacade = new SignUpFacade(repo);
 
     // TODO: finish test implementation
     @Test

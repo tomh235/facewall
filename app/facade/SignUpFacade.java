@@ -1,14 +1,13 @@
 package facade;
 
-import data.FacewallRepository;
-import data.dto.PersonDTO;
+import data.Repository;
 import model.UserModel;
 
 public class SignUpFacade {
-    private final FacewallRepository repository;
+    private final Repository repository;
 
-    public SignUpFacade (FacewallRepository repository) {
-        this.repository= repository;
+    public SignUpFacade (Repository repository) {
+        this.repository = repository;
     }
 
     public void delegateNewUserToRepository(UserModel userModel) {
