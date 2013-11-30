@@ -48,4 +48,15 @@ public class FacewallDB {
 
         return relatedNodes;
     }
+
+    //Should throw a checked exception rather than a runtime one
+    public Node findSingleRelatedNode(Node node) {
+        List<Node> relatedNodes = findRelatedNodes(node);
+
+        if (relatedNodes.size() != 1) {
+            throw new RuntimeException("non-singular related nodes!");
+        }
+
+        return relatedNodes.get(0);
+    }
 }

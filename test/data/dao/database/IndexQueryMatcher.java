@@ -49,4 +49,17 @@ public class IndexQueryMatcher extends CompositeMatcher<IndexQuery> {
         });
         return this;
     }
+
+    public IndexQueryMatcher queryingForAllValues() {
+        add(new TypeSafeMatcher<IndexQuery>() {
+            @Override public boolean matchesSafely(IndexQuery indexQuery) {
+                return "*".equals(indexQuery.queriedValue);
+            }
+
+            @Override public void describeTo(Description description) {
+                description.appendText(" querying for all values");
+            }
+        });
+        return this;
+    }
 }

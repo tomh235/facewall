@@ -127,4 +127,39 @@ public class FacewallDBTest {
         verify(mockNode).getRelationships();
         verify(mockRelationship, times(2)).getOtherNode(mockNode);
     }
+
+    @Test
+    public void single_related_node() {
+        Relationship mockRelationship = mock(Relationship.class);
+        Iterable<Relationship> relationships = asList(mockRelationship);
+
+        Node mockNode = mock(Node.class);
+        when(mockNode.getRelationships()).thenReturn(relationships);
+
+        Node expectedNode = mock(Node.class);
+
+        when(mockRelationship.getOtherNode(any(Node.class)))
+            .thenReturn(expectedNode);
+
+        Node result = facewallDB.findSingleRelatedNode(mockNode);
+
+        assertThat(result, is(sameInstance(expectedNode)));
+    }
+
+    @Test
+    public void single_related_node_verifyInteractions() {
+        Relationship mockRelationship = mock(Relationship.class);
+        Iterable<Relationship> relationships = asList(mockRelationship);
+
+        Node mockNode = mock(Node.class);
+        when(mockNode.getRelationships()).thenReturn(relationships);
+
+        when(mockRelationship.getOtherNode(any(Node.class)))
+            .thenReturn(mock(Node.class));
+
+        facewallDB.findRelatedNodes(mockNode);
+
+        verify(mockNode).getRelationships();
+        verify(mockRelationship).getOtherNode(mockNode);
+    }
 }
