@@ -6,8 +6,9 @@ tmp
 .history
 dist
 /.idea
-/*.iml
-/*.iws
+*.iml
+*.iws
+*.ipr
 /out
 /.idea_modules
 /.classpath
@@ -17,3 +18,4 @@ dist
 .shell_history
 project/target
 target/
+.gradle/

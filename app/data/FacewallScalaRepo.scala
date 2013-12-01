@@ -6,7 +6,6 @@ import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
 import scala.collection.JavaConverters._
-import java.util
 
 class FacewallScalaRepo extends ScalaRepository {
 

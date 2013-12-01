@@ -1,0 +1,8 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+dependencies {
+    testCompile project(':facewall-database-utils')
+    testCompile "org.neo4j:neo4j-kernel:1.9.5"
+    testCompile "org.neo4j:neo4j-rest-graphdb:1.9"
+}
