@@ -1,6 +1,6 @@
 package data;
 
-public class DataModuleEndToEndTest extends DatabaseTest {
+public class DataModuleEndToEndTest extends FacewallDatabaseTest {
 
 
 }
