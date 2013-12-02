@@ -11,6 +11,7 @@ public class UserModel {
     @URL(message = "Please enter a valid URL")
     public String imgURL;
     @Required(message = "An Email is required")
+    @MaxLength(value = 50, message = "Maximum name length is 50 characters")
     public String name;
     @Required(message = "A Role is required")
     public String role;

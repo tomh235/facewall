@@ -18,7 +18,7 @@ class FacewallScalaRepo extends ScalaRepository {
     }
 
     private val noTeam: Team = new Team {
-        def members(): util.List[Person] = Nil.asJava.asInstanceOf[java.util.List[Person]]
+        def members(): java.util.List[Person] = Nil.asJava.asInstanceOf[java.util.List[Person]]
         def name(): String = ""
         def id(): String = {
             throw new UnsupportedOperationException("cannot get the id of no team")
