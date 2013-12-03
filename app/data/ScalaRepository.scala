@@ -3,6 +3,7 @@ package data
 import domain.{Team, Person, Query}
 
 trait  ScalaRepository {
+    def addPerson(person: Person)
     def findTeamForPerson(person: Person): Team
     def listPersons: java.util.List[Person]
     def listTeams: List[Team]

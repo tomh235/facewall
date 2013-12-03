@@ -24,17 +24,18 @@ public class SearchFacade {
     }
 
     public SearchResultsModel createSearchResultsModel(Query query) {
+        SearchResultsModel resultsModel;
         List<Person> persons = repository.queryPersons(query);
         List<Team> teams = repository.queryTeams(query);
 
         if (persons.size() == 1 && teams.isEmpty()) {
-            return personDetailsModelMapper.map(persons.get(0));
+            resultsModel = personDetailsModelMapper.map(persons.get(0));
+        } else if (teams.size() == 1 && persons.isEmpty()) {
+            resultsModel = teamDetailsModelMapper.map(teams.get(0));
+        } else {
+            resultsModel = searchResultsModelMapper.map(persons, teams);
         }
+        return resultsModel;
 
-        if (teams.size() == 1 && persons.isEmpty()) {
-            return teamDetailsModelMapper.map(teams.get(0));
-        }
-
-        return searchResultsModelMapper.map(persons, teams);
     }
 }

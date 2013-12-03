@@ -38,6 +38,8 @@ class FacewallScalaRepo extends ScalaRepository {
             (__ \ 'colour).read[String]
         )(DefaultTeamImplementation)
 
+  def addPerson(person: Person) {}
+
   def findTeamForPerson(person: Person): Team = Cypher(
         """
           |START person = node(*)

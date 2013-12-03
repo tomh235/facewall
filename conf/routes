@@ -16,6 +16,6 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 # New userModel registration form
 GET     /signupform                 controllers.SignUpController.blankSignUpForm
-POST    /signupform                 controllers.SignUpController.signUpFormSubmit
+POST    /signupform                 controllers.SignUpController.submitSignUpForm
 
 GET     /signup-summary             controllers.SignUpController.summaryPage

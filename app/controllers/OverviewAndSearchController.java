@@ -14,14 +14,14 @@ import model.SearchResultsModel;
 import model.TeamDetailsModel;
 import play.mvc.Controller;
 import play.mvc.Result;
-import requestmapper.QueryMapper;
+import requestmapper.SearchQueryMapper;
 
 //Split these up into two controllers
 public class OverviewAndSearchController extends Controller {
     private static final ScalaRepository repo = new FacewallScalaRepo();
     private static final OverviewFacade overviewFacade = new OverviewFacade(repo);
     private static final SearchFacade searchFacade = new SearchFacade(repo, new SearchResultsModelMapper(), new PersonDetailsModelMapper(), new TeamDetailsModelMapper());
-    private static final QueryMapper queryMapper = new QueryMapper();
+    private static final SearchQueryMapper searchQueryMapper = new SearchQueryMapper();
 
     public static Result overview() {
         return ok(views.html.overview.render(overviewFacade.createOverviewModel()));
@@ -33,7 +33,7 @@ public class OverviewAndSearchController extends Controller {
 
     public static Result searchResults() {
         Result result;
-        Query query = queryMapper.map(request());
+        Query query = searchQueryMapper.map(request());
         SearchResultsModel searchResultsModel = searchFacade.createSearchResultsModel(query);
 
         //This looks like scala code that has been translated into java. That's fine, but this kind of java code

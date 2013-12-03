@@ -1,4 +1,4 @@
-@(userForm: Form[model.UserModel])
+@(userForm: Form[model.UserModel], teamExists: Boolean)
 @main("Input your details", 2) {
 <div class="container">
     <div class="row">
@@ -7,7 +7,7 @@
                 <div class="form-group">
 
                     @for(error <- userForm("name").error) {
-                    <h4 color="red">@(error.message)</h4>
+                    <h4>@(error.message)</h4>
                     }
 
                     <label>Full name</label>
@@ -16,7 +16,7 @@
                 <div class="form-group">
 
                     @for(error <- userForm("imgURL").error) {
-                    <h4 color="red">@(error.message)</h4>
+                    <h4>@(error.message)</h4>
                     }
 
                     <label>Url to picture</label>
@@ -25,7 +25,7 @@
                 <div class="form-group">
 
                     @for(error <- userForm("email").error) {
-                    <h4 color="red">@(error.message)</h4>
+                    <h4>@(error.message)</h4>
                     }
 
                     <label>Email address</label>
@@ -43,7 +43,11 @@
                 <div class="form-group">
 
                     @for(error <- userForm("scrum").error) {
-                    <h4 color="red">@(error.message)</h4>
+                    <h4>@(error.message)</h4>
+                    }
+
+                    @if(!teamExists) {
+                    <h4>"The team entered does not exist"</h4>
                     }
 
                     <label>Scrum name</label>
@@ -52,7 +56,7 @@
                 <div class="form-group">
 
                     @for(error <- userForm("role").error) {
-                    <h4 color="red">@(error.message)</h4>
+                    <h4>@(error.message)</h4>
                     }
 
                     <label>Job role</label>
@@ -67,7 +71,7 @@
                 <div class="form-group">
 
                     @for(error <- userForm("location").error) {
-                    <h4 color="red">@(error.message)</h4>
+                    <h4>@(error.message)</h4>
                     }
 
                     <label>Work location</label>
