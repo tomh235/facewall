@@ -37,17 +37,17 @@
                     <h4>@(error.message)</h4>
                     }
 
+                    @if(!teamExists) {
+                    <h4>The team entered does not exist</h4>
+                    }
+
                     <label>Team name</label>
-                    <input class="form-control" type="text" name="team" placeholder="Enter team name" required>
+                    <input class="form-control" name="team" required>
                 </div>
                 <div class="form-group">
 
                     @for(error <- userForm("scrum").error) {
                     <h4>@(error.message)</h4>
-                    }
-
-                    @if(!teamExists) {
-                    <h4>"The team entered does not exist"</h4>
                     }
 
                     <label>Scrum name</label>

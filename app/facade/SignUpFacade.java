@@ -15,7 +15,6 @@ public class SignUpFacade {
     private final PersonMapper personMapper;
     private final TeamValidator teamValidator;
 
-
     public SignUpFacade (ScalaRepository repository, PersonMapper personMapper, QueryMapper queryMapper, TeamValidator teamValidator) {
         this.repository = repository;
         this.personMapper = personMapper;

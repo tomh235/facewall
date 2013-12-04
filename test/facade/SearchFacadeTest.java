@@ -1,5 +1,6 @@
 package facade;
 
+import data.ScalaRepository;
 import domain.Person;
 import domain.Query;
 import domain.Team;
@@ -10,8 +11,8 @@ import model.DefaultSearchResultsModel;
 import model.PersonDetailsModel;
 import model.SearchResultsModel;
 import model.TeamDetailsModel;
+import org.junit.Before;
 import org.junit.Test;
-import data.ScalaRepository;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -22,13 +23,22 @@ import java.util.Arrays;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class SearchFacadeTest {
-    ScalaRepository mockRepo = mock(ScalaRepository.class);
-    SearchResultsModelMapper mockSearchResultsModelMapper = mock(SearchResultsModelMapper.class);
-    PersonDetailsModelMapper mockPersonDetailsModelMapper = mock(PersonDetailsModelMapper.class);
-    TeamDetailsModelMapper teamDetailsModelMapper = mock(TeamDetailsModelMapper.class);
-    SearchFacade searchFacade = new SearchFacade(mockRepo, mockSearchResultsModelMapper, mockPersonDetailsModelMapper, teamDetailsModelMapper);
+    @Mock
+    ScalaRepository mockRepo;
+    @Mock
+    SearchResultsModelMapper mockSearchResultsModelMapper;
+    @Mock
+    PersonDetailsModelMapper mockPersonDetailsModelMapper;
+    @Mock
+    TeamDetailsModelMapper teamDetailsModelMapper;
+    SearchFacade searchFacade;
 
+    @Before
+    public void setUp() {
+        searchFacade = new SearchFacade(mockRepo, mockSearchResultsModelMapper, mockPersonDetailsModelMapper, teamDetailsModelMapper);
+    }
     @Test
     public void find_persons_and_teams_query_from_web_then_map_to_search_results_model_test() {
         Query query = mock(Query.class);

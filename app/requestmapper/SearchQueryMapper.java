@@ -5,7 +5,7 @@ import play.mvc.Http;
 
 public class SearchQueryMapper {
     public Query map(Http.Request request) {
-        // TODO Implement a better way of handling GET requests to /search-results with wrong parameters
+        // TODO -- Charlie : Implement a better way of handling GET requests to /search-results with wrong parameters
         if (request.queryString().get("keywords") == null) {
             return new Query() {
                 @Override
