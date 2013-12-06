@@ -1,15 +1,15 @@
-package data.util;
+package facewall.database.util;
 
 import org.neo4j.graphdb.*;
 import org.neo4j.graphdb.event.KernelEventHandler;
 import org.neo4j.graphdb.event.TransactionEventHandler;
 import org.neo4j.graphdb.index.IndexManager;
 
-abstract class GraphDatabaseAdapter implements GraphDatabaseService {
+public abstract class ForwardingGraphDatabaseService implements GraphDatabaseService {
 
     private final GraphDatabaseService backingDatabase;
 
-    protected GraphDatabaseAdapter(GraphDatabaseService backingDatabase) {
+    protected ForwardingGraphDatabaseService(GraphDatabaseService backingDatabase) {
         this.backingDatabase = backingDatabase;
     }
 

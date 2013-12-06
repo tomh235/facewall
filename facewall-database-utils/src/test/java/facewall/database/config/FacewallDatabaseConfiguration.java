@@ -1,4 +1,4 @@
-package data.util;
+package facewall.database.config;
 
 import org.neo4j.graphdb.RelationshipType;
 

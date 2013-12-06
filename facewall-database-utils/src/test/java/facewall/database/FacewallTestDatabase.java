@@ -1,38 +1,24 @@
-package data.util;
+package facewall.database;
 
-import data.fixture.Fixtures;
-import data.fixture.PersonData;
-import data.fixture.TeamData;
+import facewall.database.fixture.Fixtures;
+import facewall.database.fixture.PersonData;
+import facewall.database.fixture.TeamData;
+import facewall.database.util.ForwardingGraphDatabaseService;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.index.Index;
 import org.neo4j.graphdb.index.IndexManager;
-import org.neo4j.test.TestGraphDatabaseFactory;
 
 import java.util.Map;
 
-import static data.util.DatabaseOperations.clearDatabaseOperation;
-import static data.util.DatabaseOperations.initialiseDatabaseOperation;
-import static data.util.FacewallDatabaseConfiguration.*;
+import static facewall.database.DatabaseOperations.clearDatabaseOperation;
+import static facewall.database.DatabaseOperations.initialiseDatabaseOperation;
+import static facewall.database.config.FacewallDatabaseConfiguration.*;
 
-public class FacewallTestDatabase extends GraphDatabaseAdapter {
+public class FacewallTestDatabase extends ForwardingGraphDatabaseService {
 
-    private FacewallTestDatabase(GraphDatabaseService backingDatabase) {
+    FacewallTestDatabase(GraphDatabaseService backingDatabase) {
         super(backingDatabase);
-    }
-
-    public static FacewallTestDatabase createImpermanentFacewallTestDatabase() {
-        GraphDatabaseService db = new TestGraphDatabaseFactory().newImpermanentDatabase();
-        IndexManager indexManager = db.index();
-
-        indexManager.forNodes(personIndexName);
-        indexManager.forNodes(teamIndexName);
-
-        return new FacewallTestDatabase(db);
-    }
-
-    public static FacewallTestDatabase createFacewallTestDatabaseWrappingExistingDatabase(GraphDatabaseService db) {
-        return new FacewallTestDatabase(db);
     }
 
     public void clear() {
