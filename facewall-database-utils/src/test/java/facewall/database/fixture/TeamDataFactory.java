@@ -3,6 +3,7 @@ package facewall.database.fixture;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import static facewall.database.fixture.PersonDataFactory.defaultPersons;
 import static facewall.database.fixture.TeamData.newTeamData;
@@ -29,6 +30,7 @@ public class TeamDataFactory {
     public static TeamData.Builder defaultTeam() {
         return newTeamData()
             .withProperties(new HashMap<String, Object>() {{
+                put("id", UUID.randomUUID().toString());
                 put("name", randomName());
                 put("colour", randomColour());
             }});

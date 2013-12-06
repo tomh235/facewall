@@ -3,6 +3,7 @@ package facewall.database.fixture;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import static facewall.database.fixture.PersonData.newPersonData;
 import static java.util.Arrays.asList;
@@ -64,6 +65,7 @@ abstract public class PersonDataFactory {
 
         return newPersonData()
             .withProperties(new HashMap<String, Object>() {{
+                put("id", UUID.randomUUID().toString());
                 put("name", name);
                 put("picture", "http://dummyimage.com/300x400/000/fff.png&text=" + name);
             }});
