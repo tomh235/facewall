@@ -2,8 +2,7 @@ package facewall.database.fixture;
 
 import facewall.database.util.ForwardingMap;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
@@ -18,21 +17,31 @@ public class TeamData extends ForwardingMap<String, Object> {
         this.members = builder.members;
     }
 
-    public final Builder newTeamData() {
+    public static Builder newTeamData() {
         return new Builder();
     }
 
     public static class Builder {
-        private Map<String, Object> properties = emptyMap();
-        private Iterable<PersonData> members = emptyList();
+        private Map<String, Object> properties = new HashMap<>();
+        private List<PersonData> members = new ArrayList<>();
 
         public Builder withProperties(Map<String, Object> properties) {
-            this.properties = properties;
+            this.properties.putAll(properties);
+            return this;
+        }
+
+        public Builder withProperty(String key, Object value) {
+            this.properties.put(key, value);
             return this;
         }
 
         public Builder withMembers(PersonData... members) {
-            this.members = asList(members);
+            this.members.addAll(asList(members));
+            return this;
+        }
+
+        public Builder withMembers(Collection<PersonData> members) {
+            this.members.addAll(members);
             return this;
         }
 

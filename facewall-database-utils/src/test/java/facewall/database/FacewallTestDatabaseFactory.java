@@ -3,9 +3,9 @@ package facewall.database;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.test.TestGraphDatabaseFactory;
 
-abstract public class FacewallTestDatabases {
+abstract public class FacewallTestDatabaseFactory {
 
-    private FacewallTestDatabases() {}
+    private FacewallTestDatabaseFactory() {}
 
     public static FacewallTestDatabase createImpermanentFacewallTestDatabase() {
         GraphDatabaseService db = new TestGraphDatabaseFactory().newImpermanentDatabase();
