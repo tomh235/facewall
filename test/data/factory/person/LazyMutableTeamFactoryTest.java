@@ -1,6 +1,5 @@
 package data.factory.person;
 
-import data.dao.FacewallDAO;
 import data.dao.TraversingDAO;
 import data.datatype.TeamId;
 import data.factory.LazyMutableTeamFactory;
@@ -15,7 +14,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.neo4j.graphdb.Node;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static data.datatype.TeamId.newTeamId;
@@ -24,7 +22,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsSame.sameInstance;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
-import static util.CollectionMatcher.contains;
+import static util.CollectionMatcher.containsExhaustively;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LazyMutableTeamFactoryTest {
@@ -53,7 +51,7 @@ public class LazyMutableTeamFactoryTest {
 
         List<Person> result = lazyMutableTeamFactory.createLazyMutableTeam().members();
 
-        assertThat(result, contains(
+        assertThat(result, containsExhaustively(
             sameInstance(expectedPerson1),
             sameInstance(expectedPerson2))
         );

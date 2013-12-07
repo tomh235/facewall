@@ -25,7 +25,7 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsSame.sameInstance;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
-import static util.CollectionMatcher.contains;
+import static util.CollectionMatcher.containsExhaustively;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TeamFactoryTest {
@@ -54,7 +54,7 @@ public class TeamFactoryTest {
         );
         List<Team> result = teamFactory.createTeams(dtos);
 
-        assertThat(result, contains(
+        assertThat(result, containsExhaustively(
             sameInstance(expectedTeam1),
             sameInstance(expectedTeam2)
         ));

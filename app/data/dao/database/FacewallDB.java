@@ -37,7 +37,7 @@ public class FacewallDB {
 
     public IndexHits<Node> lookupNodesInIndex(IndexQuery indexQuery) {
         Index<Node> index = db.index().forNodes(indexQuery.indexName);
-        return index.get(indexQuery.keyName, indexQuery.queriedValue);
+        return index.query(indexQuery.keyName, indexQuery.queriedValue);
     }
 
     public Node lookupSingleNodeInIndex(IndexQuery indexQuery) {

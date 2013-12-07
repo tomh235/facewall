@@ -29,7 +29,7 @@ public class TeamDTOMatcher extends CompositeMatcher<TeamDTO> {
         return this;
     }
 
-    public TeamDTOMatcher whereMemberNodes(final Matcher<List<Node>> memberNodeMatcher) {
+    public TeamDTOMatcher whereMemberNodes(final Matcher<Iterable<Node>> memberNodeMatcher) {
         add(new TypeSafeMatcher<TeamDTO>() {
             @Override public boolean matchesSafely(TeamDTO teamDTO) {
                 return memberNodeMatcher.matches(teamDTO.memberNodes);

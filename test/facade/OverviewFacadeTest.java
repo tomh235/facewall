@@ -43,7 +43,7 @@ public class OverviewFacadeTest extends CollectionMatcher{
         OverviewEntryModelMatcher productResourcesMatcher = anOverviewEntryModel().withTeamHeader("productResources").named("pr_member");
 
         List<OverviewEntryModel> result = facewallFacade.createOverviewModel();
-        assertThat(result, contains(ecom1Matcher,ecom2Matcher,productResourcesMatcher));
+        assertThat(result, containsExhaustively(ecom1Matcher, ecom2Matcher, productResourcesMatcher));
 
         verify(mockRepo).listPersons();
     }
@@ -71,7 +71,7 @@ public class OverviewFacadeTest extends CollectionMatcher{
         OverviewEntryModelMatcher ecom4Matcher = anOverviewEntryModel().withTeamHeader("ecom").named("rick");
 
         List<OverviewEntryModel> result = facewallFacade.createOverviewModel();
-        assertThat(result, contains(ecom1Matcher,ecom2Matcher,ecom3Matcher,ecom4Matcher));
+        assertThat(result, containsExhaustively(ecom1Matcher, ecom2Matcher, ecom3Matcher, ecom4Matcher));
 
         verify(mockRepo).listPersons();
 
@@ -98,7 +98,7 @@ public class OverviewFacadeTest extends CollectionMatcher{
         OverviewEntryModelMatcher productResourcesMatcher = anOverviewEntryModel().withTeamHeader("productResources").named("pr_member");
 
         List<OverviewEntryModel> result = facewallFacade.createOverviewModel();
-        assertThat(result, contains(ecom1Matcher,ecom2Matcher,productResourcesMatcher));
+        assertThat(result, containsExhaustively(ecom1Matcher, ecom2Matcher, productResourcesMatcher));
 
         verify(mockRepo).listPersons();
     }
@@ -131,7 +131,7 @@ public class OverviewFacadeTest extends CollectionMatcher{
         OverviewEntryModelMatcher teamless2Matcher = anOverviewEntryModel().withTeamHeader("").named("teamless_member2");
 
         List<OverviewEntryModel> result = facewallFacade.createOverviewModel();
-        assertThat(result, contains(ecom1Matcher,ecom2Matcher,productResourcesMatcher,teamless1Matcher,teamless2Matcher));
+        assertThat(result, containsExhaustively(ecom1Matcher, ecom2Matcher, productResourcesMatcher, teamless1Matcher, teamless2Matcher));
 
         verify(mockRepo).listPersons();
     }

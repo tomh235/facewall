@@ -24,7 +24,7 @@ import static org.hamcrest.core.Is.is;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
-import static util.CollectionMatcher.contains;
+import static util.CollectionMatcher.containsExhaustively;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FacewallDBTest {
@@ -63,7 +63,7 @@ public class FacewallDBTest {
     @Test
     public void nodes_from_index_lookup() {
         IndexHits<Node> expectedHits = mock(IndexHits.class);
-        when(mockIndex.get(anyString(), any())).thenReturn(expectedHits);
+        when(mockIndex.query(anyString(), any())).thenReturn(expectedHits);
 
         IndexHits<Node> result = facewallDB.lookupNodesInIndex(anIndexLookup()
                 .onIndex(Persons)
@@ -76,7 +76,7 @@ public class FacewallDBTest {
     @Test
     public void single_node_from_index_lookup() {
         IndexHits<Node> expectedHits = mock(IndexHits.class);
-        when(mockIndex.get(anyString(), any())).thenReturn(expectedHits);
+        when(mockIndex.query(anyString(), any())).thenReturn(expectedHits);
 
         Node expectedNode = mock(Node.class);
         when(expectedHits.getSingle()).thenReturn(expectedNode);
@@ -100,7 +100,7 @@ public class FacewallDBTest {
 
         verify(mockDb).index();
         verify(mockIndexManager).forNodes(query.indexName);
-        verify(mockIndex).get(query.keyName, query.queriedValue);
+        verify(mockIndex).query(query.keyName, query.queriedValue);
     }
 
     @Test
@@ -120,9 +120,9 @@ public class FacewallDBTest {
 
         List<Node> result = facewallDB.findRelatedNodes(mockNode);
 
-        assertThat(result, contains(
-                sameInstance(expectedNode1),
-                sameInstance(expectedNode2)
+        assertThat(result, containsExhaustively(
+            sameInstance(expectedNode1),
+            sameInstance(expectedNode2)
         ));
     }
 

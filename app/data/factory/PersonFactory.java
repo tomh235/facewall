@@ -5,12 +5,14 @@ import data.mapper.MutableTeam;
 import data.mapper.PersonMapper;
 import data.mapper.TeamMapper;
 import domain.Person;
+import domain.Persons;
 import domain.Team;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static data.factory.DefaultMutablePerson.newMutablePersonInTeam;
+import static domain.Persons.newPersons;
 
 public class PersonFactory {
 
@@ -25,12 +27,12 @@ public class PersonFactory {
     }
 
     public List<Person> createPersons(List<PersonDTO> personDTOs) {
-        List<Person> persons = new ArrayList<>();
+        List<Person> personList = new ArrayList<>();
 
         for (PersonDTO dto : personDTOs) {
-            persons.add(createPerson(dto));
+            personList.add(createPerson(dto));
         }
-        return persons;
+        return personList;
     }
 
     private Person createPerson(PersonDTO dto) {

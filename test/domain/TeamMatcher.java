@@ -65,7 +65,7 @@ public class TeamMatcher extends CompositeMatcher<Team> {
         return this;
     }
 
-    public TeamMatcher whereMembers(final Matcher<List<Person>> members) {
+    public TeamMatcher whereMembers(final Matcher<Iterable<Person>> members) {
         add(new TypeSafeMatcher<Team>() {
 
             @Override

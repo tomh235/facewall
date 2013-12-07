@@ -24,7 +24,7 @@ import static org.hamcrest.core.IsSame.sameInstance;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Mockito.*;
-import static util.CollectionMatcher.contains;
+import static util.CollectionMatcher.containsExhaustively;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FacewallDAOTest extends DAOTest {
@@ -99,7 +99,7 @@ public class FacewallDAOTest extends DAOTest {
         verify(mockDb).findSingleRelatedNode(expectedPersonNode1);
         verify(mockDb).findSingleRelatedNode(expectedPersonNode2);
 
-        assertThat(result, contains(
+        assertThat(result, containsExhaustively(
             aPersonDTO().withPersonNode(
                 sameInstance(expectedPersonNode1)),
             aPersonDTO().withPersonNode(
@@ -127,7 +127,7 @@ public class FacewallDAOTest extends DAOTest {
 
         List<PersonDTO> result = facewallDAO.fetchPersons();
 
-        assertThat(result, contains(
+        assertThat(result, containsExhaustively(
             aPersonDTO().withTeamNode(
                 sameInstance(expectedTeamNode1)),
             aPersonDTO().withTeamNode(
@@ -153,7 +153,7 @@ public class FacewallDAOTest extends DAOTest {
         verify(mockDb).findRelatedNodes(expectedTeamNode1);
         verify(mockDb).findRelatedNodes(expectedTeamNode2);
 
-        assertThat(result, contains(
+        assertThat(result, containsExhaustively(
             aTeamDTO().withTeamNode(
                 sameInstance(expectedTeamNode1)),
             aTeamDTO().withTeamNode(
@@ -182,12 +182,12 @@ public class FacewallDAOTest extends DAOTest {
 
         List<TeamDTO> result = facewallDAO.fetchTeams();
 
-        assertThat(result, contains(
-            aTeamDTO().whereMemberNodes(contains(
+        assertThat(result, containsExhaustively(
+            aTeamDTO().whereMemberNodes(containsExhaustively(
                 sameInstance(expectedMemberNode1),
                 sameInstance(expectedMemberNode2)
             )
-        )));
+            )));
     }
 
     private void stubOutMocks() {

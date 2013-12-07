@@ -15,7 +15,7 @@ import static model.TeamSearchResultMatcher.aTeamSearchResult;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static util.CollectionMatcher.contains;
+import static util.CollectionMatcher.containsExhaustively;
 
 public class SearchResultsModelMapperTest {
 
@@ -36,9 +36,9 @@ public class SearchResultsModelMapperTest {
         List<Team> teamList = new ArrayList<>();
 
         DefaultSearchResultsModel result = searchResultsModelMapper.map(personList, teamList);
-        assertThat(result.persons, contains(
-                aPersonSearchResult().named("fred smith").withPicture("pic1.img").inTeam("a team"),
-                aPersonSearchResult().named("fred bailey").withPicture("pic3.img").inTeam("a team")
+        assertThat(result.persons, containsExhaustively(
+            aPersonSearchResult().named("fred smith").withPicture("pic1.img").inTeam("a team"),
+            aPersonSearchResult().named("fred bailey").withPicture("pic3.img").inTeam("a team")
         ));
     }
 
@@ -59,9 +59,9 @@ public class SearchResultsModelMapperTest {
         list4.add(anotherTeam);
 
         DefaultSearchResultsModel result = searchResultsModelMapper.map(list3, list4);
-        assertThat(result.teams, contains(
-                aTeamSearchResult().named("Ecom"),
-                aTeamSearchResult().named("another team")
+        assertThat(result.teams, containsExhaustively(
+            aTeamSearchResult().named("Ecom"),
+            aTeamSearchResult().named("another team")
         ));
     }
 
@@ -78,8 +78,8 @@ public class SearchResultsModelMapperTest {
         teamlessList.add(teamless);
 
         DefaultSearchResultsModel result = searchResultsModelMapper.map(teamlessList, emptyTeamList);
-        assertThat(result.persons, contains(
-                aPersonSearchResult().inTeam("")
+        assertThat(result.persons, containsExhaustively(
+            aPersonSearchResult().inTeam("")
         ));
 
     }
