@@ -1,5 +1,6 @@
 package facewall.database;
 
+import facewall.database.config.IndexConfiguration;
 import facewall.database.fixture.Fixtures;
 import facewall.database.fixture.PersonData;
 import facewall.database.fixture.TeamData;
@@ -34,22 +35,22 @@ public class FacewallTestDatabase extends ForwardingGraphDatabaseService {
             @Override protected void performOperation(GraphDatabaseService db) {
 
                 IndexManager indexManager = db.index();
-                Index<Node> personIndex = indexManager.forNodes(personIndexName);
-                Index<Node> teamIndex = indexManager.forNodes(teamIndexName);
+                Index<Node> personIdIndex = indexManager.forNodes(Persons_Id.name);
+                Index<Node> teamIdIndex = indexManager.forNodes(Teams_Id.name);
 
 
                 for (TeamData teamData : fixtures.teams) {
                     Node teamNode = db.createNode();
                     copyData(teamData, teamNode);
 
-                    teamIndex.add(teamNode, indexKey, teamData.get(indexKey));
+                    teamIdIndex.add(teamNode, Teams_Id.key, teamData.get(Teams_Id.key));
 
                     for (PersonData personData : teamData.members) {
                         Node personNode = db.createNode();
                         copyData(personData, personNode);
 
                         personNode.createRelationshipTo(teamNode, MEMBER_OF);
-                        personIndex.add(personNode, indexKey, personData.get(indexKey));
+                        personIdIndex.add(personNode, Persons_Id.key, personData.get(Persons_Id.key));
                     }
                 }
 
@@ -57,7 +58,7 @@ public class FacewallTestDatabase extends ForwardingGraphDatabaseService {
                     Node personNode = db.createNode();
                     copyData(personData, personNode);
 
-                    personIndex.add(personNode, indexKey, personData.get(indexKey));
+                    personIdIndex.add(personNode, Persons_Id.key, personData.get(Persons_Id.key));
                 }
             }
 

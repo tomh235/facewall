@@ -61,7 +61,7 @@ public class FacewallDAOTest extends DAOTest {
 
         verify(mockDb).lookupNodesInIndex(
             argThat(is(anIndexQuery()
-                .queryingOnAnIndexNamed("Persons")
+                .queryingOnAnIndexNamed("Persons_Id")
                 .queryingOnTheKey("id")
                 .queryingForAllValues()
             ))
@@ -75,7 +75,7 @@ public class FacewallDAOTest extends DAOTest {
 
         verify(mockDb).lookupNodesInIndex(
             argThat(is(anIndexQuery()
-                .queryingOnAnIndexNamed("Teams")
+                .queryingOnAnIndexNamed("Teams_Id")
                 .queryingOnTheKey("id")
                 .queryingForAllValues()
             ))

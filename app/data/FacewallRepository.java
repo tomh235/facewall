@@ -7,6 +7,7 @@ import data.factory.PersonFactory;
 import data.factory.TeamFactory;
 import domain.Person;
 import domain.Persons;
+import domain.Query;
 import domain.Team;
 
 import java.util.List;
@@ -31,6 +32,14 @@ class FacewallRepository implements Repository {
     @Override public List<Team> listTeams() {
         List<TeamDTO> dto = dao.fetchTeams();
         return teamFactory.createTeams(dto);
+    }
+
+    @Override public List<Person> queryPersons(Query query) {
+        return null;
+    }
+
+    @Override public List<Team> queryTeams(Query query) {
+        return null;
     }
 
     @Override public void addPerson(Person person) {

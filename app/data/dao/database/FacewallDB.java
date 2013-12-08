@@ -13,8 +13,8 @@ import java.util.List;
 public class FacewallDB {
     public enum NodeIndex {
 
-        Persons("Persons", "id"),
-        Teams("Teams", "id");
+        Persons_Id("Persons_Id", "id"),
+        Teams_Id("Teams_Id", "id");
 
         final String name;
 

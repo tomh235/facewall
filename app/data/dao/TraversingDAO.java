@@ -10,8 +10,8 @@ import org.neo4j.graphdb.Transaction;
 import java.util.Collections;
 import java.util.List;
 
-import static data.dao.database.FacewallDB.NodeIndex.Persons;
-import static data.dao.database.FacewallDB.NodeIndex.Teams;
+import static data.dao.database.FacewallDB.NodeIndex.Persons_Id;
+import static data.dao.database.FacewallDB.NodeIndex.Teams_Id;
 import static data.dao.database.IndexQuery.anIndexLookup;
 
 public class TraversingDAO {
@@ -28,7 +28,7 @@ public class TraversingDAO {
         Transaction tx = db.beginTransaction();
         try {
             IndexQuery query = anIndexLookup()
-                .onIndex(Teams)
+                .onIndex(Teams_Id)
                 .forValue(id.value)
                 .build();
 
@@ -49,7 +49,7 @@ public class TraversingDAO {
         Transaction tx = db.beginTransaction();
         try {
             IndexQuery query = anIndexLookup()
-                .onIndex(Persons)
+                .onIndex(Persons_Id)
                 .forValue(personId.value)
                 .build();
 
