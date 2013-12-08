@@ -6,7 +6,6 @@ import facewall.database.FacewallTestDatabase;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.HashMap;
 import java.util.List;
 
 import static data.DataModule.createRepository;
@@ -76,27 +75,22 @@ public class DataModuleTest {
         facewallTestDatabase.seedFixtures(defaultFixtures()
             .withTeams(
                 defaultTeam()
-                    .withProperty("name", "Teas")
                     .withMembers(
                         defaultPerson()
-                            .withProperties(new HashMap<String, Object>() {{
-                                put("name", "Earl Grey");
-                                put("picture", "whittard-earl-grey.png");
-                            }}).build(),
+                            .withProperty("name", "Earl Grey")
+                            .withProperty("picture", "whittard-earl-grey.png")
+                            .build(),
                         defaultPerson()
-                            .withProperties(new HashMap<String, Object>() {{
-                                put("name", "Yorkshire Tea");
-                                put("picture", "The North.png");
-                            }}).build()
+                            .withProperty("name", "Yorkshire Tea")
+                            .withProperty("picture", "The North.png")
+                            .build()
                     ).build(),
                 defaultTeam()
-                    .withProperty("name", "Coffees")
                     .withMembers(
                         defaultPerson()
-                            .withProperties(new HashMap<String, Object>() {{
-                                put("name", "Gold blend");
-                                put("picture", "nescafe-gold-blend.img");
-                            }}).build()
+                            .withProperty("name", "Gold blend")
+                            .withProperty("picture", "nescafe-gold-blend.img")
+                            .build()
                     ).build()
             ).build()
         );
@@ -106,16 +100,49 @@ public class DataModuleTest {
         assertThat(result, arePersons()
             .whichContains(aPerson()
                 .named("Earl Grey")
-                .withPicture("whittard-earl-grey.png")
-                .inTeam(aTeam().named("Teas")))
+                .withPicture("whittard-earl-grey.png"))
             .whichContains(aPerson()
                 .named("Yorkshire Tea")
-                .withPicture("The North.png")
-                .inTeam(aTeam().named("Teas")))
+                .withPicture("The North.png"))
             .whichContains(aPerson()
                 .named("Gold blend")
-                .withPicture("nescafe-gold-blend.img")
-                .inTeam(aTeam().named("Coffees")))
+                .withPicture("nescafe-gold-blend.img"))
+        );
+    }
+
+    @Test
+    public void list_persons_contains_persons_in_teams_from_db() {
+        facewallTestDatabase.seedFixtures(defaultFixtures()
+            .withTeams(
+                defaultTeam()
+                    .withProperty("name", "teas")
+                    .withMembers(
+                        defaultPerson()
+                            .withProperty("name", "Earl Grey")
+                            .build(),
+                        defaultPerson()
+                            .withProperty("name", "Yorkshire Tea")
+                            .build()
+                    ).build(),
+                defaultTeam()
+                    .withProperty("name", "coffees")
+                    .withMembers(
+                        defaultPerson().build()
+                    ).build()
+            ).build()
+        );
+
+        List<Person> result = repo.listPersons();
+
+        assertThat(result, arePersons()
+            .whichContains(aPerson()
+                .named("Earl Grey")
+                .inTeam(aTeam().named("teas")))
+            .whichContains(aPerson()
+                .named("Yorkshire Tea")
+                .inTeam(aTeam().named("teas")))
+            .whichContains(aPerson()
+                .inTeam(aTeam().named("coffees")))
         );
     }
 
@@ -164,12 +191,37 @@ public class DataModuleTest {
     }
 
     @Test
-    public void list_teams_contains_teams_with_data_from_db() {
+    public void list_teams_contains_teams_with_properties_from_db() {
         facewallTestDatabase.seedFixtures(defaultFixtures()
             .withTeams(
                 defaultTeam()
                     .withProperty("name", "Woodwind")
                     .withProperty("colour", "wooden")
+                    .build(),
+                defaultTeam()
+                    .withProperty("name", "Brass")
+                    .withProperty("colour", "metallic")
+                    .build()
+            ).build()
+        );
+
+        List<Team> result = repo.listTeams();
+
+        assertThat(result, areTeams()
+            .whichContains(aTeam()
+                .named("Woodwind")
+                .withColour("wooden"))
+            .whichContains(aTeam()
+                .named("Brass")
+                .withColour("metallic"))
+        );
+    }
+
+    @Test
+    public void list_teams_contains_teams_with_members_from_db() {
+        facewallTestDatabase.seedFixtures(defaultFixtures()
+            .withTeams(
+                defaultTeam()
                     .withMembers(
                         defaultPerson()
                             .withProperty("name", "flute")
@@ -179,8 +231,6 @@ public class DataModuleTest {
                             .build()
                     ).build(),
                 defaultTeam()
-                    .withProperty("name", "Brass")
-                    .withProperty("colour", "metallic")
                     .withMembers(
                         defaultPerson()
                             .withProperty("name", "trombone")
@@ -193,18 +243,14 @@ public class DataModuleTest {
 
         assertThat(result, areTeams()
             .whichContains(aTeam()
-                .named("Woodwind")
-                .withColour("wooden")
                 .whereMembers(arePersons().whichContainExhaustively(
                     aPerson().named("flute"),
                     aPerson().named("oboe")
                 )))
             .whichContains(aTeam()
-                .named("Brass")
-                .withColour("metallic")
                 .whereMembers(arePersons().whichContainExhaustively(
                     aPerson().named("trombone")
-                ))
-        ));
+                )))
+        );
     }
 }
