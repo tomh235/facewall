@@ -55,6 +55,23 @@ public class DataModuleTest {
     }
 
     @Test
+    public void list_persons_lists_teamless_persons() {
+        facewallTestDatabase.seedFixtures(newFixtures()
+            .withTeams(
+                defaultTeam()
+                    .withMembers(defaultPersons(8))
+                    .build())
+            .withTeamlessPersons(
+                defaultPersons(2)
+            ).build()
+        );
+
+        List<Person> result = repo.listPersons();
+
+        assertThat(result, arePersons().numbering(10));
+    }
+
+    @Test
     public void list_persons_contains_persons_with_data_from_db() {
         facewallTestDatabase.seedFixtures(defaultFixtures()
             .withTeams(
@@ -99,6 +116,35 @@ public class DataModuleTest {
                 .named("Gold blend")
                 .withPicture("nescafe-gold-blend.img")
                 .inTeam(aTeam().named("Coffees")))
+        );
+    }
+
+    @Test
+    public void list_persons_contains_teamless_persons_with_data_from_db() {
+        facewallTestDatabase.seedFixtures(defaultFixtures()
+                .withTeamlessPersons(
+                    defaultPerson()
+                        .withProperty("name", "development manager")
+                        .withProperty("picture", "important-looking-person1.img")
+                        .build(),
+                    defaultPerson()
+                        .withProperty("name", "delivery manager")
+                        .withProperty("picture", "important-looking-person2.img")
+                        .build()
+                ).build()
+        );
+
+        List<Person> result = repo.listPersons();
+
+        assertThat(result, arePersons()
+            .whichContains(aPerson()
+                .named("development manager")
+                .withPicture("important-looking-person1.img")
+                .whoIsNotInATeam())
+            .whichContains(aPerson()
+                .named("delivery manager")
+                .withPicture("important-looking-person2.img")
+                .whoIsNotInATeam())
         );
     }
 

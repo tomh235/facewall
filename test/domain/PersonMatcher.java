@@ -7,6 +7,8 @@ import org.hamcrest.TypeSafeMatcher;
 
 import java.util.List;
 
+import static domain.NoTeam.noTeam;
+
 public class PersonMatcher extends CompositeMatcher<Person> {
 
     private PersonMatcher(){
@@ -77,6 +79,22 @@ public class PersonMatcher extends CompositeMatcher<Person> {
             @Override
             public void describeTo(Description description) {
                 description.appendText("in: ").appendDescriptionOf(team);
+            }
+        });
+        return this;
+    }
+
+    public PersonMatcher whoIsNotInATeam() {
+        add(new TypeSafeMatcher<Person>() {
+
+            @Override
+            public boolean matchesSafely(Person person) {
+                return noTeam() == person.team();
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("who does not belong to a team");
             }
         });
         return this;

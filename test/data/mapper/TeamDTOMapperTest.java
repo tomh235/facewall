@@ -9,9 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import static data.dao.MockNodeFactory.createMockNodeWithProperties;
+import static domain.NoTeam.noTeam;
 import static domain.TeamMatcher.aTeam;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsSame.sameInstance;
 
 public class TeamDTOMapperTest {
 
@@ -47,5 +49,12 @@ public class TeamDTOMapperTest {
         assertThat(result, is(aTeam()
             .withColour("green")
         ));
+    }
+
+    @Test
+    public void map_no_team() {
+        Team result = teamDTOMapper.map(new TestMutableTeam(), null);
+
+        assertThat(result, is(sameInstance(noTeam())));
     }
 }

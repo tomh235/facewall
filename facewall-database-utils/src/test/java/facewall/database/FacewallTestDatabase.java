@@ -40,21 +40,28 @@ public class FacewallTestDatabase extends ForwardingGraphDatabaseService {
 
                 for (TeamData teamData : fixtures.teams) {
                     Node teamNode = db.createNode();
-                    copyData(teamNode, teamData);
+                    copyData(teamData, teamNode);
 
                     teamIndex.add(teamNode, indexKey, teamData.get(indexKey));
 
                     for (PersonData personData : teamData.members) {
                         Node personNode = db.createNode();
-                        copyData(personNode, personData);
+                        copyData(personData, personNode);
 
                         personNode.createRelationshipTo(teamNode, MEMBER_OF);
                         personIndex.add(personNode, indexKey, personData.get(indexKey));
                     }
                 }
+
+                for (PersonData personData : fixtures.teamlessPersons) {
+                    Node personNode = db.createNode();
+                    copyData(personData, personNode);
+
+                    personIndex.add(personNode, indexKey, personData.get(indexKey));
+                }
             }
 
-            private void copyData(Node node, Map<String, Object> data) {
+            private void copyData(Map<String, Object> data, Node node) {
                 for (Map.Entry<String, Object> entry : data.entrySet()) {
                     node.setProperty(entry.getKey(), entry.getValue());
                 }

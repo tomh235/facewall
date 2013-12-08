@@ -6,10 +6,12 @@ import static java.util.Collections.emptyList;
 
 public class NoTeam implements Team {
 
+    private static final NoTeam noTeam = new NoTeam();
+
     private NoTeam() {}
 
     public static Team noTeam() {
-        return new NoTeam();
+        return noTeam;
     }
 
     @Override public String id() {

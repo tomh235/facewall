@@ -57,10 +57,10 @@ public class FacewallDB {
     public Node findSingleRelatedNode(Node node) {
         List<Node> relatedNodes = findRelatedNodes(node);
 
-        if (relatedNodes.size() != 1) {
+        if (relatedNodes.size() > 1) {
             throw new RuntimeException("non-singular related nodes!");
         }
 
-        return relatedNodes.get(0);
+        return relatedNodes.isEmpty() ? null : relatedNodes.get(0);
     }
 }

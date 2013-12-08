@@ -16,9 +16,12 @@ public abstract class CompositeMatcher <T> extends TypeSafeMatcher<T> {
 
     @Override
     public final boolean matchesSafely(T target) {
+        boolean result = true;
+
         for (TypeSafeMatcher<T> matcher : matchers) {
-            if (!matcher.matches(target)) return false;
-        } return true;
+            result = result && matcher.matches(target);
+        }
+        return result;
     }
 
     @Override
