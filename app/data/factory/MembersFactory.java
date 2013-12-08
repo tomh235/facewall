@@ -1,7 +1,7 @@
 package data.factory;
 
 import data.mapper.MutablePerson;
-import data.mapper.PersonMapper;
+import data.mapper.PersonDTOMapper;
 import domain.Person;
 import org.neo4j.graphdb.Node;
 
@@ -10,11 +10,11 @@ import java.util.List;
 
 public class MembersFactory {
 
-    private final PersonMapper personMapper;
+    private final PersonDTOMapper personDTOMapper;
     private final MutablePersonFactory mutablePersonFactory;
 
-    public MembersFactory(PersonMapper personMapper, MutablePersonFactory mutablePersonFactory) {
-        this.personMapper = personMapper;
+    public MembersFactory(PersonDTOMapper personDTOMapper, MutablePersonFactory mutablePersonFactory) {
+        this.personDTOMapper = personDTOMapper;
         this.mutablePersonFactory = mutablePersonFactory;
     }
 
@@ -24,7 +24,7 @@ public class MembersFactory {
         for (Node personNode : personNodes) {
             MutablePerson mutablePerson = mutablePersonFactory.createMutablePerson();
 
-            members.add(personMapper.map(mutablePerson, personNode));
+            members.add(personDTOMapper.map(mutablePerson, personNode));
         }
         return members;
     }

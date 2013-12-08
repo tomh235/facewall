@@ -1,8 +1,7 @@
 package data.factory;
 
-import data.dto.TeamDTO;
 import data.mapper.MutablePerson;
-import data.mapper.PersonMapper;
+import data.mapper.PersonDTOMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,12 +20,12 @@ import static org.mockito.Mockito.*;
 public class MembersFactoryTest {
 
     @Mock MutablePersonFactory mockMutablePersonFactory;
-    @Mock PersonMapper mockPersonMapper;
+    @Mock PersonDTOMapper mockPersonDTOMapper;
     private MembersFactory membersFactory;
 
     @Before
     public void setUp() throws Exception {
-        membersFactory = new MembersFactory(mockPersonMapper, mockMutablePersonFactory);
+        membersFactory = new MembersFactory(mockPersonDTOMapper, mockMutablePersonFactory);
     }
 
     @Test
@@ -37,8 +36,8 @@ public class MembersFactoryTest {
 
         membersFactory.createMembers(expectedPersonNodesList);
 
-        verify(mockPersonMapper).map(any(MutablePerson.class), eq(expectedPersonNode1));
-        verify(mockPersonMapper).map(any(MutablePerson.class), eq(expectedPersonNode2));
+        verify(mockPersonDTOMapper).map(any(MutablePerson.class), eq(expectedPersonNode1));
+        verify(mockPersonDTOMapper).map(any(MutablePerson.class), eq(expectedPersonNode2));
     }
 
     @Test
@@ -53,7 +52,7 @@ public class MembersFactoryTest {
         List<Node> membersNodes = asList(mock(Node.class), mock(Node.class));
         membersFactory.createMembers(membersNodes);
 
-        verify(mockPersonMapper).map(eq(expectedMutablePerson1), any(Node.class));
-        verify(mockPersonMapper).map(eq(expectedMutablePerson2), any(Node.class));
+        verify(mockPersonDTOMapper).map(eq(expectedMutablePerson1), any(Node.class));
+        verify(mockPersonDTOMapper).map(eq(expectedMutablePerson2), any(Node.class));
     }
 }

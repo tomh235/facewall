@@ -2,27 +2,25 @@ package data.factory;
 
 import data.dto.PersonDTO;
 import data.mapper.MutableTeam;
-import data.mapper.PersonMapper;
-import data.mapper.TeamMapper;
+import data.mapper.PersonDTOMapper;
+import data.mapper.TeamDTOMapper;
 import domain.Person;
-import domain.Persons;
 import domain.Team;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static data.factory.DefaultMutablePerson.newMutablePersonInTeam;
-import static domain.Persons.newPersons;
 
 public class PersonFactory {
 
-    private final PersonMapper personMapper;
-    private final TeamMapper teamMapper;
+    private final PersonDTOMapper personDTOMapper;
+    private final TeamDTOMapper teamDTOMapper;
     private final LazyMutableTeamFactory lazyMutableTeamFactory;
 
-    public PersonFactory(PersonMapper personMapper, TeamMapper teamMapper, LazyMutableTeamFactory lazyMutableTeamFactory) {
-        this.personMapper = personMapper;
-        this.teamMapper = teamMapper;
+    public PersonFactory(PersonDTOMapper personDTOMapper, TeamDTOMapper teamDTOMapper, LazyMutableTeamFactory lazyMutableTeamFactory) {
+        this.personDTOMapper = personDTOMapper;
+        this.teamDTOMapper = teamDTOMapper;
         this.lazyMutableTeamFactory = lazyMutableTeamFactory;
     }
 
@@ -37,10 +35,10 @@ public class PersonFactory {
 
     private Person createPerson(PersonDTO dto) {
         MutableTeam mutableTeam = lazyMutableTeamFactory.createLazyMutableTeam();
-        Team lazyTeam = teamMapper.map(mutableTeam, dto.teamNode);
+        Team lazyTeam = teamDTOMapper.map(mutableTeam, dto.teamNode);
 
         DefaultMutablePerson defaultMutablePerson = newMutablePersonInTeam(lazyTeam);
 
-        return personMapper.map(defaultMutablePerson, dto.personNode);
+        return personDTOMapper.map(defaultMutablePerson, dto.personNode);
     }
 }

@@ -4,8 +4,8 @@ import data.dao.FacewallDAO;
 import data.dao.TraversingDAO;
 import data.dao.database.FacewallDB;
 import data.factory.*;
-import data.mapper.PersonMapper;
-import data.mapper.TeamMapper;
+import data.mapper.PersonDTOMapper;
+import data.mapper.TeamDTOMapper;
 import org.neo4j.graphdb.GraphDatabaseService;
 
 public class DataModule {
@@ -16,18 +16,18 @@ public class DataModule {
         FacewallDAO facewallDAO = new FacewallDAO(facewallDB);
         TraversingDAO traversingDAO = new TraversingDAO(facewallDB);
 
-        PersonMapper personMapper = new PersonMapper();
-        TeamMapper teamMapper = new TeamMapper();
+        PersonDTOMapper personDTOMapper = new PersonDTOMapper();
+        TeamDTOMapper teamDTOMapper = new TeamDTOMapper();
 
-        LazyMutableTeamFactory lazyMutableTeamFactory = new LazyMutableTeamFactory(traversingDAO, personMapper);
+        LazyMutableTeamFactory lazyMutableTeamFactory = new LazyMutableTeamFactory(traversingDAO, personDTOMapper);
         LazyMutablePersonFactory lazyMutablePersonFactory = new LazyMutablePersonFactory(
-            traversingDAO, lazyMutableTeamFactory, teamMapper
+            traversingDAO, lazyMutableTeamFactory, teamDTOMapper
         );
 
-        MembersFactory membersFactory = new MembersFactory(personMapper, lazyMutablePersonFactory);
+        MembersFactory membersFactory = new MembersFactory(personDTOMapper, lazyMutablePersonFactory);
 
-        PersonFactory personFactory = new PersonFactory(personMapper, teamMapper, lazyMutableTeamFactory);
-        TeamFactory teamFactory = new TeamFactory(teamMapper, membersFactory);
+        PersonFactory personFactory = new PersonFactory(personDTOMapper, teamDTOMapper, lazyMutableTeamFactory);
+        TeamFactory teamFactory = new TeamFactory(teamDTOMapper, membersFactory);
 
         return new FacewallRepository(personFactory, teamFactory, facewallDAO);
     }

@@ -5,7 +5,7 @@ import data.factory.DefaultMutableTeam;
 import data.factory.MembersFactory;
 import data.factory.TeamFactory;
 import data.mapper.MutableTeam;
-import data.mapper.TeamMapper;
+import data.mapper.TeamDTOMapper;
 import domain.Person;
 import domain.Team;
 import org.junit.Before;
@@ -30,14 +30,14 @@ import static util.CollectionMatcher.containsExhaustively;
 @RunWith(MockitoJUnitRunner.class)
 public class TeamFactoryTest {
 
-    @Mock TeamMapper mockTeamMapper;
+    @Mock TeamDTOMapper mockTeamDTOMapper;
     @Mock MembersFactory mockMembersFactory;
 
     private TeamFactory teamFactory;
 
     @Before
     public void setUp() throws Exception {
-        teamFactory = new TeamFactory(mockTeamMapper, mockMembersFactory);
+        teamFactory = new TeamFactory(mockTeamDTOMapper, mockMembersFactory);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class TeamFactoryTest {
         Team expectedTeam1 = mock(Team.class);
         Team expectedTeam2 = mock(Team.class);
 
-        when(mockTeamMapper.map(any(MutableTeam.class), any(Node.class)))
+        when(mockTeamDTOMapper.map(any(MutableTeam.class), any(Node.class)))
             .thenReturn(expectedTeam1)
             .thenReturn(expectedTeam2);
 
@@ -71,8 +71,8 @@ public class TeamFactoryTest {
         );
         teamFactory.createTeams(dtos);
 
-        verify(mockTeamMapper).map(any(DefaultMutableTeam.class), eq(expectedTeamNode1));
-        verify(mockTeamMapper).map(any(DefaultMutableTeam.class), eq(expectedTeamNode2));
+        verify(mockTeamDTOMapper).map(any(DefaultMutableTeam.class), eq(expectedTeamNode1));
+        verify(mockTeamDTOMapper).map(any(DefaultMutableTeam.class), eq(expectedTeamNode2));
     }
 
     @Test
@@ -83,7 +83,7 @@ public class TeamFactoryTest {
         List<TeamDTO> dtos = asList(mock(TeamDTO.class));
         teamFactory.createTeams(dtos);
 
-        verify(mockTeamMapper).map(
+        verify(mockTeamDTOMapper).map(
             argThat(is(aMutableTeam()
                 .whoseMembersAre(
                     sameInstance(expectedMembers)))

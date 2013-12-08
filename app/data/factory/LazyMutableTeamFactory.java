@@ -1,10 +1,9 @@
 package data.factory;
 
-import data.dao.FacewallDAO;
 import data.dao.TraversingDAO;
 import data.mapper.MutablePerson;
 import data.mapper.MutableTeam;
-import data.mapper.PersonMapper;
+import data.mapper.PersonDTOMapper;
 import domain.Person;
 import org.neo4j.graphdb.Node;
 
@@ -14,11 +13,11 @@ import static data.factory.DefaultMutablePerson.newMutablePersonInTeam;
 
 public class LazyMutableTeamFactory {
     private final TraversingDAO dao;
-    private final PersonMapper personMapper;
+    private final PersonDTOMapper personDTOMapper;
 
-    public LazyMutableTeamFactory(TraversingDAO traversingDAO, PersonMapper personMapper) {
+    public LazyMutableTeamFactory(TraversingDAO traversingDAO, PersonDTOMapper personDTOMapper) {
         this.dao = traversingDAO;
-        this.personMapper = personMapper;
+        this.personDTOMapper = personDTOMapper;
     }
 
     public MutableTeam createLazyMutableTeam() {
@@ -27,7 +26,7 @@ public class LazyMutableTeamFactory {
 
     private class LazyMutableTeam extends MutableTeam {
 
-        MembersFactory membersFactory = new MembersFactory(personMapper, new DefaultMutablePersonFactory());
+        MembersFactory membersFactory = new MembersFactory(personDTOMapper, new DefaultMutablePersonFactory());
 
         @Override public List<Person> members() {
             List<Node> memberNodes = dao.fetchTeamMembers(id);

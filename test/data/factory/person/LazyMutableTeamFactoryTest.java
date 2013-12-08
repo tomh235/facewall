@@ -5,7 +5,7 @@ import data.datatype.TeamId;
 import data.factory.LazyMutableTeamFactory;
 import data.mapper.MutablePerson;
 import data.mapper.MutableTeam;
-import data.mapper.PersonMapper;
+import data.mapper.PersonDTOMapper;
 import domain.Person;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,12 +28,12 @@ import static util.CollectionMatcher.containsExhaustively;
 public class LazyMutableTeamFactoryTest {
 
     @Mock TraversingDAO mockDAO;
-    @Mock PersonMapper mockPersonMapper;
+    @Mock PersonDTOMapper mockPersonDTOMapper;
     private LazyMutableTeamFactory lazyMutableTeamFactory;
 
     @Before
     public void setUp() throws Exception {
-        lazyMutableTeamFactory = new LazyMutableTeamFactory(mockDAO, mockPersonMapper);
+        lazyMutableTeamFactory = new LazyMutableTeamFactory(mockDAO, mockPersonDTOMapper);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class LazyMutableTeamFactoryTest {
         Person expectedPerson1 = mock(Person.class);
         Person expectedPerson2 = mock(Person.class);
 
-        when(mockPersonMapper.map(any(MutablePerson.class), any(Node.class)))
+        when(mockPersonDTOMapper.map(any(MutablePerson.class), any(Node.class)))
             .thenReturn(expectedPerson1)
             .thenReturn(expectedPerson2);
 
@@ -79,7 +79,7 @@ public class LazyMutableTeamFactoryTest {
 
         lazyMutableTeamFactory.createLazyMutableTeam().members();
 
-        verify(mockPersonMapper).map(any(MutablePerson.class), eq(expectedPersonNode1));
-        verify(mockPersonMapper).map(any(MutablePerson.class), eq(expectedPersonNode2));
+        verify(mockPersonDTOMapper).map(any(MutablePerson.class), eq(expectedPersonNode1));
+        verify(mockPersonDTOMapper).map(any(MutablePerson.class), eq(expectedPersonNode2));
     }
 }

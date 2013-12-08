@@ -1,7 +1,7 @@
 package data.factory;
 
 import data.dto.TeamDTO;
-import data.mapper.TeamMapper;
+import data.mapper.TeamDTOMapper;
 import domain.Person;
 import domain.Team;
 
@@ -12,11 +12,11 @@ import static data.factory.DefaultMutableTeam.newMutableTeamWithMembers;
 
 public class TeamFactory {
 
-    private final TeamMapper teamMapper;
+    private final TeamDTOMapper teamDTOMapper;
     private final MembersFactory membersFactory;
 
-    public TeamFactory(TeamMapper teamMapper, MembersFactory membersFactory) {
-        this.teamMapper = teamMapper;
+    public TeamFactory(TeamDTOMapper teamDTOMapper, MembersFactory membersFactory) {
+        this.teamDTOMapper = teamDTOMapper;
         this.membersFactory = membersFactory;
     }
 
@@ -33,6 +33,6 @@ public class TeamFactory {
         List<Person> lazyMembers = membersFactory.createMembers(dto.memberNodes);
         DefaultMutableTeam defaultMutableTeam = newMutableTeamWithMembers(lazyMembers);
 
-        return teamMapper.map(defaultMutableTeam, dto.teamNode);
+        return teamDTOMapper.map(defaultMutableTeam, dto.teamNode);
     }
 }

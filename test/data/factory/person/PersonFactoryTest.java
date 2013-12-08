@@ -6,8 +6,8 @@ import data.factory.LazyMutableTeamFactory;
 import data.factory.PersonFactory;
 import data.mapper.MutablePerson;
 import data.mapper.MutableTeam;
-import data.mapper.PersonMapper;
-import data.mapper.TeamMapper;
+import data.mapper.PersonDTOMapper;
+import data.mapper.TeamDTOMapper;
 import domain.Person;
 import domain.Team;
 import org.junit.Before;
@@ -31,15 +31,15 @@ import static util.CollectionMatcher.containsExhaustively;
 @RunWith(MockitoJUnitRunner.class)
 public class PersonFactoryTest {
 
-    @Mock PersonMapper mockPersonMapper;
-    @Mock TeamMapper mockTeamMapper;
+    @Mock PersonDTOMapper mockPersonDTOMapper;
+    @Mock TeamDTOMapper mockTeamDTOMapper;
     @Mock LazyMutableTeamFactory mockLazyMutableTeamFactory;
 
     private PersonFactory personFactory;
 
     @Before
     public void setUp() throws Exception {
-        personFactory = new PersonFactory(mockPersonMapper, mockTeamMapper, mockLazyMutableTeamFactory);
+        personFactory = new PersonFactory(mockPersonDTOMapper, mockTeamDTOMapper, mockLazyMutableTeamFactory);
     }
 
     @Test
@@ -47,7 +47,7 @@ public class PersonFactoryTest {
         Person expectedPerson1 = mock(Person.class);
         Person expectedPerson2 = mock(Person.class);
 
-        when(mockPersonMapper.map(any(MutablePerson.class), any(Node.class)))
+        when(mockPersonDTOMapper.map(any(MutablePerson.class), any(Node.class)))
             .thenReturn(expectedPerson1)
             .thenReturn(expectedPerson2);
         List<PersonDTO> dtos = asList(
@@ -82,22 +82,22 @@ public class PersonFactoryTest {
 
         verify(mockLazyMutableTeamFactory, times(2)).createLazyMutableTeam();
 
-        verify(mockTeamMapper).map(expectedMutableTeam, expectedTeamNode1);
-        verify(mockPersonMapper).map(any(DefaultMutablePerson.class), eq(expectedPersonNode1));
+        verify(mockTeamDTOMapper).map(expectedMutableTeam, expectedTeamNode1);
+        verify(mockPersonDTOMapper).map(any(DefaultMutablePerson.class), eq(expectedPersonNode1));
 
-        verify(mockTeamMapper).map(expectedMutableTeam, expectedTeamNode2);
-        verify(mockPersonMapper).map(any(DefaultMutablePerson.class), eq(expectedPersonNode2));
+        verify(mockTeamDTOMapper).map(expectedMutableTeam, expectedTeamNode2);
+        verify(mockPersonDTOMapper).map(any(DefaultMutablePerson.class), eq(expectedPersonNode2));
     }
 
     @Test
     public void create_person_sets_team_on_defaultPersonBuilder() {
         Team expectedTeam = mock(Team.class);
-        when(mockTeamMapper.map(any(MutableTeam.class), any(Node.class))).thenReturn(expectedTeam);
+        when(mockTeamDTOMapper.map(any(MutableTeam.class), any(Node.class))).thenReturn(expectedTeam);
 
         List<PersonDTO> dtos = asList(mock(PersonDTO.class));
         personFactory.createPersons(dtos);
 
-        verify(mockPersonMapper).map(
+        verify(mockPersonDTOMapper).map(
             argThat(is(aMutablePerson()
                 .whoseTeamHasBeenSetTo(
                     sameInstance(expectedTeam)))),

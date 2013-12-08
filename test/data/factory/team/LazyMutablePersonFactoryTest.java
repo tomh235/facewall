@@ -1,13 +1,12 @@
 package data.factory.team;
 
-import data.dao.FacewallDAO;
 import data.dao.TraversingDAO;
 import data.datatype.PersonId;
 import data.factory.LazyMutablePersonFactory;
 import data.factory.LazyMutableTeamFactory;
 import data.mapper.MutablePerson;
 import data.mapper.MutableTeam;
-import data.mapper.TeamMapper;
+import data.mapper.TeamDTOMapper;
 import domain.Team;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,18 +27,18 @@ public class LazyMutablePersonFactoryTest {
 
     @Mock TraversingDAO mockDAO;
     @Mock LazyMutableTeamFactory mockLazyMutableTeamFactory;
-    @Mock TeamMapper mockTeamMapper;
+    @Mock TeamDTOMapper mockTeamDTOMapper;
     private LazyMutablePersonFactory lazyMutablePersonFactory;
 
     @Before
     public void setUp() throws Exception {
-        lazyMutablePersonFactory = new LazyMutablePersonFactory(mockDAO, mockLazyMutableTeamFactory, mockTeamMapper);
+        lazyMutablePersonFactory = new LazyMutablePersonFactory(mockDAO, mockLazyMutableTeamFactory, mockTeamDTOMapper);
     }
 
     @Test
     public void lazy_mutable_persons_team_delegates_to_teamMapper() {
         Team expectedTeam = mock(Team.class);
-        when(mockTeamMapper.map(any(MutableTeam.class), any(Node.class)))
+        when(mockTeamDTOMapper.map(any(MutableTeam.class), any(Node.class)))
             .thenReturn(expectedTeam);
 
         Team result = lazyMutablePersonFactory.createMutablePerson().team();
@@ -61,7 +60,7 @@ public class LazyMutablePersonFactoryTest {
         person.team();
 
         verify(mockDAO).fetchTeamForPerson(expectedPersonId);
-        verify(mockTeamMapper).map(any(MutableTeam.class), eq(expectedTeamNode));
+        verify(mockTeamDTOMapper).map(any(MutableTeam.class), eq(expectedTeamNode));
     }
 
     @Test
@@ -73,6 +72,6 @@ public class LazyMutablePersonFactoryTest {
         lazyMutablePersonFactory.createMutablePerson().team();
 
         verify(mockLazyMutableTeamFactory).createLazyMutableTeam();
-        verify(mockTeamMapper).map(eq(expectedMutableTeam), any(Node.class));
+        verify(mockTeamDTOMapper).map(eq(expectedMutableTeam), any(Node.class));
     }
 }
