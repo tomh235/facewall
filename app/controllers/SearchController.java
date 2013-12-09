@@ -30,7 +30,7 @@ public class SearchController extends Controller {
         SearchResultsModel searchResultsModel = searchFacade.createSearchResultsModel(query);
 
         //This looks like scala code that has been translated into java. That's fine, but this kind of java code
-        //should be avoided if possible.
+        //should be avoided if possible. Hopefully we can design it away.
         if(searchResultsModel instanceof DefaultSearchResultsModel) {
             result = ok(views.html.searchresults.render((DefaultSearchResultsModel) searchResultsModel));
         } else if(searchResultsModel instanceof PersonDetailsModel) {

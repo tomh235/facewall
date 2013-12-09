@@ -7,6 +7,8 @@ import util.CompositeMatcher;
 
 import java.util.List;
 
+import static util.CollectionMatcher.containsExhaustively;
+
 public class TeamsMatcher extends CompositeMatcher<List<Team>> {
 
     private TeamsMatcher() {}
@@ -41,6 +43,21 @@ public class TeamsMatcher extends CompositeMatcher<List<Team>> {
 
             @Override public void describeTo(Description description) {
                 description.appendText(" contains a team which is ").appendDescriptionOf(teamMatcher);
+            }
+        });
+        return this;
+    }
+
+    public TeamsMatcher whichContainExhaustively(final Matcher<Team>... teamMatchers) {
+        add(new TypeSafeMatcher<List<Team>>() {
+            Matcher<Iterable<Team>> listMatcher = containsExhaustively(teamMatchers);
+
+            @Override public boolean matchesSafely(List<Team> teams) {
+                return listMatcher.matches(teams);
+            }
+
+            @Override public void describeTo(Description description) {
+                description.appendDescriptionOf(listMatcher);
             }
         });
         return this;

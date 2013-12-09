@@ -1,6 +1,7 @@
 package data;
 
 import domain.Person;
+import domain.Query;
 import domain.Team;
 import facewall.database.FacewallTestDatabase;
 import org.junit.Before;
@@ -20,6 +21,8 @@ import static facewall.database.fixture.PersonDataFactory.defaultPerson;
 import static facewall.database.fixture.PersonDataFactory.defaultPersons;
 import static facewall.database.fixture.TeamDataFactory.defaultTeam;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class DataModuleTest {
 
@@ -236,5 +239,32 @@ public class DataModuleTest {
                     aPerson().named("trombone")
                 )))
         );
+    }
+
+    //fails if there's a space in the search terms atm, might have to use cypher queries to fix
+    //possibly look into lucene index queries
+    @Test
+    public void query_teams_matches_teams_where_the_name_contains_the_query_string() {
+        facewallTestDatabase.seedFixtures(newFixtures()
+            .withTeams(
+                defaultTeam()
+                    .withProperty("name", "shouldmatch this team"),
+                defaultTeam()
+                    .withProperty("name", "shouldn't match this team"),
+                defaultTeam()
+                    .withProperty("name", "shouldn't match this team either"),
+                defaultTeam()
+                    .withProperty("name", "shouldmatch this team as well")
+            )
+        );
+
+        Query query = mock(Query.class);
+        when(query.toRegEx()).thenReturn("*shouldmatch*");
+
+        List<Team> result = repo.queryTeams(query);
+        assertThat(result, areTeams().whichContainExhaustively(
+            aTeam().named("shouldmatch this team"),
+            aTeam().named("shouldmatch this team as well")
+        ));
     }
 }

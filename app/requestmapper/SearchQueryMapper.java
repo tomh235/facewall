@@ -23,6 +23,7 @@ public class SearchQueryMapper {
                 }
             };
         } else {
+            //this could do with a comment <-- not this one, obviously
             return new Query() {
                 @Override
                 public String toRegEx() {

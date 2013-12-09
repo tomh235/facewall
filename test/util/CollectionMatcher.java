@@ -14,7 +14,8 @@ public class CollectionMatcher <T> {
                 Iterator<T> iterator = targetIterable.iterator();
 
                 for (Matcher<T> itemMatcher : itemMatchers) {
-                    result = result && itemMatcher.matches(iterator.next());
+                    T nextItem = iterator.next();
+                    result = result && itemMatcher.matches(nextItem);
                 }
                 return result && !iterator.hasNext();
             }

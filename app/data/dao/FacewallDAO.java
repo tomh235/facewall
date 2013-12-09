@@ -113,6 +113,7 @@ public class FacewallDAO {
 
     public void addPerson(Person person) {
         Transaction tx = db.beginTransaction();
+
         try {
             Node personNode = db.createNode();
             Node teamNode = getTeamByName(person.name());
