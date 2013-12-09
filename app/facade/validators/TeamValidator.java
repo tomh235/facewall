@@ -1,14 +1,15 @@
 package facade.validators;
 
+import data.Repository;
 import data.ScalaRepository;
 import domain.Query;
 import requestmapper.QueryMapper;
 
 public class TeamValidator {
-    ScalaRepository repository;
-    QueryMapper queryMapper;
+    private final Repository repository;
+    private final QueryMapper queryMapper;
 
-    public TeamValidator(ScalaRepository repository, QueryMapper queryMapper) {
+    public TeamValidator(Repository repository, QueryMapper queryMapper) {
         this.repository = repository;
         this.queryMapper = queryMapper;
     }

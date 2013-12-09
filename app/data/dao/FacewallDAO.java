@@ -2,13 +2,15 @@ package data.dao;
 
 import data.dao.database.FacewallDB;
 import data.dao.database.IndexQuery;
+import data.dao.database.RelationshipTypes;
 import data.dto.PersonDTO;
 import data.dto.TeamDTO;
+import data.mapper.PersonNodeMapper;
+import domain.Person;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Transaction;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static data.dao.database.FacewallDB.NodeIndex.Persons_Id;
 import static data.dao.database.FacewallDB.NodeIndex.Teams_Id;
@@ -17,9 +19,11 @@ import static data.dao.database.IndexQuery.anIndexLookup;
 public class FacewallDAO {
 
     private final FacewallDB db;
+    private final PersonNodeMapper personNodeMapper;
 
-    public FacewallDAO(FacewallDB facewallDB) {
+    public FacewallDAO(FacewallDB facewallDB, PersonNodeMapper personNodeMapper) {
         this.db = facewallDB;
+        this.personNodeMapper = personNodeMapper;
     }
 
     public List<PersonDTO> fetchPersons() {
@@ -68,7 +72,25 @@ public class FacewallDAO {
         return dtos;
     }
 
-    public void writePerson() {
+    public void addPerson(Person person) {
+        Transaction tx = db.beginTransaction();
+        try {
+            Node personNode = db.createNode();
+            Node teamNode = getTeamByName(person.name());
 
+            Map<String, String> propertiesMap = personNodeMapper.mapNodeProperties(person);
+            Map<Node, RelationshipTypes> relationsMap = personNodeMapper.mapNodeRelationships(teamNode);
+
+            db.addPropertiesToNode(personNode, propertiesMap);
+            db.addRelationshipsToNode(personNode, relationsMap);
+
+            tx.success();
+        } finally {
+            tx.finish();
+        }
+    }
+
+    public Node getTeamByName(String name) {
+        return null;
     }
 }

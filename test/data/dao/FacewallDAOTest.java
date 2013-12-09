@@ -2,8 +2,11 @@ package data.dao;
 
 import data.dao.database.FacewallDB;
 import data.dao.database.IndexQuery;
+import data.dao.database.RelationshipTypes;
 import data.dto.PersonDTO;
 import data.dto.TeamDTO;
+import data.mapper.PersonNodeMapper;
+import domain.Person;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +15,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.index.IndexHits;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static data.dao.database.IndexQueryMatcher.anIndexQuery;
 import static data.dto.PersonDTOMatcher.aPersonDTO;
@@ -30,11 +35,12 @@ import static util.CollectionMatcher.containsExhaustively;
 public class FacewallDAOTest extends DAOTest {
 
     @Mock FacewallDB mockDb;
+    @Mock PersonNodeMapper mockPersonNodeMapper;
     private FacewallDAO facewallDAO;
 
     @Before
     public void setUp() throws Exception {
-        facewallDAO = new FacewallDAO(mockDb);
+        facewallDAO = new FacewallDAO(mockDb, mockPersonNodeMapper);
         when(mockDb.beginTransaction()).thenReturn(mockTransaction);
     }
 
@@ -50,6 +56,15 @@ public class FacewallDAOTest extends DAOTest {
     public void fetch_teams_starts_and_finishes_transactions() {
         stubOutMocks();
         facewallDAO.fetchTeams();
+
+        verifyTransactionComplete();
+    }
+
+    @Test
+    public void add_person_starts_and_finishes_transactions() {
+        Person mockPerson = mock(Person.class);
+        stubOutMocks();
+        facewallDAO.addPerson(mockPerson);
 
         verifyTransactionComplete();
     }
@@ -101,9 +116,9 @@ public class FacewallDAOTest extends DAOTest {
 
         assertThat(result, containsExhaustively(
             aPersonDTO().withPersonNode(
-                sameInstance(expectedPersonNode1)),
+                    sameInstance(expectedPersonNode1)),
             aPersonDTO().withPersonNode(
-                sameInstance(expectedPersonNode2)
+                    sameInstance(expectedPersonNode2)
             )
         ));
     }
@@ -155,7 +170,7 @@ public class FacewallDAOTest extends DAOTest {
 
         assertThat(result, containsExhaustively(
             aTeamDTO().withTeamNode(
-                sameInstance(expectedTeamNode1)),
+                    sameInstance(expectedTeamNode1)),
             aTeamDTO().withTeamNode(
                 sameInstance(expectedTeamNode2)
             )
@@ -188,6 +203,62 @@ public class FacewallDAOTest extends DAOTest {
                 sameInstance(expectedMemberNode2)
             )
             )));
+    }
+
+    @Test
+    public void create_person_delegates_to_create_node() {
+        Person mockPerson = mock(Person.class);
+        facewallDAO.addPerson(mockPerson);
+
+        verify(mockDb).createNode();
+    }
+
+    @Test
+    public void create_person_delegates_to_property_mapper() {
+        Person mockPerson = mock(Person.class);
+        facewallDAO.addPerson(mockPerson);
+
+        verify(mockPersonNodeMapper).mapNodeProperties(mockPerson);
+
+    }
+
+    @Test
+    public void create_person_delegates_to_relationship_mapper() {
+        Person mockPerson = mock(Person.class);
+        facewallDAO.addPerson(mockPerson);
+
+        verify(mockPersonNodeMapper).mapNodeRelationships(any(Node.class));
+    }
+
+    @Test
+    public void create_person_delegates_to_db_add_properties_to_node() {
+        Person mockPerson = mock(Person.class);
+        Node mockPersonNode = mock(Node.class);
+
+        Map<String, String> stubProperties = new HashMap<>();
+        stubProperties.put("name", "bob");
+
+        when(mockDb.createNode()).thenReturn(mockPersonNode);
+        when(mockPersonNodeMapper.mapNodeProperties(mockPerson)).thenReturn(stubProperties);
+
+        facewallDAO.addPerson(mockPerson);
+        verify(mockDb).addPropertiesToNode(mockPersonNode, stubProperties);
+    }
+
+    @Test
+    public void create_person_delegates_to_db_add_relationships_to_node() {
+        Person mockPerson = mock(Person.class);
+        Node mockPersonNode = mock(Node.class);
+        Node mockTeamNode = mock(Node.class);
+
+        Map<Node, RelationshipTypes> stubRelations = new HashMap<>();
+        stubRelations.put(mockTeamNode, RelationshipTypes.TEAMMEMBER_OF);
+
+        when(mockDb.createNode()).thenReturn(mockPersonNode);
+        when(mockPersonNodeMapper.mapNodeRelationships(any(Node.class))).thenReturn(stubRelations);
+
+        facewallDAO.addPerson(mockPerson);
+        verify(mockDb).addRelationshipsToNode(mockPersonNode, stubRelations);
     }
 
     private void stubOutMocks() {

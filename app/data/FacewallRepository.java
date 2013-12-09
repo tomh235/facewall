@@ -5,18 +5,19 @@ import data.dto.PersonDTO;
 import data.dto.TeamDTO;
 import data.factory.PersonFactory;
 import data.factory.TeamFactory;
+import data.mapper.PersonNodeMapper;
 import domain.Person;
 import domain.Persons;
 import domain.Query;
 import domain.Team;
+import org.neo4j.graphdb.Node;
 
 import java.util.List;
 
 class FacewallRepository implements Repository {
-    final PersonFactory personFactory;
-    final TeamFactory teamFactory;
-
-    final FacewallDAO dao;
+    private final PersonFactory personFactory;
+    private final TeamFactory teamFactory;
+    private final FacewallDAO dao;
 
     public FacewallRepository(PersonFactory personFactory, TeamFactory teamFactory, FacewallDAO dao) {
         this.personFactory = personFactory;
@@ -43,6 +44,6 @@ class FacewallRepository implements Repository {
     }
 
     @Override public void addPerson(Person person) {
-        dao.writePerson();
+        dao.addPerson(person);
     }
 }

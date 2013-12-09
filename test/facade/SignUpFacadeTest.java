@@ -1,5 +1,6 @@
 package facade;
 
+import data.Repository;
 import data.ScalaRepository;
 import domain.MockTeam;
 import domain.Person;
@@ -31,7 +32,7 @@ import static org.mockito.Mockito.when;
 public class SignUpFacadeTest {
 
     @Mock PersonMapper mockPersonMapper;
-    @Mock ScalaRepository mockRepository;
+    @Mock Repository mockRepository;
     @Mock TeamValidator mockTeamValidator;
     @Mock QueryMapper mockQueryMapper;
     SignUpFacade signUpFacade;

@@ -1,6 +1,5 @@
 package requestmapper;
 
-import data.ScalaRepository;
 import domain.MockTeam;
 import domain.Person;
 import domain.Team;
@@ -13,12 +12,11 @@ import static domain.PersonMatcher.aPerson;
 import static domain.TeamMatcher.aTeam;
 import static model.UserModelBuilder.aUserModel;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.mock;
 import static org.hamcrest.Matchers.is;
 
 public class PersonMapperTest {
-    ScalaRepository mockRepository = mock(ScalaRepository.class);
-    PersonMapper personMapper = new PersonMapper(mockRepository);
+
+    PersonMapper personMapper = new PersonMapper();
 
     String imageURL = "http://www.image.jpeg";
     UserModel userModel = aUserModel()

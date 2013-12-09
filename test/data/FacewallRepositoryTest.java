@@ -5,11 +5,12 @@ import data.dto.PersonDTO;
 import data.dto.TeamDTO;
 import data.factory.PersonFactory;
 import data.factory.TeamFactory;
+import data.mapper.PersonNodeMapper;
 import domain.Person;
 import domain.Team;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -28,13 +29,11 @@ import static org.mockito.Mockito.when;
 public class FacewallRepositoryTest {
     @Mock PersonFactory mockPersonFactory;
     @Mock TeamFactory mockTeamFactory;
-    @Mock FacewallDAO mockDao;
-    private FacewallRepository repository;
+    @Mock FacewallDAO mockfacewallDAO;
+    @Mock PersonNodeMapper personNodeMapper;
 
-    @Before
-    public void setUp() throws Exception {
-        repository = new FacewallRepository(mockPersonFactory, mockTeamFactory, mockDao);
-    }
+    @InjectMocks
+    FacewallRepository repository;
 
     @Test
     public void fetch_person_delegates_to_factory() {
@@ -48,11 +47,11 @@ public class FacewallRepositoryTest {
     @Test
     public void fetch_person_verifyInteractions() {
         List<PersonDTO> expectedDTOs = mock(List.class);
-        when(mockDao.fetchPersons()).thenReturn(expectedDTOs);
+        when(mockfacewallDAO.fetchPersons()).thenReturn(expectedDTOs);
 
         repository.listPersons();
 
-        verify(mockDao).fetchPersons();
+        verify(mockfacewallDAO).fetchPersons();
         verify(mockPersonFactory).createPersons(expectedDTOs);
     }
 
@@ -68,11 +67,19 @@ public class FacewallRepositoryTest {
     @Test
     public void fetch_team_verifyInteractions() {
         List<TeamDTO> expectedDTOs = mock(List.class);
-        when(mockDao.fetchTeams()).thenReturn(expectedDTOs);
+        when(mockfacewallDAO.fetchTeams()).thenReturn(expectedDTOs);
 
         repository.listTeams();
 
-        verify(mockDao).fetchTeams();
+        verify(mockfacewallDAO).fetchTeams();
         verify(mockTeamFactory).createTeams(expectedDTOs);
+    }
+
+    @Test
+    public void add_person_interacts_with_facewall_dao() {
+        Person mockPerson = mock(Person.class);
+
+        repository.addPerson(mockPerson);
+        verify(mockfacewallDAO).addPerson(mockPerson);
     }
 }

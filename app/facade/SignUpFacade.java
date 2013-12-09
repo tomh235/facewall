@@ -1,6 +1,6 @@
 package facade;
 
-import data.ScalaRepository;
+import data.Repository;
 import domain.Person;
 import domain.Query;
 import domain.Team;
@@ -10,12 +10,15 @@ import requestmapper.PersonMapper;
 import requestmapper.QueryMapper;
 
 public class SignUpFacade {
-    private final ScalaRepository repository;
-    private final QueryMapper queryMapper;
+    private final Repository repository;
     private final PersonMapper personMapper;
+    private final QueryMapper queryMapper;
     private final TeamValidator teamValidator;
 
-    public SignUpFacade (ScalaRepository repository, PersonMapper personMapper, QueryMapper queryMapper, TeamValidator teamValidator) {
+    public SignUpFacade (Repository repository,
+                         PersonMapper personMapper,
+                         QueryMapper queryMapper,
+                         TeamValidator teamValidator) {
         this.repository = repository;
         this.personMapper = personMapper;
         this.queryMapper = queryMapper;

@@ -1,14 +1,12 @@
 package data.dao.database;
 
-import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Relationship;
-import org.neo4j.graphdb.Transaction;
+import org.neo4j.graphdb.*;
 import org.neo4j.graphdb.index.Index;
 import org.neo4j.graphdb.index.IndexHits;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class FacewallDB {
     public enum NodeIndex {
@@ -17,20 +15,18 @@ public class FacewallDB {
         Teams_Id("Teams_Id", "id");
 
         final String name;
-
         final String key;
+
         private NodeIndex(String name, String key) {
             this.name = name;
             this.key = key;
         }
-
     }
     private final GraphDatabaseService db;
 
     public FacewallDB(GraphDatabaseService db) {
         this.db = db;
     }
-
     public Transaction beginTransaction() {
         return db.beginTx();
     }
@@ -62,5 +58,21 @@ public class FacewallDB {
         }
 
         return relatedNodes.isEmpty() ? null : relatedNodes.get(0);
+    }
+
+    public void addPropertiesToNode(Node node, Map<String, String> propertiesList) {
+        for (Map.Entry<String, String> property : propertiesList.entrySet()) {
+            node.setProperty(property.getKey(), property.getValue());
+        }
+    }
+
+    public void addRelationshipsToNode(Node startNode, Map<Node,RelationshipTypes> relationshipList) {
+        for (Map.Entry<Node,RelationshipTypes> relation : relationshipList.entrySet()) {
+            startNode.createRelationshipTo(relation.getKey(), relation.getValue());
+        }
+    }
+
+    public Node createNode() {
+        return db.createNode();
     }
 }
