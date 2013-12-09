@@ -2,7 +2,6 @@ package data.dao;
 
 import data.dao.database.FacewallDB;
 import data.dao.database.IndexQuery;
-import data.datatype.PersonId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -47,7 +46,7 @@ public class TraversingDAOTest extends DAOTest {
         dao.fetchTeamMembers(newTeamId("some id"));
 
         verify(mockDb).lookupSingleNodeInIndex(argThat(is(anIndexQuery()
-            .queryingOnAnIndexNamed("Teams")
+            .queryingOnAnIndexNamed("Teams_Id")
             .queryingOnTheKey("id")
             .queryingForTheValue("some id")
         )));
@@ -87,7 +86,7 @@ public class TraversingDAOTest extends DAOTest {
         dao.fetchTeamForPerson(newPersonId("some id"));
 
         verify(mockDb).lookupSingleNodeInIndex(argThat(is(anIndexQuery()
-            .queryingOnAnIndexNamed("Persons")
+            .queryingOnAnIndexNamed("Persons_Id")
             .queryingOnTheKey("id")
             .queryingForTheValue("some id")
         )));

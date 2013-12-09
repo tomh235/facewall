@@ -5,6 +5,7 @@ import data.dao.database.IndexQuery;
 import data.dao.database.RelationshipTypes;
 import data.dto.PersonDTO;
 import data.dto.TeamDTO;
+import domain.Query;
 import data.mapper.PersonNodeMapper;
 import domain.Person;
 import org.junit.Before;
@@ -33,6 +34,8 @@ import static util.CollectionMatcher.containsExhaustively;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FacewallDAOTest extends DAOTest {
+
+    private static final Query someQuery = mock(Query.class);
 
     @Mock FacewallDB mockDb;
     @Mock PersonNodeMapper mockPersonNodeMapper;
@@ -99,15 +102,14 @@ public class FacewallDAOTest extends DAOTest {
 
     @Test
     public void fetch_person_retrieves_person_nodes() {
-        IndexHits<Node> personNodeHits = mock(IndexHits.class);
-        when(mockDb.lookupNodesInIndex(any(IndexQuery.class)))
-            .thenReturn(personNodeHits);
-
         Node expectedPersonNode1 = mock(Node.class);
         Node expectedPersonNode2 = mock(Node.class);
-        when(personNodeHits.iterator()).thenReturn(asList(
+
+        IndexHits<Node> personNodeHits = createMockIndexHits(
             expectedPersonNode1, expectedPersonNode2
-        ).iterator());
+        );
+        when(mockDb.lookupNodesInIndex(any(IndexQuery.class)))
+            .thenReturn(personNodeHits);
 
         List<PersonDTO> result = facewallDAO.fetchPersons();
 
@@ -125,16 +127,14 @@ public class FacewallDAOTest extends DAOTest {
 
     @Test
     public void fetch_person_retrieves_team_nodes() {
-        IndexHits<Node> personNodeHits = mock(IndexHits.class);
-        when(mockDb.lookupNodesInIndex(any(IndexQuery.class)))
-            .thenReturn(personNodeHits);
-
-        when(personNodeHits.iterator()).thenReturn(asList(
-            mock(Node.class), mock(Node.class)
-        ).iterator());
-
         Node expectedTeamNode1 = mock(Node.class);
         Node expectedTeamNode2 = mock(Node.class);
+
+        IndexHits<Node> personNodeHits = createMockIndexHits(
+            expectedTeamNode1, expectedTeamNode2
+        );
+        when(mockDb.lookupNodesInIndex(any(IndexQuery.class)))
+            .thenReturn(personNodeHits);
 
         when(mockDb.findSingleRelatedNode(any(Node.class)))
             .thenReturn(expectedTeamNode1)
@@ -153,15 +153,14 @@ public class FacewallDAOTest extends DAOTest {
 
     @Test
     public void fetch_teams_retrieves_team_nodes() {
-        IndexHits<Node> teamNodeHits = mock(IndexHits.class);
-        when(mockDb.lookupNodesInIndex(any(IndexQuery.class)))
-            .thenReturn(teamNodeHits);
-
         Node expectedTeamNode1 = mock(Node.class);
         Node expectedTeamNode2 = mock(Node.class);
-        when(teamNodeHits.iterator()).thenReturn(asList(
+
+        IndexHits<Node> teamNodeHits = createMockIndexHits(
             expectedTeamNode1, expectedTeamNode2
-        ).iterator());
+        );
+        when(mockDb.lookupNodesInIndex(any(IndexQuery.class)))
+            .thenReturn(teamNodeHits);
 
         List<TeamDTO> result = facewallDAO.fetchTeams();
 
@@ -177,16 +176,11 @@ public class FacewallDAOTest extends DAOTest {
         ));
     }
 
-
     @Test
     public void fetch_teams_retrieves_members_nodes() {
-        IndexHits<Node> teamNodeHits = mock(IndexHits.class);
+        IndexHits<Node> mockIndexHits = createMockIndexHits(mock(Node.class));
         when(mockDb.lookupNodesInIndex(any(IndexQuery.class)))
-            .thenReturn(teamNodeHits);
-
-        when(teamNodeHits.iterator()).thenReturn(asList(
-            mock(Node.class)
-        ).iterator());
+            .thenReturn(mockIndexHits);
 
         Node expectedMemberNode1 = mock(Node.class);
         Node expectedMemberNode2 = mock(Node.class);
@@ -261,7 +255,179 @@ public class FacewallDAOTest extends DAOTest {
         verify(mockDb).addRelationshipsToNode(mockPersonNode, stubRelations);
     }
 
+    @Test
+    public void query_persons_starts_and_finishes_transaction() {
+        stubOutMocks();
+
+        facewallDAO.queryPersons(someQuery);
+
+        verifyTransactionComplete();
+    }
+
+    @Test
+    public void query_persons_should_build_indexQuery_on_name() {
+        stubOutMocks();
+
+        Query query = mock(Query.class);
+        when(query.toRegEx()).thenReturn("search-term");
+
+        facewallDAO.queryPersons(query);
+
+        verify(mockDb).lookupNodesInIndex(argThat(is(anIndexQuery()
+            .queryingOnAnIndexNamed("Persons_Name")
+            .queryingOnTheKey("name")
+            .queryingForTheValue("search-term")
+        )));
+    }
+
+    @Test
+    public void query_persons_fetches_person_nodes() {
+        Node expectedPersonNode1 = mock(Node.class);
+        Node expectedPersonNode2 = mock(Node.class);
+
+        IndexHits<Node> mockIndexHits = createMockIndexHits(
+            expectedPersonNode1,
+            expectedPersonNode2
+        );
+        when(mockDb.lookupNodesInIndex(any(IndexQuery.class)))
+            .thenReturn(mockIndexHits);
+
+        List<PersonDTO> result = facewallDAO.queryPersons(someQuery);
+
+        assertThat(result, containsExhaustively(
+           aPersonDTO().withPersonNode(sameInstance(expectedPersonNode1)),
+           aPersonDTO().withPersonNode(sameInstance(expectedPersonNode2))
+        ));
+    }
+
+    @Test
+    public void query_persons_fetches_persons_team_nodes() {
+        IndexHits<Node> mockIndexHits = createMockIndexHits(
+            mock(Node.class), mock(Node.class)
+        );
+        when(mockDb.lookupNodesInIndex(any(IndexQuery.class)))
+            .thenReturn(mockIndexHits);
+
+        Node expectedTeamNode1 = mock(Node.class);
+        Node expectedTeamNode2 = mock(Node.class);
+
+        when(mockDb.findSingleRelatedNode(any(Node.class)))
+            .thenReturn(expectedTeamNode1)
+            .thenReturn(expectedTeamNode2);
+
+        List<PersonDTO> result = facewallDAO.queryPersons(someQuery);
+
+        assertThat(result, containsExhaustively(
+           aPersonDTO().withTeamNode(sameInstance(expectedTeamNode1)),
+           aPersonDTO().withTeamNode(sameInstance(expectedTeamNode2))
+        ));
+    }
+
+    @Test
+    public void query_persons_looks_up_team_node_for_person() {
+        Node personNode1 = mock(Node.class);
+        Node personNode2 = mock(Node.class);
+
+        IndexHits<Node> mockIndexHits = createMockIndexHits(
+            personNode1, personNode2
+        );
+        when(mockDb.lookupNodesInIndex(any(IndexQuery.class)))
+            .thenReturn(mockIndexHits);
+
+        facewallDAO.queryPersons(someQuery);
+
+        verify(mockDb).findSingleRelatedNode(personNode1);
+        verify(mockDb).findSingleRelatedNode(personNode2);
+    }
+
+    @Test
+    public void query_teams_starts_and_finishes_transaction() {
+        stubOutMocks();
+
+        facewallDAO.queryTeams(someQuery);
+
+        verifyTransactionComplete();
+    }
+
+    @Test
+    public void query_teams_builds_indexQuery_on_name() {
+        stubOutMocks();
+
+        Query query = mock(Query.class);
+        when(query.toRegEx()).thenReturn("search-term");
+
+        facewallDAO.queryTeams(query);
+
+        verify(mockDb).lookupNodesInIndex(argThat(is(anIndexQuery()
+            .queryingOnAnIndexNamed("Teams_Name")
+            .queryingOnTheKey("name")
+            .queryingForTheValue("search-term")
+        )));
+    }
+
+    @Test
+    public void query_teams_fetches_team_nodes() {
+        Node expectedTeamNode1 = mock(Node.class);
+        Node expectedTeamNode2 = mock(Node.class);
+
+        IndexHits<Node> mockIndexHits = createMockIndexHits(
+            expectedTeamNode1,
+            expectedTeamNode2
+        );
+        when(mockDb.lookupNodesInIndex(any(IndexQuery.class)))
+            .thenReturn(mockIndexHits);
+
+        List<TeamDTO> result = facewallDAO.queryTeams(someQuery);
+
+        assertThat(result, containsExhaustively(
+            aTeamDTO().withTeamNode(sameInstance(expectedTeamNode1)),
+            aTeamDTO().withTeamNode(sameInstance(expectedTeamNode2))
+        ));
+    }
+
+    @Test
+    public void query_teams_fetches_teams_member_nodes() {
+        IndexHits<Node> mockIndexHits = createMockIndexHits(mock(Node.class));
+        when(mockDb.lookupNodesInIndex(any(IndexQuery.class)))
+            .thenReturn(mockIndexHits);
+
+        Node expectedPersonNode1 = mock(Node.class);
+        Node expectedPersonNode2 = mock(Node.class);
+
+        when(mockDb.findRelatedNodes(any(Node.class))).thenReturn(asList(
+            expectedPersonNode1, expectedPersonNode2)
+        );
+
+        List<TeamDTO> result = facewallDAO.queryTeams(someQuery);
+
+        assertThat(result, containsExhaustively(
+            aTeamDTO().whereMemberNodes(containsExhaustively(
+                sameInstance(expectedPersonNode1),
+                sameInstance(expectedPersonNode2)
+            ))));
+    }
+
+    @Test
+    public void query_teams_looks_up_member_nodes_for_team() {
+        Node teamNode1 = mock(Node.class);
+
+        IndexHits<Node> mockIndexHits = createMockIndexHits(teamNode1);
+        when(mockDb.lookupNodesInIndex(any(IndexQuery.class)))
+            .thenReturn(mockIndexHits);
+
+        facewallDAO.queryTeams(someQuery);
+
+        verify(mockDb).findRelatedNodes(teamNode1);
+    }
+
     private void stubOutMocks() {
         when(mockDb.lookupNodesInIndex(any(IndexQuery.class))).thenReturn(stubNodeIndexHits);
+    }
+
+    private static IndexHits<Node> createMockIndexHits(Node... nodes) {
+        IndexHits<Node> mockIndexHits = mock(IndexHits.class);
+        when(mockIndexHits.iterator()).thenReturn(asList(nodes).iterator());
+
+        return mockIndexHits;
     }
 }
