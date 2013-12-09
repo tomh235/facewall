@@ -17,7 +17,7 @@ import play.mvc.Result;
 import requestmapper.SearchQueryMapper;
 
 //Split these up into two controllers
-public class OverviewAndSearchController extends Controller {
+public class SearchController extends Controller {
     private static final ScalaRepository repo = new FacewallScalaRepo();
     private static final SearchQueryMapper searchQueryMapper = new SearchQueryMapper();
     private static final OverviewFacade overviewFacade = new OverviewFacade(repo);
