@@ -2,6 +2,7 @@ package controllers;
 
 import data.DataModule;
 import data.Repository;
+import data.ScalaRepository;
 import facade.FacadeCreator;
 import facade.SignUpFacade;
 import model.UserModel;
@@ -10,10 +11,9 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 
-
 public class SignUpController extends Controller {
     private static final Form<UserModel> signUpForm = Form.form(UserModel.class);
-    private static final Repository repository = DataModule.createRepository(GraphDatabaseFactory.databaseFor("localhost://7474"));
+    private static final Repository repository = DataModule.createRepository(GraphDatabaseFactory.databaseFor("http://localhost:7474"));
     private static final SignUpFacade signUpFacade = FacadeCreator.createSignUpFacade(repository);
     private static UserModel newUserModel;
 

@@ -19,9 +19,9 @@ import requestmapper.SearchQueryMapper;
 //Split these up into two controllers
 public class OverviewAndSearchController extends Controller {
     private static final ScalaRepository repo = new FacewallScalaRepo();
+    private static final SearchQueryMapper searchQueryMapper = new SearchQueryMapper();
     private static final OverviewFacade overviewFacade = new OverviewFacade(repo);
     private static final SearchFacade searchFacade = new SearchFacade(repo, new SearchResultsModelMapper(), new PersonDetailsModelMapper(), new TeamDetailsModelMapper());
-    private static final SearchQueryMapper searchQueryMapper = new SearchQueryMapper();
 
     public static Result overview() {
         return ok(views.html.overview.render(overviewFacade.createOverviewModel()));
