@@ -13,15 +13,14 @@ import static java.util.concurrent.ThreadLocalRandom.current;
 
 public class TeamDataFactory {
 
-    public static List<TeamData> defaultTeams(int number) {
-        List<TeamData> result = new ArrayList<>();
+    public static List<TeamData.Builder> defaultTeams(int number) {
+        List<TeamData.Builder> result = new ArrayList<>();
 
         for (int i = 0; i < number; i++) {
-            List<PersonData> members = defaultPersons(1 + randomInt(14));
+            List<PersonData.Builder> members = defaultPersons(1 + randomInt(14));
 
             result.add(defaultTeam()
                 .withMembers(members)
-                .build()
             );
         }
         return result;

@@ -37,15 +37,12 @@ public class DataModuleTest {
         facewallTestDatabase.seedFixtures(newFixtures()
             .withTeams(
                 defaultTeam()
-                    .withMembers(defaultPersons(8))
-                    .build(),
+                    .withMembers(defaultPersons(8)),
                 defaultTeam()
-                    .withMembers(defaultPersons(3))
-                    .build(),
+                    .withMembers(defaultPersons(3)),
                 defaultTeam()
                     .withMembers(defaultPersons(5))
-                    .build()
-            ).build()
+            )
         );
 
         List<Person> result = repo.listPersons();
@@ -58,11 +55,10 @@ public class DataModuleTest {
         facewallTestDatabase.seedFixtures(newFixtures()
             .withTeams(
                 defaultTeam()
-                    .withMembers(defaultPersons(8))
-                    .build())
+                    .withMembers(defaultPersons(8)))
             .withTeamlessPersons(
                 defaultPersons(2)
-            ).build()
+            )
         );
 
         List<Person> result = repo.listPersons();
@@ -78,21 +74,18 @@ public class DataModuleTest {
                     .withMembers(
                         defaultPerson()
                             .withProperty("name", "Earl Grey")
-                            .withProperty("picture", "whittard-earl-grey.png")
-                            .build(),
+                            .withProperty("picture", "whittard-earl-grey.png"),
                         defaultPerson()
                             .withProperty("name", "Yorkshire Tea")
                             .withProperty("picture", "The North.png")
-                            .build()
-                    ).build(),
+                    ),
                 defaultTeam()
                     .withMembers(
                         defaultPerson()
                             .withProperty("name", "Gold blend")
                             .withProperty("picture", "nescafe-gold-blend.img")
-                            .build()
-                    ).build()
-            ).build()
+                    )
+            )
         );
 
         List<Person> result = repo.listPersons();
@@ -118,18 +111,16 @@ public class DataModuleTest {
                     .withProperty("name", "teas")
                     .withMembers(
                         defaultPerson()
-                            .withProperty("name", "Earl Grey")
-                            .build(),
+                            .withProperty("name", "Earl Grey"),
                         defaultPerson()
                             .withProperty("name", "Yorkshire Tea")
-                            .build()
-                    ).build(),
+                    ),
                 defaultTeam()
                     .withProperty("name", "coffees")
                     .withMembers(
-                        defaultPerson().build()
-                    ).build()
-            ).build()
+                        defaultPerson()
+                    )
+            )
         );
 
         List<Person> result = repo.listPersons();
@@ -152,13 +143,11 @@ public class DataModuleTest {
                 .withTeamlessPersons(
                     defaultPerson()
                         .withProperty("name", "development manager")
-                        .withProperty("picture", "important-looking-person1.img")
-                        .build(),
+                        .withProperty("picture", "important-looking-person1.img"),
                     defaultPerson()
                         .withProperty("name", "delivery manager")
                         .withProperty("picture", "important-looking-person2.img")
-                        .build()
-                ).build()
+                )
         );
 
         List<Person> result = repo.listPersons();
@@ -179,10 +168,10 @@ public class DataModuleTest {
     public void list_teams_lists_all_teams_in_db() {
         facewallTestDatabase.seedFixtures(newFixtures()
             .withTeams(
-                defaultTeam().build(),
-                defaultTeam().build(),
-                defaultTeam().build()
-            ).build()
+                defaultTeam(),
+                defaultTeam(),
+                defaultTeam()
+            )
         );
 
         List<Team> result = repo.listTeams();
@@ -196,13 +185,11 @@ public class DataModuleTest {
             .withTeams(
                 defaultTeam()
                     .withProperty("name", "Woodwind")
-                    .withProperty("colour", "wooden")
-                    .build(),
+                    .withProperty("colour", "wooden"),
                 defaultTeam()
                     .withProperty("name", "Brass")
                     .withProperty("colour", "metallic")
-                    .build()
-            ).build()
+            )
         );
 
         List<Team> result = repo.listTeams();
@@ -224,19 +211,16 @@ public class DataModuleTest {
                 defaultTeam()
                     .withMembers(
                         defaultPerson()
-                            .withProperty("name", "flute")
-                            .build(),
+                            .withProperty("name", "flute"),
                         defaultPerson()
                             .withProperty("name", "oboe")
-                            .build()
-                    ).build(),
+                    ),
                 defaultTeam()
                     .withMembers(
                         defaultPerson()
                             .withProperty("name", "trombone")
-                            .build()
-                    ).build()
-            ).build()
+                    )
+            )
         );
 
         List<Team> result = repo.listTeams();

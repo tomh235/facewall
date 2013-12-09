@@ -30,10 +30,10 @@ public class FacewallTestDatabase extends ForwardingGraphDatabaseService {
         initialiseDatabaseOperation.execute(this);
     }
 
-    public void seedFixtures(final Fixtures fixtures) {
+    public void seedFixtures(final Fixtures.Builder fixturesBuilder) {
         DatabaseOperation seedFixturesOperation = new DatabaseOperation() {
             @Override protected void performOperation(GraphDatabaseService db) {
-
+                Fixtures fixtures = fixturesBuilder.build();
                 IndexManager indexManager = db.index();
 
                 FacewallIndices personIndices = newFacewallIndices(indexManager,

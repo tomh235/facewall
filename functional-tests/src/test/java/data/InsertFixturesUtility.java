@@ -27,15 +27,14 @@ public class InsertFixturesUtility {
                     .withMembers(defaultPerson()
                         .withProperty("name", "Hugo Wainwright")
                         .withProperty("picture", "https://fbcdn-sphotos-c-a.akamaihd.net/hphotos-ak-frc1/300430_4471674470606_1745866994_n.jpg")
-                        .build()
-                    ).build(),
+                    ),
                 defaultTeam()
                     .withProperty("name", "Ecom Ars")
                     .withMembers(defaultPerson()
                         .withProperty("name", "Fahran Wallace")
                         .withProperty("picture", "http://withhomeandgarden.com/wp-content/uploads/2011/01/cat-200x300.jpg")
-                        .build()
-                    ).build())
-            .build());
+                    )
+            )
+        );
     }
 }

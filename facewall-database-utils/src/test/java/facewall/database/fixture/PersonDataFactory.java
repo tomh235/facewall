@@ -51,11 +51,11 @@ abstract public class PersonDataFactory {
 
     private PersonDataFactory() {}
 
-    public static List<PersonData> defaultPersons(int number) {
-        List<PersonData> result = new ArrayList<>();
+    public static List<PersonData.Builder> defaultPersons(int number) {
+        List<PersonData.Builder> result = new ArrayList<>();
 
         for (int i = 0; i < number; i++) {
-            result.add(defaultPerson().build());
+            result.add(defaultPerson());
         }
         return result;
     }

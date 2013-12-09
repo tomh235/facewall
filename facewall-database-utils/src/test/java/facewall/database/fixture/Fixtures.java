@@ -24,21 +24,25 @@ public class Fixtures {
         private List<TeamData> teams = new ArrayList<>();
         private List<PersonData> teamlessPersons = new ArrayList<>();
 
-        public Builder withTeams(Collection<TeamData> teamData) {
-            this.teams.addAll(teamData);
+        public Builder withTeams(Collection<TeamData.Builder> teamDataBuilders) {
+            for (TeamData.Builder builder : teamDataBuilders) {
+                teams.add(builder.build());
+            }
             return this;
         }
 
-        public Builder withTeams(TeamData... teamData) {
+        public Builder withTeams(TeamData.Builder... teamData) {
             return withTeams(asList(teamData));
         }
 
-        public Builder withTeamlessPersons(Collection<PersonData> persons) {
-            this.teamlessPersons.addAll(persons);
+        public Builder withTeamlessPersons(Collection<PersonData.Builder> personBuilders) {
+            for (PersonData.Builder builder : personBuilders) {
+                teamlessPersons.add(builder.build());
+            }
             return this;
         }
 
-        public Builder withTeamlessPersons(PersonData... persons) {
+        public Builder withTeamlessPersons(PersonData.Builder... persons) {
             return withTeamlessPersons(asList(persons));
         }
 

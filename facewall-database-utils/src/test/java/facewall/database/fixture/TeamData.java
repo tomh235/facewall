@@ -35,13 +35,14 @@ public class TeamData extends ForwardingMap<String, Object> {
             return this;
         }
 
-        public Builder withMembers(PersonData... members) {
-            this.members.addAll(asList(members));
-            return this;
+        public Builder withMembers(PersonData.Builder... members) {
+            return withMembers(asList(members));
         }
 
-        public Builder withMembers(Collection<PersonData> members) {
-            this.members.addAll(members);
+        public Builder withMembers(Collection<PersonData.Builder> membersBuilders) {
+            for (PersonData.Builder builder : membersBuilders) {
+                members.add(builder.build());
+            }
             return this;
         }
 
