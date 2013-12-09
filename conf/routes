@@ -3,13 +3,13 @@
 # ~~~~
 
 # Home page (Overview Page)
-GET     /                           controllers.OverviewAndSearchController.overview
+GET     /                           controllers.OverviewController.overview
 
 # Search page
-GET     /search                     controllers.OverviewAndSearchController.search
+GET     /search                     controllers.SearchController.search
 
 # Search Results page
-GET     /search-results             controllers.OverviewAndSearchController.searchResults
+GET     /search-results             controllers.SearchController.searchResults
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
