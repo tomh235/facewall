@@ -36,13 +36,11 @@ class FacewallRepository implements Repository {
     }
 
     @Override public List<Person> queryPersons(Query query) {
-        List<PersonDTO> dtos = dao.queryPersons(query);
-        return personFactory.createPersons(dtos);
+        return null;
     }
 
     @Override public List<Team> queryTeams(Query query) {
-        List<TeamDTO> dtos = dao.queryTeams(query);
-        return teamFactory.createTeams(dtos);
+        return null;
     }
 
     @Override public void addPerson(Person person) {

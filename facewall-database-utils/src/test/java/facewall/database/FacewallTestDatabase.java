@@ -1,20 +1,20 @@
 package facewall.database;
 
+import facewall.database.config.IndexConfiguration;
 import facewall.database.fixture.Fixtures;
 import facewall.database.fixture.PersonData;
 import facewall.database.fixture.TeamData;
 import facewall.database.util.ForwardingGraphDatabaseService;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.index.Index;
 import org.neo4j.graphdb.index.IndexManager;
 
 import java.util.Map;
 
 import static facewall.database.DatabaseOperations.clearDatabaseOperation;
 import static facewall.database.DatabaseOperations.initialiseDatabaseOperation;
-import static facewall.database.FacewallIndices.newFacewallIndices;
-import static facewall.database.config.FacewallDatabaseConfiguration.IndexConfiguration.*;
-import static facewall.database.config.FacewallDatabaseConfiguration.MEMBER_OF;
+import static facewall.database.config.FacewallDatabaseConfiguration.*;
 
 public class FacewallTestDatabase extends ForwardingGraphDatabaseService {
 
@@ -35,37 +35,30 @@ public class FacewallTestDatabase extends ForwardingGraphDatabaseService {
             @Override protected void performOperation(GraphDatabaseService db) {
                 Fixtures fixtures = fixturesBuilder.build();
                 IndexManager indexManager = db.index();
+                Index<Node> personIdIndex = indexManager.forNodes(Persons_Id.name);
+                Index<Node> teamIdIndex = indexManager.forNodes(Teams_Id.name);
 
-                FacewallIndices personIndices = newFacewallIndices(indexManager,
-                    Persons_Id,
-                    Persons_Name
-                );
-
-                FacewallIndices teamIndices = newFacewallIndices(indexManager,
-                    Teams_Id,
-                    Teams_Name
-                );
 
                 for (TeamData teamData : fixtures.teams) {
                     Node teamNode = db.createNode();
-
                     copyData(teamData, teamNode);
-                    teamIndices.addNode(teamNode, teamData);
+
+                    teamIdIndex.add(teamNode, Teams_Id.key, teamData.get(Teams_Id.key));
 
                     for (PersonData personData : teamData.members) {
                         Node personNode = db.createNode();
-                        personNode.createRelationshipTo(teamNode, MEMBER_OF);
-
                         copyData(personData, personNode);
-                        personIndices.addNode(personNode, personData);
+
+                        personNode.createRelationshipTo(teamNode, MEMBER_OF);
+                        personIdIndex.add(personNode, Persons_Id.key, personData.get(Persons_Id.key));
                     }
                 }
 
                 for (PersonData personData : fixtures.teamlessPersons) {
                     Node personNode = db.createNode();
-
                     copyData(personData, personNode);
-                    personIndices.addNode(personNode, personData);
+
+                    personIdIndex.add(personNode, Persons_Id.key, personData.get(Persons_Id.key));
                 }
             }
 

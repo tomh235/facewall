@@ -1,62 +1,45 @@
 package data.dao.database;
 
-import static data.dao.database.FacewallDB.*;
+import static data.dao.database.FacewallDB.NodeIndex;
 
-public class IndexQuery<T extends NodeIndex> {
+public class IndexQuery {
+    public final String indexName;
+    public final String keyName;
+    public final Object queriedValue;
 
-    private final T nodeIndex;
-    private final Object queriedValue;
-
-    private IndexQuery(Builder<T> builder) {
-        this.nodeIndex = builder.nodeIndex;
-        this.queriedValue = builder.queriedValue;
+    private IndexQuery(String indexName, String keyName, Object queriedValue) {
+        this.indexName = indexName;
+        this.keyName = keyName;
+        this.queriedValue = queriedValue;
     }
 
-    public static Builder<PersonNodeIndex> anIndexLookupForPersons() {
-        return new Builder<>();
+    public static Builder anIndexLookup() {
+        return new Builder();
     }
 
-    public static Builder<TeamNodeIndex> anIndexLookupForTeams() {
-        return new Builder<>();
-    }
-
-    public String getIndexName() {
-        return nodeIndex.getName();
-    }
-
-    public String getIndexKey() {
-        return nodeIndex.getKey();
-    }
-
-    public Object getQueriedValue() {
-        return queriedValue;
-    }
-
-    public static class Builder<T extends NodeIndex> {
-        private T nodeIndex;
+    public static class Builder {
+        private String indexName = "";
+        private String indexKeyName = "";
         private Object queriedValue = "";
 
         private Builder() {}
 
-        public IndexQuery<T> build() {
-            if(nodeIndex == null) {
-                throw new IllegalStateException("must specify what index to query on");
-            }
-
-            return new IndexQuery<>(this);
+        public IndexQuery build() {
+            return new IndexQuery(indexName, indexKeyName, queriedValue);
         }
 
-        public Builder<T> onIndex(T nodeIndex) {
-            this.nodeIndex = nodeIndex;
+        public Builder onIndex(NodeIndex nodeIndex) {
+            indexName = nodeIndex.name;
+            indexKeyName = nodeIndex.key;
             return this;
         }
 
-        public Builder<T> forValue(Object value) {
+        public Builder forValue(Object value) {
             this.queriedValue = value;
             return this;
         }
 
-        public Builder<T> forAllValues() {
+        public Builder forAllValues() {
             this.queriedValue = "*";
             return this;
         }

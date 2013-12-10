@@ -14,7 +14,7 @@ public class IndexQueryMatcher extends CompositeMatcher<IndexQuery> {
     public IndexQueryMatcher queryingOnAnIndexNamed(final String indexName) {
         add(new TypeSafeMatcher<IndexQuery>() {
             @Override public boolean matchesSafely(IndexQuery indexQuery) {
-                return indexName.equals(indexQuery.getIndexName());
+                return indexName.equals(indexQuery.indexName);
             }
 
             @Override public void describeTo(Description description) {
@@ -27,7 +27,7 @@ public class IndexQueryMatcher extends CompositeMatcher<IndexQuery> {
     public IndexQueryMatcher queryingOnTheKey(final String keyName) {
         add(new TypeSafeMatcher<IndexQuery>() {
             @Override public boolean matchesSafely(IndexQuery indexQuery) {
-                return keyName.equals(indexQuery.getIndexKey());
+                return keyName.equals(indexQuery.keyName);
             }
 
             @Override public void describeTo(Description description) {
@@ -40,7 +40,7 @@ public class IndexQueryMatcher extends CompositeMatcher<IndexQuery> {
     public IndexQueryMatcher queryingForTheValue(final Object value) {
         add(new TypeSafeMatcher<IndexQuery>() {
             @Override public boolean matchesSafely(IndexQuery indexQuery) {
-                return value.equals(indexQuery.getQueriedValue());
+                return value.equals(indexQuery.queriedValue);
             }
 
             @Override public void describeTo(Description description) {
@@ -53,7 +53,7 @@ public class IndexQueryMatcher extends CompositeMatcher<IndexQuery> {
     public IndexQueryMatcher queryingForAllValues() {
         add(new TypeSafeMatcher<IndexQuery>() {
             @Override public boolean matchesSafely(IndexQuery indexQuery) {
-                return "*".equals(indexQuery.getQueriedValue());
+                return "*".equals(indexQuery.queriedValue);
             }
 
             @Override public void describeTo(Description description) {

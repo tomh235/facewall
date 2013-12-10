@@ -12,7 +12,19 @@ import java.util.List;
 import java.util.Map;
 
 public class FacewallDB {
+    public enum NodeIndex {
 
+        Persons_Id("Persons_Id", "id"),
+        Teams_Id("Teams_Id", "id");
+
+        final String name;
+        final String key;
+
+        private NodeIndex(String name, String key) {
+            this.name = name;
+            this.key = key;
+        }
+    }
     private final GraphDatabaseService db;
 
     public FacewallDB(GraphDatabaseService db) {
@@ -23,8 +35,8 @@ public class FacewallDB {
     }
 
     public IndexHits<Node> lookupNodesInIndex(IndexQuery indexQuery) {
-        Index<Node> index = db.index().forNodes(indexQuery.getIndexName());
-        return index.query(indexQuery.getIndexKey(), indexQuery.getQueriedValue());
+        Index<Node> index = db.index().forNodes(indexQuery.indexName);
+        return index.query(indexQuery.keyName, indexQuery.queriedValue);
     }
 
     public Node lookupSingleNodeInIndex(IndexQuery indexQuery) {

@@ -5,8 +5,8 @@ import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.index.IndexManager;
 
-import static facewall.database.config.FacewallDatabaseConfiguration.IndexConfiguration.Persons_Id;
-import static facewall.database.config.FacewallDatabaseConfiguration.IndexConfiguration.Teams_Id;
+import static facewall.database.config.FacewallDatabaseConfiguration.Persons_Id;
+import static facewall.database.config.FacewallDatabaseConfiguration.Teams_Id;
 
 abstract class DatabaseOperations {
 
@@ -43,8 +43,8 @@ abstract class DatabaseOperations {
         @Override protected void performOperation(GraphDatabaseService db) {
             IndexManager indexManager = db.index();
 
-            indexManager.forNodes(Persons_Id.indexName);
-            indexManager.forNodes(Teams_Id.indexName);
+            indexManager.forNodes(Persons_Id.name);
+            indexManager.forNodes(Teams_Id.name);
         }
     };
 }

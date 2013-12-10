@@ -17,8 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static data.dao.database.IndexQuery.anIndexLookupForPersons;
-import static data.dao.database.PersonNodeIndex.Persons_Id;
+import static data.dao.database.FacewallDB.NodeIndex.Persons_Id;
+import static data.dao.database.IndexQuery.anIndexLookup;
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.sameInstance;
@@ -67,7 +67,7 @@ public class FacewallDBTest {
         IndexHits<Node> expectedHits = mock(IndexHits.class);
         when(mockIndex.query(anyString(), any())).thenReturn(expectedHits);
 
-        IndexHits<Node> result = facewallDB.lookupNodesInIndex(anIndexLookupForPersons()
+        IndexHits<Node> result = facewallDB.lookupNodesInIndex(anIndexLookup()
                 .onIndex(Persons_Id)
                 .forValue("1")
                 .build()
@@ -83,7 +83,7 @@ public class FacewallDBTest {
         Node expectedNode = mock(Node.class);
         when(expectedHits.getSingle()).thenReturn(expectedNode);
 
-        Node result = facewallDB.lookupSingleNodeInIndex(anIndexLookupForPersons()
+        Node result = facewallDB.lookupSingleNodeInIndex(anIndexLookup()
                 .onIndex(Persons_Id)
                 .forValue("1")
                 .build()
@@ -93,7 +93,7 @@ public class FacewallDBTest {
 
     @Test
     public void node_from_index_lookup_verifyInteractions() {
-        IndexQuery query = anIndexLookupForPersons()
+        IndexQuery query = anIndexLookup()
                 .onIndex(Persons_Id)
                 .forValue("expectedValue")
                 .build();
@@ -101,8 +101,8 @@ public class FacewallDBTest {
         facewallDB.lookupNodesInIndex(query);
 
         verify(mockDb).index();
-        verify(mockIndexManager).forNodes(query.getIndexName());
-        verify(mockIndex).query(query.getIndexKey(), query.getQueriedValue());
+        verify(mockIndexManager).forNodes(query.indexName);
+        verify(mockIndex).query(query.keyName, query.queriedValue);
     }
 
     @Test
