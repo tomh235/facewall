@@ -14,8 +14,8 @@ import java.util.Map;
 public class FacewallDB {
     public enum NodeIndex {
 
-        Persons_Id("Persons_Id", "id"),
-        Teams_Id("Teams_Id", "id");
+        Persons("Persons", "id"),
+        Teams("Teams", "id");
 
         final String name;
         final String key;

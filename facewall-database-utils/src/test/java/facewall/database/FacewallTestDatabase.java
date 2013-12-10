@@ -1,6 +1,5 @@
 package facewall.database;
 
-import facewall.database.config.IndexConfiguration;
 import facewall.database.fixture.Fixtures;
 import facewall.database.fixture.PersonData;
 import facewall.database.fixture.TeamData;
@@ -14,7 +13,9 @@ import java.util.Map;
 
 import static facewall.database.DatabaseOperations.clearDatabaseOperation;
 import static facewall.database.DatabaseOperations.initialiseDatabaseOperation;
-import static facewall.database.config.FacewallDatabaseConfiguration.*;
+import static facewall.database.config.FacewallDatabaseConfiguration.IndexConfiguration.Persons;
+import static facewall.database.config.FacewallDatabaseConfiguration.IndexConfiguration.Teams;
+import static facewall.database.config.FacewallDatabaseConfiguration.MEMBER_OF;
 
 public class FacewallTestDatabase extends ForwardingGraphDatabaseService {
 
@@ -34,23 +35,23 @@ public class FacewallTestDatabase extends ForwardingGraphDatabaseService {
         DatabaseOperation seedFixturesOperation = new DatabaseOperation() {
             @Override protected void performOperation(GraphDatabaseService db) {
                 Fixtures fixtures = fixturesBuilder.build();
-                IndexManager indexManager = db.index();
-                Index<Node> personIdIndex = indexManager.forNodes(Persons_Id.name);
-                Index<Node> teamIdIndex = indexManager.forNodes(Teams_Id.name);
 
+                IndexManager indexManager = db.index();
+                Index<Node> personIdIndex = indexManager.forNodes(Persons.indexName);
+                Index<Node> teamIdIndex = indexManager.forNodes(Teams.indexName);
 
                 for (TeamData teamData : fixtures.teams) {
                     Node teamNode = db.createNode();
                     copyData(teamData, teamNode);
 
-                    teamIdIndex.add(teamNode, Teams_Id.key, teamData.get(Teams_Id.key));
+                    teamIdIndex.add(teamNode, Teams.key, teamData.get(Teams.key));
 
                     for (PersonData personData : teamData.members) {
                         Node personNode = db.createNode();
                         copyData(personData, personNode);
 
                         personNode.createRelationshipTo(teamNode, MEMBER_OF);
-                        personIdIndex.add(personNode, Persons_Id.key, personData.get(Persons_Id.key));
+                        personIdIndex.add(personNode, Persons.key, personData.get(Persons.key));
                     }
                 }
 
@@ -58,7 +59,7 @@ public class FacewallTestDatabase extends ForwardingGraphDatabaseService {
                     Node personNode = db.createNode();
                     copyData(personData, personNode);
 
-                    personIdIndex.add(personNode, Persons_Id.key, personData.get(Persons_Id.key));
+                    personIdIndex.add(personNode, Persons.key, personData.get(Persons.key));
                 }
             }
 

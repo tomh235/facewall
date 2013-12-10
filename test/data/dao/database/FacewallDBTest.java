@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static data.dao.database.FacewallDB.NodeIndex.Persons_Id;
+import static data.dao.database.FacewallDB.NodeIndex.Persons;
 import static data.dao.database.IndexQuery.anIndexLookup;
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -68,7 +68,7 @@ public class FacewallDBTest {
         when(mockIndex.query(anyString(), any())).thenReturn(expectedHits);
 
         IndexHits<Node> result = facewallDB.lookupNodesInIndex(anIndexLookup()
-                .onIndex(Persons_Id)
+                .onIndex(Persons)
                 .forValue("1")
                 .build()
         );
@@ -84,7 +84,7 @@ public class FacewallDBTest {
         when(expectedHits.getSingle()).thenReturn(expectedNode);
 
         Node result = facewallDB.lookupSingleNodeInIndex(anIndexLookup()
-                .onIndex(Persons_Id)
+                .onIndex(Persons)
                 .forValue("1")
                 .build()
         );
@@ -94,7 +94,7 @@ public class FacewallDBTest {
     @Test
     public void node_from_index_lookup_verifyInteractions() {
         IndexQuery query = anIndexLookup()
-                .onIndex(Persons_Id)
+                .onIndex(Persons)
                 .forValue("expectedValue")
                 .build();
 

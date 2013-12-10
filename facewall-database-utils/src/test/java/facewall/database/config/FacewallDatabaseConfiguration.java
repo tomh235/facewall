@@ -8,6 +8,16 @@ public class FacewallDatabaseConfiguration {
 
     public final static RelationshipType MEMBER_OF = withName("TEAMMEMBER_OF");
 
-    public final static IndexConfiguration Persons_Id = new IndexConfiguration("Persons_Id", "id");
-    public final static IndexConfiguration Teams_Id = new IndexConfiguration("Teams_Id", "id");
+    public enum IndexConfiguration {
+        Persons("Persons", "id"),
+        Teams("Teams", "id");
+
+        public final String indexName;
+        public final String key;
+
+        private IndexConfiguration(String indexName, String key) {
+            this.indexName = indexName;
+            this.key = key;
+        }
+    }
 }
