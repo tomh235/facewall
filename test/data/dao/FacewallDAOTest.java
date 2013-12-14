@@ -1,25 +1,27 @@
 package data.dao;
 
+import data.dao.database.DatabaseQueryBuilderMatcher;
 import data.dao.database.FacewallDB;
-import data.dao.database.IndexQuery;
-import data.dao.database.RelationshipTypes;
+import data.dao.database.QueryResultRow;
+import data.dao.database.query.DatabaseQueryBuilder;
+import data.dao.database.query.PersonDatabaseQueryBuilder;
+import data.dao.database.query.TeamDatabaseQueryBuilder;
+import data.datatype.PersonId;
+import data.datatype.TeamId;
 import data.dto.PersonDTO;
 import data.dto.TeamDTO;
 import data.mapper.PersonNodeMapper;
-import domain.Person;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.index.IndexHits;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static data.dao.database.IndexQueryMatcher.anIndexQuery;
+import static data.dao.database.DatabaseQueryMatchers.*;
+import static data.datatype.PersonId.newPersonId;
+import static data.datatype.TeamId.newTeamId;
 import static data.dto.PersonDTOMatcher.aPersonDTO;
 import static data.dto.TeamDTOMatcher.aTeamDTO;
 import static java.util.Arrays.asList;
@@ -29,239 +31,228 @@ import static org.hamcrest.core.IsSame.sameInstance;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Mockito.*;
-import static util.CollectionMatcher.containsExhaustively;
+import static util.IterableMatchers.containsExhaustivelyInAnyOrder;
+import static util.IterableMatchers.containsExhaustivelyInOrder;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FacewallDAOTest extends DAOTest {
 
+    private final TeamId someTeamId = newTeamId("blah");
+    private final PersonId somePersonId = newPersonId("bloom");
+
     @Mock FacewallDB mockDb;
-    @Mock PersonNodeMapper mockPersonNodeMapper;
+
+    @InjectMocks
     private FacewallDAO facewallDAO;
 
-    @Before
-    public void setUp() throws Exception {
-        facewallDAO = new FacewallDAO(mockDb, mockPersonNodeMapper);
-        when(mockDb.beginTransaction()).thenReturn(mockTransaction);
-    }
-
     @Test
-    public void fetch_persons_starts_and_finishes_transactions() {
-        stubOutMocks();
-        facewallDAO.fetchPersons();
-
-        verifyTransactionComplete();
-    }
-
-    @Test
-    public void fetch_teams_starts_and_finishes_transactions() {
-        stubOutMocks();
-        facewallDAO.fetchTeams();
-
-        verifyTransactionComplete();
-    }
-
-    @Test
-    public void add_person_starts_and_finishes_transactions() {
-        Person mockPerson = mock(Person.class);
-        stubOutMocks();
-        facewallDAO.addPerson(mockPerson);
-
-        verifyTransactionComplete();
-    }
-
-    @Test
-    public void fetch_persons_creates_index_query() {
-        stubOutMocks();
-        facewallDAO.fetchPersons();
-
-        verify(mockDb).lookupNodesInIndex(
-            argThat(is(anIndexQuery()
-                .queryingOnAnIndexNamed("Persons")
-                .queryingOnTheKey("id")
-                .queryingForAllValues()
-            ))
-        );
-    }
-
-    @Test
-    public void fetch_teams_creates_index_query() {
-        stubOutMocks();
-        facewallDAO.fetchTeams();
-
-        verify(mockDb).lookupNodesInIndex(
-            argThat(is(anIndexQuery()
-                .queryingOnAnIndexNamed("Teams")
-                .queryingOnTheKey("id")
-                .queryingForAllValues()
-            ))
-        );
-    }
-
-    @Test
-    public void fetch_person_retrieves_person_nodes() {
-        IndexHits<Node> personNodeHits = mock(IndexHits.class);
-        when(mockDb.lookupNodesInIndex(any(IndexQuery.class)))
-            .thenReturn(personNodeHits);
-
+    public void fetch_persons_retrieves_person_nodes() {
         Node expectedPersonNode1 = mock(Node.class);
         Node expectedPersonNode2 = mock(Node.class);
-        when(personNodeHits.iterator()).thenReturn(asList(
-            expectedPersonNode1, expectedPersonNode2
-        ).iterator());
 
-        List<PersonDTO> result = facewallDAO.fetchPersons();
+        Iterable<QueryResultRow> mockQueryResults = asList(
+            createMockQueryResultRow(expectedPersonNode1, mock(Node.class)),
+            createMockQueryResultRow(expectedPersonNode2, mock(Node.class))
+        );
 
-        verify(mockDb).findSingleRelatedNode(expectedPersonNode1);
-        verify(mockDb).findSingleRelatedNode(expectedPersonNode2);
+        when(mockDb.query(any(PersonDatabaseQueryBuilder.class)))
+            .thenReturn(mockQueryResults);
 
-        assertThat(result, containsExhaustively(
-            aPersonDTO().withPersonNode(
-                    sameInstance(expectedPersonNode1)),
-            aPersonDTO().withPersonNode(
-                    sameInstance(expectedPersonNode2)
-            )
+        Iterable<PersonDTO> result = facewallDAO.fetchPersons();
+
+        assertThat(result, containsExhaustivelyInAnyOrder(
+            aPersonDTO().withPersonNode(sameInstance(expectedPersonNode1)),
+            aPersonDTO().withPersonNode(sameInstance(expectedPersonNode2))
         ));
     }
 
     @Test
-    public void fetch_person_retrieves_team_nodes() {
-        IndexHits<Node> personNodeHits = mock(IndexHits.class);
-        when(mockDb.lookupNodesInIndex(any(IndexQuery.class)))
-            .thenReturn(personNodeHits);
+    public void fetch_persons_retrieves_members_nodes() {
+        Node expectedTeamNode = mock(Node.class);
 
-        when(personNodeHits.iterator()).thenReturn(asList(
-            mock(Node.class), mock(Node.class)
-        ).iterator());
+        Iterable<QueryResultRow> mockQueryResults = asList(
+            createMockQueryResultRow(mock(Node.class), expectedTeamNode)
+        );
 
-        Node expectedTeamNode1 = mock(Node.class);
-        Node expectedTeamNode2 = mock(Node.class);
+        when(mockDb.query(any(PersonDatabaseQueryBuilder.class)))
+            .thenReturn(mockQueryResults);
 
-        when(mockDb.findSingleRelatedNode(any(Node.class)))
-            .thenReturn(expectedTeamNode1)
-            .thenReturn(expectedTeamNode2);
+        Iterable<PersonDTO> result = facewallDAO.fetchPersons();
 
-        List<PersonDTO> result = facewallDAO.fetchPersons();
-
-        assertThat(result, containsExhaustively(
+        assertThat(result, containsExhaustivelyInOrder(
             aPersonDTO().withTeamNode(
-                sameInstance(expectedTeamNode1)),
-            aPersonDTO().withTeamNode(
-                sameInstance(expectedTeamNode2)
-            )
-        ));
-    }
-
-    @Test
-    public void fetch_teams_retrieves_team_nodes() {
-        IndexHits<Node> teamNodeHits = mock(IndexHits.class);
-        when(mockDb.lookupNodesInIndex(any(IndexQuery.class)))
-            .thenReturn(teamNodeHits);
-
-        Node expectedTeamNode1 = mock(Node.class);
-        Node expectedTeamNode2 = mock(Node.class);
-        when(teamNodeHits.iterator()).thenReturn(asList(
-            expectedTeamNode1, expectedTeamNode2
-        ).iterator());
-
-        List<TeamDTO> result = facewallDAO.fetchTeams();
-
-        verify(mockDb).findRelatedNodes(expectedTeamNode1);
-        verify(mockDb).findRelatedNodes(expectedTeamNode2);
-
-        assertThat(result, containsExhaustively(
-            aTeamDTO().withTeamNode(
-                    sameInstance(expectedTeamNode1)),
-            aTeamDTO().withTeamNode(
-                sameInstance(expectedTeamNode2)
-            )
-        ));
-    }
-
-
-    @Test
-    public void fetch_teams_retrieves_members_nodes() {
-        IndexHits<Node> teamNodeHits = mock(IndexHits.class);
-        when(mockDb.lookupNodesInIndex(any(IndexQuery.class)))
-            .thenReturn(teamNodeHits);
-
-        when(teamNodeHits.iterator()).thenReturn(asList(
-            mock(Node.class)
-        ).iterator());
-
-        Node expectedMemberNode1 = mock(Node.class);
-        Node expectedMemberNode2 = mock(Node.class);
-
-        when(mockDb.findRelatedNodes(any(Node.class))).thenReturn(asList(
-            expectedMemberNode1, expectedMemberNode2
-        ));
-
-        List<TeamDTO> result = facewallDAO.fetchTeams();
-
-        assertThat(result, containsExhaustively(
-            aTeamDTO().whereMemberNodes(containsExhaustively(
-                sameInstance(expectedMemberNode1),
-                sameInstance(expectedMemberNode2)
-            )
+                sameInstance(expectedTeamNode)
             )));
     }
 
     @Test
-    public void create_person_delegates_to_create_node() {
-        Person mockPerson = mock(Person.class);
-        facewallDAO.addPerson(mockPerson);
+    public void fetch_persons_creates_query_for_persons() {
+        stubDb();
 
-        verify(mockDb).createNode();
+        facewallDAO.fetchPersons();
+
+        verify(mockDb).query(argThat(is(DatabaseQueryBuilderMatcher.aDatabaseQueryBuilder()
+            .whichBuilds(aQueryForAllPersons())
+        )));
     }
 
     @Test
-    public void create_person_delegates_to_property_mapper() {
-        Person mockPerson = mock(Person.class);
-        facewallDAO.addPerson(mockPerson);
+    public void fetch_teams_retrieves_team_nodes() {
+        Node expectedTeamNode1 = mock(Node.class);
+        Node expectedTeamNode2 = mock(Node.class);
 
-        verify(mockPersonNodeMapper).mapNodeProperties(mockPerson);
+        Iterable<QueryResultRow> mockQueryResults = asList(
+            createMockQueryResultRow(mock(Node.class), expectedTeamNode1),
+            createMockQueryResultRow(mock(Node.class), expectedTeamNode2)
+        );
 
+        when(mockDb.query(any(TeamDatabaseQueryBuilder.class)))
+            .thenReturn(mockQueryResults);
+
+        Iterable<TeamDTO> result = facewallDAO.fetchTeams();
+
+        assertThat(result, containsExhaustivelyInAnyOrder(
+            aTeamDTO().withTeamNode(sameInstance(expectedTeamNode1)),
+            aTeamDTO().withTeamNode(sameInstance(expectedTeamNode2))
+        ));
     }
 
     @Test
-    public void create_person_delegates_to_relationship_mapper() {
-        Person mockPerson = mock(Person.class);
-        facewallDAO.addPerson(mockPerson);
+    public void fetch_teams_retrieves_members_nodes() {
+        Node expectedMemberNode1 = mock(Node.class);
+        Node expectedMemberNode2 = mock(Node.class);
 
-        verify(mockPersonNodeMapper).mapNodeRelationships(any(Node.class));
+        Node teamNode = mock(Node.class);
+
+        Iterable<QueryResultRow> mockQueryResults = asList(
+            createMockQueryResultRow(expectedMemberNode1, teamNode),
+            createMockQueryResultRow(expectedMemberNode2, teamNode)
+        );
+
+        when(mockDb.query(any(TeamDatabaseQueryBuilder.class)))
+            .thenReturn(mockQueryResults);
+
+        Iterable<TeamDTO> result = facewallDAO.fetchTeams();
+
+        assertThat(result, containsExhaustivelyInOrder(
+            aTeamDTO().whereMemberNodes(containsExhaustivelyInOrder(
+                sameInstance(expectedMemberNode1),
+                sameInstance(expectedMemberNode2)
+            ))));
     }
 
     @Test
-    public void create_person_delegates_to_db_add_properties_to_node() {
-        Person mockPerson = mock(Person.class);
-        Node mockPersonNode = mock(Node.class);
+    public void fetch_teams_creates_query_for_teams() {
+        stubDb();
 
-        Map<String, String> stubProperties = new HashMap<>();
-        stubProperties.put("name", "bob");
+        facewallDAO.fetchTeams();
 
-        when(mockDb.createNode()).thenReturn(mockPersonNode);
-        when(mockPersonNodeMapper.mapNodeProperties(mockPerson)).thenReturn(stubProperties);
-
-        facewallDAO.addPerson(mockPerson);
-        verify(mockDb).addPropertiesToNode(mockPersonNode, stubProperties);
+        verify(mockDb).query(argThat(is(DatabaseQueryBuilderMatcher.aDatabaseQueryBuilder()
+            .whichBuilds(aQueryForAllTeams())
+        )));
     }
 
     @Test
-    public void create_person_delegates_to_db_add_relationships_to_node() {
-        Person mockPerson = mock(Person.class);
-        Node mockPersonNode = mock(Node.class);
-        Node mockTeamNode = mock(Node.class);
+    public void fetch_team_retrieves_team_node() {
+        Node expectedTeamNode1 = mock(Node.class);
 
-        Map<Node, RelationshipTypes> stubRelations = new HashMap<>();
-        stubRelations.put(mockTeamNode, RelationshipTypes.TEAMMEMBER_OF);
+        Iterable<QueryResultRow> mockQueryResults = asList(
+            createMockQueryResultRow(mock(Node.class), expectedTeamNode1)
+        );
+        when(mockDb.query(any(TeamDatabaseQueryBuilder.class)))
+            .thenReturn(mockQueryResults);
 
-        when(mockDb.createNode()).thenReturn(mockPersonNode);
-        when(mockPersonNodeMapper.mapNodeRelationships(any(Node.class))).thenReturn(stubRelations);
+        TeamDTO result = facewallDAO.fetchTeam(someTeamId);
 
-        facewallDAO.addPerson(mockPerson);
-        verify(mockDb).addRelationshipsToNode(mockPersonNode, stubRelations);
+        assertThat(result, is(
+            aTeamDTO().withTeamNode(sameInstance(expectedTeamNode1))
+        ));
     }
 
-    private void stubOutMocks() {
-        when(mockDb.lookupNodesInIndex(any(IndexQuery.class))).thenReturn(stubNodeIndexHits);
+    @Test
+    public void fetch_team_retrieves_members_nodes() {
+        Node expectedMemberNode1 = mock(Node.class);
+        Node expectedMemberNode2 = mock(Node.class);
+
+        Node teamNode = mock(Node.class);
+
+        Iterable<QueryResultRow> mockQueryResults = asList(
+            createMockQueryResultRow(expectedMemberNode1, teamNode),
+            createMockQueryResultRow(expectedMemberNode2, teamNode)
+        );
+
+        when(mockDb.query(any(TeamDatabaseQueryBuilder.class)))
+            .thenReturn(mockQueryResults);
+
+        TeamDTO result = facewallDAO.fetchTeam(someTeamId);
+
+        assertThat(result, is(
+            aTeamDTO().whereMemberNodes(containsExhaustivelyInOrder(
+                sameInstance(expectedMemberNode1),
+                sameInstance(expectedMemberNode2)
+            ))));
+    }
+
+    @Test
+    public void fetch_team_creates_query_for_team_with_id() {
+        stubDb();
+
+        facewallDAO.fetchTeam(newTeamId("team id"));
+
+        verify(mockDb).query(argThat(is(DatabaseQueryBuilderMatcher.aDatabaseQueryBuilder()
+            .whichBuilds(aQueryForTeamWithId("team id"))
+        )));
+    }
+
+    @Test
+    public void fetch_person_retrieves_person_node() {
+        Node expectedPersonNode1 = mock(Node.class);
+
+        Iterable<QueryResultRow> mockQueryResults = asList(
+            createMockQueryResultRow(expectedPersonNode1, mock(Node.class))
+        );
+        when(mockDb.query(any(PersonDatabaseQueryBuilder.class)))
+            .thenReturn(mockQueryResults);
+
+        PersonDTO result = facewallDAO.fetchPerson(somePersonId);
+
+        assertThat(result, is(
+            aPersonDTO().withPersonNode(sameInstance(expectedPersonNode1))
+        ));
+    }
+
+    @Test
+    public void fetch_person_retrieves_members_nodes() {
+        Node expectedTeamNode = mock(Node.class);
+
+        Iterable<QueryResultRow> mockQueryResults = asList(
+            createMockQueryResultRow(mock(Node.class), expectedTeamNode)
+        );
+
+        when(mockDb.query(any(PersonDatabaseQueryBuilder.class)))
+            .thenReturn(mockQueryResults);
+
+        PersonDTO result = facewallDAO.fetchPerson(somePersonId);
+
+        assertThat(result, is(
+            aPersonDTO().withTeamNode(sameInstance(expectedTeamNode))
+        ));
+    }
+
+    @Test
+    public void fetch_person_creates_query_for_person_with_id() {
+        stubDb();
+
+        facewallDAO.fetchPerson(newPersonId("person-id"));
+
+        verify(mockDb).query(argThat(is(DatabaseQueryBuilderMatcher.aDatabaseQueryBuilder()
+            .whichBuilds(aQueryForPersonWithId("person-id"))
+        )));
+    }
+
+    private void stubDb() {
+        when(mockDb.query(any(DatabaseQueryBuilder.class))).thenReturn(
+            asList(mock(QueryResultRow.class))
+        );
     }
 }

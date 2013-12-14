@@ -20,11 +20,6 @@ public class PersonData extends ForwardingMap<String, Object> {
     public static class Builder {
         private Map<String, Object> properties = new HashMap<>();
 
-        public Builder withProperties(Map<String, Object> properties) {
-            this.properties.putAll(properties);
-            return this;
-        }
-
         public Builder withProperty(String key, String value) {
             this.properties.put(key, value);
             return this;

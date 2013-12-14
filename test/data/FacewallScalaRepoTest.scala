@@ -6,7 +6,7 @@ import domain.PersonMatcher.aPerson
 import domain.TeamMatcher.aTeam
 import org.anormcypher.Cypher
 import org.neo4j.server.WrappingNeoServerBootstrapper
-import util.CollectionMatcher.containsExhaustively
+import util.IterableMatchers.containsExhaustivelyInOrder
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.is
 import org.scalatest.mock.MockitoSugar.mock
@@ -49,10 +49,10 @@ class FacewallScalaRepoTest extends FunSuite with BeforeAndAfter with TemporaryD
     val fahran = aPerson.withId("2").named("Fahran").withPicture("person3.img").inTeam(aTeam().named("Checkout"))
     val person3 = aPerson.withId("5").named("Person 3").withPicture("Person 3.img").inTeam(aTeam().named("Checkout"))
 
-    val checkout = aTeam.withId("3").named("Checkout").withColour("88aa44").whereMembers(containsExhaustively(
+    val checkout = aTeam.withId("3").named("Checkout").withColour("88aa44").whereMembers(containsExhaustivelyInOrder(
         aPerson.named("Fahran"), aPerson.named("Person 3")
     ))
-    val productResources = aTeam.withId("4").named("ProductResources").withColour("3355ff").whereMembers(containsExhaustively(
+    val productResources = aTeam.withId("4").named("ProductResources").withColour("3355ff").whereMembers(containsExhaustivelyInOrder(
         aPerson.named("Hugo")
     ))
 
@@ -67,7 +67,7 @@ class FacewallScalaRepoTest extends FunSuite with BeforeAndAfter with TemporaryD
 
     test("listPersons should get all persons") {
         val result = repo.listPersons
-        assertThat(result, containsExhaustively(hugo, fahran, person3))
+        assertThat(result, containsExhaustivelyInOrder(hugo, fahran, person3))
     }
 
     test("findTeamForPerson should find Team that Person is member of") {
@@ -77,25 +77,25 @@ class FacewallScalaRepoTest extends FunSuite with BeforeAndAfter with TemporaryD
 
     test("listTeams should get Checkout and ProductResources") {
         val result = repo.listTeams.asJava
-        assertThat(result, containsExhaustively(checkout, productResources))
+        assertThat(result, containsExhaustivelyInOrder(checkout, productResources))
     }
 
     test("findPersonsForTeam should find Persons that are members of the Team") {
         val result = repo.findPersonsForTeam(new MockTeam("3", "Checkout", "blue", List.empty[Person].asJava)).asJava
-        assertThat(result, containsExhaustively(fahran, person3))
+        assertThat(result, containsExhaustivelyInOrder(fahran, person3))
     }
 
     test("queryPersons should find persons matching query") {
         val query = mock[Query]
         when(query.toRegEx).thenReturn("Hugo")
         val result = repo.queryPersons(query)
-        assertThat(result, containsExhaustively(hugo))
+        assertThat(result, containsExhaustivelyInOrder(hugo))
     }
 
     test("queryTeams should find teams matching query") {
         val query = mock[Query]
         when(query.toRegEx).thenReturn(".*Product.*")
         val result = repo.queryTeams(query)
-        assertThat(result, containsExhaustively(productResources))
+        assertThat(result, containsExhaustivelyInOrder(productResources))
     }
 }

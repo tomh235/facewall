@@ -25,11 +25,6 @@ public class TeamData extends ForwardingMap<String, Object> {
         private Map<String, Object> properties = new HashMap<>();
         private List<PersonData> members = new ArrayList<>();
 
-        public Builder withProperties(Map<String, Object> properties) {
-            this.properties.putAll(properties);
-            return this;
-        }
-
         public Builder withProperty(String key, Object value) {
             this.properties.put(key, value);
             return this;

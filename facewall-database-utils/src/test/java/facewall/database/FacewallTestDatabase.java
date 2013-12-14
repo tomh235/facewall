@@ -4,10 +4,12 @@ import facewall.database.fixture.Fixtures;
 import facewall.database.fixture.PersonData;
 import facewall.database.fixture.TeamData;
 import facewall.database.util.ForwardingGraphDatabaseService;
+import org.neo4j.cypher.javacompat.ExecutionEngine;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.index.Index;
 import org.neo4j.graphdb.index.IndexManager;
+import org.neo4j.rest.graphdb.query.QueryEngine;
 
 import java.util.Map;
 
@@ -16,6 +18,7 @@ import static facewall.database.DatabaseOperations.initialiseDatabaseOperation;
 import static facewall.database.config.FacewallDatabaseConfiguration.IndexConfiguration.Persons;
 import static facewall.database.config.FacewallDatabaseConfiguration.IndexConfiguration.Teams;
 import static facewall.database.config.FacewallDatabaseConfiguration.MEMBER_OF;
+import static facewall.database.util.QueryEngineAdaptor.createQueryEngineAdaptor;
 
 public class FacewallTestDatabase extends ForwardingGraphDatabaseService {
 
@@ -71,5 +74,10 @@ public class FacewallTestDatabase extends ForwardingGraphDatabaseService {
         };
 
         seedFixturesOperation.execute(this);
+    }
+
+    public QueryEngine<Map<String, Object>> createQueryEngine() {
+        ExecutionEngine executionEngine = new ExecutionEngine(this);
+        return createQueryEngineAdaptor(executionEngine);
     }
 }

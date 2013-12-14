@@ -1,47 +1,46 @@
 package data.dao.database;
 
+import data.dao.database.query.DatabaseQuery;
+import data.dao.database.query.DatabaseQueryBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.index.Index;
-import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.graphdb.index.IndexManager;
+import org.neo4j.rest.graphdb.query.QueryEngine;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static data.dao.database.FacewallDB.NodeIndex.Persons;
-import static data.dao.database.IndexQuery.anIndexLookup;
-import static java.util.Arrays.asList;
+import static data.dao.database.FacewallDB.NodeIndex.Teams;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
-import static util.CollectionMatcher.containsExhaustively;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FacewallDBTest {
 
     @Mock GraphDatabaseService mockDb;
+    @Mock QueryEngine<Map<String,Object>> mockQueryEngine;
+
     @Mock IndexManager mockIndexManager;
     @Mock Index<Node> mockIndex;
     @Mock Transaction mockTransaction;
+
+    @InjectMocks
     private FacewallDB facewallDB;
 
     @Before
     public void setUp() throws Exception {
-        facewallDB = new FacewallDB(mockDb);
-
-        mockTransaction = mock(Transaction.class);
         when(mockDb.beginTx()).thenReturn(mockTransaction);
         when(mockDb.index()).thenReturn(mockIndexManager);
 
@@ -49,161 +48,48 @@ public class FacewallDBTest {
     }
 
     @Test
-    public void beginTransaction_delegates_to_graphDb() {
-        when(mockDb.beginTx()).thenReturn(mockTransaction);
-
-        Transaction result = facewallDB.beginTransaction();
-        assertThat(result, is(sameInstance(mockTransaction)));
+    public void persons_index_name() {
+        assertThat(Persons.getName(), is("Persons"));
     }
 
     @Test
-    public void beginTransaction_verify_interactions() {
-        facewallDB.beginTransaction();
-        verify(mockDb).beginTx();
+    public void persons_index_key() {
+        assertThat(Persons.getKey(), is("id"));
     }
 
     @Test
-    public void nodes_from_index_lookup() {
-        IndexHits<Node> expectedHits = mock(IndexHits.class);
-        when(mockIndex.query(anyString(), any())).thenReturn(expectedHits);
-
-        IndexHits<Node> result = facewallDB.lookupNodesInIndex(anIndexLookup()
-                .onIndex(Persons)
-                .forValue("1")
-                .build()
-        );
-        assertThat(result, is(sameInstance(expectedHits)));
+    public void teams_index_name() {
+        assertThat(Teams.getName(), is("Teams"));
     }
 
     @Test
-    public void single_node_from_index_lookup() {
-        IndexHits<Node> expectedHits = mock(IndexHits.class);
-        when(mockIndex.query(anyString(), any())).thenReturn(expectedHits);
-
-        Node expectedNode = mock(Node.class);
-        when(expectedHits.getSingle()).thenReturn(expectedNode);
-
-        Node result = facewallDB.lookupSingleNodeInIndex(anIndexLookup()
-                .onIndex(Persons)
-                .forValue("1")
-                .build()
-        );
-        assertThat(result, is(sameInstance(expectedNode)));
+    public void teams_index_key() {
+        assertThat(Teams.getKey(), is("id"));
     }
 
     @Test
-    public void node_from_index_lookup_verifyInteractions() {
-        IndexQuery query = anIndexLookup()
-                .onIndex(Persons)
-                .forValue("expectedValue")
-                .build();
+    public void query_builds_then_executes_query() {
+        DatabaseQueryBuilder mockQueryBuilder = mock(DatabaseQueryBuilder.class);
+        DatabaseQuery mockQuery = mock(DatabaseQuery.class);
+        when(mockQueryBuilder.build()).thenReturn(mockQuery);
 
-        facewallDB.lookupNodesInIndex(query);
+        facewallDB.query(mockQueryBuilder);
 
-        verify(mockDb).index();
-        verify(mockIndexManager).forNodes(query.indexName);
-        verify(mockIndex).query(query.keyName, query.queriedValue);
+        verify(mockQueryBuilder).build();
+        verify(mockQuery).execute(mockQueryEngine);
     }
 
     @Test
-    public void all_nodes_related_to_given_node() {
-        Relationship mockRelationship = mock(Relationship.class);
-        Iterable<Relationship> relationships = asList(mockRelationship, mockRelationship);
+    public void query_returns_results_of_executing_query() {
+        DatabaseQueryBuilder mockQueryBuilder = mock(DatabaseQueryBuilder.class);
+        DatabaseQuery mockQuery = mock(DatabaseQuery.class);
+        when(mockQueryBuilder.build()).thenReturn(mockQuery);
 
-        Node mockNode = mock(Node.class);
-        when(mockNode.getRelationships()).thenReturn(relationships);
+        Iterable<QueryResultRow> expectedResults = mock(Iterable.class);
+        when(mockQuery.execute(any(QueryEngine.class))).thenReturn(expectedResults);
 
-        Node expectedNode1 = mock(Node.class);
-        Node expectedNode2 = mock(Node.class);
+        Iterable<QueryResultRow> results = facewallDB.query(mockQueryBuilder);
 
-        when(mockRelationship.getOtherNode(any(Node.class)))
-                .thenReturn(expectedNode1)
-                .thenReturn(expectedNode2);
-
-        List<Node> result = facewallDB.findRelatedNodes(mockNode);
-
-        assertThat(result, containsExhaustively(
-            sameInstance(expectedNode1),
-            sameInstance(expectedNode2)
-        ));
+        assertThat(results, sameInstance(expectedResults));
     }
-
-    @Test
-    public void all_nodes_related_to_given_node_verifyInteractions() {
-        Relationship mockRelationship = mock(Relationship.class);
-        Iterable<Relationship> relationships = asList(mockRelationship, mockRelationship);
-
-        Node mockNode = mock(Node.class);
-        when(mockNode.getRelationships()).thenReturn(relationships);
-
-        when(mockRelationship.getOtherNode(any(Node.class)))
-                .thenReturn(mock(Node.class))
-                .thenReturn(mock(Node.class));
-
-        facewallDB.findRelatedNodes(mockNode);
-
-        verify(mockNode).getRelationships();
-        verify(mockRelationship, times(2)).getOtherNode(mockNode);
-    }
-
-    @Test
-    public void single_related_node() {
-        Relationship mockRelationship = mock(Relationship.class);
-        Iterable<Relationship> relationships = asList(mockRelationship);
-
-        Node mockNode = mock(Node.class);
-        when(mockNode.getRelationships()).thenReturn(relationships);
-
-        Node expectedNode = mock(Node.class);
-
-        when(mockRelationship.getOtherNode(any(Node.class)))
-            .thenReturn(expectedNode);
-
-        Node result = facewallDB.findSingleRelatedNode(mockNode);
-
-        assertThat(result, is(sameInstance(expectedNode)));
-    }
-
-    @Test
-    public void single_related_node_verifyInteractions() {
-        Relationship mockRelationship = mock(Relationship.class);
-        Iterable<Relationship> relationships = asList(mockRelationship);
-
-        Node mockNode = mock(Node.class);
-        when(mockNode.getRelationships()).thenReturn(relationships);
-
-        when(mockRelationship.getOtherNode(any(Node.class)))
-            .thenReturn(mock(Node.class));
-
-        facewallDB.findRelatedNodes(mockNode);
-
-        verify(mockNode).getRelationships();
-        verify(mockRelationship).getOtherNode(mockNode);
-    }
-
-    @Test
-    public void add_properties_to_node_delegates_to_neo4j_add_properties() {
-        Node mockNode = mock(Node.class);
-        Map<String, String> stubProperties = new HashMap<>();
-        stubProperties.put("name", "bob");
-        stubProperties.put("imgURL", "http://www.image.jpeg");
-
-        facewallDB.addPropertiesToNode(mockNode, stubProperties);
-
-        verify(mockNode).setProperty("name", "bob");
-        verify(mockNode).setProperty("imgURL", "http://www.image.jpeg");
-    }
-
-    @Test
-    public void add_relationships_delegates_to_neo4j_create_relationship_to() {
-        Node mockNode = mock(Node.class);
-        Node mockTeamNode = mock(Node.class);
-        Map<Node, RelationshipTypes> stubProperties= new HashMap<>();
-        stubProperties.put(mockTeamNode, RelationshipTypes.TEAMMEMBER_OF);
-
-        facewallDB.addRelationshipsToNode(mockNode, stubProperties);
-
-        verify(mockNode).createRelationshipTo(mockTeamNode, RelationshipTypes.TEAMMEMBER_OF);
-    }
-
 }

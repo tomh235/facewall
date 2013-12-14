@@ -9,6 +9,7 @@ import static facewall.database.fixture.PersonDataFactory.defaultPersons;
 import static facewall.database.fixture.TeamData.newTeamData;
 import static java.lang.Integer.toHexString;
 import static java.util.Arrays.asList;
+import static java.util.UUID.randomUUID;
 import static java.util.concurrent.ThreadLocalRandom.current;
 
 public class TeamDataFactory {
@@ -17,22 +18,21 @@ public class TeamDataFactory {
         List<TeamData.Builder> result = new ArrayList<>();
 
         for (int i = 0; i < number; i++) {
-            List<PersonData.Builder> members = defaultPersons(1 + randomInt(14));
-
-            result.add(defaultTeam()
-                .withMembers(members)
-            );
+            result.add(defaultTeamWithDefaultMembers());
         }
         return result;
     }
 
+    public static TeamData.Builder defaultTeamWithDefaultMembers() {
+        return defaultTeam()
+            .withMembers(defaultPersons(1 + randomInt(14)));
+    }
+
     public static TeamData.Builder defaultTeam() {
         return newTeamData()
-            .withProperties(new HashMap<String, Object>() {{
-                put("id", UUID.randomUUID().toString());
-                put("name", randomName());
-                put("colour", randomColour());
-            }});
+            .withProperty("id", randomUUID().toString())
+            .withProperty("name", randomName())
+            .withProperty("colour", randomColour());
     }
 
     private static String randomName() {

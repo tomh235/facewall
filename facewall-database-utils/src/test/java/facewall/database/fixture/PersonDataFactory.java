@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import static facewall.database.fixture.PersonData.newPersonData;
 import static java.util.Arrays.asList;
+import static java.util.UUID.randomUUID;
 import static java.util.concurrent.ThreadLocalRandom.current;
 
 abstract public class PersonDataFactory {
@@ -49,7 +50,8 @@ abstract public class PersonDataFactory {
         "Carnap"
     );
 
-    private PersonDataFactory() {}
+    private PersonDataFactory() {
+    }
 
     public static List<PersonData.Builder> defaultPersons(int number) {
         List<PersonData.Builder> result = new ArrayList<>();
@@ -64,11 +66,9 @@ abstract public class PersonDataFactory {
         final String name = randomName();
 
         return newPersonData()
-            .withProperties(new HashMap<String, Object>() {{
-                put("id", UUID.randomUUID().toString());
-                put("name", name);
-                put("picture", "http://dummyimage.com/300x400/000/fff.png&text=" + name);
-            }});
+            .withProperty("id", randomUUID().toString())
+            .withProperty("name", name)
+            .withProperty("picture", "http://dummyimage.com/300x400/000/fff.png&text=" + name);
     }
 
     private static String randomName() {

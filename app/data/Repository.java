@@ -12,6 +12,4 @@ public interface Repository {
 
     List<Person> queryPersons(Query query);
     List<Team> queryTeams(Query query);
-
-    void addPerson(Person person);
 }

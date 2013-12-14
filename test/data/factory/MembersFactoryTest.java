@@ -1,5 +1,7 @@
 package data.factory;
 
+import data.dto.PersonDTO;
+import data.dto.TeamDTO;
 import data.mapper.MutablePerson;
 import data.mapper.PersonDTOMapper;
 import org.junit.Before;
@@ -32,9 +34,13 @@ public class MembersFactoryTest {
     public void create_members_passes_nodes_to_mapper() {
         Node expectedPersonNode1 = mock(Node.class);
         Node expectedPersonNode2 = mock(Node.class);
-        List<Node> expectedPersonNodesList = asList(expectedPersonNode1, expectedPersonNode2);
 
-        membersFactory.createMembers(expectedPersonNodesList);
+        TeamDTO teamDTO = new TeamDTO(
+            mock(Node.class),
+            asList(expectedPersonNode1, expectedPersonNode2)
+        );
+
+        membersFactory.createMembers(teamDTO);
 
         verify(mockPersonDTOMapper).map(any(MutablePerson.class), eq(expectedPersonNode1));
         verify(mockPersonDTOMapper).map(any(MutablePerson.class), eq(expectedPersonNode2));
@@ -49,8 +55,11 @@ public class MembersFactoryTest {
             .thenReturn(expectedMutablePerson1)
             .thenReturn(expectedMutablePerson2);
 
-        List<Node> membersNodes = asList(mock(Node.class), mock(Node.class));
-        membersFactory.createMembers(membersNodes);
+        TeamDTO teamDTO = new TeamDTO(
+            mock(Node.class),
+            asList(mock(Node.class), mock(Node.class))
+        );
+        membersFactory.createMembers(teamDTO);
 
         verify(mockPersonDTOMapper).map(eq(expectedMutablePerson1), any(Node.class));
         verify(mockPersonDTOMapper).map(eq(expectedMutablePerson2), any(Node.class));

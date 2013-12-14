@@ -29,8 +29,8 @@ public class IndexQuery {
         }
 
         public Builder onIndex(NodeIndex nodeIndex) {
-            indexName = nodeIndex.name;
-            indexKeyName = nodeIndex.key;
+            indexName = nodeIndex.getName();
+            indexKeyName = nodeIndex.getKey();
             return this;
         }
 

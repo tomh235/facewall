@@ -20,12 +20,13 @@ import java.util.List;
 
 import static data.factory.team.MutableTeamMatcher.aMutableTeam;
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsSame.sameInstance;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
-import static util.CollectionMatcher.containsExhaustively;
+import static util.IterableMatchers.containsExhaustivelyInOrder;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TeamFactoryTest {
@@ -54,7 +55,7 @@ public class TeamFactoryTest {
         );
         List<Team> result = teamFactory.createTeams(dtos);
 
-        assertThat(result, containsExhaustively(
+        assertThat(result, containsExhaustivelyInOrder(
             sameInstance(expectedTeam1),
             sameInstance(expectedTeam2)
         ));
@@ -78,7 +79,7 @@ public class TeamFactoryTest {
     @Test
     public void create_members_delegated_to_member_factory() {
         List<Person> expectedMembers = mock(List.class);
-        when(mockMembersFactory.createMembers(any(List.class))).thenReturn(expectedMembers);
+        when(mockMembersFactory.createMembers(any(TeamDTO.class))).thenReturn(expectedMembers);
 
         List<TeamDTO> dtos = asList(mock(TeamDTO.class));
         teamFactory.createTeams(dtos);
@@ -89,5 +90,13 @@ public class TeamFactoryTest {
                     sameInstance(expectedMembers)))
             ), any(Node.class)
         );
+    }
+
+    @Test
+    public void team_dto_passed_to_members_factory() {
+        TeamDTO expectedTeamDTO = mock(TeamDTO.class);
+        teamFactory.createTeams(asList(expectedTeamDTO));
+
+        verify(mockMembersFactory).createMembers(expectedTeamDTO);
     }
 }

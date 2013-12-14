@@ -20,6 +20,7 @@ import static facewall.database.fixture.FixturesFactory.defaultFixtures;
 import static facewall.database.fixture.PersonDataFactory.defaultPerson;
 import static facewall.database.fixture.PersonDataFactory.defaultPersons;
 import static facewall.database.fixture.TeamDataFactory.defaultTeam;
+import static facewall.database.fixture.TeamDataFactory.defaultTeamWithDefaultMembers;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -32,7 +33,7 @@ public class DataModuleTest {
     @Before
     public void setUp() throws Exception {
         facewallTestDatabase = createImpermanentFacewallTestDatabase();
-        repo = createRepository(facewallTestDatabase);
+        repo = createRepository(facewallTestDatabase, facewallTestDatabase.createQueryEngine());
     }
 
     @Test
@@ -171,9 +172,9 @@ public class DataModuleTest {
     public void list_teams_lists_all_teams_in_db() {
         facewallTestDatabase.seedFixtures(newFixtures()
             .withTeams(
-                defaultTeam(),
-                defaultTeam(),
-                defaultTeam()
+                defaultTeamWithDefaultMembers(),
+                defaultTeamWithDefaultMembers(),
+                defaultTeamWithDefaultMembers()
             )
         );
 
@@ -186,10 +187,10 @@ public class DataModuleTest {
     public void list_teams_contains_teams_with_properties_from_db() {
         facewallTestDatabase.seedFixtures(defaultFixtures()
             .withTeams(
-                defaultTeam()
+                defaultTeamWithDefaultMembers()
                     .withProperty("name", "Woodwind")
                     .withProperty("colour", "wooden"),
-                defaultTeam()
+                defaultTeamWithDefaultMembers()
                     .withProperty("name", "Brass")
                     .withProperty("colour", "metallic")
             )
@@ -230,15 +231,67 @@ public class DataModuleTest {
 
         assertThat(result, areTeams()
             .whichContains(aTeam()
-                .whereMembers(arePersons().whichContainExhaustively(
-                    aPerson().named("flute"),
-                    aPerson().named("oboe")
-                )))
+                .whereMembers(arePersons()
+                    .whichContains(aPerson().named("flute"))
+                    .whichContains(aPerson().named("oboe"))
+                ))
             .whichContains(aTeam()
-                .whereMembers(arePersons().whichContainExhaustively(
-                    aPerson().named("trombone")
+                .whereMembers(arePersons()
+                    .whichContains(aPerson().named("trombone")
                 )))
         );
+    }
+
+    @Test
+    public void persons_teams_members_contains_itself() {
+        facewallTestDatabase.seedFixtures(defaultFixtures()
+            .withTeams(
+                defaultTeam()
+                    .withProperty("name", "woodwind")
+                    .withMembers(
+                        defaultPerson()
+                            .withProperty("name", "flute")
+                    )
+            )
+        );
+
+        List<Person> result = repo.listPersons();
+
+        assertThat(result, arePersons()
+            .whichContains(aPerson()
+                .named("flute")
+                .inTeam(aTeam()
+                    .named("woodwind")
+                    .whereMembers(arePersons()
+                        .whichContains(aPerson()
+                            .named("flute")
+        )))));
+    }
+
+    @Test
+    public void teams_members_team_is_itself() {
+        facewallTestDatabase.seedFixtures(defaultFixtures()
+            .withTeams(
+                defaultTeam()
+                    .withProperty("name", "woodwind")
+                    .withMembers(
+                        defaultPerson()
+                            .withProperty("name", "flute")
+                    )
+            )
+        );
+
+        List<Team> result = repo.listTeams();
+
+        assertThat(result, areTeams()
+            .whichContains(aTeam()
+                .named("woodwind")
+                .whereMembers(arePersons()
+                    .whichContains(aPerson()
+                        .named("flute")
+                        .inTeam(aTeam()
+                            .named("woodwind")
+                        )))));
     }
 
     //fails if there's a space in the search terms atm, might have to use cypher queries to fix

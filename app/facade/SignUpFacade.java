@@ -1,5 +1,6 @@
 package facade;
 
+import data.AdminRepository;
 import data.Repository;
 import domain.Person;
 import domain.Query;
@@ -10,16 +11,18 @@ import requestmapper.PersonMapper;
 import requestmapper.QueryMapper;
 
 public class SignUpFacade {
+    private final AdminRepository adminRepository;
     private final Repository repository;
     private final PersonMapper personMapper;
     private final QueryMapper queryMapper;
     private final TeamValidator teamValidator;
 
-    public SignUpFacade (Repository repository,
-                         PersonMapper personMapper,
-                         QueryMapper queryMapper,
-                         TeamValidator teamValidator) {
+    public SignUpFacade(AdminRepository adminRepository,
+                        Repository repository, PersonMapper personMapper,
+                        QueryMapper queryMapper,
+                        TeamValidator teamValidator) {
         this.repository = repository;
+        this.adminRepository = adminRepository;
         this.personMapper = personMapper;
         this.queryMapper = queryMapper;
         this.teamValidator = teamValidator;
@@ -28,7 +31,7 @@ public class SignUpFacade {
     public void delegateNewUserToRepository(UserModel userModel) {
         Team userModelsTeam = getUserModelTeamFromRepository(userModel);
         Person person = personMapper.map(userModel, userModelsTeam);
-        repository.addPerson(person);
+        adminRepository.addPerson(person);
     }
 
     public boolean validateModelsTeamExists(UserModel newUser) {

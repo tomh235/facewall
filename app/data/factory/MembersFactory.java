@@ -1,5 +1,6 @@
 package data.factory;
 
+import data.dto.TeamDTO;
 import data.mapper.MutablePerson;
 import data.mapper.PersonDTOMapper;
 import domain.Person;
@@ -18,10 +19,10 @@ public class MembersFactory {
         this.mutablePersonFactory = mutablePersonFactory;
     }
 
-    public List<Person> createMembers(List<Node> personNodes) {
+    public List<Person> createMembers(TeamDTO teamDTO) {
         List<Person> members = new ArrayList<>();
 
-        for (Node personNode : personNodes) {
+        for (Node personNode: teamDTO.memberNodes) {
             MutablePerson mutablePerson = mutablePersonFactory.createMutablePerson();
 
             members.add(personDTOMapper.map(mutablePerson, personNode));

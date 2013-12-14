@@ -1,5 +1,6 @@
 package data.dao;
 
+import data.dao.database.QueryResultRow;
 import org.junit.Before;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Transaction;
@@ -21,6 +22,14 @@ public class DAOTest {
         when(stubNodeIndexHits.iterator()).thenReturn(Collections.<Node>emptyList().iterator());
 
         mockTransaction = mock(Transaction.class);
+    }
+
+    protected final QueryResultRow createMockQueryResultRow(Node person, Node team) {
+        QueryResultRow queryResultRow = mock(QueryResultRow.class);
+        when(queryResultRow.getPerson()).thenReturn(person);
+        when(queryResultRow.getTeam()).thenReturn(team);
+
+        return queryResultRow;
     }
 
     protected final void verifyTransactionComplete() {

@@ -26,7 +26,7 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsSame.sameInstance;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
-import static util.CollectionMatcher.containsExhaustively;
+import static util.IterableMatchers.containsExhaustivelyInOrder;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PersonFactoryTest {
@@ -55,7 +55,7 @@ public class PersonFactoryTest {
         );
         List<Person> result = personFactory.createPersons(dtos);
 
-        assertThat(result, containsExhaustively(
+        assertThat(result, containsExhaustivelyInOrder(
             sameInstance(expectedPerson1),
             sameInstance(expectedPerson2)
         ));

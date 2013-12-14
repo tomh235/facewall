@@ -7,7 +7,7 @@ import util.CompositeMatcher;
 
 import java.util.List;
 
-import static util.CollectionMatcher.containsExhaustively;
+import static util.IterableMatchers.containsExhaustivelyInOrder;
 
 public class TeamsMatcher extends CompositeMatcher<List<Team>> {
 
@@ -50,7 +50,7 @@ public class TeamsMatcher extends CompositeMatcher<List<Team>> {
 
     public TeamsMatcher whichContainExhaustively(final Matcher<Team>... teamMatchers) {
         add(new TypeSafeMatcher<List<Team>>() {
-            Matcher<Iterable<Team>> listMatcher = containsExhaustively(teamMatchers);
+            Matcher<Iterable<Team>> listMatcher = containsExhaustivelyInOrder(teamMatchers);
 
             @Override public boolean matchesSafely(List<Team> teams) {
                 return listMatcher.matches(teams);

@@ -7,7 +7,8 @@ import util.CompositeMatcher;
 
 import java.util.List;
 
-import static util.CollectionMatcher.containsExhaustively;
+import static util.IterableMatchers.contains;
+import static util.IterableMatchers.containsExhaustivelyInOrder;
 
 public class PersonsMatcher extends CompositeMatcher<List<Person>> {
 
@@ -19,7 +20,7 @@ public class PersonsMatcher extends CompositeMatcher<List<Person>> {
 
     public PersonsMatcher whichContainExhaustively(final Matcher<Person>... matchers) {
         add(new TypeSafeMatcher<List<Person>>() {
-            private Matcher<Iterable<Person>> iterableMatcher = containsExhaustively(matchers);
+            private Matcher<Iterable<Person>> iterableMatcher = containsExhaustivelyInOrder(matchers);
 
             @Override public boolean matchesSafely(List<Person> persons) {
                 return iterableMatcher.matches(persons);
@@ -48,12 +49,7 @@ public class PersonsMatcher extends CompositeMatcher<List<Person>> {
     public PersonsMatcher whichContains(final Matcher<Person> personMatcher) {
         add(new TypeSafeMatcher<List<Person>>() {
             @Override public boolean matchesSafely(List<Person> persons) {
-                boolean result = false;
-
-                for (Person person : persons) {
-                    result = result || personMatcher.matches(person);
-                }
-                return result;
+                return contains(personMatcher).matches(persons);
             }
 
             @Override public void describeTo(Description description) {

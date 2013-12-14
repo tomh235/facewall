@@ -19,7 +19,8 @@ object ApplicationBuild extends Build {
 
     val facewallDatabaseUtilsDependencies = Seq(
         "org.neo4j" % "neo4j-kernel" % "1.9.5" classifier "tests",
-        "org.neo4j" % "neo4j-rest-graphdb" % "1.9"
+        "org.neo4j" % "neo4j-rest-graphdb" % "1.9",
+        "org.neo4j" % "neo4j-cypher" % "1.9.5"
     )
 
     val facewallDatabaseUtils = Project("facewall-database-utils", file("facewall-database-utils"),

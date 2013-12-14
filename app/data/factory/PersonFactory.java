@@ -24,7 +24,7 @@ public class PersonFactory {
         this.lazyMutableTeamFactory = lazyMutableTeamFactory;
     }
 
-    public List<Person> createPersons(List<PersonDTO> personDTOs) {
+    public List<Person> createPersons(Iterable<PersonDTO> personDTOs) {
         List<Person> personList = new ArrayList<>();
 
         for (PersonDTO dto : personDTOs) {

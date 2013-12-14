@@ -1,19 +1,19 @@
 package data.factory;
 
-import data.dao.TraversingDAO;
+import data.dao.FacewallDAO;
+import data.dto.PersonDTO;
 import data.mapper.MutablePerson;
 import data.mapper.MutableTeam;
 import data.mapper.TeamDTOMapper;
 import domain.Team;
-import org.neo4j.graphdb.Node;
 
 public class LazyMutablePersonFactory implements MutablePersonFactory {
-    private final TraversingDAO dao;
+    private final FacewallDAO facewallDAO;
     private final LazyMutableTeamFactory lazyMutableTeamFactory;
     private final TeamDTOMapper teamDTOMapper;
 
-    public LazyMutablePersonFactory(TraversingDAO traversingDAO, LazyMutableTeamFactory lazyMutableTeamFactory, TeamDTOMapper teamDTOMapper) {
-        this.dao = traversingDAO;
+    public LazyMutablePersonFactory(FacewallDAO facewallDAO, LazyMutableTeamFactory lazyMutableTeamFactory, TeamDTOMapper teamDTOMapper) {
+        this.facewallDAO = facewallDAO;
         this.lazyMutableTeamFactory = lazyMutableTeamFactory;
         this.teamDTOMapper = teamDTOMapper;
     }
@@ -22,9 +22,9 @@ public class LazyMutablePersonFactory implements MutablePersonFactory {
         return new MutablePerson() {
             @Override public Team team() {
                 MutableTeam mutableTeam = lazyMutableTeamFactory.createLazyMutableTeam();
-                Node teamNode = dao.fetchTeamForPerson(id);
+                PersonDTO dto = facewallDAO.fetchPerson(id);
 
-                return teamDTOMapper.map(mutableTeam, teamNode);
+                return teamDTOMapper.map(mutableTeam, dto.teamNode);
             }
         };
     }

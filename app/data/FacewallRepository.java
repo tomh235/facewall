@@ -26,13 +26,13 @@ class FacewallRepository implements Repository {
     }
 
     @Override public List<Person> listPersons() {
-        List<PersonDTO> dto = dao.fetchPersons();
+        Iterable<PersonDTO> dto = dao.fetchPersons();
         return personFactory.createPersons(dto);
     }
 
     @Override public List<Team> listTeams() {
-        List<TeamDTO> dto = dao.fetchTeams();
-        return teamFactory.createTeams(dto);
+        Iterable<TeamDTO> dtos = dao.fetchTeams();
+        return teamFactory.createTeams(dtos);
     }
 
     @Override public List<Person> queryPersons(Query query) {
@@ -41,9 +41,5 @@ class FacewallRepository implements Repository {
 
     @Override public List<Team> queryTeams(Query query) {
         return null;
-    }
-
-    @Override public void addPerson(Person person) {
-        dao.addPerson(person);
     }
 }

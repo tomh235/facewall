@@ -74,12 +74,4 @@ public class FacewallRepositoryTest {
         verify(mockfacewallDAO).fetchTeams();
         verify(mockTeamFactory).createTeams(expectedDTOs);
     }
-
-    @Test
-    public void add_person_interacts_with_facewall_dao() {
-        Person mockPerson = mock(Person.class);
-
-        repository.addPerson(mockPerson);
-        verify(mockfacewallDAO).addPerson(mockPerson);
-    }
 }

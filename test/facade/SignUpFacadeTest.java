@@ -1,16 +1,17 @@
 package facade;
 
+import data.AdminRepository;
+import data.FacewallRepositoryTest;
 import data.Repository;
-import data.ScalaRepository;
 import domain.MockTeam;
 import domain.Person;
 import domain.Query;
 import domain.Team;
 import facade.validators.TeamValidator;
 import model.UserModel;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import requestmapper.PersonMapper;
@@ -31,16 +32,14 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class SignUpFacadeTest {
 
-    @Mock PersonMapper mockPersonMapper;
+    @Mock AdminRepository mockAdminRepository;
     @Mock Repository mockRepository;
     @Mock TeamValidator mockTeamValidator;
+    @Mock PersonMapper mockPersonMapper;
     @Mock QueryMapper mockQueryMapper;
-    SignUpFacade signUpFacade;
 
-    @Before
-    public void setup() {
-        signUpFacade = new SignUpFacade(mockRepository, mockPersonMapper, mockQueryMapper, mockTeamValidator);
-    }
+    @InjectMocks
+    SignUpFacade signUpFacade;
 
     @Test
     public void delegateNewUserToRepository_delegates_correctly() {
@@ -52,7 +51,7 @@ public class SignUpFacadeTest {
         when(mockPersonMapper.map(any(UserModel.class), any(Team.class))).thenReturn(mockPerson);
         signUpFacade.delegateNewUserToRepository(mockUserModel);
 
-        verify(mockRepository).addPerson(mockPerson);
+        verify(mockAdminRepository).addPerson(mockPerson);
     }
 
     @Test

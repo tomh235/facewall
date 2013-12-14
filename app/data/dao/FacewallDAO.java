@@ -1,97 +1,67 @@
 package data.dao;
 
 import data.dao.database.FacewallDB;
-import data.dao.database.IndexQuery;
+import data.dao.database.QueryResultRow;
 import data.dao.database.RelationshipTypes;
+import data.datatype.PersonId;
+import data.datatype.TeamId;
 import data.dto.PersonDTO;
 import data.dto.TeamDTO;
 import data.mapper.PersonNodeMapper;
 import domain.Person;
+import domain.Query;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Transaction;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-import static data.dao.database.FacewallDB.NodeIndex.Persons;
-import static data.dao.database.FacewallDB.NodeIndex.Teams;
-import static data.dao.database.IndexQuery.anIndexLookup;
+import static data.dao.database.query.PersonDatabaseQueryBuilder.forPersons;
+import static data.dao.database.query.TeamDatabaseQueryBuilder.forTeams;
 
 public class FacewallDAO {
 
     private final FacewallDB db;
-    private final PersonNodeMapper personNodeMapper;
 
-    public FacewallDAO(FacewallDB facewallDB, PersonNodeMapper personNodeMapper) {
+    public FacewallDAO(FacewallDB facewallDB) {
         this.db = facewallDB;
-        this.personNodeMapper = personNodeMapper;
     }
 
-    public List<PersonDTO> fetchPersons() {
+    public Iterable<PersonDTO> fetchPersons() {
         List<PersonDTO> dtos = new ArrayList<>();
 
-        Transaction tx = db.beginTransaction();
-        try {
-            IndexQuery query = anIndexLookup()
-                .onIndex(Persons)
-                .forAllValues()
-                .build();
-
-            for (Node personNode : db.lookupNodesInIndex(query)) {
-                Node teamNode = db.findSingleRelatedNode(personNode);
-
-                dtos.add(new PersonDTO(personNode, teamNode));
-            }
-            tx.success();
-        } finally {
-            tx.finish();
+        for (QueryResultRow row : db.query(forPersons())) {
+            dtos.add(new PersonDTO(row.getPerson(), row.getTeam()));
         }
-
         return dtos;
     }
 
-    public List<TeamDTO> fetchTeams() {
-        List<TeamDTO> dtos = new ArrayList<>();
+    public Iterable<TeamDTO> fetchTeams() {
+        TeamDTOs dtos = new TeamDTOs();
 
-        Transaction tx = db.beginTransaction();
-        try {
-            IndexQuery query = anIndexLookup()
-                .onIndex(Teams)
-                .forAllValues()
-                .build();
-
-            for (Node teamNode : db.lookupNodesInIndex(query)) {
-                List<Node> membersNodes = db.findRelatedNodes(teamNode);
-
-                dtos.add(new TeamDTO(teamNode, membersNodes));
-            }
-            tx.success();
-        } finally {
-            tx.finish();
+        for (QueryResultRow row : db.query(forTeams())) {
+            dtos.addMemberToTeam(row.getTeam(), row.getPerson());
         }
-
         return dtos;
     }
 
-    public void addPerson(Person person) {
-        Transaction tx = db.beginTransaction();
+    public TeamDTO fetchTeam(TeamId teamId) {
+        TeamDTOs dtos = new TeamDTOs();
 
-        try {
-            Node personNode = db.createNode();
-            Node teamNode = getTeamByName(person.name());
-
-            Map<String, String> propertiesMap = personNodeMapper.mapNodeProperties(person);
-            Map<Node, RelationshipTypes> relationsMap = personNodeMapper.mapNodeRelationships(teamNode);
-
-            db.addPropertiesToNode(personNode, propertiesMap);
-            db.addRelationshipsToNode(personNode, relationsMap);
-
-            tx.success();
-        } finally {
-            tx.finish();
+        for (QueryResultRow row : db.query(forTeams().withId(teamId))) {
+            dtos.addMemberToTeam(row.getTeam(), row.getPerson());
         }
+        return dtos.getSingle();
     }
 
-    public Node getTeamByName(String name) {
-        return null;
+    //refactor for safety
+    public PersonDTO fetchPerson(PersonId personId) {
+        List<PersonDTO> dtos = new ArrayList<>();
+
+        for (QueryResultRow row : db.query(forPersons().withId(personId))) {
+            dtos.add(new PersonDTO(row.getPerson(), row.getTeam()));
+        }
+        return dtos.get(0);
     }
 }
