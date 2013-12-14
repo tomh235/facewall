@@ -1,9 +1,7 @@
 package facewall.database.fixture;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 import static facewall.database.fixture.PersonDataFactory.defaultPersons;
 import static facewall.database.fixture.TeamData.newTeamData;

@@ -33,7 +33,7 @@ public class DataModuleTest {
     @Before
     public void setUp() throws Exception {
         facewallTestDatabase = createImpermanentFacewallTestDatabase();
-        repo = createRepository(facewallTestDatabase, facewallTestDatabase.createQueryEngine());
+        repo = createRepository(facewallTestDatabase.createQueryEngine());
     }
 
     @Test

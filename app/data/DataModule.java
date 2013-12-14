@@ -13,12 +13,11 @@ import java.util.Map;
 
 public class DataModule {
 
-    public static Repository createRepository(GraphDatabaseService db, QueryEngine<Map<String, Object>> queryEngine) {
+    public static Repository createRepository(QueryEngine<Map<String, Object>> queryEngine) {
         FacewallDB facewallDB = new FacewallDB(queryEngine);
 
         PersonDTOMapper personDTOMapper = new PersonDTOMapper();
         TeamDTOMapper teamDTOMapper = new TeamDTOMapper();
-        PersonNodeMapper personNodeMapper = new PersonNodeMapper();
 
         FacewallDAO facewallDAO = new FacewallDAO(facewallDB);
 

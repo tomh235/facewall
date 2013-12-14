@@ -5,8 +5,6 @@ import facewall.database.util.ForwardingMap;
 import java.util.HashMap;
 import java.util.Map;
 
-import static java.util.Collections.emptyMap;
-
 public class PersonData extends ForwardingMap<String, Object> {
 
     private PersonData(Builder builder) {

@@ -10,8 +10,6 @@ import data.datatype.PersonId;
 import data.datatype.TeamId;
 import data.dto.PersonDTO;
 import data.dto.TeamDTO;
-import data.mapper.PersonNodeMapper;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -19,6 +17,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.neo4j.graphdb.Node;
 
+import static data.dao.MockQueryResultRowFactory.createMockQueryResultRow;
 import static data.dao.database.DatabaseQueryMatchers.*;
 import static data.datatype.PersonId.newPersonId;
 import static data.datatype.TeamId.newTeamId;
@@ -35,7 +34,7 @@ import static util.IterableMatchers.containsExhaustivelyInAnyOrder;
 import static util.IterableMatchers.containsExhaustivelyInOrder;
 
 @RunWith(MockitoJUnitRunner.class)
-public class FacewallDAOTest extends DAOTest {
+public class FacewallDAOTest {
 
     private final TeamId someTeamId = newTeamId("blah");
     private final PersonId somePersonId = newPersonId("bloom");

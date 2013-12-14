@@ -27,7 +27,6 @@ public class FacewallDB {
         public final String getKey() {
             return key;
         }
-
     }
 
     private final QueryEngine<Map<String, Object>> cypherQueryExecutionEngine;

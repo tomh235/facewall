@@ -5,8 +5,6 @@ import facewall.database.util.ForwardingMap;
 import java.util.*;
 
 import static java.util.Arrays.asList;
-import static java.util.Collections.emptyList;
-import static java.util.Collections.emptyMap;
 
 public class TeamData extends ForwardingMap<String, Object> {
 
