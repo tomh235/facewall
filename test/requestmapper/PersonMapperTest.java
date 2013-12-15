@@ -36,7 +36,7 @@ public class PersonMapperTest {
 
     @Test
     public void user_model_with_accompanying_team_maps_to_person_with_same_team() {
-        Team mockTeam = new MockTeam("1", "ecom", "blue", new ArrayList<Person>());
+        Team mockTeam = new MockTeam("ecom", "blue", new ArrayList<Person>());
 
         Person result = personMapper.map(userModel, mockTeam);
         assertThat(result, is(aPerson().inTeam(aTeam().named("ecom").withColour("blue"))));

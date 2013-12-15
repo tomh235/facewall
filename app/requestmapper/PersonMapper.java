@@ -9,11 +9,6 @@ public class PersonMapper {
     public Person map(final UserModel userModel, final Team team) {
         return new Person() {
             @Override
-            public String id() {
-                return null;
-            }
-
-            @Override
             public String name() {
                 return userModel.name;
             }

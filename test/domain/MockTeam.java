@@ -3,14 +3,9 @@ package domain;
 import java.util.List;
 
 public class MockTeam implements Team {
-    public final String id;
     public final String name;
     public final String colour;
     public List<Person> members;
-
-    public String id() {
-        return id;
-    }
 
     public String name() {
         return name;
@@ -24,8 +19,7 @@ public class MockTeam implements Team {
         return members;
     }
 
-    public MockTeam(String id, String name, String colour, List<Person> members) {
-        this.id = id;
+    public MockTeam(String name, String colour, List<Person> members) {
         this.name = name;
         this.colour = colour;
         this.members = members;

@@ -14,10 +14,6 @@ public class NoTeam implements Team {
         return noTeam;
     }
 
-    @Override public String id() {
-        throw new UnsupportedOperationException("id method is no longer supported");
-    }
-
     @Override public String name() {
         return "";
     }

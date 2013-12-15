@@ -17,22 +17,6 @@ public class TeamMatcher extends CompositeMatcher<Team> {
         return new TeamMatcher();
     }
 
-    public TeamMatcher withId(final String id) {
-        add(new TypeSafeMatcher<Team>() {
-
-            @Override
-            public boolean matchesSafely(Team target) {
-                return target.id().equals(id);
-            }
-
-            @Override
-            public void describeTo(Description description) {
-                description.appendText("with an id of " + id);
-            }
-        });
-        return this;
-    }
-
     public TeamMatcher named(final String name) {
         add(new TypeSafeMatcher<Team>() {
 

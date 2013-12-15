@@ -14,10 +14,6 @@ abstract public class MutablePerson implements Person {
 
     protected MutablePerson() {}
 
-    @Override final public String id() {
-        throw new UnsupportedOperationException("id method no longer supported");
-    }
-
     final public void setId(PersonId personId) {
         this.id = personId;
     }

@@ -65,7 +65,7 @@ public class SignUpFacadeTest {
         UserModel userModel = new UserModel();
         userModel.team = "ecom";
 
-        Team mockTeam = new MockTeam("1", "ecom", "blue", new ArrayList<Person>());
+        Team mockTeam = new MockTeam("ecom", "blue", new ArrayList<Person>());
 
         when(mockRepository.queryTeams(any(Query.class))).thenReturn(new ArrayList<>(Arrays.asList(mockTeam)));
         Team result = signUpFacade.getUserModelTeamFromRepository(userModel);

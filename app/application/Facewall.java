@@ -3,6 +3,7 @@ package application;
 import data.Repository;
 import facade.OverviewFacade;
 import facade.SearchFacade;
+import facade.modelmapper.OverviewModelMapper;
 import facade.modelmapper.PersonDetailsModelMapper;
 import facade.modelmapper.SearchResultsModelMapper;
 import facade.modelmapper.TeamDetailsModelMapper;
@@ -31,12 +32,10 @@ final public class Facewall {
 
     private static Facewall createFacewall() {
 
-        System.setProperty("org.neo4j.rest.logging_filter", "true");
-
         RestAPIFacade restAPIFacade = new RestAPIFacade("http://localhost:7474/db/data/");
         Repository repository = createRepository(new RestCypherQueryEngine(restAPIFacade));
 
-        OverviewFacade overviewFacade = new OverviewFacade(repository);
+        OverviewFacade overviewFacade = new OverviewFacade(repository, new OverviewModelMapper());
 
         SearchResultsModelMapper searchResultsModelMapper = new SearchResultsModelMapper();
         PersonDetailsModelMapper personDetailsModelMapper = new PersonDetailsModelMapper();

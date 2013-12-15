@@ -16,10 +16,6 @@ public abstract class MutableTeam implements Team {
 
     protected MutableTeam() {}
 
-    final @Override public String id() {
-        throw new UnsupportedOperationException("id method no longer supported.");
-    }
-
     final public void setId(TeamId id) {
         this.id = id;
     }

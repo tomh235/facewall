@@ -49,8 +49,8 @@ public class SearchResultsModelMapperTest {
         List<Person> list1 = new ArrayList<>();
         List<Person> list2 = new ArrayList<>();
 
-        MockTeam ecom = new MockTeam("1", "Ecom", "blue", list1);
-        MockTeam anotherTeam = new MockTeam("2", "another team", "red", list2);
+        MockTeam ecom = new MockTeam("Ecom", "blue", list1);
+        MockTeam anotherTeam = new MockTeam("another team", "red", list2);
 
         List<Person> list3 = new ArrayList<>();
         List list4 = new ArrayList<>();

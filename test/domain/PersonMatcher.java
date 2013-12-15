@@ -19,22 +19,6 @@ public class PersonMatcher extends CompositeMatcher<Person> {
         return new PersonMatcher();
     }
 
-    public PersonMatcher withId(final String id) {
-        add(new TypeSafeMatcher<Person>() {
-
-            @Override
-            public boolean matchesSafely(Person target) {
-                return id.equals(target.id());
-            }
-
-            @Override
-            public void describeTo(Description description) {
-                description.appendText("with an id of ").appendValue(id);
-            }
-        });
-        return this;
-    }
-
     public PersonMatcher named(final String name) {
         add(new TypeSafeMatcher<Person>() {
 
