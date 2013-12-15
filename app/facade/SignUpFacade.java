@@ -9,7 +9,7 @@ import facade.validators.TeamValidator;
 import model.UserModel;
 import requestmapper.PersonMapper;
 
-import static facade.QueryBuilder.newQuery;
+import static domain.Query.newQuery;
 
 public class SignUpFacade {
     private final AdminRepository adminRepository;
@@ -38,7 +38,7 @@ public class SignUpFacade {
     }
 
     protected Team getUserModelTeamFromRepository(UserModel newUser) {
-        Query teamQuery = newQuery().withKeywords(newUser.team).build();
+        Query teamQuery = newQuery(newUser.team);
         return repository.queryTeams(teamQuery).get(0);
     }
 }

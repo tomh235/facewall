@@ -3,7 +3,7 @@ package facade.validators;
 import data.Repository;
 import domain.Query;
 
-import static facade.QueryBuilder.newQuery;
+import static domain.Query.newQuery;
 
 public class TeamValidator {
     private final Repository repository;
@@ -13,7 +13,7 @@ public class TeamValidator {
     }
 
     public boolean validate(String teamName) {
-        Query teamQuery = newQuery().withKeywords(teamName).build();
+        Query teamQuery = newQuery(teamName);
         return !repository.queryTeams(teamQuery).isEmpty();
     }
 }

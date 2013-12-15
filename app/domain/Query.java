@@ -2,6 +2,27 @@ package domain;
 
 import domain.datatype.QueryString;
 
-public interface Query {
-    QueryString queryString();
+import static domain.datatype.QueryString.newQueryString;
+
+public class Query {
+
+    private static final Query emptyQuery = new Query(newQueryString(""));
+
+    private final QueryString queryString;
+
+    private Query(QueryString queryString) {
+        this.queryString = queryString;
+    }
+
+    public static Query emptyQuery() {
+        return emptyQuery;
+    }
+
+    public static Query newQuery(String keywords) {
+        return new Query(newQueryString(".*" + keywords + ".*"));
+    }
+
+    public QueryString queryString() {
+        return queryString;
+    }
 }

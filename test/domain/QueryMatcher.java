@@ -14,16 +14,31 @@ public class QueryMatcher extends CompositeMatcher<Query> {
         return new QueryMatcher();
     }
 
-    public QueryMatcher withQueryString(final String regEx) {
+    public QueryMatcher withQueryString(final String queryString) {
         add(new TypeSafeMatcher<Query>() {
             @Override
             public boolean matchesSafely(Query query){
-                return query.queryString().value.equals(regEx);
+                return query.queryString().value.equals(queryString);
             }
 
             @Override
             public void describeTo(Description description) {
-                description.appendText("Where the target is " + regEx);
+                description.appendText("for the regex pattern ").appendValue(queryString);
+            }
+        });
+        return this;
+    }
+
+    public QueryMatcher whichIsEmpty() {
+        add(new TypeSafeMatcher<Query>() {
+            @Override
+            public boolean matchesSafely(Query query){
+                return query.queryString().value.equals("");
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("which is empty");
             }
         });
         return this;

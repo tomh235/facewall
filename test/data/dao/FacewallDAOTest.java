@@ -25,6 +25,7 @@ import static data.datatype.PersonId.newPersonId;
 import static data.datatype.TeamId.newTeamId;
 import static data.dto.PersonDTOMatcher.aPersonDTO;
 import static data.dto.TeamDTOMatcher.aTeamDTO;
+import static domain.Query.newQuery;
 import static domain.datatype.QueryString.newQueryString;
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -41,11 +42,7 @@ public class FacewallDAOTest {
 
     private static final TeamId someTeamId = newTeamId("blah");
     private static final PersonId somePersonId = newPersonId("bloom");
-    private static final Query someQuery = new Query() {
-        @Override public QueryString queryString() {
-            return newQueryString("some-query");
-        }
-    };
+    private static final Query someQuery = newQuery("query");
 
     @Mock FacewallDB mockDb;
 

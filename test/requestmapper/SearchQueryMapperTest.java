@@ -1,6 +1,5 @@
 package requestmapper;
 
-import com.google.common.collect.ImmutableMap;
 import domain.Query;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +8,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import play.mvc.Http;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import static domain.QueryMatcher.aQuery;
@@ -28,26 +28,30 @@ public class SearchQueryMapperTest {
 
         Query result = searchQueryMapper.map(request);
 
-        assertThat(result, is(aQuery().withQueryString(".*")));
+        assertThat(result, is(aQuery().whichIsEmpty()));
     }
 
     @Test
     public void should_map_a_request_with_no_keywords_into_empty_regex() {
-        Map<String, String[]> queryString = ImmutableMap.of("keywords", new String[] {""});
+        Map<String, String[]> queryString = new HashMap<String, String[]>() {{
+            put("keywords", new String[]{""});
+        }};
         when(request.queryString()).thenReturn(queryString);
 
         Query result = searchQueryMapper.map(request);
 
-        assertThat(result, is(aQuery().withQueryString("")));
+        assertThat(result, is(aQuery().whichIsEmpty()));
     }
 
     @Test
     public void should_map_from_request_to_query_regex() {
-        Map<String, String[]> queryString = ImmutableMap.of("keywords", new String[] {"hello"});
+        Map<String, String[]> queryString = new HashMap<String, String[]>() {{
+            put("keywords", new String[]{"hello"});
+        }};
         when(request.queryString()).thenReturn(queryString);
 
         Query result = searchQueryMapper.map(request);
 
-        assertThat(result, is(aQuery().withQueryString("(?i).*hello.*")));
+        assertThat(result, is(aQuery().withQueryString(".*hello.*")));
     }
 }
