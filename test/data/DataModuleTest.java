@@ -14,6 +14,7 @@ import static domain.PersonMatcher.aPerson;
 import static domain.PersonsMatcher.arePersons;
 import static domain.TeamMatcher.aTeam;
 import static domain.TeamsMatcher.areTeams;
+import static domain.datatype.QueryString.newQueryString;
 import static facewall.database.FacewallTestDatabaseFactory.createImpermanentFacewallTestDatabase;
 import static facewall.database.fixture.Fixtures.newFixtures;
 import static facewall.database.fixture.FixturesFactory.defaultFixtures;
@@ -294,30 +295,55 @@ public class DataModuleTest {
                         )))));
     }
 
-    //fails if there's a space in the search terms atm, might have to use cypher queries to fix
-    //possibly look into lucene index queries
     @Test
-    public void query_teams_matches_teams_where_the_name_contains_the_query_string() {
+    public void query_teams_for_names_matching_string() {
         facewallTestDatabase.seedFixtures(newFixtures()
             .withTeams(
-                defaultTeam()
-                    .withProperty("name", "shouldmatch this team"),
-                defaultTeam()
+                defaultTeamWithDefaultMembers()
+                    .withProperty("name", "should match this team"),
+                defaultTeamWithDefaultMembers()
                     .withProperty("name", "shouldn't match this team"),
-                defaultTeam()
+                defaultTeamWithDefaultMembers()
                     .withProperty("name", "shouldn't match this team either"),
-                defaultTeam()
-                    .withProperty("name", "shouldmatch this team as well")
+                defaultTeamWithDefaultMembers()
+                    .withProperty("name", "should match this team as well")
             )
         );
 
         Query query = mock(Query.class);
-        when(query.toRegEx()).thenReturn("*shouldmatch*");
+        when(query.queryString()).thenReturn(newQueryString(".*should match.*"));
 
         List<Team> result = repo.queryTeams(query);
         assertThat(result, areTeams().whichContainExhaustively(
-            aTeam().named("shouldmatch this team"),
-            aTeam().named("shouldmatch this team as well")
+            aTeam().named("should match this team"),
+            aTeam().named("should match this team as well")
+        ));
+    }
+    
+    @Test
+    public void query_persons_for_name_matching_string() {
+        facewallTestDatabase.seedFixtures(newFixtures()
+            .withTeams(
+                defaultTeamWithDefaultMembers()
+                    .withMembers(
+                        defaultPerson()
+                            .withProperty("name", "rickety doodle"),
+                        defaultPerson()
+                            .withProperty("name", "poodle do"),
+                        defaultPerson()
+                            .withProperty("name", "limey tonsil"),
+                        defaultPerson()
+                            .withProperty("name", "lizard")
+            )
+        ));
+
+        Query query = mock(Query.class);
+        when(query.queryString()).thenReturn(newQueryString(".*oodle.*"));
+
+        List<Person> result = repo.queryPersons(query);
+        assertThat(result, arePersons().whichContainExhaustively(
+            aPerson().named("rickety doodle"),
+            aPerson().named("poodle do")
         ));
     }
 }

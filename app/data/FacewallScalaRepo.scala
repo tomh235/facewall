@@ -91,7 +91,7 @@ class FacewallScalaRepo extends ScalaRepository {
           |START n = node(*)
           |WHERE n.name! =~ {regex}
           |RETURN n;
-        """.stripMargin).on("regex" -> query.toRegEx)().flatMap { row =>
+        """.stripMargin).on("regex" -> query.queryString().value)().flatMap { row =>
         val nodeAsMap = row[NeoNode]("n").props
         val jsonValue = Json.toJson(nodeAsMap)(Neo4jREST.mapFormat)
         jsonValue.asOpt[Person]
@@ -104,7 +104,7 @@ class FacewallScalaRepo extends ScalaRepository {
           |WHERE team.name! =~ {regex}
           |RETURN distinct team
         """.stripMargin
-    ).on("regex" -> query.toRegEx)().flatMap { row =>
+    ).on("regex" -> query.queryString().value)().flatMap { row =>
         val nodeAsMap = row[NeoNode]("team").props
         val jsonValue = Json.toJson(nodeAsMap)(Neo4jREST.mapFormat)
         jsonValue.asOpt[Team]

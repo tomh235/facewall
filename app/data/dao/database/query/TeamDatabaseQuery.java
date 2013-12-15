@@ -13,9 +13,11 @@ import static data.dao.database.RelationshipTypes.TEAMMEMBER_OF;
 
 class TeamDatabaseQuery implements DatabaseQuery {
     private final String id;
+    private final Map<String, String> propertyCriteria;
 
-    TeamDatabaseQuery(String id) {
+    TeamDatabaseQuery(String id, Map<String, String> propertyCriteria) {
         this.id = id;
+        this.propertyCriteria = propertyCriteria;
     }
 
     @Override public FacewallQueryResults execute(QueryEngine<Map<String, Object>> queryEngine) {
@@ -23,7 +25,14 @@ class TeamDatabaseQuery implements DatabaseQuery {
         String cypherQuery =
             "START person = node:" + Persons.getName() + "('" + Persons.getKey() + ":*'), " +
                 "team = node:" + Teams.getName() + "('" + Teams.getKey() + ":" + id + "') " +
-                "WHERE person-[:" + TEAMMEMBER_OF.name() + "]->team " +
+                "WHERE person-[:" + TEAMMEMBER_OF.name() + "]->team ";
+
+        for (Map.Entry<String, String> entry : propertyCriteria.entrySet()) {
+            cypherQuery +=
+                "AND team." + entry.getKey() + " =~ '" + entry.getValue() + "' ";
+        }
+
+        cypherQuery +=
                 "RETURN person, team";
 
         QueryResult<Map<String,Object>> cypherResults = queryEngine.query(cypherQuery, Collections.<String, Object>emptyMap());

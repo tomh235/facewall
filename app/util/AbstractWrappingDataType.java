@@ -1,6 +1,6 @@
-package data.datatype;
+package util;
 
-abstract class AbstractWrappingDataType<T> {
+public abstract class AbstractWrappingDataType<T> {
     public final T value;
 
     protected AbstractWrappingDataType(T value) {

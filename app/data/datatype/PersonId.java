@@ -1,5 +1,7 @@
 package data.datatype;
 
+import util.AbstractWrappingDataType;
+
 public class PersonId extends AbstractWrappingDataType<String> {
     private PersonId(String value) {
         super(value);

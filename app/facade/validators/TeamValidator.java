@@ -1,7 +1,6 @@
 package facade.validators;
 
 import data.Repository;
-import data.ScalaRepository;
 import domain.Query;
 import requestmapper.QueryMapper;
 

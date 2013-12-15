@@ -1,5 +1,7 @@
 package data.datatype;
 
+import util.AbstractWrappingDataType;
+
 public class TeamId extends AbstractWrappingDataType<String> {
     private TeamId(String value) {
         super(value);

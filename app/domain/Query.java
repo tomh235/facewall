@@ -1,5 +1,7 @@
 package domain;
 
+import domain.datatype.QueryString;
+
 public interface Query {
-    String toRegEx();
+    QueryString queryString();
 }

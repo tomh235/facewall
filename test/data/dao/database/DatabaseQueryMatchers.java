@@ -60,7 +60,27 @@ public class DatabaseQueryMatchers {
             }
 
             @Override public void describeTo(Description description) {
-                description.appendText("a query for all teams.");
+                description.appendText("a query for the team with the id ").appendValue(teamId);
+            }
+        };
+    }
+
+    public static Matcher<DatabaseQuery> aQueryForTeamsWithName(final String name) {
+        return new TypeSafeMatcher<DatabaseQuery>() {
+            @Override public boolean matchesSafely(DatabaseQuery databaseQuery) {
+                String cypherStatement = captureCypherStatement(databaseQuery);
+
+                return cypherStatement.contains(
+                    "START person = node:" + Persons.getName() + "('" + Persons.getKey() + ":*'), " +
+                        "team = node:" + Teams.getName() + "('" + Teams.getKey() + ":*') " +
+                        "WHERE person-[:" + TEAMMEMBER_OF.name() + "]->team " +
+                        "AND team.name =~ '" + name + "' " +
+                        "RETURN person, team"
+                );
+            }
+
+            @Override public void describeTo(Description description) {
+                description.appendText("a query teams with a name matching ").appendValue(name);
             }
         };
     }
@@ -73,12 +93,33 @@ public class DatabaseQueryMatchers {
                 return cypherStatement.contains(
                     "START person = node:" + Persons.getName() + "('" + Persons.getKey() + ":*') " +
                     "MATCH (person)-[r?]->(team) " +
+                    "WHERE 1=1 " +
                     "RETURN person, team"
                 );
             }
 
             @Override public void describeTo(Description description) {
                 description.appendText("a query for all persons.");
+            }
+        };
+    }
+
+    public static Matcher<DatabaseQuery> aQueryForPersonsNamed(final String name) {
+        return new TypeSafeMatcher<DatabaseQuery>() {
+            @Override public boolean matchesSafely(DatabaseQuery databaseQuery) {
+                String cypherStatement = captureCypherStatement(databaseQuery);
+
+                return cypherStatement.contains(
+                    "START person = node:" + Persons.getName() + "('" + Persons.getKey() + ":*') " +
+                    "MATCH (person)-[r?]->(team) " +
+                    "WHERE 1=1 " +
+                    "AND person.name =~ '" + name + "' " +
+                    "RETURN person, team"
+                );
+            }
+
+            @Override public void describeTo(Description description) {
+                description.appendText("a query persons with a name matching ").appendValue(name);
             }
         };
     }
@@ -90,32 +131,14 @@ public class DatabaseQueryMatchers {
 
                 return cypherStatement.contains(
                     "START person = node:" + Persons.getName() + "('" + Persons.getKey() + ":" + personId + "') " +
-                        "MATCH (person)-[r?]->(team) " +
-                        "RETURN person, team"
-                );
-            }
-
-            @Override public void describeTo(Description description) {
-                description.appendText("a query for all teams.");
-            }
-        };
-    }
-
-    public static Matcher<DatabaseQuery> aQueryForMembersOfTeam(final String teamId) {
-        return new TypeSafeMatcher<DatabaseQuery>() {
-            @Override public boolean matchesSafely(DatabaseQuery databaseQuery) {
-                String cypherStatement = captureCypherStatement(databaseQuery);
-
-                return cypherStatement.contains(
-                    "START person = node:" + Persons.getName() + "('" + Persons.getKey() + ":*'), team = node:" + Teams.getName() + "('" + Teams.getKey() + ":" + teamId + "') " +
-                    "WHERE person-[:TEAMMEMBER_OF]->team " +
+                    "MATCH (person)-[r?]->(team) " +
+                    "WHERE 1=1 " +
                     "RETURN person, team"
                 );
             }
 
             @Override public void describeTo(Description description) {
-                description.appendText("a query members of team with id ").appendValue(teamId);
-
+                description.appendText("a query for a person with the id ").appendValue(personId);
             }
         };
     }

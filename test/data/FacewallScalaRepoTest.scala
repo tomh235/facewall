@@ -87,14 +87,14 @@ class FacewallScalaRepoTest extends FunSuite with BeforeAndAfter with TemporaryD
 
     test("queryPersons should find persons matching query") {
         val query = mock[Query]
-        when(query.toRegEx).thenReturn("Hugo")
+        when(query.queryString().value).thenReturn("Hugo")
         val result = repo.queryPersons(query)
         assertThat(result, containsExhaustivelyInOrder(hugo))
     }
 
     test("queryTeams should find teams matching query") {
         val query = mock[Query]
-        when(query.toRegEx).thenReturn(".*Product.*")
+        when(query.queryString().value).thenReturn(".*Product.*")
         val result = repo.queryTeams(query)
         assertThat(result, containsExhaustivelyInOrder(productResources))
     }

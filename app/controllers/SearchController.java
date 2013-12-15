@@ -38,6 +38,7 @@ public class SearchController extends Controller {
         } else if(searchResultsModel instanceof TeamDetailsModel) {
             result = ok(views.html.teamdetails.render((TeamDetailsModel) searchResultsModel));
         } else {
+            //This should be a 4xx rather than a 5xx response
             result = internalServerError("Query not recognized");
         }
         return result;

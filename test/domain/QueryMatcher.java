@@ -18,7 +18,7 @@ public class QueryMatcher extends CompositeMatcher<Query> {
         add(new TypeSafeMatcher<Query>() {
             @Override
             public boolean matchesSafely(Query query){
-                return query.toRegEx().equals(regEx);
+                return query.queryString().value.equals(regEx);
             }
 
             @Override

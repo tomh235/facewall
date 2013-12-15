@@ -1,7 +1,10 @@
 package requestmapper;
 
 import domain.Query;
+import domain.datatype.QueryString;
 import play.mvc.Http;
+
+import static domain.datatype.QueryString.newQueryString;
 
 public class SearchQueryMapper {
     public Query map(Http.Request request) {
@@ -9,8 +12,8 @@ public class SearchQueryMapper {
         if (request.queryString().get("keywords") == null) {
             return new Query() {
                 @Override
-                public String toRegEx() {
-                    return ".*";
+                public QueryString queryString() {
+                    return newQueryString(".*");
                 }
             };
         }
@@ -18,16 +21,16 @@ public class SearchQueryMapper {
         if (keywords.equals("")) {
             return new Query() {
                 @Override
-                public String toRegEx() {
-                    return "";
+                public QueryString queryString() {
+                    return newQueryString("");
                 }
             };
         } else {
             //this could do with a comment <-- not this one, obviously
             return new Query() {
                 @Override
-                public String toRegEx() {
-                    return String.format("(?i).*%s.*", keywords);
+                public QueryString queryString() {
+                    return newQueryString(String.format("(?i).*%s.*", keywords));
                 }
             };
         }
