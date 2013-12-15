@@ -54,7 +54,7 @@ sourceSets {
         output.dir("$buildDir/target/scala-2.10/classes_managed")
 
         java {
-            srcDirs = ['app', 'conf', 'target/scala-2.10/src_managed/main']
+            srcDirs = ['app', 'conf', 'target/scala-2.10/src_managed/main', 'target/scala-2.10/classes', 'target/scala-2.10/classes_managed']
         }
     }
 
@@ -69,7 +69,7 @@ sourceSets {
         output.dir("$buildDir/target/scala-2.10/classes_managed")
 
         scala {
-            srcDirs = ['app', 'conf', 'target/scala-2.10/src_managed/main']
+            srcDirs = ['app', 'conf', 'target/scala-2.10/src_managed/main', 'target/scala-2.10/classes', 'target/scala-2.10/classes_managed']
         }
     }
 
@@ -81,5 +81,6 @@ sourceSets {
 }
 
 compileScala {
-    println classpath
+    taskDependencies.values = compileScala.taskDependencies.values - 'compileJava'
 }
+compileJava.dependsOn compileScala
