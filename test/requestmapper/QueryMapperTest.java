@@ -13,6 +13,6 @@ public class QueryMapperTest {
     @Test
     public void should_map_teamName_query_to_regex() {
         Query result = QueryMapper.map("test");
-        assertThat(result, is(aQuery().withRegEx("test")));
+        assertThat(result, is(aQuery().withQueryString(".*test.*")));
     }
 }

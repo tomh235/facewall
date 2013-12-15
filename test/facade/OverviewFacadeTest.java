@@ -1,5 +1,6 @@
 package facade;
 
+import data.Repository;
 import domain.MockPerson;
 import domain.MockTeam;
 import domain.Person;
@@ -7,20 +8,18 @@ import domain.Team;
 import model.OverviewEntryModel;
 import model.OverviewEntryModelMatcher;
 import org.junit.Test;
-import data.ScalaRepository;
-import util.IterableMatchers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static model.OverviewEntryModelMatcher.anOverviewEntryModel;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
-import static model.OverviewEntryModelMatcher.*;
 import static util.IterableMatchers.containsExhaustivelyInOrder;
 
 public class OverviewFacadeTest {
-    ScalaRepository mockRepo = mock(ScalaRepository.class);
+    Repository mockRepo = mock(Repository.class);
     OverviewFacade facewallFacade = new OverviewFacade(mockRepo);
 
     @Test

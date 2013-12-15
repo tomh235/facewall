@@ -1,6 +1,6 @@
 package facade;
 
-import data.ScalaRepository;
+import data.Repository;
 import domain.Person;
 import domain.Query;
 import domain.Team;
@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class SearchFacadeTest {
     @Mock
-    ScalaRepository mockRepo;
+    Repository mockRepo;
     @Mock
     SearchResultsModelMapper mockSearchResultsModelMapper;
     @Mock

@@ -1,14 +1,13 @@
 package controllers;
 
-import data.FacewallScalaRepo;
-import data.ScalaRepository;
 import facade.OverviewFacade;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import static application.Facewall.facewall;
+
 public class OverviewController extends Controller {
-    private static final ScalaRepository repo = new FacewallScalaRepo();
-    private static final OverviewFacade overviewFacade = new OverviewFacade(repo);
+    private static final OverviewFacade overviewFacade = facewall().overviewFacade;
 
     public static Result overview() {
         return ok(views.html.overview.render(overviewFacade.createOverviewModel()));

@@ -1,17 +1,20 @@
 package facade;
 
+import data.Repository;
 import domain.Person;
 import facade.modelmapper.OverviewModelMapper;
 import model.OverviewEntryModel;
-import data.ScalaRepository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class OverviewFacade {
 
-    private final ScalaRepository repository;
+    private final Repository repository;
 
-    public OverviewFacade(ScalaRepository repository) {
+    public OverviewFacade(Repository repository) {
         this.repository = repository;
     }
 

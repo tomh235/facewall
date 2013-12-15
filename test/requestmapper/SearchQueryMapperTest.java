@@ -28,7 +28,7 @@ public class SearchQueryMapperTest {
 
         Query result = searchQueryMapper.map(request);
 
-        assertThat(result, is(aQuery().withRegEx(".*")));
+        assertThat(result, is(aQuery().withQueryString(".*")));
     }
 
     @Test
@@ -38,7 +38,7 @@ public class SearchQueryMapperTest {
 
         Query result = searchQueryMapper.map(request);
 
-        assertThat(result, is(aQuery().withRegEx("")));
+        assertThat(result, is(aQuery().withQueryString("")));
     }
 
     @Test
@@ -48,6 +48,6 @@ public class SearchQueryMapperTest {
 
         Query result = searchQueryMapper.map(request);
 
-        assertThat(result, is(aQuery().withRegEx("(?i).*hello.*")));
+        assertThat(result, is(aQuery().withQueryString("(?i).*hello.*")));
     }
 }
