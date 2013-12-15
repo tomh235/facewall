@@ -1,7 +1,6 @@
 package facade;
 
 import data.AdminRepository;
-import data.FacewallRepositoryTest;
 import data.Repository;
 import domain.MockTeam;
 import domain.Person;
@@ -15,7 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import requestmapper.PersonMapper;
-import requestmapper.QueryMapper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,9 +23,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SignUpFacadeTest {
@@ -36,7 +32,6 @@ public class SignUpFacadeTest {
     @Mock Repository mockRepository;
     @Mock TeamValidator mockTeamValidator;
     @Mock PersonMapper mockPersonMapper;
-    @Mock QueryMapper mockQueryMapper;
 
     @InjectMocks
     SignUpFacade signUpFacade;

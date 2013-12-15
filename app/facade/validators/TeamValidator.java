@@ -2,20 +2,18 @@ package facade.validators;
 
 import data.Repository;
 import domain.Query;
-import requestmapper.QueryMapper;
+
+import static facade.QueryBuilder.newQuery;
 
 public class TeamValidator {
     private final Repository repository;
-    private final QueryMapper queryMapper;
 
-    public TeamValidator(Repository repository, QueryMapper queryMapper) {
+    public TeamValidator(Repository repository) {
         this.repository = repository;
-        this.queryMapper = queryMapper;
     }
 
     public boolean validate(String teamName) {
-        Query teamQuery = queryMapper.map(teamName);
-
+        Query teamQuery = newQuery().withKeywords(teamName).build();
         return !repository.queryTeams(teamQuery).isEmpty();
     }
 }

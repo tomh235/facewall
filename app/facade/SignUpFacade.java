@@ -8,23 +8,21 @@ import domain.Team;
 import facade.validators.TeamValidator;
 import model.UserModel;
 import requestmapper.PersonMapper;
-import requestmapper.QueryMapper;
+
+import static facade.QueryBuilder.newQuery;
 
 public class SignUpFacade {
     private final AdminRepository adminRepository;
     private final Repository repository;
     private final PersonMapper personMapper;
-    private final QueryMapper queryMapper;
     private final TeamValidator teamValidator;
 
     public SignUpFacade(AdminRepository adminRepository,
                         Repository repository, PersonMapper personMapper,
-                        QueryMapper queryMapper,
                         TeamValidator teamValidator) {
         this.repository = repository;
         this.adminRepository = adminRepository;
         this.personMapper = personMapper;
-        this.queryMapper = queryMapper;
         this.teamValidator = teamValidator;
     }
 
@@ -40,7 +38,7 @@ public class SignUpFacade {
     }
 
     protected Team getUserModelTeamFromRepository(UserModel newUser) {
-        Query teamQuery = queryMapper.map(newUser.team);
+        Query teamQuery = newQuery().withKeywords(newUser.team).build();
         return repository.queryTeams(teamQuery).get(0);
     }
 }
