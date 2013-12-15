@@ -20,6 +20,11 @@ public class SignUpController extends Controller {
             return ok(views.html.signupform.render(signUpForm, true));
         }
 
+        //How about using decorator pattern to chain together Validator<Team> and Validator<Person>, and then
+        //if (Validator<Team>.isValid && Validator<Person>.isValid) then do
+        //facade.addPersonToTeam(Validator<Team>.validatedTeam, Validator<Person>.validatedPerson)
+        //otherwise signupform.render(Validator<Team>, Validator<Person>)
+
         public static Result submitSignUpForm() {
             Result result;
             Form<UserModel> filledSignUpForm = signUpForm.bindFromRequest();

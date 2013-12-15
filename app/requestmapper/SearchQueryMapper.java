@@ -1,12 +1,10 @@
 package requestmapper;
 
 import domain.Query;
-import domain.datatype.QueryString;
 import play.mvc.Http;
 
 import static domain.Query.emptyQuery;
 import static domain.Query.newQuery;
-import static domain.datatype.QueryString.newQueryString;
 import static org.apache.commons.lang.StringUtils.isNotEmpty;
 
 public class SearchQueryMapper {
