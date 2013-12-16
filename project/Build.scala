@@ -35,7 +35,11 @@ object ApplicationBuild extends Build {
 
     val functionalTestDependencies = Seq(
         "org.neo4j" % "neo4j-kernel" % "1.9.5",
-        "org.neo4j" % "neo4j-rest-graphdb" % "1.9"
+        "org.neo4j" % "neo4j-rest-graphdb" % "1.9",
+        "org.seleniumhq.selenium" % "selenium-java" % "2.38.0",
+        "org.hamcrest" % "hamcrest-all" % "1.1" % "test",
+        "junit" % "junit" % "4.11",
+        "org.mockito" % "mockito-all" % "1.9.5"
     )
 
     val functionalTests = Project("functional-tests", file("functional-tests"),
@@ -58,10 +62,10 @@ object ApplicationBuild extends Build {
         "org.neo4j" % "neo4j-rest-graphdb" % "1.9",
         "org.neo4j" % "neo4j-kernel" % "1.9.5",
 
-        "junit" % "junit" %"4.11" % "test",
         "org.hamcrest" % "hamcrest-all" % "1.1" % "test",
+        "junit" % "junit" %"4.11" % "test",
         "org.scalatest" %% "scalatest" % "1.9.1" % "test",
-        "org.mockito" % "mockito-core" % "1.9.5" % "test",
+        "org.mockito" % "mockito-all" % "1.9.5" % "test",
 
         //might be able to get rid of this
         "org.neo4j.app" % "neo4j-server" % "1.9",

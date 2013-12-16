@@ -5,4 +5,8 @@ dependencies {
     testCompile project(':facewall-database-utils')
     testCompile "org.neo4j:neo4j-kernel:1.9.5"
     testCompile "org.neo4j:neo4j-rest-graphdb:1.9"
+    testCompile "org.seleniumhq.selenium:selenium-java:2.38.0"
+    testCompile "org.hamcrest:hamcrest-all:1.1"
+    testCompile "junit:junit:4.11"
+    testCompile "org.mockito:mockito-all:1.9.5"
 }
