@@ -19,3 +19,5 @@ GET     /signupform                 controllers.SignUpController.blankSignUpForm
 POST    /signupform                 controllers.SignUpController.submitSignUpForm
 
 GET     /signup-summary             controllers.SignUpController.summaryPage
+
+GET     /person/:id                 controllers.PersonController.getPerson(id: String)

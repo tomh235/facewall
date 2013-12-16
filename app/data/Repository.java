@@ -1,5 +1,6 @@
 package data;
 
+import data.datatype.PersonId;
 import domain.Person;
 import domain.Query;
 import domain.Team;
@@ -12,4 +13,7 @@ public interface Repository {
 
     List<Person> queryPersons(Query query);
     List<Team> queryTeams(Query query);
+
+    Person findPersonById(PersonId id);
+
 }

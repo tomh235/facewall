@@ -1,6 +1,7 @@
 package data;
 
 import data.dao.FacewallDAO;
+import data.datatype.PersonId;
 import data.dto.PersonDTO;
 import data.dto.TeamDTO;
 import data.factory.PersonFactory;
@@ -119,4 +120,18 @@ public class FacewallRepositoryTest {
         verify(mockfacewallDAO).queryTeams(query);
         verify(mockTeamFactory).createTeams(expectedDTOs);
     }
+
+    @Test
+    public void fetch_personDetails_verifyInteractions() {
+        PersonId mockId = mock(PersonId.class);
+        PersonDTO expectedDTO = mock(PersonDTO.class);
+        when(mockfacewallDAO.fetchPerson(mockId)).thenReturn(expectedDTO);
+
+        Person result = repository.findPersonById(mockId);
+        assertThat(result, is(sameInstance(mockPersonFactory.createPerson(expectedDTO))));
+
+
+    }
+
+
 }

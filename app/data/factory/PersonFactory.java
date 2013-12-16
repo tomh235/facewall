@@ -33,7 +33,7 @@ public class PersonFactory {
         return personList;
     }
 
-    private Person createPerson(PersonDTO dto) {
+    public Person createPerson(PersonDTO dto) {
         MutableTeam mutableTeam = lazyMutableTeamFactory.createLazyMutableTeam();
         Team lazyTeam = teamDTOMapper.map(mutableTeam, dto.teamNode);
 

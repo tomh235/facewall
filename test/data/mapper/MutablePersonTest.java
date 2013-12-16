@@ -16,10 +16,6 @@ public class MutablePersonTest {
         @Override public Team team() {
             throw new UnsupportedOperationException();
         }
-
-        public PersonId getId() {
-            return id;
-        }
     }
 
     @Test

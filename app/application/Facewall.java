@@ -2,6 +2,7 @@ package application;
 
 import data.Repository;
 import facade.OverviewFacade;
+import facade.PersonDetailsFacade;
 import facade.SearchFacade;
 import facade.modelmapper.OverviewModelMapper;
 import facade.modelmapper.PersonDetailsModelMapper;
@@ -18,12 +19,17 @@ final public class Facewall {
 
     public final OverviewFacade overviewFacade;
     public final SearchFacade searchFacade;
+    public final PersonDetailsFacade personDetailsFacade;
 
     private Facewall(
-        OverviewFacade overviewFacade,
-        SearchFacade searchFacade) {
+            OverviewFacade overviewFacade,
+            SearchFacade searchFacade,
+            PersonDetailsFacade personDetailsFacade
+        )
+    {
         this.overviewFacade = overviewFacade;
         this.searchFacade = searchFacade;
+        this.personDetailsFacade = personDetailsFacade;
     }
 
     public static Facewall facewall() {
@@ -41,12 +47,14 @@ final public class Facewall {
         PersonDetailsModelMapper personDetailsModelMapper = new PersonDetailsModelMapper();
         TeamDetailsModelMapper teamDetailsModelMapper = new TeamDetailsModelMapper();
 
+        PersonDetailsFacade personDetailsFacade = new PersonDetailsFacade(repository,personDetailsModelMapper);
+
         SearchFacade searchFacade = new SearchFacade(
             repository,
             searchResultsModelMapper,
             personDetailsModelMapper,
             teamDetailsModelMapper
         );
-        return new Facewall(overviewFacade, searchFacade);
+        return new Facewall(overviewFacade, searchFacade, personDetailsFacade);
     }
 }

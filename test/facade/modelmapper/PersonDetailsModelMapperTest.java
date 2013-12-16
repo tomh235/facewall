@@ -1,5 +1,6 @@
 package facade.modelmapper;
 
+import data.datatype.PersonId;
 import model.PersonDetailsModel;
 import org.junit.Test;
 import domain.MockPerson;
@@ -13,7 +14,7 @@ public class PersonDetailsModelMapperTest{
 
     @Test
     public void should_map_person() {
-       MockPerson person = new MockPerson("id", "Hello World", "picture", null);
+       MockPerson person = new MockPerson(PersonId.newPersonId("id"), "Hello World", "picture", null);
        PersonDetailsModel result = personDetailsModelMapper.map(person);
 
        assertThat(result, is(aPersonDetailsModel().named("Hello World")));

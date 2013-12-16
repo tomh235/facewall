@@ -18,6 +18,10 @@ abstract public class MutablePerson implements Person {
         this.id = personId;
     }
 
+    @Override final public PersonId getId() {
+        return id;
+    }
+
     @Override final public String name() {
         return name;
     }
@@ -35,4 +39,5 @@ abstract public class MutablePerson implements Person {
     }
 
     @Override abstract public Team team();
+
 }

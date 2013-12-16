@@ -1,5 +1,6 @@
 package requestmapper;
 
+import data.datatype.PersonId;
 import domain.Person;
 import domain.Team;
 import model.UserModel;
@@ -22,6 +23,12 @@ public class PersonMapper {
             public Team team() {
                 return team;
             }
+
+            @Override
+            public PersonId getId() {
+                return null;
+            }
+
         };
     }
 }

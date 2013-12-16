@@ -1,6 +1,7 @@
 package data;
 
 import data.dao.FacewallDAO;
+import data.datatype.PersonId;
 import data.dto.PersonDTO;
 import data.dto.TeamDTO;
 import data.factory.PersonFactory;
@@ -43,5 +44,11 @@ class FacewallRepository implements Repository {
     @Override public List<Team> queryTeams(Query query) {
         Iterable<TeamDTO> dtos = dao.queryTeams(query);
         return teamFactory.createTeams(dtos);
+    }
+
+    @Override
+    public Person findPersonById(PersonId id) {
+        PersonDTO personDTO = dao.fetchPerson(id);
+        return personFactory.createPerson(personDTO);
     }
 }
