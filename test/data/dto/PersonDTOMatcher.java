@@ -16,7 +16,7 @@ public class PersonDTOMatcher extends CompositeMatcher<PersonDTO> {
     public PersonDTOMatcher withPersonNode(final Matcher<Node> nodeMatcher) {
         add(new TypeSafeMatcher<PersonDTO>() {
             @Override public boolean matchesSafely(PersonDTO personDTO) {
-                return nodeMatcher.matches(personDTO.personNode);
+                return nodeMatcher.matches(personDTO.personInformation);
             }
 
             @Override public void describeTo(Description description) {
@@ -29,7 +29,7 @@ public class PersonDTOMatcher extends CompositeMatcher<PersonDTO> {
     public PersonDTOMatcher withTeamNode(final Matcher<Node> nodeMatcher) {
         add(new TypeSafeMatcher<PersonDTO>() {
             @Override public boolean matchesSafely(PersonDTO personDTO) {
-                return nodeMatcher.matches(personDTO.teamNode);
+                return nodeMatcher.matches(personDTO.teamInformation);
             }
 
             @Override public void describeTo(Description description) {

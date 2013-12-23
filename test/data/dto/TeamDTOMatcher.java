@@ -6,8 +6,6 @@ import org.hamcrest.TypeSafeMatcher;
 import org.neo4j.graphdb.Node;
 import util.CompositeMatcher;
 
-import java.util.List;
-
 public class TeamDTOMatcher extends CompositeMatcher<TeamDTO> {
 
     private TeamDTOMatcher() {}
@@ -19,7 +17,7 @@ public class TeamDTOMatcher extends CompositeMatcher<TeamDTO> {
     public TeamDTOMatcher withTeamNode(final Matcher<Node> nodeMatcher) {
         add(new TypeSafeMatcher<TeamDTO>() {
             @Override public boolean matchesSafely(TeamDTO teamDTO) {
-                return nodeMatcher.matches(teamDTO.teamNode);
+                return nodeMatcher.matches(teamDTO.teamInformation);
             }
 
             @Override public void describeTo(Description description) {
@@ -32,7 +30,7 @@ public class TeamDTOMatcher extends CompositeMatcher<TeamDTO> {
     public TeamDTOMatcher whereMemberNodes(final Matcher<Iterable<Node>> memberNodeMatcher) {
         add(new TypeSafeMatcher<TeamDTO>() {
             @Override public boolean matchesSafely(TeamDTO teamDTO) {
-                return memberNodeMatcher.matches(teamDTO.memberNodes);
+                return memberNodeMatcher.matches(teamDTO.memberInformation);
             }
 
             @Override public void describeTo(Description description) {

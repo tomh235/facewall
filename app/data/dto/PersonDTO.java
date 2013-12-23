@@ -1,13 +1,11 @@
 package data.dto;
 
-import org.neo4j.graphdb.Node;
-
 public class PersonDTO {
-    public final Node personNode;
-    public final Node teamNode;
+    public final PersonInformation personInformation;
+    public final TeamInformation teamInformation;
 
-    public PersonDTO(Node personNode, Node teamNode) {
-        this.personNode = personNode;
-        this.teamNode = teamNode;
+    public PersonDTO(PersonInformation personInformation, TeamInformation teamInformation) {
+        this.personInformation = personInformation;
+        this.teamInformation = teamInformation;
     }
 }

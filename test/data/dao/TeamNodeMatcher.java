@@ -1,4 +1,4 @@
-package data.mapper;
+package data.dao;
 
 import data.dao.database.RelationshipTypes;
 import org.hamcrest.Description;

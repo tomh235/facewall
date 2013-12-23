@@ -1,21 +1,23 @@
 package data.dao;
 
+import data.dto.PersonInformation;
 import data.dto.TeamDTO;
+import data.dto.TeamInformation;
 import org.neo4j.graphdb.Node;
 
 import java.util.*;
 
 public class TeamDTOs implements Iterable<TeamDTO> {
 
-    private Map<Node, List<Node>> teamsToMembers = new HashMap<>();
+    private Map<TeamInformation, List<PersonInformation>> teamsToMembers = new HashMap<>();
 
-    public void addMemberToTeam(Node team, final Node member) {
+    public void addMemberToTeam(TeamInformation team, final PersonInformation member) {
         if (teamsToMembers.containsKey(team)) {
             teamsToMembers.get(team).add(member);
         } else {
             teamsToMembers.put(
                 team,
-                new ArrayList<Node>() {{ add(member); }}
+                new ArrayList<PersonInformation>() {{ add(member); }}
             );
         }
     }
@@ -28,7 +30,7 @@ public class TeamDTOs implements Iterable<TeamDTO> {
     @Override public Iterator<TeamDTO> iterator() {
         List<TeamDTO> dtos = new ArrayList<>();
 
-        for (Map.Entry<Node, List<Node>> entry : teamsToMembers.entrySet()) {
+        for (Map.Entry<TeamInformation, List<PersonInformation>> entry : teamsToMembers.entrySet()) {
             dtos.add(new TeamDTO(entry.getKey(), entry.getValue()));
         }
         return dtos.iterator();

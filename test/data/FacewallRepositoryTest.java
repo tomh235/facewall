@@ -1,157 +1,124 @@
 package data;
 
-import data.dao.FacewallDAO;
 import data.datatype.PersonId;
-import data.dto.PersonDTO;
-import data.dto.TeamDTO;
-import data.factory.PersonFactory;
-import data.factory.TeamFactory;
-import data.mapper.PersonNodeMapper;
 import domain.Person;
 import domain.Query;
 import domain.Team;
+import facewall.database.FacewallTestDatabase;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.List;
 
+import static data.DataModule.createRepository;
 import static data.datatype.PersonId.newPersonId;
+import static domain.PersonMatcher.aPerson;
+import static domain.PersonsMatcher.arePersons;
+import static domain.TeamMatcher.aTeam;
+import static domain.TeamsMatcher.areTeams;
+import static facewall.database.FacewallTestDatabaseFactory.createImpermanentFacewallTestDatabase;
+import static facewall.database.fixture.Fixtures.newFixtures;
+import static facewall.database.fixture.PersonDataFactory.defaultPerson;
+import static facewall.database.fixture.TeamDataFactory.defaultTeam;
+import static facewall.database.fixture.TeamDataFactory.defaultTeamWithDefaultMembers;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsSame.sameInstance;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyList;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FacewallRepositoryTest {
     private static final Query someQuery = mock(Query.class);
     private static final PersonId somePersonId = newPersonId("some-id");
 
-    @Mock PersonFactory mockPersonFactory;
-    @Mock TeamFactory mockTeamFactory;
-    @Mock FacewallDAO mockfacewallDAO;
-    @Mock PersonNodeMapper personNodeMapper;
+    private FacewallTestDatabase facewallTestDatabase;
+    private Repository repository;
 
-    @InjectMocks
-    FacewallRepository repository;
+    @Before
+    public void setUp() throws Exception {
+        facewallTestDatabase = createImpermanentFacewallTestDatabase();
+        repository = createRepository(facewallTestDatabase.createQueryEngine());
+    }
 
     @Test
-    public void fetch_persons_delegates_to_factory() {
-        List<Person> expectedPersons = mock(List.class);
-        when(mockPersonFactory.createPersons(anyList())).thenReturn(expectedPersons);
+    public void list_persons_retrieves_person_names_from_db() {
+        facewallTestDatabase.seedFixtures(newFixtures()
+                .withTeamlessPersons(defaultPerson()
+                        .withProperty("name", "Bill")
+                ).withTeams(defaultTeam()
+                        .withMembers(defaultPerson()
+                                .withProperty("name", "Ben")
+                        )
+                )
+        );
 
         List<Person> result = repository.listPersons();
-        assertThat(result, is(sameInstance(expectedPersons)));
+        assertThat(result, arePersons()
+                .whichContainExhaustively(
+                        aPerson().named("Bill"),
+                        aPerson().named("Ben")
+                )
+        );
     }
 
     @Test
-    public void fetch_persons_verifyInteractions() {
-        List<PersonDTO> expectedDTOs = mock(List.class);
-        when(mockfacewallDAO.fetchPersons()).thenReturn(expectedDTOs);
+    public void list_persons_retrieves_person_pictures_from_db() {
+        facewallTestDatabase.seedFixtures(newFixtures()
+                .withTeamlessPersons(defaultPerson()
+                        .withProperty("picture", "Bill.img")
+                ).withTeams(defaultTeam()
+                        .withMembers(defaultPerson()
+                                .withProperty("picture", "Ben.img")
+                        )
+                )
+        );
 
-        repository.listPersons();
-
-        verify(mockfacewallDAO).fetchPersons();
-        verify(mockPersonFactory).createPersons(expectedDTOs);
+        List<Person> result = repository.listPersons();
+        assertThat(result, arePersons()
+                .whichContainExhaustively(
+                        aPerson().withPicture("Bill.img"),
+                        aPerson().withPicture("Ben.img")
+                )
+        );
     }
 
     @Test
-    public void fetch_team_delegates_to_factory() {
-        List<Team> expectedTeams = mock(List.class);
-        when(mockTeamFactory.createTeams(anyList())).thenReturn(expectedTeams);
+    public void list_teams_retrieves_team_names_from_db() {
+        facewallTestDatabase.seedFixtures(newFixtures()
+                .withTeams(
+                        defaultTeamWithDefaultMembers()
+                                .withProperty("name", "Ecom"),
+                        defaultTeamWithDefaultMembers()
+                                .withProperty("name", "Ars")
+                )
+        );
 
         List<Team> result = repository.listTeams();
-        assertThat(result, is(sameInstance(expectedTeams)));
+        assertThat(result, areTeams()
+                .whichContainExhaustively(
+                        aTeam().named("Ecom"),
+                        aTeam().named("Ars")
+                )
+        );
     }
 
     @Test
-    public void fetch_team_verifyInteractions() {
-        List<TeamDTO> expectedDTOs = mock(List.class);
-        when(mockfacewallDAO.fetchTeams()).thenReturn(expectedDTOs);
+    public void list_teams_retrieves_team_colour_from_db() {
+        facewallTestDatabase.seedFixtures(newFixtures()
+                .withTeams(
+                        defaultTeamWithDefaultMembers()
+                                .withProperty("colour", "blue"),
+                        defaultTeamWithDefaultMembers()
+                                .withProperty("colour", "red")
+                )
+        );
 
-        repository.listTeams();
-
-        verify(mockfacewallDAO).fetchTeams();
-        verify(mockTeamFactory).createTeams(expectedDTOs);
-    }
-
-    @Test
-    public void query_persons_delegates_to_factory() {
-        List<Person> expectedPersons = mock(List.class);
-        when(mockPersonFactory.createPersons(anyList())).thenReturn(expectedPersons);
-
-        List<Person> result = repository.queryPersons(someQuery);
-        assertThat(result, is(sameInstance(expectedPersons)));
-    }
-
-    @Test
-    public void query_persons_verifyInteractions() {
-        List<PersonDTO> expectedDTOs = mock(List.class);
-        when(mockfacewallDAO.queryPersons(any(Query.class))).thenReturn(expectedDTOs);
-
-        Query query = mock(Query.class);
-        repository.queryPersons(query);
-
-        verify(mockfacewallDAO).queryPersons(query);
-        verify(mockPersonFactory).createPersons(expectedDTOs);
-    }
-
-    @Test
-    public void query_teams_delegates_to_factory() {
-        List<Team> expectedTeams = mock(List.class);
-        when(mockTeamFactory.createTeams(anyList())).thenReturn(expectedTeams);
-
-        List<Team> result = repository.queryTeams(someQuery);
-        assertThat(result, is(sameInstance(expectedTeams)));
-    }
-
-    @Test
-    public void query_team_verifyInteractions() {
-        List<TeamDTO> expectedDTOs = mock(List.class);
-        when(mockfacewallDAO.queryTeams(any(Query.class))).thenReturn(expectedDTOs);
-
-        Query query = mock(Query.class);
-        repository.queryTeams(query);
-
-        verify(mockfacewallDAO).queryTeams(query);
-        verify(mockTeamFactory).createTeams(expectedDTOs);
-    }
-
-    @Test
-    public void fetch_person_by_id_delegates_to_factory() {
-        stubDao();
-
-        Person expectedPerson = mock(Person.class);
-        when(mockPersonFactory.createPerson(any(PersonDTO.class))).thenReturn(expectedPerson);
-
-        Person result = repository.findPersonById(somePersonId);
-        assertThat(result, is(sameInstance(expectedPerson)));
-    }
-
-    @Test
-    public void fetch_person_queries_for_person_with_that_id_using_dao() {
-        repository.findPersonById(newPersonId("expected-id"));
-
-        verify(mockfacewallDAO).fetchPerson(newPersonId("expected-id"));
-    }
-
-    @Test
-    public void fetch_person_builds_person_from_person_dto_using_factory() {
-        PersonDTO expectedPersonDTO = mock(PersonDTO.class);
-        when(mockfacewallDAO.fetchPerson(any(PersonId.class))).thenReturn(expectedPersonDTO);
-
-        repository.findPersonById(somePersonId);
-
-        verify(mockPersonFactory).createPerson(expectedPersonDTO);
-    }
-
-    private void stubDao() {
-        when(mockfacewallDAO.fetchPerson(any(PersonId.class))).thenReturn(mock(PersonDTO.class));
+        List<Team> result = repository.listTeams();
+        assertThat(result, areTeams()
+                .whichContainExhaustively(
+                        aTeam().withColour("blue"),
+                        aTeam().withColour("red")
+                )
+        );
     }
 }

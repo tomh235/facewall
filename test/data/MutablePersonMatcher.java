@@ -1,4 +1,4 @@
-package data.mapper;
+package data;
 
 import domain.Team;
 import org.hamcrest.Description;

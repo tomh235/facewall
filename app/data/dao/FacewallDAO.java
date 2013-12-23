@@ -6,7 +6,11 @@ import data.dao.database.query.DatabaseQueryBuilder;
 import data.datatype.PersonId;
 import data.datatype.TeamId;
 import data.dto.PersonDTO;
+import data.dto.PersonInformation;
 import data.dto.TeamDTO;
+import data.dto.TeamInformation;
+import data.dto.PersonInformationMapper;
+import data.dto.TeamInformationMapper;
 import domain.Query;
 
 import java.util.ArrayList;
@@ -18,9 +22,13 @@ import static data.dao.database.query.TeamDatabaseQueryBuilder.forTeams;
 public class FacewallDAO {
 
     private final FacewallDB db;
+    private final PersonInformationMapper personInformationMapper;
+    private final TeamInformationMapper teamInformationMapper;
 
-    public FacewallDAO(FacewallDB facewallDB) {
+    public FacewallDAO(FacewallDB facewallDB, PersonInformationMapper personInformationMapper, TeamInformationMapper teamInformationMapper) {
         this.db = facewallDB;
+        this.personInformationMapper = personInformationMapper;
+        this.teamInformationMapper = teamInformationMapper;
     }
 
     public Iterable<PersonDTO> fetchPersons() {
@@ -61,7 +69,9 @@ public class FacewallDAO {
         List<PersonDTO> dtos = new ArrayList<>();
 
         for (QueryResultRow row : db.query(query)) {
-            dtos.add(new PersonDTO(row.getPerson(), row.getTeam()));
+            PersonInformation personInformation = personInformationMapper.map(row.getPerson());
+            TeamInformation teamInformation = teamInformationMapper.map(row.getTeam());
+            dtos.add(new PersonDTO(personInformation, teamInformation));
         }
         return dtos;
     }
@@ -70,7 +80,9 @@ public class FacewallDAO {
         TeamDTOs dtos = new TeamDTOs();
 
         for (QueryResultRow row : db.query(query)) {
-            dtos.addMemberToTeam(row.getTeam(), row.getPerson());
+            PersonInformation personInformation = personInformationMapper.map(row.getPerson());
+            TeamInformation teamInformation = teamInformationMapper.map(row.getTeam());
+            dtos.addMemberToTeam(teamInformation, personInformation);
         }
         return dtos;
     }
