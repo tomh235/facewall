@@ -37,7 +37,6 @@ dependencies {
 
     compile "org.anormcypher:anormcypher_2.10:0.4.1"
 
-    testCompile project(':facewall-database-utils')
     testCompile "junit:junit:4.11"
     testCompile "org.hamcrest:hamcrest-all:1.1"
     testCompile "org.mockito:mockito-all:1.9.5"
@@ -46,28 +45,24 @@ dependencies {
     testCompile "org.scalatest:scalatest_2.10:1.9.1"
     testCompile "org.neo4j.app:neo4j-server:1.9.5"
     testCompile "org.neo4j.app:neo4j-server:1.9.5:static-web"
+
+    testRuntime project(':facewall-database-utils')
 }
 
 sourceSets {
     main {
-        output.dir("$buildDir/target/scala-2.10/classes")
-        output.dir("$buildDir/target/scala-2.10/classes_managed")
-
         java {
-            srcDirs = ['app', 'conf', 'target/scala-2.10/src_managed/main', 'target/scala-2.10/classes', 'target/scala-2.10/classes_managed']
+            srcDirs = []
         }
     }
 
     test {
         java {
-            srcDirs = ['test']
+            srcDirs = []
         }
     }
 
     main {
-        output.dir("$buildDir/target/scala-2.10/classes")
-        output.dir("$buildDir/target/scala-2.10/classes_managed")
-
         scala {
             srcDirs = ['app', 'conf', 'target/scala-2.10/src_managed/main', 'target/scala-2.10/classes', 'target/scala-2.10/classes_managed']
         }
@@ -75,12 +70,7 @@ sourceSets {
 
     test {
         scala {
-            srcDirs = ['test']
+            srcDirs = ['test', 'app', 'conf', 'target/scala-2.10/src_managed/main', 'target/scala-2.10/classes', 'target/scala-2.10/classes_managed']
         }
     }
 }
-
-compileScala {
-    taskDependencies.values = compileScala.taskDependencies.values - 'compileJava'
-}
-compileJava.dependsOn compileScala

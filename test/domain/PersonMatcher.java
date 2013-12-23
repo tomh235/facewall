@@ -1,5 +1,6 @@
 package domain;
 
+import org.hamcrest.TypeSafeDiagnosingMatcher;
 import util.CompositeMatcher;
 import org.hamcrest.Matcher;
 import org.hamcrest.Description;

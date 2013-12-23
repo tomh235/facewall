@@ -18,6 +18,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.List;
 
+import static data.datatype.PersonId.newPersonId;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsSame.sameInstance;
@@ -30,17 +31,18 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class FacewallRepositoryTest {
     private static final Query someQuery = mock(Query.class);
+    private static final PersonId somePersonId = newPersonId("some-id");
 
     @Mock PersonFactory mockPersonFactory;
     @Mock TeamFactory mockTeamFactory;
     @Mock FacewallDAO mockfacewallDAO;
-
     @Mock PersonNodeMapper personNodeMapper;
+
     @InjectMocks
     FacewallRepository repository;
 
     @Test
-    public void fetch_person_delegates_to_factory() {
+    public void fetch_persons_delegates_to_factory() {
         List<Person> expectedPersons = mock(List.class);
         when(mockPersonFactory.createPersons(anyList())).thenReturn(expectedPersons);
 
@@ -49,7 +51,7 @@ public class FacewallRepositoryTest {
     }
 
     @Test
-    public void fetch_person_verifyInteractions() {
+    public void fetch_persons_verifyInteractions() {
         List<PersonDTO> expectedDTOs = mock(List.class);
         when(mockfacewallDAO.fetchPersons()).thenReturn(expectedDTOs);
 
@@ -122,16 +124,34 @@ public class FacewallRepositoryTest {
     }
 
     @Test
-    public void fetch_personDetails_verifyInteractions() {
-        PersonId mockId = mock(PersonId.class);
-        PersonDTO expectedDTO = mock(PersonDTO.class);
-        when(mockfacewallDAO.fetchPerson(mockId)).thenReturn(expectedDTO);
+    public void fetch_person_by_id_delegates_to_factory() {
+        stubDao();
 
-        Person result = repository.findPersonById(mockId);
-        assertThat(result, is(sameInstance(mockPersonFactory.createPerson(expectedDTO))));
+        Person expectedPerson = mock(Person.class);
+        when(mockPersonFactory.createPerson(any(PersonDTO.class))).thenReturn(expectedPerson);
 
-
+        Person result = repository.findPersonById(somePersonId);
+        assertThat(result, is(sameInstance(expectedPerson)));
     }
 
+    @Test
+    public void fetch_person_queries_for_person_with_that_id_using_dao() {
+        repository.findPersonById(newPersonId("expected-id"));
 
+        verify(mockfacewallDAO).fetchPerson(newPersonId("expected-id"));
+    }
+
+    @Test
+    public void fetch_person_builds_person_from_person_dto_using_factory() {
+        PersonDTO expectedPersonDTO = mock(PersonDTO.class);
+        when(mockfacewallDAO.fetchPerson(any(PersonId.class))).thenReturn(expectedPersonDTO);
+
+        repository.findPersonById(somePersonId);
+
+        verify(mockPersonFactory).createPerson(expectedPersonDTO);
+    }
+
+    private void stubDao() {
+        when(mockfacewallDAO.fetchPerson(any(PersonId.class))).thenReturn(mock(PersonDTO.class));
+    }
 }

@@ -12,6 +12,9 @@ import org.neo4j.graphdb.Node;
 
 import java.util.Map;
 
+import static data.dao.database.RelationshipTypes.TEAMMEMBER_OF;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -40,8 +43,7 @@ public class PersonNodeMapperTest {
 
         Map<String, String> result = personNodeMapper.mapNodeProperties(mockPerson);
 
-        assert(result.containsKey("imgURL"));
-        assert(result.get("imgURL").equals("http://www.image.png"));
+        assertThat(result.get("imageURL"), is("http://www.image.png"));
     }
 
     @Test
@@ -49,7 +51,6 @@ public class PersonNodeMapperTest {
         Node mockTeamNode = mock(Node.class);
         Map<Node, RelationshipTypes> result = personNodeMapper.mapNodeRelationships(mockTeamNode);
 
-        assert(result.containsKey(mockTeamNode));
-        assert(result.get(mockTeamNode).equals(RelationshipTypes.TEAMMEMBER_OF));
+        assertThat(result.get(mockTeamNode), is(TEAMMEMBER_OF));
     }
 }

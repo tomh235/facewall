@@ -2,7 +2,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 
 dependencies {
-    testCompile "org.neo4j:neo4j-kernel:1.9.5:tests"
-    testCompile "org.neo4j:neo4j-rest-graphdb:1.9"
-    testCompile "org.neo4j:neo4j-cypher:1.9.5"
+    compile "org.neo4j:neo4j-kernel:1.9.5:tests"
+    compile "org.neo4j:neo4j-rest-graphdb:1.9"
+    compile "org.neo4j:neo4j-cypher:1.9.5"
 }
