@@ -1,6 +1,7 @@
 package data;
 
 import data.dao.FacewallDAO;
+import data.dao.QueryingDAO;
 import data.dao.database.FacewallDB;
 import data.dao.database.query.DatabaseQueryFactory;
 import data.dao.database.query.FacewallQueryResultsMapper;
@@ -19,7 +20,7 @@ public class DataModule {
         FacewallDB facewallDB = new FacewallDB(queryEngine);
 
         FacewallQueryResultsMapper queryResultsMapper = new FacewallQueryResultsMapper(new PersonInformationMapper(), new TeamInformationMapper());
-        FacewallDAO facewallDAO = new FacewallDAO(facewallDB, new DatabaseQueryFactory(queryResultsMapper));
+        FacewallDAO facewallDAO = new FacewallDAO(new QueryingDAO(facewallDB), new DatabaseQueryFactory(queryResultsMapper));
 
         teamRepository = new TeamRepository(facewallDAO);
         personRepository = new PersonRepository(teamRepository, facewallDAO);

@@ -1,12 +1,10 @@
 package data.mapper;
 
-import data.dao.FacewallDAO;
 import data.dao.database.RelationshipTypes;
 import domain.Person;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.neo4j.graphdb.Node;
 
@@ -20,8 +18,6 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PersonNodeMapperTest {
-    @Mock private FacewallDAO mockFacewallDAO;
-
     @InjectMocks
     private PersonNodeMapper personNodeMapper;
 

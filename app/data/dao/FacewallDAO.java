@@ -1,8 +1,5 @@
 package data.dao;
 
-import data.dao.database.FacewallDB;
-import data.dao.database.QueryResultRow;
-import data.dao.database.query.DatabaseQueryBuilder;
 import data.dao.database.query.DatabaseQueryFactory;
 import data.datatype.PersonId;
 import data.datatype.TeamId;
@@ -10,71 +7,51 @@ import data.dto.PersonDTO;
 import data.dto.TeamDTO;
 import domain.Query;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class FacewallDAO {
 
-    private final FacewallDB db;
+    private final QueryingDAO dao;
     private final DatabaseQueryFactory databaseQueryFactory;
 
-    public FacewallDAO(FacewallDB facewallDB, DatabaseQueryFactory databaseQueryFactory) {
-        this.db = facewallDB;
+    public FacewallDAO(QueryingDAO dao, DatabaseQueryFactory databaseQueryFactory) {
+        this.dao = dao;
         this.databaseQueryFactory = databaseQueryFactory;
     }
 
     public Iterable<PersonDTO> fetchPersons() {
-        return queryPersons(databaseQueryFactory.forPersons());
+        return dao.queryPersons(databaseQueryFactory.forPersons());
     }
 
     public Iterable<TeamDTO> fetchTeams() {
-        return queryTeams(databaseQueryFactory.forTeams());
+        return dao.queryTeams(databaseQueryFactory.forTeams());
     }
 
     //refactor so that this is somewhat safer
     public PersonDTO fetchPerson(PersonId personId) {
-        return queryPersons(
+        return dao.queryPersons(
                 databaseQueryFactory.forPersons()
                         .withId(personId)
-        ).get(0);
+        ).iterator().next();
     }
 
+    //refactor so that this is somewhat safer
     public TeamDTO fetchTeam(TeamId teamId) {
-        return queryTeams(
-            databaseQueryFactory.forTeams()
-                .withId(teamId)
-        ).getSingle();
+        return dao.queryTeams(
+                databaseQueryFactory.forTeams()
+                        .withId(teamId)
+        ).iterator().next();
     }
 
     public Iterable<PersonDTO> queryPersons(Query query) {
-        return queryPersons(
+        return dao.queryPersons(
                 databaseQueryFactory.forPersons()
                         .named(query.queryString())
         );
     }
 
     public Iterable<TeamDTO> queryTeams(Query query) {
-        return queryTeams(
+        return dao.queryTeams(
                 databaseQueryFactory.forTeams()
                         .named(query.queryString())
         );
-    }
-
-    private List<PersonDTO> queryPersons(DatabaseQueryBuilder query) {
-        List<PersonDTO> dtos = new ArrayList<>();
-
-        for (QueryResultRow row : db.query(query)) {
-            dtos.add(new PersonDTO(row.getPerson(), row.getTeam()));
-        }
-        return dtos;
-    }
-
-    private TeamDTOs queryTeams(DatabaseQueryBuilder query) {
-        TeamDTOs dtos = new TeamDTOs();
-
-        for (QueryResultRow row : db.query(query)) {
-            dtos.addMemberToTeam(row.getTeam(), row.getPerson());
-        }
-        return dtos;
     }
 }

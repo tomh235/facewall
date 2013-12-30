@@ -21,11 +21,6 @@ public class TeamDTOs implements Iterable<TeamDTO> {
         }
     }
 
-    //refactor for safety
-    public TeamDTO getSingle() {
-        return iterator().next();
-    }
-
     @Override public Iterator<TeamDTO> iterator() {
         List<TeamDTO> dtos = new ArrayList<>();
 
