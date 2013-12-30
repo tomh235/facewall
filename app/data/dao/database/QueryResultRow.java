@@ -1,8 +1,9 @@
 package data.dao.database;
 
-import org.neo4j.graphdb.Node;
+import data.dto.PersonInformation;
+import data.dto.TeamInformation;
 
 public interface QueryResultRow {
-    Node getPerson();
-    Node getTeam();
+    PersonInformation getPerson();
+    TeamInformation getTeam();
 }

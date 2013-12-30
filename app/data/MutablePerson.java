@@ -5,8 +5,6 @@ import data.dto.PersonInformation;
 import domain.Person;
 import domain.Team;
 
-import static data.datatype.PersonId.noPersonId;
-
 class MutablePerson implements Person {
 
     private final PersonInformation personInformation;

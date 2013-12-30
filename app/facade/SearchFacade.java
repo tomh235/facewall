@@ -1,6 +1,7 @@
 package facade;
 
-import data.Repository;
+import data.PersonRepository;
+import data.TeamRepository;
 import domain.Person;
 import domain.Query;
 import domain.Team;
@@ -11,14 +12,24 @@ import model.SearchResultsModel;
 
 import java.util.List;
 
+// A bit too many dependencies here. Perhaps we can split up the logic pertaining to resolving the type of model
+// that needs to be mapped from retrieving the data that needs to go into the model.
 public class SearchFacade {
-    private final Repository repository;
+    private final PersonRepository personRepository;
+    private final TeamRepository teamRepository;
     private final SearchResultsModelMapper searchResultsModelMapper;
     private final PersonDetailsModelMapper personDetailsModelMapper;
     private final TeamDetailsModelMapper teamDetailsModelMapper;
 
-    public SearchFacade(Repository repository, SearchResultsModelMapper searchResultsModelMapper, PersonDetailsModelMapper personDetailsModelMapper, TeamDetailsModelMapper teamDetailsModelMapper) {
-        this.repository = repository;
+    public SearchFacade(
+            PersonRepository personRepository,
+            TeamRepository teamRepository,
+            SearchResultsModelMapper searchResultsModelMapper,
+            PersonDetailsModelMapper personDetailsModelMapper,
+            TeamDetailsModelMapper teamDetailsModelMapper
+    ) {
+        this.personRepository = personRepository;
+        this.teamRepository = teamRepository;
         this.searchResultsModelMapper = searchResultsModelMapper;
         this.personDetailsModelMapper = personDetailsModelMapper;
         this.teamDetailsModelMapper = teamDetailsModelMapper;
@@ -26,8 +37,8 @@ public class SearchFacade {
 
     public SearchResultsModel createSearchResultsModel(Query query) {
         SearchResultsModel resultsModel;
-        List<Person> persons = repository.queryPersons(query);
-        List<Team> teams = repository.queryTeams(query);
+        List<Person> persons = personRepository.queryPersons(query);
+        List<Team> teams = teamRepository.queryTeams(query);
 
         if (persons.size() == 1 && teams.isEmpty()) {
             resultsModel = personDetailsModelMapper.map(persons.get(0));

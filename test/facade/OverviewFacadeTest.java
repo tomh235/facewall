@@ -1,7 +1,6 @@
 package facade;
 
-import data.Repository;
-import data.datatype.PersonId;
+import data.PersonRepository;
 import domain.MockPerson;
 import domain.MockTeam;
 import domain.Person;
@@ -23,12 +22,13 @@ import static data.datatype.PersonId.newPersonId;
 import static domain.NoTeam.noTeam;
 import static model.OverviewEntryModelMatcher.anOverviewEntryModel;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static util.IterableMatchers.containsExhaustivelyInOrder;
 
 @RunWith(MockitoJUnitRunner.class)
 public class OverviewFacadeTest {
-    @Mock Repository mockRepo = mock(Repository.class);
+    @Mock PersonRepository mockRepo;
     private OverviewFacade overviewFacade;
 
     @Before

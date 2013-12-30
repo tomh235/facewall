@@ -3,7 +3,6 @@ package data.dto;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.neo4j.graphdb.Node;
 import util.CompositeMatcher;
 
 public class PersonDTOMatcher extends CompositeMatcher<PersonDTO> {
@@ -13,27 +12,27 @@ public class PersonDTOMatcher extends CompositeMatcher<PersonDTO> {
         return new PersonDTOMatcher();
     }
 
-    public PersonDTOMatcher withPersonNode(final Matcher<Node> nodeMatcher) {
+    public PersonDTOMatcher withPerson(final Matcher<PersonInformation> personMatcher) {
         add(new TypeSafeMatcher<PersonDTO>() {
             @Override public boolean matchesSafely(PersonDTO personDTO) {
-                return nodeMatcher.matches(personDTO.personInformation);
+                return personMatcher.matches(personDTO.personInformation);
             }
 
             @Override public void describeTo(Description description) {
-                description.appendText("with a person node matching: ").appendDescriptionOf(nodeMatcher);
+                description.appendText("with a person node matching: ").appendDescriptionOf(personMatcher);
             }
         });
         return this;
     }
-
-    public PersonDTOMatcher withTeamNode(final Matcher<Node> nodeMatcher) {
+    
+    public PersonDTOMatcher withTeam(final Matcher<TeamInformation> teamMatcher) {
         add(new TypeSafeMatcher<PersonDTO>() {
             @Override public boolean matchesSafely(PersonDTO personDTO) {
-                return nodeMatcher.matches(personDTO.teamInformation);
+                return teamMatcher.matches(personDTO.teamInformation);
             }
 
             @Override public void describeTo(Description description) {
-                description.appendText("with a team node matching: ").appendDescriptionOf(nodeMatcher);
+                description.appendText("with a team node matching: ").appendDescriptionOf(teamMatcher);
             }
         });
         return this;

@@ -1,7 +1,7 @@
 package facade;
 
 import data.AdminRepository;
-import data.Repository;
+import data.TeamRepository;
 import domain.Person;
 import domain.Query;
 import domain.Team;
@@ -13,15 +13,15 @@ import static domain.Query.newQuery;
 
 public class SignUpFacade {
     private final AdminRepository adminRepository;
-    private final Repository repository;
+    private final TeamRepository teamRepository;
     private final PersonMapper personMapper;
     private final TeamValidator teamValidator;
 
     public SignUpFacade(AdminRepository adminRepository,
-                        Repository repository, PersonMapper personMapper,
+                        TeamRepository teamRepository, PersonMapper personMapper,
                         TeamValidator teamValidator) {
-        this.repository = repository;
         this.adminRepository = adminRepository;
+        this.teamRepository = teamRepository;
         this.personMapper = personMapper;
         this.teamValidator = teamValidator;
     }
@@ -39,6 +39,6 @@ public class SignUpFacade {
 
     protected Team getUserModelTeamFromRepository(UserModel newUser) {
         Query teamQuery = newQuery(newUser.team);
-        return repository.queryTeams(teamQuery).get(0);
+        return teamRepository.queryTeams(teamQuery).get(0);
     }
 }

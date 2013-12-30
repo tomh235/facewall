@@ -1,7 +1,7 @@
 package facade;
 
 import data.AdminRepository;
-import data.Repository;
+import data.TeamRepository;
 import domain.MockTeam;
 import domain.Person;
 import domain.Query;
@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
 public class SignUpFacadeTest {
 
     @Mock AdminRepository mockAdminRepository;
-    @Mock Repository mockRepository;
+    @Mock TeamRepository mockRepository;
     @Mock TeamValidator mockTeamValidator;
     @Mock PersonMapper mockPersonMapper;
 

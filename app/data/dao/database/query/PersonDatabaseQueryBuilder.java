@@ -8,13 +8,13 @@ import java.util.Map;
 
 public class PersonDatabaseQueryBuilder implements DatabaseQueryBuilder {
 
+    private final FacewallQueryResultsMapper queryResultsMapper;
+
     private String id = "*";
     private Map<String, String> propertyCriteria = new HashMap<>();
 
-    private PersonDatabaseQueryBuilder() {}
-
-    public static PersonDatabaseQueryBuilder forPersons() {
-        return new PersonDatabaseQueryBuilder();
+    PersonDatabaseQueryBuilder(FacewallQueryResultsMapper queryResultsMapper) {
+        this.queryResultsMapper = queryResultsMapper;
     }
 
     public PersonDatabaseQueryBuilder withId(PersonId id) {
@@ -28,6 +28,6 @@ public class PersonDatabaseQueryBuilder implements DatabaseQueryBuilder {
     }
 
     public DatabaseQuery build() {
-        return new PersonDatabaseQuery(id, propertyCriteria);
+        return new PersonDatabaseQuery(queryResultsMapper, id, propertyCriteria);
     }
 }

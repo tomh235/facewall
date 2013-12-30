@@ -1,24 +1,22 @@
 package data.dao.database.query;
 
-import data.datatype.PersonId;
-import domain.datatype.QueryString;
 import org.junit.Test;
 
 import static data.dao.database.DatabaseQueryBuilderMatcher.aDatabaseQueryBuilder;
-import static data.dao.database.DatabaseQueryMatchers.aQueryForAllPersons;
-import static data.dao.database.DatabaseQueryMatchers.aQueryForPersonWithId;
-import static data.dao.database.DatabaseQueryMatchers.aQueryForPersonsNamed;
-import static data.dao.database.query.PersonDatabaseQueryBuilder.forPersons;
+import static data.dao.database.DatabaseQueryMatchers.*;
 import static data.datatype.PersonId.newPersonId;
 import static domain.datatype.QueryString.newQueryString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.mockito.Mockito.mock;
 
 public class PersonDatabaseQueryBuilderTest {
 
+    private final DatabaseQueryFactory databaseQueryFactory = new DatabaseQueryFactory(mock(FacewallQueryResultsMapper.class));
+
     @Test
     public void forPersons_builds_query_for_all_persons() {
-        PersonDatabaseQueryBuilder result = forPersons();
+        PersonDatabaseQueryBuilder result = databaseQueryFactory.forPersons();
 
         assertThat(result, is(aDatabaseQueryBuilder()
             .whichBuilds(aQueryForAllPersons())
@@ -27,7 +25,7 @@ public class PersonDatabaseQueryBuilderTest {
 
     @Test
     public void builds_query_for_person_with_id() {
-        PersonDatabaseQueryBuilder result = forPersons().withId(newPersonId("person-id"));
+        PersonDatabaseQueryBuilder result = databaseQueryFactory.forPersons().withId(newPersonId("person-id"));
 
         assertThat(result, is(aDatabaseQueryBuilder()
             .whichBuilds(aQueryForPersonWithId("person-id"))
@@ -36,7 +34,7 @@ public class PersonDatabaseQueryBuilderTest {
 
     @Test
     public void builds_query_for_persons_named_george() {
-        PersonDatabaseQueryBuilder result = forPersons().named(newQueryString(".*George.*"));
+        PersonDatabaseQueryBuilder result = databaseQueryFactory.forPersons().named(newQueryString(".*George.*"));
 
         assertThat(result, is(aDatabaseQueryBuilder()
             .whichBuilds(aQueryForPersonsNamed(".*George.*"))

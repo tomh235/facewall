@@ -3,65 +3,60 @@ package data.dao;
 import data.dao.database.FacewallDB;
 import data.dao.database.QueryResultRow;
 import data.dao.database.query.DatabaseQueryBuilder;
+import data.dao.database.query.DatabaseQueryFactory;
 import data.datatype.PersonId;
 import data.datatype.TeamId;
 import data.dto.PersonDTO;
-import data.dto.PersonInformation;
 import data.dto.TeamDTO;
-import data.dto.TeamInformation;
-import data.dto.PersonInformationMapper;
-import data.dto.TeamInformationMapper;
 import domain.Query;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static data.dao.database.query.PersonDatabaseQueryBuilder.forPersons;
-import static data.dao.database.query.TeamDatabaseQueryBuilder.forTeams;
-
 public class FacewallDAO {
 
     private final FacewallDB db;
-    private final PersonInformationMapper personInformationMapper;
-    private final TeamInformationMapper teamInformationMapper;
+    private final DatabaseQueryFactory databaseQueryFactory;
 
-    public FacewallDAO(FacewallDB facewallDB, PersonInformationMapper personInformationMapper, TeamInformationMapper teamInformationMapper) {
+    public FacewallDAO(FacewallDB facewallDB, DatabaseQueryFactory databaseQueryFactory) {
         this.db = facewallDB;
-        this.personInformationMapper = personInformationMapper;
-        this.teamInformationMapper = teamInformationMapper;
+        this.databaseQueryFactory = databaseQueryFactory;
     }
 
     public Iterable<PersonDTO> fetchPersons() {
-        return queryPersons(forPersons());
+        return queryPersons(databaseQueryFactory.forPersons());
     }
 
     public Iterable<TeamDTO> fetchTeams() {
-        return queryTeams(forTeams());
+        return queryTeams(databaseQueryFactory.forTeams());
     }
 
     //refactor so that this is somewhat safer
     public PersonDTO fetchPerson(PersonId personId) {
         return queryPersons(
-            forPersons()
-                .withId(personId)
+                databaseQueryFactory.forPersons()
+                        .withId(personId)
         ).get(0);
     }
 
     public TeamDTO fetchTeam(TeamId teamId) {
-        return queryTeams(forTeams()
-            .withId(teamId)
+        return queryTeams(
+            databaseQueryFactory.forTeams()
+                .withId(teamId)
         ).getSingle();
     }
 
     public Iterable<PersonDTO> queryPersons(Query query) {
         return queryPersons(
-            forPersons().named(query.queryString())
+                databaseQueryFactory.forPersons()
+                        .named(query.queryString())
         );
     }
 
     public Iterable<TeamDTO> queryTeams(Query query) {
         return queryTeams(
-            forTeams().named(query.queryString())
+                databaseQueryFactory.forTeams()
+                        .named(query.queryString())
         );
     }
 
@@ -69,9 +64,7 @@ public class FacewallDAO {
         List<PersonDTO> dtos = new ArrayList<>();
 
         for (QueryResultRow row : db.query(query)) {
-            PersonInformation personInformation = personInformationMapper.map(row.getPerson());
-            TeamInformation teamInformation = teamInformationMapper.map(row.getTeam());
-            dtos.add(new PersonDTO(personInformation, teamInformation));
+            dtos.add(new PersonDTO(row.getPerson(), row.getTeam()));
         }
         return dtos;
     }
@@ -80,9 +73,7 @@ public class FacewallDAO {
         TeamDTOs dtos = new TeamDTOs();
 
         for (QueryResultRow row : db.query(query)) {
-            PersonInformation personInformation = personInformationMapper.map(row.getPerson());
-            TeamInformation teamInformation = teamInformationMapper.map(row.getTeam());
-            dtos.addMemberToTeam(teamInformation, personInformation);
+            dtos.addMemberToTeam(row.getTeam(), row.getPerson());
         }
         return dtos;
     }

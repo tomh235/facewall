@@ -8,17 +8,16 @@ import java.util.Map;
 
 public class TeamDatabaseQueryBuilder implements DatabaseQueryBuilder {
 
+    private final FacewallQueryResultsMapper queryResultsMapper;
     private String id = "*";
     private Map<String, String> propertyCriteria = new HashMap<>();
 
-    private TeamDatabaseQueryBuilder() {}
-
-    public static TeamDatabaseQueryBuilder forTeams() {
-        return new TeamDatabaseQueryBuilder();
+    TeamDatabaseQueryBuilder(FacewallQueryResultsMapper queryResultsMapper) {
+        this.queryResultsMapper = queryResultsMapper;
     }
 
     public DatabaseQuery build() {
-        return new TeamDatabaseQuery(id, propertyCriteria);
+        return new TeamDatabaseQuery(queryResultsMapper, id, propertyCriteria);
     }
 
     public TeamDatabaseQueryBuilder withId(TeamId id) {

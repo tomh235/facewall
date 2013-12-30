@@ -1,7 +1,8 @@
 package data.dao.database.query;
 
 import data.dao.database.QueryResultRow;
-import org.neo4j.graphdb.Node;
+import data.dto.PersonInformation;
+import data.dto.TeamInformation;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -11,7 +12,7 @@ class FacewallQueryResults implements Iterable<QueryResultRow> {
 
     private List<QueryResultRow> resultRows = new ArrayList<>();
 
-    public void add(Node person, Node team) {
+    public void add(PersonInformation person, TeamInformation team) {
         resultRows.add(new DefaultQueryResultRow(person, team));
     }
 
@@ -21,19 +22,19 @@ class FacewallQueryResults implements Iterable<QueryResultRow> {
 
     private static class DefaultQueryResultRow implements QueryResultRow {
 
-        private final Node person;
-        private final Node team;
+        private final PersonInformation person;
+        private final TeamInformation team;
 
-        private DefaultQueryResultRow(Node person, Node team) {
+        private DefaultQueryResultRow(PersonInformation person, TeamInformation team) {
             this.person = person;
             this.team = team;
         }
 
-        @Override public Node getPerson() {
+        @Override public PersonInformation getPerson() {
             return person;
         }
 
-        @Override public Node getTeam() {
+        @Override public TeamInformation getTeam() {
             return team;
         }
     }

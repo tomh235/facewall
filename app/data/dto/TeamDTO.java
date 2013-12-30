@@ -1,7 +1,5 @@
 package data.dto;
 
-import org.neo4j.graphdb.Node;
-
 import java.util.List;
 
 public class TeamDTO {

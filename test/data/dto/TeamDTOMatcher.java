@@ -14,27 +14,27 @@ public class TeamDTOMatcher extends CompositeMatcher<TeamDTO> {
         return new TeamDTOMatcher();
     }
 
-    public TeamDTOMatcher withTeamNode(final Matcher<Node> nodeMatcher) {
+    public TeamDTOMatcher withTeamInformation(final Matcher<TeamInformation> teamInformationMatcher) {
         add(new TypeSafeMatcher<TeamDTO>() {
             @Override public boolean matchesSafely(TeamDTO teamDTO) {
-                return nodeMatcher.matches(teamDTO.teamInformation);
+                return teamInformationMatcher.matches(teamDTO.teamInformation);
             }
 
             @Override public void describeTo(Description description) {
-                description.appendText("where the team node is: ").appendDescriptionOf(nodeMatcher);
+                description.appendText("where the team information is: ").appendDescriptionOf(teamInformationMatcher);
             }
         });
         return this;
     }
 
-    public TeamDTOMatcher whereMemberNodes(final Matcher<Iterable<Node>> memberNodeMatcher) {
+    public TeamDTOMatcher whereMemberInformation(final Matcher<Iterable<PersonInformation>> memberInformationMatcher) {
         add(new TypeSafeMatcher<TeamDTO>() {
             @Override public boolean matchesSafely(TeamDTO teamDTO) {
-                return memberNodeMatcher.matches(teamDTO.memberInformation);
+                return memberInformationMatcher.matches(teamDTO.memberInformation);
             }
 
             @Override public void describeTo(Description description) {
-                description.appendText("where the member nodes: ").appendDescriptionOf(memberNodeMatcher);
+                description.appendText("where the members' information: ").appendDescriptionOf(memberInformationMatcher);
             }
         });
         return this;

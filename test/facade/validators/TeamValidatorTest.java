@@ -1,6 +1,6 @@
 package facade.validators;
 
-import data.Repository;
+import data.TeamRepository;
 import domain.MockTeam;
 import domain.Person;
 import domain.Query;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TeamValidatorTest {
-    @Mock Repository mockRepository;
+    @Mock TeamRepository mockRepository;
 
     @InjectMocks
     TeamValidator teamValidator;

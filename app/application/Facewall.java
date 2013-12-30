@@ -1,6 +1,8 @@
 package application;
 
-import data.Repository;
+import data.DataModule;
+import data.PersonRepository;
+import data.TeamRepository;
 import facade.OverviewFacade;
 import facade.PersonDetailsFacade;
 import facade.SearchFacade;
@@ -11,7 +13,7 @@ import facade.modelmapper.TeamDetailsModelMapper;
 import org.neo4j.rest.graphdb.RestAPIFacade;
 import org.neo4j.rest.graphdb.query.RestCypherQueryEngine;
 
-import static data.DataModule.createRepository;
+import static data.DataModule.createDataModule;
 
 final public class Facewall {
 
@@ -38,19 +40,23 @@ final public class Facewall {
 
     private static Facewall createFacewall() {
 
-        RestAPIFacade restAPIFacade = new RestAPIFacade("http://localhost:7474/db/data/");
-        Repository repository = createRepository(new RestCypherQueryEngine(restAPIFacade));
+        RestCypherQueryEngine queryEngine = new RestCypherQueryEngine(new RestAPIFacade("http://localhost:7474/db/data/"));
 
-        OverviewFacade overviewFacade = new OverviewFacade(repository, new OverviewModelMapper());
+        DataModule dataModule = createDataModule(queryEngine);
+        PersonRepository personRepository = dataModule.personRepository;
+        TeamRepository teamRepository = dataModule.teamRepository;
+
+        OverviewFacade overviewFacade = new OverviewFacade(personRepository, new OverviewModelMapper());
 
         SearchResultsModelMapper searchResultsModelMapper = new SearchResultsModelMapper();
         PersonDetailsModelMapper personDetailsModelMapper = new PersonDetailsModelMapper();
         TeamDetailsModelMapper teamDetailsModelMapper = new TeamDetailsModelMapper();
 
-        PersonDetailsFacade personDetailsFacade = new PersonDetailsFacade(repository,personDetailsModelMapper);
+        PersonDetailsFacade personDetailsFacade = new PersonDetailsFacade(personRepository, personDetailsModelMapper);
 
         SearchFacade searchFacade = new SearchFacade(
-            repository,
+            personRepository,
+            teamRepository,
             searchResultsModelMapper,
             personDetailsModelMapper,
             teamDetailsModelMapper

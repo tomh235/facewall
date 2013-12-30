@@ -11,7 +11,7 @@ import domain.Team;
 import java.util.ArrayList;
 import java.util.List;
 
-class TeamRepository {
+public class TeamRepository {
     private final FacewallDAO dao;
 
     public TeamRepository(FacewallDAO dao) {

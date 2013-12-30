@@ -1,7 +1,9 @@
 package model;
 
 import org.hibernate.validator.constraints.URL;
-import play.data.validation.Constraints.*;
+import play.data.validation.Constraints.Email;
+import play.data.validation.Constraints.MaxLength;
+import play.data.validation.Constraints.Required;
 
 public class UserModel {
     @Required(message = "An Email address is required")

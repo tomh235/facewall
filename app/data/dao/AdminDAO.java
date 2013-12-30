@@ -5,7 +5,6 @@ import data.dao.database.RelationshipTypes;
 import data.mapper.PersonNodeMapper;
 import domain.Person;
 import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Transaction;
 
 import java.util.Map;
 

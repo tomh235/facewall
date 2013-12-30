@@ -1,6 +1,5 @@
 package data.dto;
 
-import data.dto.TeamInformation;
 import org.neo4j.graphdb.Node;
 
 import static data.dto.TeamInformation.newTeamInformation;

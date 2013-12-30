@@ -2,10 +2,7 @@ package data;
 
 import data.dao.FacewallDAO;
 import data.datatype.PersonId;
-import data.datatype.TeamId;
 import data.dto.PersonDTO;
-import data.dto.PersonInformation;
-import data.dto.TeamDTO;
 import data.dto.TeamInformation;
 import domain.Person;
 import domain.Query;

@@ -1,14 +1,14 @@
 package facade.validators;
 
-import data.Repository;
+import data.TeamRepository;
 import domain.Query;
 
 import static domain.Query.newQuery;
 
 public class TeamValidator {
-    private final Repository repository;
+    private final TeamRepository repository;
 
-    public TeamValidator(Repository repository) {
+    public TeamValidator(TeamRepository repository) {
         this.repository = repository;
     }
 

@@ -1,6 +1,7 @@
 package facade;
 
-import data.Repository;
+import data.PersonRepository;
+import data.TeamRepository;
 import domain.Person;
 import domain.Query;
 import domain.Team;
@@ -11,9 +12,9 @@ import model.DefaultSearchResultsModel;
 import model.PersonDetailsModel;
 import model.SearchResultsModel;
 import model.TeamDetailsModel;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -25,28 +26,23 @@ import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SearchFacadeTest {
-    @Mock
-    Repository mockRepo;
-    @Mock
-    SearchResultsModelMapper mockSearchResultsModelMapper;
-    @Mock
-    PersonDetailsModelMapper mockPersonDetailsModelMapper;
-    @Mock
-    TeamDetailsModelMapper teamDetailsModelMapper;
+    @Mock PersonRepository mockPersonRepo;
+    @Mock TeamRepository mockTeamRepo;
+    @Mock SearchResultsModelMapper mockSearchResultsModelMapper;
+    @Mock PersonDetailsModelMapper mockPersonDetailsModelMapper;
+    @Mock TeamDetailsModelMapper teamDetailsModelMapper;
+    
+    @InjectMocks
     SearchFacade searchFacade;
 
-    @Before
-    public void setUp() {
-        searchFacade = new SearchFacade(mockRepo, mockSearchResultsModelMapper, mockPersonDetailsModelMapper, teamDetailsModelMapper);
-    }
     @Test
     public void find_persons_and_teams_query_from_web_then_map_to_search_results_model_test() {
         Query query = mock(Query.class);
         Person mockPerson = mock(Person.class);
         Team mockTeam = mock(Team.class);
 
-        when(mockRepo.queryPersons(query)).thenReturn(new ArrayList<>(Arrays.asList(mockPerson, mockPerson)));
-        when(mockRepo.queryTeams(query)).thenReturn(new ArrayList<>(Arrays.asList(mockTeam)));
+        when(mockPersonRepo.queryPersons(query)).thenReturn(new ArrayList<>(Arrays.asList(mockPerson, mockPerson)));
+        when(mockTeamRepo.queryTeams(query)).thenReturn(new ArrayList<>(Arrays.asList(mockTeam)));
 
         DefaultSearchResultsModel expectedResult = mock(DefaultSearchResultsModel.class);
         when(mockSearchResultsModelMapper.map(new ArrayList<>(Arrays.asList(mockPerson, mockPerson)), new ArrayList<>(Arrays.asList(mockTeam))))
@@ -55,8 +51,8 @@ public class SearchFacadeTest {
         SearchResultsModel result = searchFacade.createSearchResultsModel(query);
         assertEquals("Expected: " + expectedResult + "/nGot: " + result + ".", expectedResult, result);
 
-        verify(mockRepo).queryPersons(query);
-        verify(mockRepo).queryTeams(query);
+        verify(mockPersonRepo).queryPersons(query);
+        verify(mockTeamRepo).queryTeams(query);
         verify(mockSearchResultsModelMapper).map(new ArrayList<>(Arrays.asList(mockPerson, mockPerson)), new ArrayList<>(Arrays.asList(mockTeam)));
     }
 
@@ -65,8 +61,8 @@ public class SearchFacadeTest {
         Query query = mock(Query.class);
         Person mockPerson = mock(Person.class);
 
-        when(mockRepo.queryPersons(query)).thenReturn(new ArrayList<>(Arrays.asList(mockPerson)));
-        when(mockRepo.queryTeams(query)).thenReturn(new ArrayList<Team>());
+        when(mockPersonRepo.queryPersons(query)).thenReturn(new ArrayList<>(Arrays.asList(mockPerson)));
+        when(mockTeamRepo.queryTeams(query)).thenReturn(new ArrayList<Team>());
 
         PersonDetailsModel expectedResult = mock(PersonDetailsModel.class);
         when(mockPersonDetailsModelMapper.map(mockPerson)).thenReturn(expectedResult);
@@ -74,8 +70,8 @@ public class SearchFacadeTest {
         SearchResultsModel result = searchFacade.createSearchResultsModel(query);
         assertEquals ("the result should be a person details model, got: " + result.getClass(), expectedResult, result);
 
-        verify(mockRepo).queryPersons(query);
-        verify(mockRepo).queryTeams(query);
+        verify(mockPersonRepo).queryPersons(query);
+        verify(mockTeamRepo).queryTeams(query);
         verify(mockPersonDetailsModelMapper).map(mockPerson);
     }
 
@@ -84,8 +80,8 @@ public class SearchFacadeTest {
         Query query = mock(Query.class);
         Team mockTeam = mock(Team.class);
 
-        when(mockRepo.queryPersons(query)).thenReturn(new ArrayList<Person>());
-        when(mockRepo.queryTeams(query)).thenReturn(new ArrayList<>(Arrays.asList(mockTeam)));
+        when(mockPersonRepo.queryPersons(query)).thenReturn(new ArrayList<Person>());
+        when(mockTeamRepo.queryTeams(query)).thenReturn(new ArrayList<>(Arrays.asList(mockTeam)));
 
         TeamDetailsModel expectedResult = mock(TeamDetailsModel.class);
         when(teamDetailsModelMapper.map(mockTeam)).thenReturn(expectedResult);

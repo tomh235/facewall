@@ -3,7 +3,6 @@ package data;
 import data.datatype.TeamId;
 import data.dto.TeamInformation;
 import domain.Person;
-import domain.Team;
 
 import java.util.List;
 

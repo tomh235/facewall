@@ -3,7 +3,6 @@ package data.dao;
 import data.dto.PersonInformation;
 import data.dto.TeamDTO;
 import data.dto.TeamInformation;
-import org.neo4j.graphdb.Node;
 
 import java.util.*;
 

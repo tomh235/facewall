@@ -2,7 +2,7 @@ package data.mapper;
 
 import data.dao.database.RelationshipTypes;
 import domain.Person;
-import org.neo4j.graphdb.*;
+import org.neo4j.graphdb.Node;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,6 +1,6 @@
 package facade;
 
-import data.Repository;
+import data.PersonRepository;
 import domain.Person;
 import domain.Persons;
 import facade.modelmapper.OverviewModelMapper;
@@ -13,10 +13,10 @@ import static domain.Persons.newPersons;
 
 public class OverviewFacade {
 
-    private final Repository repository;
+    private final PersonRepository repository;
     private final OverviewModelMapper overviewModelMapper;
 
-    public OverviewFacade(Repository repository, OverviewModelMapper overviewModelMapper) {
+    public OverviewFacade(PersonRepository repository, OverviewModelMapper overviewModelMapper) {
         this.repository = repository;
         this.overviewModelMapper = overviewModelMapper;
     }
