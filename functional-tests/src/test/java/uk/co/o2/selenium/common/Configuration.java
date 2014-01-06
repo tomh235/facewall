@@ -9,6 +9,6 @@ public class Configuration {
     public static String serverPort = System.getProperty("qa.hostPort", "9000");
 
     public static String hostUrl = "http://" + server + ":" + serverPort;
-    public static String url = hostUrl;
+    public static String baseUrl = hostUrl;
 
 }

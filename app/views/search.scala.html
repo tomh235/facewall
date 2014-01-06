@@ -17,9 +17,13 @@
 
 <script src="assets/javascripts/search-box.js"></script>
 <script>
+
+
     var searchInput = $("#search");
+    console.log(searchInput);
     var result = $("#result");
     searchInput.focus();
+
 
     autoSearchOnKeyUp(searchInput, "search-results", result);
 </script>
