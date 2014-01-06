@@ -8,10 +8,6 @@ import java.util.List;
 
 public class HomePage {
 
-    public boolean navbarExists() {
-       return WebBrowser.findElements(By.className("nav")).size() == 1;
-    }
-
     public RegisterPage clickRegistrationTab() {
         WebBrowser.findElement(By.id("register")).click();
         return new RegisterPage();
@@ -26,8 +22,8 @@ public class HomePage {
         List<WebElement> elements = WebBrowser.findElements(By.className("entry"));
 
         for (WebElement element: elements) {
-            String currentName = element.findElement(By.className("entryname")).getText();
-            String currentTeam = element.findElement(By.className("teamname")).getText();
+            String currentName = element.findElement(By.className("entryName")).getText();
+            String currentTeam = element.findElement(By.className("teamName")).getText();
             String currentImgUrl  = element.findElement(By.cssSelector("img")).getAttribute("src");
             if(currentName.equals(name) && currentTeam.equals(team) && currentImgUrl.equals(imgUrl)) {
                 return true;

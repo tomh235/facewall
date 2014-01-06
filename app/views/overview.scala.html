@@ -6,10 +6,10 @@
         @entries.map { entry =>
             <div class="col-md-4 entry">
                 <div class="thumbnail" style="background-color:#@entry.colour">
-                    <h5 class="teamname" >@entry.teamHeader</h5>
+                    <h5 class="teamName" >@entry.teamHeader</h5>
                     <img src="@entry.picture"/>
 
-                    <a href="/person/@entry.link"><h3 class="text-center entryname">@entry.name</h3></a>
+                    <a href="/person/@entry.link"><h3 class="text-center entryName">@entry.name</h3></a>
                 </div>
             </div>
         }
