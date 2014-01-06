@@ -10,8 +10,8 @@ import java.util.Map;
 import static data.dao.database.FacewallDB.NodeIndex.Persons;
 import static data.dao.database.FacewallDB.NodeIndex.Teams;
 import static data.dao.database.RelationshipTypes.TEAMMEMBER_OF;
-import static data.dao.database.query.PersonNodeKey.newPersonNodeKey;
-import static data.dao.database.query.TeamNodeKey.newTeamNodeKey;
+import static data.dao.database.query.PersonNodeKey.*;
+import static data.dao.database.query.TeamNodeKey.*;
 
 class TeamDatabaseQuery implements DatabaseQuery {
 
