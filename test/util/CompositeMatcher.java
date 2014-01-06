@@ -32,5 +32,4 @@ public abstract class CompositeMatcher <T> extends TypeSafeMatcher<T> {
             description.appendDescriptionOf(matcher);
         }
     }
-
 }

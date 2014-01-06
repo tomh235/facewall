@@ -2,7 +2,7 @@ package facade;
 
 import data.PersonRepository;
 import domain.MockPerson;
-import domain.MockTeam;
+import domain.StubbedTeam;
 import domain.Person;
 import domain.Team;
 import facade.modelmapper.OverviewModelMapper;
@@ -42,8 +42,8 @@ public class OverviewFacadeTest {
         MockPerson ecom_member2 = new MockPerson(newPersonId("4"), "ecom_member2", "pic2.img", null);
         MockPerson pr_member    = new MockPerson(newPersonId("5"), "pr_member", "pic3.img", null);
 
-        Team ecom = new MockTeam("ecom", "blue", new ArrayList<Person>(Arrays.asList(ecom_member1, ecom_member2)));
-        Team productResources = new MockTeam("productResources", "green", new ArrayList<Person>(Arrays.asList(pr_member)));
+        Team ecom = new StubbedTeam("ecom", "blue", new ArrayList<Person>(Arrays.asList(ecom_member1, ecom_member2)));
+        Team productResources = new StubbedTeam("productResources", "green", new ArrayList<Person>(Arrays.asList(pr_member)));
 
         ecom_member1.setTeam(ecom);
         ecom_member2.setTeam(ecom);
@@ -69,7 +69,7 @@ public class OverviewFacadeTest {
         MockPerson ecom_member3 = new MockPerson(newPersonId("4"), "dave2", "pic2.img", null);
         MockPerson ecom_member4 = new MockPerson(newPersonId("7"), "rick", "pic5.img", null);
 
-        Team ecom = new MockTeam("ecom", "blue", new ArrayList<Person>(Arrays.asList(ecom_member1)));
+        Team ecom = new StubbedTeam("ecom", "blue", new ArrayList<Person>(Arrays.asList(ecom_member1)));
 
         ecom_member1.setTeam(ecom);
         ecom_member2.setTeam(ecom);
@@ -97,8 +97,8 @@ public class OverviewFacadeTest {
         MockPerson ecom_member2 = new MockPerson(newPersonId("7"), "ecom_member2", "pic5.img", null);
         MockPerson pr_member = new MockPerson(newPersonId("4"), "pr_member", "pic2.img", null);
 
-        Team ecom = new MockTeam("ecom", "blue", new ArrayList<Person>(Arrays.asList(ecom_member1)));
-        Team productResources = new MockTeam("productResources", "green", new ArrayList<Person>(Arrays.asList(pr_member)));
+        Team ecom = new StubbedTeam("ecom", "blue", new ArrayList<Person>(Arrays.asList(ecom_member1)));
+        Team productResources = new StubbedTeam("productResources", "green", new ArrayList<Person>(Arrays.asList(pr_member)));
 
         ecom_member1.setTeam(ecom);
         ecom_member2.setTeam(ecom);
@@ -125,8 +125,8 @@ public class OverviewFacadeTest {
         MockPerson teamless_member1 = new MockPerson(newPersonId("5"), "teamless_member1", "pic3.img", null);
         MockPerson teamless_member2 = new MockPerson(newPersonId("6"), "teamless_member2", "pic4.img", null);
 
-        Team ecom = new MockTeam("ecom", "blue", new ArrayList<Person>(Arrays.asList(ecom_member1)));
-        Team productResources = new MockTeam("productResources", "green", new ArrayList<Person>(Arrays.asList(pr_member)));
+        Team ecom = new StubbedTeam("ecom", "blue", new ArrayList<Person>(Arrays.asList(ecom_member1)));
+        Team productResources = new StubbedTeam("productResources", "green", new ArrayList<Person>(Arrays.asList(pr_member)));
 
         ecom_member1.setTeam(ecom);
         ecom_member2.setTeam(ecom);

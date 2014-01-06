@@ -25,4 +25,8 @@ public class NoTeam implements Team {
     @Override public List<Person> members() {
         return emptyList();
     }
+
+    @Override public void addMember(Person member) {
+        throw new UnsupportedOperationException();
+    }
 }

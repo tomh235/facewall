@@ -8,10 +8,12 @@ import org.neo4j.cypher.javacompat.ExecutionEngine;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.index.Index;
+import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.graphdb.index.IndexManager;
 import org.neo4j.rest.graphdb.query.QueryEngine;
 
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import static facewall.database.DatabaseOperations.clearDatabaseOperation;
 import static facewall.database.DatabaseOperations.initialiseDatabaseOperation;
@@ -79,5 +81,16 @@ public class FacewallTestDatabase extends ForwardingGraphDatabaseService {
     public QueryEngine<Map<String, Object>> createQueryEngine() {
         ExecutionEngine executionEngine = new ExecutionEngine(this);
         return createQueryEngineAdaptor(executionEngine);
+    }
+
+    public Node findPersonById(String personId) {
+        IndexHits<Node> hits = index().forNodes(Persons.indexName).query(Persons.key, personId);
+        Node personNode = hits.getSingle();
+
+        if (personNode != null) {
+            return personNode;
+        } else {
+            throw new NoSuchElementException("no person with that id");
+        }
     }
 }

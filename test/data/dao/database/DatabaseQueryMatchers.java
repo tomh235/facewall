@@ -1,7 +1,6 @@
 package data.dao.database;
 
 import data.dao.database.query.DatabaseQuery;
-import domain.Person;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
@@ -11,8 +10,8 @@ import org.neo4j.rest.graphdb.util.QueryResultBuilder;
 
 import java.util.Map;
 
-import static data.dao.database.FacewallDB.NodeIndex.Persons;
-import static data.dao.database.FacewallDB.NodeIndex.Teams;
+import static data.dao.database.NodeIndex.Persons;
+import static data.dao.database.NodeIndex.Teams;
 import static data.dao.database.RelationshipTypes.TEAMMEMBER_OF;
 import static java.util.Collections.emptyList;
 import static org.mockito.ArgumentCaptor.forClass;

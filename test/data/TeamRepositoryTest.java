@@ -1,5 +1,6 @@
 package data;
 
+import domain.Person;
 import domain.Query;
 import domain.Team;
 import facewall.database.FacewallTestDatabase;
@@ -9,6 +10,8 @@ import org.junit.Test;
 import java.util.List;
 
 import static data.DataModule.createDataModule;
+import static data.datatype.PersonId.newPersonId;
+import static data.datatype.TeamId.newTeamId;
 import static domain.PersonMatcher.aPerson;
 import static domain.PersonsMatcher.arePersons;
 import static domain.TeamMatcher.aTeam;
@@ -21,18 +24,23 @@ import static facewall.database.fixture.PersonDataFactory.defaultPerson;
 import static facewall.database.fixture.TeamDataFactory.defaultTeam;
 import static facewall.database.fixture.TeamDataFactory.defaultTeamWithDefaultMembers;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static util.IterableMatchers.contains;
 
 public class TeamRepositoryTest {
 
     private FacewallTestDatabase facewallTestDatabase;
-    private TeamRepository repo;
+    private TeamRepository teamRepository;
+    private PersonRepository personRepository;
 
     @Before
     public void setUp() throws Exception {
         facewallTestDatabase = createImpermanentFacewallTestDatabase();
-        repo = createDataModule(facewallTestDatabase.createQueryEngine()).teamRepository;
+        DataModule dataModule = createDataModule(facewallTestDatabase.createQueryEngine(), facewallTestDatabase);
+        teamRepository = dataModule.teamRepository;
+        personRepository = dataModule.personRepository;
     }
 
     @Test
@@ -46,7 +54,7 @@ public class TeamRepositoryTest {
                 )
         );
 
-        List<Team> result = repo.listTeams();
+        List<Team> result = teamRepository.listTeams();
         assertThat(result, areTeams()
                 .whichContainExhaustively(
                         aTeam().named("Ecom"),
@@ -66,7 +74,7 @@ public class TeamRepositoryTest {
                 )
         );
 
-        List<Team> result = repo.listTeams();
+        List<Team> result = teamRepository.listTeams();
         assertThat(result, areTeams()
                 .whichContainExhaustively(
                         aTeam().withColour("blue"),
@@ -85,7 +93,7 @@ public class TeamRepositoryTest {
                 )
         );
 
-        List<Team> result = repo.listTeams();
+        List<Team> result = teamRepository.listTeams();
 
         assertThat(result, areTeams().numbering(3));
     }
@@ -103,7 +111,7 @@ public class TeamRepositoryTest {
                 )
         );
 
-        List<Team> result = repo.listTeams();
+        List<Team> result = teamRepository.listTeams();
 
         assertThat(result, areTeams()
                 .whichContains(aTeam()
@@ -134,7 +142,7 @@ public class TeamRepositoryTest {
                 )
         );
 
-        List<Team> result = repo.listTeams();
+        List<Team> result = teamRepository.listTeams();
 
         assertThat(result, areTeams()
                 .whichContains(aTeam()
@@ -162,7 +170,7 @@ public class TeamRepositoryTest {
                 )
         );
 
-        List<Team> result = repo.listTeams();
+        List<Team> result = teamRepository.listTeams();
 
         assertThat(result, areTeams()
                 .whichContains(aTeam()
@@ -193,10 +201,38 @@ public class TeamRepositoryTest {
         Query query = mock(Query.class);
         when(query.queryString()).thenReturn(newQueryString(".*should match.*"));
 
-        List<Team> result = repo.queryTeams(query);
+        List<Team> result = teamRepository.queryTeams(query);
         assertThat(result, areTeams().whichContainExhaustively(
                 aTeam().named("should match this team"),
                 aTeam().named("should match this team as well")
+        ));
+    }
+
+    @Test
+    public void findTeamById_with_member_added() {
+        facewallTestDatabase.seedFixtures(defaultFixtures()
+                .withTeams(
+                        defaultTeamWithDefaultMembers()
+                                .withProperty("id", "ferrari-id")
+                                .withProperty("name", "ferrari"))
+                .withTeamlessPersons(
+                        defaultPerson()
+                                .withProperty("id", "kimmi-id")
+                                .withProperty("name", "kimmi")
+                )
+        );
+
+        Team team = teamRepository.findTeamById(newTeamId("ferrari-id"));
+        Person member = personRepository.findPersonById(newPersonId("kimmi-id"));
+
+        team.addMember(member);
+
+        Team result = teamRepository.findTeamById(newTeamId("ferrari-id"));
+        assertThat(result, is(aTeam()
+                .named("ferrari")
+                .whereMembers(contains(
+                        aPerson().named("kimmi")
+                ))
         ));
     }
 }

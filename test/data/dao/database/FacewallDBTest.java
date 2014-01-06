@@ -17,8 +17,8 @@ import org.neo4j.rest.graphdb.query.QueryEngine;
 
 import java.util.Map;
 
-import static data.dao.database.FacewallDB.NodeIndex.Persons;
-import static data.dao.database.FacewallDB.NodeIndex.Teams;
+import static data.dao.database.NodeIndex.Persons;
+import static data.dao.database.NodeIndex.Teams;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.hamcrest.core.Is.is;

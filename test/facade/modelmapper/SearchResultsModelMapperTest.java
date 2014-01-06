@@ -1,8 +1,7 @@
 package facade.modelmapper;
 
-import data.datatype.PersonId;
 import domain.MockPerson;
-import domain.MockTeam;
+import domain.StubbedTeam;
 import domain.Person;
 import domain.Team;
 import model.DefaultSearchResultsModel;
@@ -51,8 +50,8 @@ public class SearchResultsModelMapperTest {
         List<Person> list1 = new ArrayList<>();
         List<Person> list2 = new ArrayList<>();
 
-        MockTeam ecom = new MockTeam("Ecom", "blue", list1);
-        MockTeam anotherTeam = new MockTeam("another team", "red", list2);
+        StubbedTeam ecom = new StubbedTeam("Ecom", "blue", list1);
+        StubbedTeam anotherTeam = new StubbedTeam("another team", "red", list2);
 
         List<Person> list3 = new ArrayList<>();
         List list4 = new ArrayList<>();

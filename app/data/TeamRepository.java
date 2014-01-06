@@ -13,44 +13,22 @@ import java.util.List;
 
 public class TeamRepository {
     private final FacewallDAO dao;
+    private final TeamsFactory teamsFactory;
 
-    public TeamRepository(FacewallDAO dao) {
+    public TeamRepository(FacewallDAO dao, TeamsFactory teamsFactory) {
         this.dao = dao;
+        this.teamsFactory = teamsFactory;
     }
 
     public List<Team> listTeams() {
-        return createTeams(dao.fetchTeams());
+        return teamsFactory.createTeams(dao.fetchTeams());
     }
 
     public List<Team> queryTeams(Query query) {
-        return createTeams(dao.queryTeams(query));
+        return teamsFactory.createTeams(dao.queryTeams(query));
     }
 
     public Team findTeamById(TeamId id) {
-        return createTeam(dao.fetchTeam(id));
-    }
-
-    private List<Team> createTeams(Iterable<TeamDTO> dtos) {
-        List<Team> result = new ArrayList<>();
-        for (TeamDTO dto : dtos) {
-            result.add(createTeam(dto));
-        }
-
-        return result;
-    }
-
-    private Team createTeam(TeamDTO dto) {
-        MutableTeam team = new MutableTeam(dto.teamInformation);
-
-        List<Person> members = new ArrayList<>();
-        for (PersonInformation personInformation : dto.memberInformation) {
-            MutablePerson person = new MutablePerson(personInformation);
-            person.setTeam(team);
-
-            members.add(person);
-        }
-        team.setMembers(members);
-
-        return team;
+        return teamsFactory.createTeam(dao.fetchTeam(id));
     }
 }

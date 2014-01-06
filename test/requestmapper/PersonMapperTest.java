@@ -1,6 +1,6 @@
 package requestmapper;
 
-import domain.MockTeam;
+import domain.StubbedTeam;
 import domain.Person;
 import domain.Team;
 import model.UserModel;
@@ -36,7 +36,7 @@ public class PersonMapperTest {
 
     @Test
     public void user_model_with_accompanying_team_maps_to_person_with_same_team() {
-        Team mockTeam = new MockTeam("ecom", "blue", new ArrayList<Person>());
+        Team mockTeam = new StubbedTeam("ecom", "blue", new ArrayList<Person>());
 
         Person result = personMapper.map(userModel, mockTeam);
         assertThat(result, is(aPerson().inTeam(aTeam().named("ecom").withColour("blue"))));

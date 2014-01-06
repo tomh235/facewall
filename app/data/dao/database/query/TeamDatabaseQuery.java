@@ -7,8 +7,8 @@ import org.neo4j.rest.graphdb.util.QueryResult;
 import java.util.Collections;
 import java.util.Map;
 
-import static data.dao.database.FacewallDB.NodeIndex.Persons;
-import static data.dao.database.FacewallDB.NodeIndex.Teams;
+import static data.dao.database.NodeIndex.Persons;
+import static data.dao.database.NodeIndex.Teams;
 import static data.dao.database.RelationshipTypes.TEAMMEMBER_OF;
 import static data.dao.database.query.PersonNodeKey.*;
 import static data.dao.database.query.TeamNodeKey.*;

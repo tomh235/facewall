@@ -1,7 +1,7 @@
 package facade.validators;
 
 import data.TeamRepository;
-import domain.MockTeam;
+import domain.StubbedTeam;
 import domain.Person;
 import domain.Query;
 import domain.Team;
@@ -27,7 +27,7 @@ public class TeamValidatorTest {
     TeamValidator teamValidator;
 
     String teamName = "ecom";
-    Team mockTeam = new MockTeam("ecom", "blue" , new ArrayList<Person>());
+    Team mockTeam = new StubbedTeam("ecom", "blue" , new ArrayList<Person>());
 
     @Test
     public void validate_returns_true_if_team_matches_query() {

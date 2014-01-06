@@ -28,4 +28,34 @@ public class PersonInformationMatcher extends CompositeMatcher<PersonInformation
         });
         return this;
     }
+
+    public PersonInformationMatcher named(final String name) {
+        add(new TypeSafeMatcher<PersonInformation>() {
+            @Override
+            public boolean matchesSafely(PersonInformation personInformation) {
+                return name.equals(personInformation.getName());
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText(" with the name ").appendValue(name);
+            }
+        });
+        return this;
+    }
+
+    public PersonInformationMatcher withPicture(final String picture) {
+        add(new TypeSafeMatcher<PersonInformation>() {
+            @Override
+            public boolean matchesSafely(PersonInformation personInformation) {
+                return picture.equals(personInformation.getPicture());
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText(" with the picture ").appendValue(picture);
+            }
+        });
+        return this;
+    }
 }

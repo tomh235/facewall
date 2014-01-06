@@ -7,9 +7,9 @@ import org.neo4j.rest.graphdb.util.QueryResult;
 import java.util.Collections;
 import java.util.Map;
 
-import static data.dao.database.FacewallDB.NodeIndex.Persons;
 import static data.dao.database.query.PersonNodeKey.newPersonNodeKey;
 import static data.dao.database.query.TeamNodeKey.newTeamNodeKey;
+import static data.dao.database.NodeIndex.Persons;
 
 public class PersonDatabaseQuery implements DatabaseQuery {
 

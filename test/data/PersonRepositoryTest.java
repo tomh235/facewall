@@ -32,7 +32,7 @@ public class PersonRepositoryTest {
     @Before
     public void setUp() throws Exception {
         facewallTestDatabase = createImpermanentFacewallTestDatabase();
-        repository = createDataModule(facewallTestDatabase.createQueryEngine()).personRepository;
+        repository = createDataModule(facewallTestDatabase.createQueryEngine(), facewallTestDatabase).personRepository;
     }
 
     @Test

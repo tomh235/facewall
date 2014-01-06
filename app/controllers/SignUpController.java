@@ -1,18 +1,20 @@
 package controllers;
 
-import data.TeamRepository;
-import facade.FacadeCreator;
+import data.dto.PersonInformation;
 import facade.SignUpFacade;
+import facade.validators.UserModelValidator;
+import facade.validators.ValidatedUserModel;
 import model.UserModel;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import static application.Facewall.facewall;
+
 public class SignUpController extends Controller {
     private static final Form<UserModel> signUpForm = Form.form(UserModel.class);
-    private static final TeamRepository repository = null;
-    private static final SignUpFacade signUpFacade = FacadeCreator.createSignUpFacade(repository);
-    private static UserModel newUserModel;
+    private static final SignUpFacade signUpFacade = facewall().signUpFacade;
+    private static final UserModelValidator userModelValidator = facewall().userModelValidator;
 
        // TODO - Charlie : Implement a list of teams in the database on the signUpForm
         public static Result blankSignUpForm() {
@@ -25,21 +27,12 @@ public class SignUpController extends Controller {
         //otherwise signupform.render(Validator<Team>, Validator<Person>)
 
         public static Result submitSignUpForm() {
-            Result result;
             Form<UserModel> filledSignUpForm = signUpForm.bindFromRequest();
-            newUserModel = filledSignUpForm.get();
-            boolean teamExists = signUpFacade.validateModelsTeamExists(newUserModel);
+            UserModel newUserModel = filledSignUpForm.get();
 
-            if (filledSignUpForm.hasErrors() || !teamExists ) {
-                result = badRequest(views.html.signupform.render(filledSignUpForm, teamExists));
-            } else {
-                signUpFacade.delegateNewUserToRepository(newUserModel);
-                result = redirect(routes.SignUpController.summaryPage());
-            }
-            return result;
-        }
+            ValidatedUserModel validatedUserModel = userModelValidator.validate(newUserModel);
+            signUpFacade.registerPerson(validatedUserModel.getPersonInformation(), validatedUserModel.getTeam());
 
-        public static Result summaryPage() {
-            return ok(views.html.signupsummary.render(newUserModel));
+            return ok();
         }
 }

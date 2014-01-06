@@ -66,5 +66,11 @@ public class PersonRepository {
         public List<Person> members() {
             return teamRepository.findTeamById(teamInformation.getId()).members();
         }
+
+        //TODO implement this
+        @Override
+        public void addMember(Person member) {
+            throw new UnsupportedOperationException();
+        }
     }
 }

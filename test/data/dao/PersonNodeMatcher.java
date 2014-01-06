@@ -6,6 +6,7 @@ import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Relationship;
 import util.CompositeMatcher;
 
 public class PersonNodeMatcher extends CompositeMatcher<Node>{
@@ -22,7 +23,7 @@ public class PersonNodeMatcher extends CompositeMatcher<Node>{
 
             @Override
             public boolean matchesSafely(Node target) {
-                return id.equals(target.getId());
+                return id.equals(target.getProperty("id"));
             }
 
             @Override
@@ -54,7 +55,7 @@ public class PersonNodeMatcher extends CompositeMatcher<Node>{
 
             @Override
             public boolean matchesSafely(Node target) {
-                return picture.equals(target.getProperty("imgURL"));
+                return picture.equals(target.getProperty("picture"));
             }
 
             @Override
@@ -102,7 +103,8 @@ public class PersonNodeMatcher extends CompositeMatcher<Node>{
 
             @Override
             public boolean matchesSafely(Node target) {
-                return teamNode.matches(target.getSingleRelationship(RelationshipTypes.TEAMMEMBER_OF, Direction.OUTGOING));
+                Relationship teamMemberRelationship = target.getSingleRelationship(RelationshipTypes.TEAMMEMBER_OF, Direction.OUTGOING);
+                return teamNode.matches(teamMemberRelationship.getOtherNode(target));
             }
 
             @Override

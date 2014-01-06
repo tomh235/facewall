@@ -22,6 +22,10 @@ public class Query {
         return new Query(newQueryString(".*" + keywords + ".*"));
     }
 
+    public static Query newExactQuery(String exactMatch) {
+        return new Query(newQueryString(exactMatch));
+    }
+
     public QueryString queryString() {
         return queryString;
     }

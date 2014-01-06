@@ -24,7 +24,7 @@ public class TeamNodeMatcher extends CompositeMatcher<Node> {
 
             @Override
             public boolean matchesSafely(Node target) {
-                return id.equals(target.getId());
+                return id.equals(target.getProperty("id"));
             }
 
             @Override
