@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="input-group input-group-lg">
-                    <input tabindex="1" id="search" type="text" name="keywords" class="form-control" placeholder="search keywords">
+                    <input tabindex="1" id="searchInput" type="text" name="keywords" class="form-control" placeholder="search keywords">
                     <span class="input-group-btn">
                         <button class="btn btn-default icon-search" type="button"></button>
                     </span>
@@ -17,14 +17,13 @@
 
 <script src="assets/javascripts/search-box.js"></script>
 <script>
-
-
-    var searchInput = $("#search");
-    console.log(searchInput);
+jQuery(document).ready(function($){
+    var searchInput = $("#searchInput");
     var result = $("#result");
     searchInput.focus();
 
-
     autoSearchOnKeyUp(searchInput, "search-results", result);
+});
+
 </script>
 }

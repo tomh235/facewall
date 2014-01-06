@@ -1,7 +1,7 @@
 var autoSearchOnKeyUp = function (input, target, result) {
     var recentness = 0;
 
-    input.keyup(function () {
+    $(input).keyup(function () {
         recentness++;
         var requestRecentness = recentness;
         var params = {};
