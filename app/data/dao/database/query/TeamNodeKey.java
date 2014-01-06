@@ -2,8 +2,8 @@ package data.dao.database.query;
 
 import util.AbstractWrappingDataType;
 
-public class TeamNodeKey extends AbstractWrappingDataType {
-    protected TeamNodeKey(Object value) {
+public class TeamNodeKey extends AbstractWrappingDataType<String> {
+    protected TeamNodeKey(String value) {
         super(value);
     }
 

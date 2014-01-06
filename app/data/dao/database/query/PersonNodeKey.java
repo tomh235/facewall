@@ -2,9 +2,9 @@ package data.dao.database.query;
 
 import util.AbstractWrappingDataType;
 
-public class PersonNodeKey extends AbstractWrappingDataType {
+public class PersonNodeKey extends AbstractWrappingDataType<String> {
 
-    protected PersonNodeKey(Object value) {
+    protected PersonNodeKey(String value) {
         super(value);
     }
 
