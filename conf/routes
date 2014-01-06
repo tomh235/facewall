@@ -18,4 +18,6 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 GET     /signupform                 controllers.SignUpController.blankSignUpForm
 POST    /signupform                 controllers.SignUpController.submitSignUpForm
 
+GET     /signupsummary             controllers.SignUpController.submitSignUpForm
+
 GET     /person/:id                 controllers.PersonController.getPerson(id: String)

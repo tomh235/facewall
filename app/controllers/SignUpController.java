@@ -8,6 +8,7 @@ import model.UserModel;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.html.signupsummary;
 
 import static application.Facewall.facewall;
 
@@ -33,6 +34,7 @@ public class SignUpController extends Controller {
             ValidatedUserModel validatedUserModel = userModelValidator.validate(newUserModel);
             signUpFacade.registerPerson(validatedUserModel.getPersonInformation(), validatedUserModel.getTeam());
 
-            return ok();
+            return ok(views.html.signupsummary.render(newUserModel));
         }
+
 }
