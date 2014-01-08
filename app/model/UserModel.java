@@ -1,5 +1,6 @@
 package model;
 
+import org.apache.commons.lang.WordUtils;
 import org.hibernate.validator.constraints.URL;
 import play.data.validation.Constraints.Email;
 import play.data.validation.Constraints.MaxLength;
@@ -29,4 +30,10 @@ public class UserModel {
     @Required(message = "A Team is required")
     public String team;
     public String scrum;
+
+    //Not sure if in correct place, apologies if not! - Stuart
+    public String prettifyString(String inputString) {
+        String str1 = inputString.replaceAll("_", " "); //Remove underscores
+        return WordUtils.capitalizeFully(str1); //Capitalise words
+    }
 }

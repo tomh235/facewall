@@ -2,11 +2,16 @@ package uk.co.o2.selenium.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import uk.co.o2.selenium.common.Configuration;
 import uk.co.o2.selenium.common.WebBrowser;
 
 import java.util.List;
 
 public class HomePage {
+
+    public void navigateToHomePage() {
+        WebBrowser.navigateTo(Configuration.baseUrl);
+    }
 
     public RegisterPage clickRegistrationTab() {
         WebBrowser.findElement(By.id("register")).click();

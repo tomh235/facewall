@@ -18,4 +18,8 @@ public class RegisterPage {
     public void clickSubmit() {
         WebBrowser.findElement(By.id("submit")).click();
     }
+
+    public String getSummaryItem(String className) {
+        return WebBrowser.findElement(By.className(className)).getText();
+    }
 }
