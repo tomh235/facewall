@@ -66,10 +66,10 @@ public class SearchTest extends SeleniumBase {
      public void noSearchResults() throws Exception {
         singlePersonPage = searchPage.searchPerson("Norman Cook");
         assertThat(singlePersonPage.personExists("Norman Cook"), is(false));
-        //assertThat(singlePersonPage.hasNoResultsMessage(), is(true));
+        assertThat(singlePersonPage.hasNoResultsMessage(), is(true));
         searchResultsPage = searchPage.searchTeam("Team unknown");
         assertThat(searchResultsPage.teamExists("Team unknown"), is(false));
-        //assertThat(searchResultsPage.hasNoResultsMessage(), is(true));
+        assertThat(searchResultsPage.hasNoResultsMessage(), is(true));
     }
 
 }
