@@ -1,18 +1,23 @@
 var autoSearchOnKeyUp = function (input, target, result) {
     var recentness = 0;
 
-    $(input).keypress(function () {
-        recentness++;
-        var requestRecentness = recentness;
-        var params = {};
-        params[input.attr("name")] = input.val();
+    $(input).keyup(function () {
+        var searchstring = $(this).val();
+            if (searchstring.length >= 1) {
+                        recentness++;
+                                   var requestRecentness = recentness;
+                                   var params = {};
+                                   params[input.attr("name")] = input.val();
 
-        var updateResultWithMostRecent = function (data) {
-            if (recentness == requestRecentness) {
-                result.empty();
-                result.append(data);
-            }
-        };
+                                   var updateResultWithMostRecent = function (data) {
+                                       if (recentness == requestRecentness) {
+                                           result.empty();
+                                           result.append(data);
+                                       }
+                                   };
+
+            }  else if (searchstring.length == 0) {result.empty();}
+
 
         $.get(target, params).done(updateResultWithMostRecent);
     });
