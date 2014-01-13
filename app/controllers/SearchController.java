@@ -11,12 +11,14 @@ import play.mvc.Result;
 import requestmapper.SearchQueryMapper;
 
 import static application.Facewall.facewall;
+import static util.freemarker.TemplateHelper.view;
 
 public class SearchController extends Controller {
     private static final SearchQueryMapper searchQueryMapper = new SearchQueryMapper();
     private static final SearchFacade searchFacade = facewall().searchFacade;
+
     public static Result search() {
-        return ok(views.html.search.render());
+        return ok(view("search.ftl"));
     }
 
     public static Result searchResults() {

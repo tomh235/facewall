@@ -3,6 +3,7 @@ import sbt._
 import Keys._
 import play.Project._
 
+
 object ApplicationBuild extends Build {
 
     val appName = "facewall"
@@ -61,6 +62,7 @@ object ApplicationBuild extends Build {
         "com.sun.jersey" % "jersey-core" % "1.9",
         "org.neo4j" % "neo4j-rest-graphdb" % "1.9",
         "org.neo4j" % "neo4j-kernel" % "1.9.5",
+        "org.freemarker" % "freemarker" % "2.3.19",
 
         "org.hamcrest" % "hamcrest-all" % "1.1" % "test",
         "junit" % "junit" %"4.11" % "test",
@@ -74,6 +76,15 @@ object ApplicationBuild extends Build {
     )
 
     val main = play.Project(appName, appVersion, appDependencies).settings(
+        unmanagedResources in Compile <<= (
+          javaSource in Compile,
+          classDirectory in Compile,
+          unmanagedResources in Compile
+        ) map {
+          (app, classes, resources) =>
+          IO.copyDirectory(app / "views", classes / "views", overwrite = true)
+          resources
+        },
         resolvers ++= dependencyResolvers
-    ).dependsOn(facewallDatabaseUtils % "test")
+        ).dependsOn(facewallDatabaseUtils % "test")
 }

@@ -34,6 +34,7 @@ dependencies {
     compile "org.scala-lang:scala-compiler:2.10.0"
     compile "org.neo4j:neo4j-rest-graphdb:1.9"
     compile "org.neo4j:neo4j-kernel:1.9.5"
+    compile "org.freemarker:freemarker:2.3.20"
 
     compile "org.anormcypher:anormcypher_2.10:0.4.1"
 

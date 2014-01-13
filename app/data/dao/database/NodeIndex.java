@@ -1,8 +1,5 @@
 package data.dao.database;
 
-/**
-* Created by charlie on 16/12/13.
-*/
 public enum NodeIndex {
 
     Persons("Persons", "id"),
