@@ -3,7 +3,7 @@
 <div class="container">
     @if(!results.persons.isEmpty) {
     <div>
-        <h1><small>People</small></h1>
+        <h1>People</h1>
     </div>
     <div class="row">
         @results.persons.map { result =>
@@ -17,11 +17,13 @@
         </div>
         }
     </div>
+    } else {
+       <h1 class="no-results no-results-person">No person exists with that name!</h1>
     }
 
     @if(!results.teams.isEmpty) {
     <div>
-        <h1><small>Teams</small></h1>
+        <h1>Teams</h1>
     </div>
     <div class="row">
         @results.teams.map { result =>
@@ -32,5 +34,7 @@
         </div>
         }
     </div>
+    } else {
+        <h1 class="no-results no-results-team">No team exists with that name!</h1>
     }
 </div>

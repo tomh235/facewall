@@ -49,7 +49,7 @@ public class SearchTest extends SeleniumBase {
     }
 
     @Test
-    public void searchForPerson() throws Exception {
+     public void searchForPerson() throws Exception {
         facewallDb.seedFixtures(newFixtures().withTeamlessPersons(defaultPerson().withProperty("name", "Fred Weasley")));
         singlePersonPage = searchPage.searchPerson("Fred Weasley");
         assertThat(singlePersonPage.getPersonName(), is("Fred Weasley"));
@@ -65,9 +65,11 @@ public class SearchTest extends SeleniumBase {
     @Test
      public void noSearchResults() throws Exception {
         singlePersonPage = searchPage.searchPerson("Norman Cook");
-        assertThat(singlePersonPage.hasNoResults(), is(true));
+        assertThat(singlePersonPage.personExists("Norman Cook"), is(false));
+        //assertThat(singlePersonPage.hasNoResultsMessage(), is(true));
         searchResultsPage = searchPage.searchTeam("Team unknown");
         assertThat(searchResultsPage.teamExists("Team unknown"), is(false));
+        //assertThat(searchResultsPage.hasNoResultsMessage(), is(true));
     }
 
 }

@@ -2,6 +2,7 @@
 
 @main("Welcome to the facewall app", 0) {
 <div class="container">
+    @if(!entries.isEmpty) {
     <div class="row">
         @entries.map { entry =>
             <div class="col-md-4 entry">
@@ -14,6 +15,7 @@
             </div>
         }
     </div>
+    }
 </div>
 <script src="assets/javascripts/snake-order.js"></script>
 <script>

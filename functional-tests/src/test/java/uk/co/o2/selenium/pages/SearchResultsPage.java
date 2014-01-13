@@ -11,4 +11,11 @@ public class SearchResultsPage {
         }
         else return false;
     }
+
+    public Boolean hasNoResultsMessage() {
+        if(WebBrowser.findElement(By.className("no-results-team")).isDisplayed()) {
+            return true;
+        }
+        else return false;
+    }
 }
