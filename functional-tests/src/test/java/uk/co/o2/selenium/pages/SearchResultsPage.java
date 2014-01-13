@@ -13,7 +13,7 @@ public class SearchResultsPage {
     }
 
     public Boolean hasNoResultsMessage() {
-        if(WebBrowser.findElement(By.className("no-results-team")).isDisplayed()) {
+        if(WebBrowser.findElement(By.className("no-results")).isDisplayed()) {
             return true;
         }
         else return false;
