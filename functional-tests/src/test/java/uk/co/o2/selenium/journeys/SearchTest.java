@@ -44,7 +44,7 @@ public class SearchTest extends SeleniumBase {
     }
 
     @After
-    public void afterTest() {
+    public void afterTest() throws InterruptedException {
         facewallDb.clear();
     }
 
@@ -64,6 +64,7 @@ public class SearchTest extends SeleniumBase {
 
     @Test
      public void noPersonSearchResults() throws Exception {
+        facewallDb.seedFixtures(newFixtures().withTeamlessPersons(defaultPerson().withProperty("name", "Fred Weasley")));
         singlePersonPage = searchPage.searchPerson("Norman Cook");
         assertThat(singlePersonPage.personExists("Norman Cook"), is(false));
         assertThat(singlePersonPage.hasNoResultsMessage(), is(true));
@@ -71,6 +72,7 @@ public class SearchTest extends SeleniumBase {
 
     @Test
     public void noTeamSearchResults() throws Exception {
+        facewallDb.seedFixtures(newFixtures().withTeams(defaultTeamWithDefaultMembers().withProperty("name", "ecom")));
         searchResultsPage = searchPage.searchTeam("Team unknown");
         assertThat(searchResultsPage.teamExists("Team unknown"), is(false));
         assertThat(searchResultsPage.hasNoResultsMessage(), is(true));
