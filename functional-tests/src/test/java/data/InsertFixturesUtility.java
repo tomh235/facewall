@@ -21,20 +21,38 @@ public class InsertFixturesUtility {
         facewallDb.initialise();
 
         facewallDb.seedFixtures(defaultFixtures()
-            .withTeams(
-                defaultTeam()
-                    .withProperty("name", "Ecom Shop")
-                    .withMembers(defaultPerson()
-                        .withProperty("name", "Hugo Wainwright")
-                        .withProperty("picture", "https://fbcdn-sphotos-c-a.akamaihd.net/hphotos-ak-frc1/300430_4471674470606_1745866994_n.jpg")
-                    ),
-                defaultTeam()
-                    .withProperty("name", "Ecom Ars")
-                    .withMembers(defaultPerson()
-                        .withProperty("name", "Fahran Wallace")
-                        .withProperty("picture", "http://withhomeandgarden.com/wp-content/uploads/2011/01/cat-200x300.jpg")
-                    )
-            )
+                .withTeams(
+                        defaultTeam()
+                                .withProperty("name", "Ecom Shop")
+                                .withMembers(defaultPerson()
+                                        .withProperty("name", "Hugo Wainwright")
+                                        .withProperty("picture", "https://fbcdn-sphotos-c-a.akamaihd.net/hphotos-ak-frc1/300430_4471674470606_1745866994_n.jpg")
+                                ),
+                        defaultTeam()
+                                .withProperty("name", "Ecom Ars")
+                                .withMembers(defaultPerson()
+                                        .withProperty("name", "Fahran Wallace")
+                                        .withProperty("picture", "http://withhomeandgarden.com/wp-content/uploads/2011/01/cat-200x300.jpg")
+                                ),
+                        defaultTeam()
+                                .withProperty("name", "OPP Accounts")
+                                .withMembers(defaultPerson()
+                                        .withProperty("name", "Stuart Gray")
+                                        .withProperty("picture", "http://withhomeandgarden.com/wp-content/uploads/2011/01/cat-200x300.jpg")
+                                ),
+                        defaultTeam()
+                                .withProperty("name", "Portal Scrum")
+                                .withMembers(defaultPerson()
+                                        .withProperty("name", "Luke Langfield")
+                                        .withProperty("picture", "https://pbs.twimg.com/profile_images/1480549921/Board.jpg")
+                                ),
+                        defaultTeam()
+                                .withProperty("name", "Portal Scrum")
+                                .withMembers(defaultPerson()
+                                        .withProperty("name", "Charlie Briggs")
+                                        .withProperty("picture", "http://withhomeandgarden.com/wp-content/uploads/2011/01/cat-200x300.jpg")
+                                )
+                )
         );
     }
 }
