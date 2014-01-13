@@ -61,4 +61,13 @@ public class SearchTest extends SeleniumBase {
         searchResultsPage = searchPage.searchTeam("ecom");
         assertThat(searchResultsPage.teamExists("ecom"), is(true));
     }
+
+    @Test
+     public void noSearchResults() throws Exception {
+        singlePersonPage = searchPage.searchPerson("Norman Cook");
+        assertThat(singlePersonPage.hasNoResults(), is(true));
+        searchResultsPage = searchPage.searchTeam("Team unknown");
+        assertThat(searchResultsPage.teamExists("Team unknown"), is(false));
+    }
+
 }
