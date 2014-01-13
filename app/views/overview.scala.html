@@ -5,25 +5,26 @@
     @if(!entries.isEmpty) {
     <div class="row">
         @entries.map { entry =>
-            <div class="col-md-4 entry">
-                <div class="thumbnail" style="background-color:#@entry.colour">
-                    <h5 class="teamName" >@entry.teamHeader</h5>
-                    <img src="@entry.picture"/>
-
-                    <a href="/person/@entry.link"><h3 class="text-center entryName">@entry.name</h3></a>
-                </div>
-            </div>
+        <div class="col-md-3 col-sm-4 entry">
+            <h5 class="text-center teamName" style="color: #@entry.colour">@entry.teamHeader</h5>
+            <div class="imgWrapper @entry.colour" style="border: 15px solid #@entry.colour"><img class="avatar" src="@entry.picture"/></div>
+            <a href="/person/@entry.link"><h3 class="text-center entryName">@entry.name</h3></a>
+        </div>
         }
     </div>
     } else {
-        <h1 class="no-results">There are no faces here!</h1>
+        <h1 class="no-results main">There are no faces here!</h1>
         <div class="sadface"><img src="assets/images/sadface.png" /></div>
     }
 </div>
 <script src="assets/javascripts/snake-order.js"></script>
+<script src="assets/javascripts/jquery.fakecrop.js"></script>
 <script>
-    var overviewEntries = $("div.col-md-4").detach();
-    var snakeOrdered = snakeOrder(overviewEntries.get(), 3);
-    $("div.row").append(snakeOrdered);
+    $(document).ready(function () {
+        $('img.avatar').fakecrop();
+        var overviewEntries = $("div.col-md-4").detach();
+        var snakeOrdered = snakeOrder(overviewEntries.get(), 3);
+        $("div.row").append(snakeOrdered);
+    });
 </script>
 }

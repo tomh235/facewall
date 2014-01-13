@@ -17,8 +17,6 @@
         </div>
         }
     </div>
-    } else {
-       <h1 class="no-results no-results-person">No person exists with that name!</h1>
     }
 
     @if(!results.teams.isEmpty) {
@@ -27,14 +25,20 @@
     </div>
     <div class="row">
         @results.teams.map { result =>
-        <div class="col-md-4">
+        <div class="col-md-4 col-md-offset-4">
             <div class="thumbnail">
                 <h3 class="text-center">@result.name</h3>
             </div>
         </div>
         }
     </div>
-    } else {
-        <h1 class="no-results no-results-team">No team exists with that name!</h1>
+    }
+
+    @if(results.persons.isEmpty && results.teams.isEmpty) {
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h1 class="no-results search"><img src="assets/images/cross.png" />No results found!</h1>
+        </div>
+    </div>
     }
 </div>
