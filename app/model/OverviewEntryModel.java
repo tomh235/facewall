@@ -1,11 +1,11 @@
 package model;
 
 public class OverviewEntryModel {
-    public final String teamHeader;
-    public final String name;
-    public final String picture;
-    public final String colour;
-    public final String link;
+    public String teamHeader;
+    public String name;
+    public String picture;
+    public String colour;
+    public String link;
 
     public OverviewEntryModel(String teamHeader, String name, String picture, String colour, String link) {
         this.teamHeader = teamHeader;

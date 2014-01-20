@@ -51,6 +51,7 @@ public class SearchTest extends SeleniumBase {
     @Test
      public void searchForPerson() throws Exception {
         facewallDb.seedFixtures(newFixtures().withTeamlessPersons(defaultPerson().withProperty("name", "Fred Weasley")));
+        Thread.sleep(1200);
         singlePersonPage = searchPage.searchPerson("Fred Weasley");
         assertThat(singlePersonPage.getPersonName(), is("Fred Weasley"));
     }

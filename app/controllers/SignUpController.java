@@ -1,6 +1,5 @@
 package controllers;
 
-import data.dto.PersonInformation;
 import facade.SignUpFacade;
 import facade.validators.UserModelValidator;
 import facade.validators.ValidatedUserModel;
@@ -8,9 +7,10 @@ import model.UserModel;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.signupsummary;
 
 import static application.Facewall.facewall;
+import static util.freemarker.TemplateHelper.view;
+import static util.freemarker.TemplateHelper.withArgs;
 
 public class SignUpController extends Controller {
     private static final Form<UserModel> signUpForm = Form.form(UserModel.class);
@@ -34,7 +34,7 @@ public class SignUpController extends Controller {
             ValidatedUserModel validatedUserModel = userModelValidator.validate(newUserModel);
             signUpFacade.registerPerson(validatedUserModel.getPersonInformation(), validatedUserModel.getTeam());
 
-            return ok(views.html.signupsummary.render(newUserModel));
+            return ok(view("signupsummary.ftl", withArgs("userModel", newUserModel)));
         }
 
 }

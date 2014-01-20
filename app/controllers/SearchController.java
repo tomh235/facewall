@@ -9,9 +9,11 @@ import model.TeamDetailsModel;
 import play.mvc.Controller;
 import play.mvc.Result;
 import requestmapper.SearchQueryMapper;
+import util.freemarker.TemplateHelper;
 
 import static application.Facewall.facewall;
 import static util.freemarker.TemplateHelper.view;
+import static util.freemarker.TemplateHelper.withArgs;
 
 public class SearchController extends Controller {
     private static final SearchQueryMapper searchQueryMapper = new SearchQueryMapper();
@@ -29,14 +31,14 @@ public class SearchController extends Controller {
         //This looks like scala code that has been translated into java. That's fine, but this kind of java code
         //should be avoided if possible. Hopefully we can design it away.
         if(searchResultsModel instanceof DefaultSearchResultsModel) {
-            result = ok(views.html.searchresults.render((DefaultSearchResultsModel) searchResultsModel));
+            result = ok(view("searchresults.ftl", withArgs("results", searchResultsModel)));
         } else if(searchResultsModel instanceof PersonDetailsModel) {
-            result = ok(views.html.persondetails.render((PersonDetailsModel) searchResultsModel));
+            result = ok(view("persondetails.ftl", withArgs("person", searchResultsModel)));
         } else if(searchResultsModel instanceof TeamDetailsModel) {
-            result = ok(views.html.teamdetails.render((TeamDetailsModel) searchResultsModel));
+            result = ok(view("teamdetails.ftl", withArgs("team", searchResultsModel)));
         } else {
             //This should be a 4xx rather than a 5xx response
-            result = internalServerError("Query not recognized");
+            result = ok();
         }
         return result;
     }

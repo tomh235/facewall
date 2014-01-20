@@ -88,7 +88,7 @@ public class TemplateHelper {
         }
     }
 
-    public static Arg _(String name, Object value) {
+    public static Arg withArgs(String name, Object value) {
         return new Arg(name, value);
     }
 

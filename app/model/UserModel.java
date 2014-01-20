@@ -14,7 +14,6 @@ public class UserModel {
 
     @Required(message = "An image URL is a required")
     @URL(message = "Please enter a valid URL")
-    @MaxLength(value = 50, message = "Maximum URL length is 50 characters")
     public String imgURL;
 
     @Required(message = "An Email is required")
