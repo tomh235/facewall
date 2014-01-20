@@ -36,4 +36,31 @@ public class HomePage {
         }
         return false;
     }
+
+    public boolean hasTitle() {
+        if (WebBrowser.findElement(By.id("homeTitle")).isDisplayed()) {
+            return true;
+
+        }
+        else return false;
+    }
+
+    public Boolean hasNavbar() {
+        if (WebBrowser.findElement(By.className("nav")).isDisplayed()){
+            return  true;
+        }
+        else return false;
+    }
+
+    public Boolean hasPeople() {
+        if (WebBrowser.findElement(By.className("entry")).isDisplayed())   {
+            return true;
+        } else return false;
+    }
+
+    public Boolean hasFooter() {
+        if (WebBrowser.findElement(By.className("footer")).isDisplayed()){
+            return true;
+        }               else return false;
+    }
 }
