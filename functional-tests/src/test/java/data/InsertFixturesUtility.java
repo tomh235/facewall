@@ -38,7 +38,7 @@ public class InsertFixturesUtility {
                                 .withProperty("name", "OPP Accounts")
                                 .withMembers(defaultPerson()
                                         .withProperty("name", "Stuart Gray")
-                                        .withProperty("picture", "http://withhomeandgarden.com/wp-content/uploads/2011/01/cat-200x300.jpg")
+                                        .withProperty("picture", "https://2.gravatar.com/avatar/d225c9bb9f57ac91198c9af48b728d4f?d=https%3A%2F%2Fidenticons.github.com%2Fd052c099b06be7c91c32b0ba900c268c.png&r=x&s=440")
                                 ),
                         defaultTeam()
                                 .withProperty("name", "Portal Scrum")

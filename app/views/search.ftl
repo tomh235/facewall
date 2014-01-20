@@ -24,6 +24,5 @@
     searchInput.focus();
     autoSearchOnKeyUp(searchInput, "search-results", result);
 </script>
-}
 
 </@main.main>

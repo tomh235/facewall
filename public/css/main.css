@@ -16,9 +16,12 @@ h1, h2, h3, h4, h5, h6 {
     background-color: #ffffff;
 }
 
-.entry { text-align: center; border-bottom: 1px solid #ccc; margin-bottom: 30px; padding-bottom: 20px;}
+.smiley { height: 60px; margin-bottom: 5px;}
 
-.entry .imgWrapper { margin: 15px 0 0 0; border-radius: 200px; display: inline-block; box-sizing: content-box;}
+.entry { text-align: center; border-bottom: 1px solid #ccc; margin-bottom: 30px; padding-bottom: 20px;}
+.entry h5.teamName { height: 1.1em; }
+.entry .imgWrapper { margin: 15px 0 0 0; border-radius: 200px; display: inline-block; box-sizing: content-box; border: 15px solid #fff;}
+.entry h3.entryName { height: 2.2em;}
 
 .imgWrapper img { border-radius: 200px; top: -15px !important;}
 
@@ -26,8 +29,15 @@ form[role=form] .submit{
     text-align: center;
 }
 
-.no-results.main { text-align: center;}
+.no-results.main { line-height: 1em;}
 
-.no-results.search {}
+.no-results.search { vertical-align: bottom; text-align: center;}
+.no-results.search img { margin-bottom: -5px; margin-left: -32px;}
 
 .sadface { text-align: center;}
+
+@media (max-width: 768px) {
+    .smiley { height: 30px; margin-bottom: 4px; }
+}
+
+
