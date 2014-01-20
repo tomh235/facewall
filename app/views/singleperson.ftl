@@ -1,5 +1,3 @@
-<link rel="stylesheet" media="screen" href="/assets/css/singleperson.css">
-
 <#import 'main.ftl' as main>
 
 <@main.main title = "Your face" activeTabIndex = 4>
@@ -8,7 +6,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2 entry">
             <h5 class="personName">${person.name}</h5>
-            <img class="thumbnail" src="${person.picture}"></img>
+            <img class="single-person-pic" src="${person.picture}"></img>
             <h5 class="teamName">${person.teamName}</h5>
         </div>
     </div>

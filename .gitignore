@@ -20,3 +20,4 @@ project/target
 target/
 .gradle/
 build/
+neo4jDB/

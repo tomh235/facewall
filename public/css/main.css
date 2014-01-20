@@ -39,5 +39,12 @@ form[role=form] .submit{
 @media (max-width: 768px) {
     .smiley { height: 30px; margin-bottom: 4px; }
 }
-
+.signup-pic {
+    width: 320;
+}
+.single-person-pic {
+    margin: 0 auto;
+    max-width: 100%;
+    max-height: 400px;
+}
 

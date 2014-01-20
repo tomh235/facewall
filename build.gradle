@@ -21,6 +21,7 @@ idea {
     project {
         jdkName = '1.7'
         languageLevel = '1.7'
+        ipr.withXml { provider -> provider.node.component.find { it.@name == 'VcsDirectoryMappings' }.mapping.@vcs = 'Git' }
     }
 
     module {

@@ -1,5 +1,3 @@
-<link rel="stylesheet" media="screen" href="/assets/css/signupsummary.css">
-
 <#import 'main.ftl' as main>
 
 <@main.main title = "Summary of new userModel" activeTabIndex = 2>
@@ -51,7 +49,7 @@
                 <p class="imgUrl">${userModel.imgURL}</p>
     
                 <a href="#">
-                    <img class="thumbnail" src="${userModel.imgURL}" alt="">
+                    <img class="signup-pic" src="${userModel.imgURL}" alt="">
                 </a>
     
             </div>
