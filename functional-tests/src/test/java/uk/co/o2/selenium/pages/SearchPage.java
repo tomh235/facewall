@@ -7,7 +7,7 @@ public class SearchPage {
 
     public SinglePersonPage searchPerson(String personName) throws InterruptedException {
         WebBrowser.findElement(By.name("keywords")).sendKeys(personName);
-        Thread.sleep(1000);
+        Thread.sleep(3000);
         return new SinglePersonPage();
     }
 
