@@ -34,6 +34,7 @@ public class SearchTest extends SeleniumBase {
         neoDb = databaseFor("http://localhost:7474/db/data/");
         facewallDb = createFacewallTestDatabaseWrappingExistingDatabase(neoDb);
         facewallDb.clear();
+        facewallDb.initialise();
     }
 
     @Before
@@ -46,12 +47,12 @@ public class SearchTest extends SeleniumBase {
     @After
     public void afterTest() throws InterruptedException {
         facewallDb.clear();
+        facewallDb.initialise();
     }
 
     @Test
      public void searchForPerson() throws Exception {
         facewallDb.seedFixtures(newFixtures().withTeamlessPersons(defaultPerson().withProperty("name", "Fred Weasley")));
-        Thread.sleep(1200);
         singlePersonPage = searchPage.searchPerson("Fred Weasley");
         assertThat(singlePersonPage.getPersonName(), is("Fred Weasley"));
     }
@@ -79,7 +80,6 @@ public class SearchTest extends SeleniumBase {
 
     @Test
     public void noTeamAndPersonSearchResults() throws Exception {
-        facewallDb.seedFixtures(newFixtures().withTeamlessPersons(defaultPerson().withProperty("name", "Fred Weasley")));
         searchResultsPage = searchPage.searchTeam("No results");
         assertThat(searchResultsPage.hasNoResultsMessage(), is(true));
     }

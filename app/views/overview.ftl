@@ -13,8 +13,7 @@
         </#list>
     </div>
     <#else>
-        <h1 class="no-results main">There are no faces here!</h1>
-        <div class="sadface"><img src="assets/images/smiley_sad.png" /></div>
+        <h1 class="no-results main text-center"><img class="smiley" src="assets/images/smiley_sad.png" />There are no faces here!</h1>
     </#if>
 </div>
 <script src="assets/javascripts/snake-order.js"></script>

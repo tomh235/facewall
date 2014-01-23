@@ -66,7 +66,7 @@ abstract public class PersonDataFactory {
         return newPersonData()
             .withProperty("id", randomUUID().toString())
             .withProperty("name", name)
-            .withProperty("picture", "http://dummyimage.com/300x400/000/fff.png&text=" + name);
+            .withProperty("picture", "http://dummyimage.com/200x200/000/fff.png&text=" + name);
     }
 
     private static String randomName() {

@@ -36,11 +36,13 @@ public class RegistrationTest extends SeleniumBase {
         neoDb = databaseFor("http://localhost:7474/db/data/");
         facewallDb = createFacewallTestDatabaseWrappingExistingDatabase(neoDb);
         facewallDb.clear();
+        facewallDb.initialise();
     }
 
     @After
     public void afterTest(){
         facewallDb.clear();
+        facewallDb.initialise();
     }
 
     @Test

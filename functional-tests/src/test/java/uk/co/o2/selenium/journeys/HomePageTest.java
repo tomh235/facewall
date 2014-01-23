@@ -18,9 +18,4 @@ public class HomePageTest extends SeleniumBase {
         assertThat(homePage.hasPeople(), is (true));
         //assertThat(homePage.hasFooter(), is(true));
     }
-
-
-
-
-
 }

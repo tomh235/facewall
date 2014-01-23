@@ -9,25 +9,28 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
 }
 
-.page-header {
-    background-color: #3b5998;
-    color: #ffffff;
+/* Top */
+
+#homeTitle {
+   margin-bottom: 30px;
 }
 
 .jumbotron {
-    background-color: #ffffff;
+    background-color: #f5f5f5;
+    padding-bottom: 0;
+    border-bottom: 1px solid #ddd;
 }
 
 .smiley { height: 60px; margin-bottom: 5px;}
+
+.nav { margin-bottom: -1px;}
 
 /* Overview */
 
 .entry { text-align: center; border-bottom: 1px solid #ccc; margin-bottom: 30px; padding-bottom: 20px;}
 .entry h5.teamName { height: 1.1em; }
-.entry .imgWrapper { margin: 15px 0 0 0; border-radius: 200px; display: inline-block; box-sizing: content-box; border: 15px solid #fff;}
+.entry .imgWrapper { margin: 15px 0 0 0; border-radius: 200px; display: inline-block; box-sizing: content-box; border: 15px solid #fff; overflow:hidden;}
 .entry h3.entryName { height: 2.2em;}
-
-.imgWrapper img { border-radius: 200px; top: -15px !important;}
 
 /* Register/Confirmation  */
 
