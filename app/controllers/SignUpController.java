@@ -19,7 +19,7 @@ public class SignUpController extends Controller {
 
        // TODO - Charlie : Implement a list of teams in the database on the signUpForm
         public static Result blankSignUpForm() {
-            return ok(views.html.signupform.render(signUpForm, true));
+            return ok(view("signupform.ftl", withArgs("userForm", signUpForm), withArgs("teamExists", true)));
         }
 
         //How about using decorator pattern to chain together Validator<Team> and Validator<Person>, and then

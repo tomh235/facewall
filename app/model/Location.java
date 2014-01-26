@@ -9,7 +9,7 @@ public enum Location {
     BUCKINGHAM_AVENUE ("Buckingham Avenue, Slough, UK"),
     LEEDS ("Leeds, UK");
 
-    private final String locationName;
+    private  String locationName;
 
     Location(String locationName) {
         this.locationName = locationName;

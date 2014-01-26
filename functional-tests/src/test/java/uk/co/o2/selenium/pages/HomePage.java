@@ -41,15 +41,13 @@ public class HomePage {
         if (WebBrowser.findElement(By.id("homeTitle")).isDisplayed()) {
             return true;
 
-        }
-        else return false;
+        } else return false;
     }
 
     public Boolean hasNavbar() {
         if (WebBrowser.findElement(By.className("nav")).isDisplayed()){
             return  true;
-        }
-        else return false;
+        } else return false;
     }
 
     public Boolean hasPeople() {
@@ -61,6 +59,6 @@ public class HomePage {
     public Boolean hasFooter() {
         if (WebBrowser.findElement(By.className("footer")).isDisplayed()){
             return true;
-        }               else return false;
+        } else return false;
     }
 }

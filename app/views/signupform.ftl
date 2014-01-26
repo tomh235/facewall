@@ -1,64 +1,67 @@
-@(userForm: Form[model.UserModel], teamExists: Boolean)
-@main("Input your details", 2) {
+<#import 'main.ftl' as main>
+
+<@main.main title = "Input your details" activeTabIndex = 2>
+        
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3 form">
             <form role="form" method="post" action="/signupform">
                 <div class="form-group">
-
-                    @for(error <- userForm("name").error) {
-                    <h4>@(error.message)</h4>
-                    }
+                    <#if userForm.error("name")??>
+                        <#list userForm.error("name") as error>
+                        <h4>${error.message}</h4>
+                        </#list>
+                    </#if>
 
                     <label>Full name</label>
                     <input class="form-control" type="text" name="name" placeholder="Enter name" required>
                 </div>
                 <div class="form-group">
-
-                    @for(error <- userForm("imgURL").error) {
-                    <h4>@(error.message)</h4>
-                    }
-
+                    <#if userForm.error("imgURL")??>
+                        <#list userForm.error("imgURL") as error>
+                        <h4>${error.message}</h4>
+                        </#list>
+                    </#if>
                     <label>Url to picture</label>
                     <input class="form-control" type="url" name="imgURL" placeholder="Enter url" required>
                 </div>
                 <div class="form-group">
-
-                    @for(error <- userForm("email").error) {
-                    <h4>@(error.message)</h4>
-                    }
-
+                    <#if userForm.error("email")??>
+                        <#list userForm.error("email") as error>
+                        <h4>${error.message}</h4>
+                        </#list>
+                    </#if>
                     <label>Email address</label>
                     <input class="form-control" type="email" name="email" placeholder="Enter email" required>
                 </div>
                 <div class="form-group">
-
-                    @for(error <- userForm("team").error) {
-                    <h4>@(error.message)</h4>
-                    }
-
-                    @if(!teamExists) {
+                    <#if userForm.error("team")??>
+                        <#list userForm.error("team") as error>
+                        <h4>${error.message}</h4>
+                        </#list>
+                    </#if>
+                    <#if !teamExists>
                     <h4>The team entered does not exist</h4>
-                    }
+                    </#if>
 
                     <label>Team name</label>
                     <input class="form-control" name="team" placeholder="Enter team name" required>
                 </div>
                 <div class="form-group">
-
-                    @for(error <- userForm("scrum").error) {
-                    <h4>@(error.message)</h4>
-                    }
-
+                    <#if userForm.error("scrum")??>
+                        <#list userForm.error("scrum") as error>
+                        <h4>${error.message}</h4>
+                        </#list>
+                    </#if>
                     <label>Scrum name</label>
                     <input class="form-control" type="text" name="scrum" placeholder="Enter scrum name" required>
                 </div>
                 <div class="form-group">
-
-                    @for(error <- userForm("role").error) {
-                    <h4>@(error.message)</h4>
-                    }
-
+                    <#if userForm.error("role")??>
+                        <#list userForm.error("role") as error>
+                        <h4>${error.message}</h4>
+                        </#list>
+                    </#if>
                     <label>Job role</label>
                     <select class="form-control" name="role" required>
                         <option value="ba">Business Analyst</option>
@@ -69,11 +72,11 @@
                     </select>
                 </div>
                 <div class="form-group">
-
-                    @for(error <- userForm("location").error) {
-                    <h4>@(error.message)</h4>
-                    }
-
+                    <#if userForm.error("location")??>
+                        <#list userForm.error("location") as error>
+                        <h4>${error.message}</h4>
+                        </#list>
+                    </#if>
                     <label>Work location</label>
                     <select class="form-control" name="location" required >
                         <option value="bath_road">Bath Road</option>
@@ -87,4 +90,4 @@
         </div>
     </div>
 </div>
-}
+</@main.main>
