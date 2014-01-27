@@ -121,7 +121,7 @@ public class RegistrationTest extends SeleniumBase {
 
         //Go to overview to check person is not showing
         homePage.navigateToHomePage();
-        assertThat(homePage.personExists(NAME, TEAM, INVALID_URL), is(false));
+        assertThat(homePage.personExists(NAME, TEAM, INVALID_IMGURL), is(false));
     }
 
     @Test
@@ -140,7 +140,7 @@ public class RegistrationTest extends SeleniumBase {
 
         //Go to overview to check person is not showing
         homePage.navigateToHomePage();
-        assertThat(homePage.personExists(NAME, TEAM, INVALID_URL), is(false));
+        assertThat(homePage.personExists(NAME, TEAM, INVALID_IMGURL), is(false));
     }
 
 }
