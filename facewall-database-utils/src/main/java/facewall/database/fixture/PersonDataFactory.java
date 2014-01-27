@@ -62,7 +62,7 @@ abstract public class PersonDataFactory {
 
     public static PersonData.Builder defaultPerson() {
         final String name = randomName();
-        final String email = randomEmail();
+        final String email = emailFromName(name);
 
         return newPersonData()
             .withProperty("id", randomUUID().toString())
@@ -81,10 +81,8 @@ abstract public class PersonDataFactory {
         return current().nextInt(bound);
     }
 
-    private static String randomEmail() {
-        String firstName = firstNames.get(randomInt(firstNames.size()));
-        String lastName = lastNames.get(randomInt(lastNames.size()));
-        return firstName + "@" + lastName + ".org.uk";
-
+    private static String emailFromName(String name) {
+        String names[] = name.split(" ");
+        return names[0] + "@" + names[1] + ".edu.net";
     }
 }
