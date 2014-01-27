@@ -5,11 +5,11 @@
         </div>
         <div class="row">
             <#list results.persons as result>
-                <div class="col-md-4">
+                <div class="col-md-4 user-entry">
                     <div class="thumbnail">
-                        <h5>${result.teamName}</h5>
-                        <img src="${result.picture}"/>
-                        <h3 class="text-center">${result.name}</h3>
+                        <h5 class="user-entry-teamname">${result.teamName}</h5>
+                        <img class="user-entry-image" src="${result.picture}"/>
+                        <h3 class="text-center user-entry-name">${result.name}</h3>
                     </div>
                 </div>
             </#list>
@@ -22,7 +22,7 @@
         </div>
         <div class="row">
             <#list results.teams as result>
-                <div class="col-md-4 col-md-offset-4">
+                <div class="col-md-4 col-md-offset-4 team-entry">
                     <div class="thumbnail">
                         <h3 class="text-center">${result.name}</h3>
                     </div>

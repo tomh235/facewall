@@ -1,3 +1,6 @@
-<h5 class="personName">${person.name}</h5>
-<img src="${person.picture}"></img>
-<h5 class="teamName">${person.teamName}</h5>
+
+<div class="entry">
+    <h5 class="person-details-name">${person.name}</h5>
+    <img class="person-details-img" src="${person.picture}"></img>
+    <h5 class="person-details-teamName">${person.teamName}</h5>
+</div>

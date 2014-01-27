@@ -18,6 +18,7 @@
 </div>
 
 <script src="/assets/javascripts/search-box.js"></script>
+<script src="assets/javascripts/jquery.fakecrop.js"></script>
 <script>
     var searchInput = $("#searchInput");
     var result = $("#result");

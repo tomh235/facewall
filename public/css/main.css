@@ -43,9 +43,22 @@ form[role=form] .submit{
     width: 320px;
 }
 
+/* Search - User entries */
+
+.user-entry-teamname {
+    min-height: 15px;
+}
+
+.user-entry-image {
+    height: 263px!important;
+}
+
+/* Search - Person Details */
+
+
 /* Single person */
 
-.single-person-pic {
+.single-person-pic, .person-details-img {
     margin: 0 auto;
     max-width: 100%;
     max-height: 400px;
