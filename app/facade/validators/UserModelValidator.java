@@ -2,7 +2,6 @@ package facade.validators;
 
 import data.TeamRepository;
 import data.dto.PersonInformation;
-import domain.Query;
 import domain.Team;
 import model.UserModel;
 
@@ -27,9 +26,13 @@ public class UserModelValidator {
 
     public PersonInformation createPersonInformation(UserModel userModel) {
         return newPersonInformation()
-                .withId(randomUUID().toString())
+                .withId(randomUUID().toString()) // TODO: change to user-chosen permalink (or email)
                 .named(userModel.name)
                 .withPicture(userModel.imgURL)
+                .withEmail(userModel.email)
+                //.withRole(userModel.role)
+                //.withLocation(userModel.location)
+                //.withScrum(userModel.scrum)
                 .build();
     }
 }

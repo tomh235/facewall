@@ -18,7 +18,7 @@ public class PersonDetailsModelMapperTest{
 
     @Test
     public void should_map_person() {
-       MockPerson person = new MockPerson(PersonId.newPersonId("id"), "Hello World", "picture", null);
+       MockPerson person = new MockPerson(PersonId.newPersonId("id"), "Hello World", "picture", null, "email@testemail.com");
        person.setTeam(new StubbedTeam("blah", "blah", Arrays.<Person>asList(person)));
 
        PersonDetailsModel result = personDetailsModelMapper.map(person);

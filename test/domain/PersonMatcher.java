@@ -1,12 +1,9 @@
 package domain;
 
-import org.hamcrest.TypeSafeDiagnosingMatcher;
-import util.CompositeMatcher;
-import org.hamcrest.Matcher;
 import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-
-import java.util.List;
+import util.CompositeMatcher;
 
 import static domain.NoTeam.noTeam;
 
@@ -47,6 +44,23 @@ public class PersonMatcher extends CompositeMatcher<Person> {
             @Override
             public void describeTo(Description description) {
                 description.appendText("whose picture is at ").appendValue(picture);
+            }
+        });
+        return this;
+
+    }
+
+    public PersonMatcher withEmail(final String email) {
+        add(new TypeSafeMatcher<Person>() {
+
+            @Override
+            public boolean matchesSafely(Person target) {
+                return email.equals(target.email());
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("whose email is at ").appendValue(email);
             }
         });
         return this;

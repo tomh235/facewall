@@ -48,4 +48,15 @@ public class PersonNodeTest {
         personNode.setProperties(personInformation);
         verify(wrappedNode).setProperty("picture", "billy.img");
     }
+
+    @Test
+    public void setProperties_copies_email_from_person_information() throws Exception {
+        PersonInformation personInformation = newPersonInformation()
+                .withEmail("email@testemail.com")
+                .build();
+
+        personNode.setProperties(personInformation);
+        verify(wrappedNode).setProperty("email", "email@testemail.com");
+    }
+
 }

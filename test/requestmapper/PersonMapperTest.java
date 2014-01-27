@@ -19,10 +19,12 @@ public class PersonMapperTest {
     PersonMapper personMapper = new PersonMapper();
 
     String imageURL = "http://www.image.jpeg";
+    String email = "email@testemail.com";
     UserModel userModel = aUserModel()
             .named("bob")
             .withImageURL(imageURL)
             .inTeam("ecom")
+            .withEmail(email)
             .build();
 
     @Test
@@ -31,6 +33,7 @@ public class PersonMapperTest {
         assertThat(result, is(aPerson()
                 .named("bob")
                 .withPicture(imageURL)
+                .withEmail(email)
         ));
     }
 
