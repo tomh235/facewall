@@ -21,8 +21,9 @@ public class RegistrationTest extends SeleniumBase {
     private HomePage homePage;
     private RegisterPage registerPage;
     private final String NAME = "George Weasley";
+    private final String EMPTY_NAME ="";
     private final String IMGURL = "http://theweasleys.com/george.jpg";
-    private final String INVALID_URL = "notaurl";
+    private final String INVALID_IMGURL = "notaurl";
     private final String EMAIL = "george@theweasleys.com";
     private final String INVALID_EMAIL = "notanemail.com";
     private final String TEAM = "ecom";
@@ -108,7 +109,7 @@ public class RegistrationTest extends SeleniumBase {
     public void formRejectsInvalidImgUrl() {
         //Fill in form
         registerPage.enterFieldInForm("name", NAME);
-        registerPage.enterFieldInForm("imgURL", INVALID_URL);
+        registerPage.enterFieldInForm("imgURL", INVALID_IMGURL);
         registerPage.enterFieldInForm("email", EMAIL);
         registerPage.enterFieldInForm("team", TEAM);
         registerPage.enterFieldInForm("scrum", SCRUM);
@@ -122,4 +123,24 @@ public class RegistrationTest extends SeleniumBase {
         homePage.navigateToHomePage();
         assertThat(homePage.personExists(NAME, TEAM, INVALID_URL), is(false));
     }
+
+    @Test
+    public void formRejectsEmptyName() {
+        //Fill in form
+        registerPage.enterFieldInForm("name", EMPTY_NAME);
+        registerPage.enterFieldInForm("imgURL", IMGURL);
+        registerPage.enterFieldInForm("email", EMAIL);
+        registerPage.enterFieldInForm("team", TEAM);
+        registerPage.enterFieldInForm("scrum", SCRUM);
+        registerPage.selectDropdown("role", ROLE);
+        registerPage.selectDropdown("location", LOCATION);
+        registerPage.clickSubmit();
+
+        assertThat(registerPage.onRegistrationPage(), is(true));
+
+        //Go to overview to check person is not showing
+        homePage.navigateToHomePage();
+        assertThat(homePage.personExists(NAME, TEAM, INVALID_URL), is(false));
+    }
+
 }

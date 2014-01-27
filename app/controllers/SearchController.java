@@ -9,7 +9,6 @@ import model.TeamDetailsModel;
 import play.mvc.Controller;
 import play.mvc.Result;
 import requestmapper.SearchQueryMapper;
-import util.freemarker.TemplateHelper;
 
 import static application.Facewall.facewall;
 import static util.freemarker.TemplateHelper.view;
@@ -25,7 +24,7 @@ public class SearchController extends Controller {
 
     public static Result searchResults() {
         Result result;
-        Query query = searchQueryMapper.map(request());
+        Query query = searchQueryMapper.mapCaseInsensitively(request());
         SearchResultsModel searchResultsModel = searchFacade.createSearchResultsModel(query);
 
         //This looks like scala code that has been translated into java. That's fine, but this kind of java code

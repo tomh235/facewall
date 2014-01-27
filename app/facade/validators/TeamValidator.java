@@ -2,9 +2,8 @@ package facade.validators;
 
 import data.TeamRepository;
 import domain.Query;
-import model.UserModel;
 
-import static domain.Query.newQuery;
+import static domain.Query.newCaseSensitiveQuery;
 
 public class TeamValidator {
     private final TeamRepository repository;
@@ -14,7 +13,7 @@ public class TeamValidator {
     }
 
     public boolean validate(String teamName) {
-        Query teamQuery = newQuery(teamName);
+        Query teamQuery = newCaseSensitiveQuery(teamName);
         return !repository.queryTeams(teamQuery).isEmpty();
     }
 }

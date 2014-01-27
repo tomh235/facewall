@@ -18,8 +18,12 @@ public class Query {
         return emptyQuery;
     }
 
-    public static Query newQuery(String keywords) {
+    public static Query newCaseSensitiveQuery(String keywords) {
         return new Query(newQueryString(".*" + keywords + ".*"));
+    }
+
+    public static Query newCaseInsensitiveQuery(String keywords) {
+        return new Query(newQueryString("(?i).*" + keywords + ".*"));
     }
 
     public static Query newExactQuery(String exactMatch) {

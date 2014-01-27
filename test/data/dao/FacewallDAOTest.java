@@ -18,7 +18,7 @@ import static data.dao.database.DatabaseQueryBuilderMatcher.aDatabaseQueryBuilde
 import static data.dao.database.DatabaseQueryMatchers.*;
 import static data.datatype.PersonId.newPersonId;
 import static data.datatype.TeamId.newTeamId;
-import static domain.Query.newQuery;
+import static domain.Query.newCaseSensitiveQuery;
 import static domain.datatype.QueryString.newQueryString;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.sameInstance;
@@ -31,7 +31,7 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class FacewallDAOTest {
 
-    private static final Query someQuery = newQuery("blah");
+    private static final Query someQuery = newCaseSensitiveQuery("blah");
     private static final TeamId someTeamId = newTeamId("some-team-id");
     private static final PersonId somePersonId = newPersonId("some-person-id");
     

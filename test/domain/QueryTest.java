@@ -1,21 +1,30 @@
 package domain;
 
-import domain.Query;
 import org.junit.Test;
 
 import static domain.Query.emptyQuery;
-import static domain.Query.newQuery;
+import static domain.Query.newCaseInsensitiveQuery;
+import static domain.Query.newCaseSensitiveQuery;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 public class QueryTest {
 
     @Test
-    public void query_for_keywords() {
-        Query result = newQuery("keywords");
+    public void case_sensitive_query_for_keywords() {
+        Query result = newCaseSensitiveQuery("keywords");
 
         assertThat(result.queryString().value, is(
            ".*keywords.*"
+        ));
+    }
+
+    @Test
+    public void case_insensitive_query_for_keywords() {
+        Query result = newCaseInsensitiveQuery("keywords");
+
+        assertThat(result.queryString().value, is(
+                "(?i).*keywords.*"
         ));
     }
 
