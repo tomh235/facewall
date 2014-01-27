@@ -66,7 +66,7 @@ public class RegistrationTest extends SeleniumBase {
         registerPage.enterFieldInForm("name", NAME);
         registerPage.enterFieldInForm("imgURL", IMGURL);
         registerPage.enterFieldInForm("email", EMAIL);
-        registerPage.enterFieldInForm("team", TEAM);
+        registerPage.selectDropdown("team", TEAM);
         registerPage.enterFieldInForm("scrum", SCRUM);
         registerPage.selectDropdown("role", ROLE);
         registerPage.selectDropdown("location", LOCATION);
@@ -92,7 +92,7 @@ public class RegistrationTest extends SeleniumBase {
         registerPage.enterFieldInForm("name", NAME);
         registerPage.enterFieldInForm("imgURL", IMGURL);
         registerPage.enterFieldInForm("email", INVALID_EMAIL);
-        registerPage.enterFieldInForm("team", TEAM);
+        registerPage.selectDropdown("team", TEAM);
         registerPage.enterFieldInForm("scrum", SCRUM);
         registerPage.selectDropdown("role", ROLE);
         registerPage.selectDropdown("location", LOCATION);
@@ -111,7 +111,7 @@ public class RegistrationTest extends SeleniumBase {
         registerPage.enterFieldInForm("name", NAME);
         registerPage.enterFieldInForm("imgURL", INVALID_IMGURL);
         registerPage.enterFieldInForm("email", EMAIL);
-        registerPage.enterFieldInForm("team", TEAM);
+        registerPage.selectDropdown("team", TEAM);
         registerPage.enterFieldInForm("scrum", SCRUM);
         registerPage.selectDropdown("role", ROLE);
         registerPage.selectDropdown("location", LOCATION);
@@ -130,7 +130,7 @@ public class RegistrationTest extends SeleniumBase {
         registerPage.enterFieldInForm("name", EMPTY_NAME);
         registerPage.enterFieldInForm("imgURL", IMGURL);
         registerPage.enterFieldInForm("email", EMAIL);
-        registerPage.enterFieldInForm("team", TEAM);
+        registerPage.selectDropdown("team", TEAM);
         registerPage.enterFieldInForm("scrum", SCRUM);
         registerPage.selectDropdown("role", ROLE);
         registerPage.selectDropdown("location", LOCATION);

@@ -73,7 +73,10 @@ final public class Facewall {
             teamDetailsModelMapper
         );
 
-        SignUpFacade signUpFacade = new SignUpFacade(adminDAO, personRepository);
+        SignUpFacade signUpFacade = new SignUpFacade(
+                adminDAO,
+                personRepository,
+                teamRepository);
         UserModelValidator userModelValidator = new UserModelValidator(teamRepository);
 
         return new Facewall(overviewFacade, searchFacade, personDetailsFacade, signUpFacade, userModelValidator);

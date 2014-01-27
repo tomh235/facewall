@@ -1,6 +1,7 @@
 package facade;
 
 import data.PersonRepository;
+import data.TeamRepository;
 import data.dao.AdminDAO;
 import data.datatype.PersonId;
 import data.dto.PersonInformation;
@@ -23,10 +24,12 @@ public class SignUpFacadeTest {
     private static final Team someTeam = mock(Team.class);
 
     @Mock private PersonRepository mockPersonRepository;
+    @Mock private TeamRepository mockTeamRepository;
     @Mock private AdminDAO adminDAO;
 
     @InjectMocks
     private SignUpFacade signUpFacade;
+
 
     @Test
     public void register_person_saves_person_to_the_database() throws Exception {
@@ -50,5 +53,11 @@ public class SignUpFacadeTest {
 
         verify(mockPersonRepository).findPersonById(newPersonId("person-id"));
         verify(mockTeam).addMember(expectedPerson);
+    }
+
+    @Test
+    public void get_available_teams_delegates_to_team_repository() throws Exception {
+        signUpFacade.getAvailableTeams();
+        verify(mockTeamRepository).listTeams();
     }
 }

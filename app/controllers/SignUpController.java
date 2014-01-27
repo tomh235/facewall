@@ -1,5 +1,7 @@
 package controllers;
 
+import data.TeamRepository;
+import domain.Team;
 import facade.SignUpFacade;
 import facade.validators.UserModelValidator;
 import facade.validators.ValidatedUserModel;
@@ -7,6 +9,8 @@ import model.UserModel;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+
+import java.util.List;
 
 import static application.Facewall.facewall;
 import static util.freemarker.TemplateHelper.view;
@@ -17,9 +21,13 @@ public class SignUpController extends Controller {
     private static final SignUpFacade signUpFacade = facewall().signUpFacade;
     private static final UserModelValidator userModelValidator = facewall().userModelValidator;
 
-       // TODO - Charlie : Implement a list of teams in the database on the signUpForm
+    // TODO - Charlie : Implement a list of teams in the database on the signUpForm
         public static Result blankSignUpForm() {
-            return ok(view("signupform.ftl", withArgs("userForm", signUpForm), withArgs("teamExists", true)));
+            List<Team> teamList= signUpFacade.getAvailableTeams();
+            return ok(view("signupform.ftl",
+                    withArgs("teamList", teamList),
+                    withArgs("userForm", signUpForm)
+                    ));
         }
 
         //How about using decorator pattern to chain together Validator<Team> and Validator<Person>, and then
@@ -36,5 +44,4 @@ public class SignUpController extends Controller {
 
             return ok(view("signupsummary.ftl", withArgs("userModel", newUserModel)));
         }
-
 }
