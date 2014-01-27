@@ -10,7 +10,7 @@ public class RegisterPage {
         WebBrowser.findElement(By.name(name)).sendKeys(value);
     }
 
-    public void selectDropdown(String name, String value){
+    public void selectDropdown(String name, String value) {
         Select select = new Select(WebBrowser.findElement(By.name(name)));
         select.selectByVisibleText(value);
     }
@@ -21,5 +21,9 @@ public class RegisterPage {
 
     public String getSummaryItem(String className) {
         return WebBrowser.findElement(By.className(className)).getText();
+    }
+
+    public boolean onRegistrationPage() {
+        return WebBrowser.getUrl().matches(".*\\/signupform$");
     }
 }

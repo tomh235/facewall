@@ -1,9 +1,7 @@
 package uk.co.o2.selenium.journeys;
 
 import facewall.database.FacewallTestDatabase;
-import org.junit.After;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import org.neo4j.graphdb.GraphDatabaseService;
 import uk.co.o2.selenium.common.SeleniumBase;
 import uk.co.o2.selenium.pages.HomePage;
@@ -22,13 +20,15 @@ public class RegistrationTest extends SeleniumBase {
     private static FacewallTestDatabase facewallDb;
     private HomePage homePage;
     private RegisterPage registerPage;
-    private final String name = "George Weasley";
-    private final String imgUrl = "http://theweasleys.com/george.jpg";
-    private final String email = "george@theweasleys.com";
-    private final String team = "ecom";
-    private final String scrum = "weasleys";
-    private final String role = "Developer";
-    private final String location = "Bath Road";
+    private final String NAME = "George Weasley";
+    private final String IMGURL = "http://theweasleys.com/george.jpg";
+    private final String INVALID_URL = "notaurl";
+    private final String EMAIL = "george@theweasleys.com";
+    private final String INVALID_EMAIL = "notanemail.com";
+    private final String TEAM = "ecom";
+    private final String SCRUM = "weasleys";
+    private final String ROLE = "Developer";
+    private final String LOCATION = "Bath Road";
 
     // TODO - embedded/single-use dBs for tests?
     @BeforeClass
@@ -37,49 +37,89 @@ public class RegistrationTest extends SeleniumBase {
         facewallDb = createFacewallTestDatabaseWrappingExistingDatabase(neoDb);
         facewallDb.clear();
         facewallDb.initialise();
-    }
-
-    @After
-    public void afterTest(){
-        facewallDb.clear();
-        facewallDb.initialise();
-    }
-
-    @Test
-    public void canRegisterUser() {
         facewallDb.seedFixtures(newFixtures().withTeams(
                 defaultTeamWithDefaultMembers()
                         .withProperty("name", "ecom")
         ));
+    }
 
+    @Before
+    public void beforeTest(){
         homePage = new HomePage();
         homePage.navigateToHomePage();
         //Initial landing on homepage
 
         registerPage = homePage.clickRegistrationTab();
         //Now on registration page
+    }
 
+    @AfterClass
+    public static void afterTest(){
+        facewallDb.clear();
+        facewallDb.initialise();
+    }
+
+    @Test
+    public void canRegisterUser() {
         //Fill in form
-        registerPage.enterFieldInForm("name", name);
-        registerPage.enterFieldInForm("imgURL", imgUrl);
-        registerPage.enterFieldInForm("email", email);
-        registerPage.enterFieldInForm("team", team);
-        registerPage.enterFieldInForm("scrum", scrum);
-        registerPage.selectDropdown("role", role);
-        registerPage.selectDropdown("location", location);
+        registerPage.enterFieldInForm("name", NAME);
+        registerPage.enterFieldInForm("imgURL", IMGURL);
+        registerPage.enterFieldInForm("email", EMAIL);
+        registerPage.enterFieldInForm("team", TEAM);
+        registerPage.enterFieldInForm("scrum", SCRUM);
+        registerPage.selectDropdown("role", ROLE);
+        registerPage.selectDropdown("location", LOCATION);
         registerPage.clickSubmit();
 
         //Check all details submitted are returned
-        assertThat(registerPage.getSummaryItem("name"), is(name));
-        assertThat(registerPage.getSummaryItem("imgUrl"), is(imgUrl));
-        assertThat(registerPage.getSummaryItem("email"), is(email));
-        assertThat(registerPage.getSummaryItem("team"), is(team));
-        assertThat(registerPage.getSummaryItem("scrum"), is(scrum));
-        assertThat(registerPage.getSummaryItem("role"), is(role));
-        assertThat(registerPage.getSummaryItem("location"), is(location));
+        assertThat(registerPage.getSummaryItem("name"), is(NAME));
+        assertThat(registerPage.getSummaryItem("imgUrl"), is(IMGURL));
+        assertThat(registerPage.getSummaryItem("email"), is(EMAIL));
+        assertThat(registerPage.getSummaryItem("team"), is(TEAM));
+        assertThat(registerPage.getSummaryItem("scrum"), is(SCRUM));
+        assertThat(registerPage.getSummaryItem("role"), is(ROLE));
+        assertThat(registerPage.getSummaryItem("location"), is(LOCATION));
 
         //Go to overview to check person is showing
         homePage.navigateToHomePage();
-        assertThat(homePage.personExists(name, team, imgUrl), is(true));
+        assertThat(homePage.personExists(NAME, TEAM, IMGURL), is(true));
+    }
+
+    @Test
+    public void formRejectsInvalidEmail() {
+        //Fill in form
+        registerPage.enterFieldInForm("name", NAME);
+        registerPage.enterFieldInForm("imgURL", IMGURL);
+        registerPage.enterFieldInForm("email", INVALID_EMAIL);
+        registerPage.enterFieldInForm("team", TEAM);
+        registerPage.enterFieldInForm("scrum", SCRUM);
+        registerPage.selectDropdown("role", ROLE);
+        registerPage.selectDropdown("location", LOCATION);
+        registerPage.clickSubmit();
+
+        assertThat(registerPage.onRegistrationPage(), is(true));
+
+        //Go to overview to check person is not showing
+        homePage.navigateToHomePage();
+        assertThat(homePage.personExists(NAME, TEAM, IMGURL), is(false));
+    }
+
+    @Test
+    public void formRejectsInvalidImgUrl() {
+        //Fill in form
+        registerPage.enterFieldInForm("name", NAME);
+        registerPage.enterFieldInForm("imgURL", INVALID_URL);
+        registerPage.enterFieldInForm("email", EMAIL);
+        registerPage.enterFieldInForm("team", TEAM);
+        registerPage.enterFieldInForm("scrum", SCRUM);
+        registerPage.selectDropdown("role", ROLE);
+        registerPage.selectDropdown("location", LOCATION);
+        registerPage.clickSubmit();
+
+        assertThat(registerPage.onRegistrationPage(), is(true));
+
+        //Go to overview to check person is not showing
+        homePage.navigateToHomePage();
+        assertThat(homePage.personExists(NAME, TEAM, IMGURL), is(false));
     }
 }
