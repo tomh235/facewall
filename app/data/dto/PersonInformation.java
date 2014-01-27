@@ -12,11 +12,14 @@ public class PersonInformation {
     private final PersonId id;
     private final String name;
     private final String picture;
+    private final String email;
+
 
     private PersonInformation(Builder builder) {
         id = builder.id;
         name = builder.name;
         picture = builder.picture;
+        email = builder.email;
     }
 
     public static Builder newPersonInformation() {
@@ -39,11 +42,14 @@ public class PersonInformation {
         return picture;
     }
 
+    public String getEmail() { return email; }
+
 
     public static class Builder {
         private PersonId id = noPersonId();
         private String name = "";
         private String picture = "";
+        private String email = "";
 
         public PersonInformation build() {
             return new PersonInformation(this);
@@ -61,6 +67,11 @@ public class PersonInformation {
 
         public Builder withPicture(String picture) {
             this.picture = picture;
+            return this;
+        }
+
+        public Builder withEmail(String email) {
+            this.email = email;
             return this;
         }
     }

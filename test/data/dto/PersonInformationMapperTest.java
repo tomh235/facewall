@@ -47,6 +47,16 @@ public class PersonInformationMapperTest {
     }
 
     @Test
+    public void map_email() throws Exception {
+        Node mockNode = createMockNodeWithProperties(new HashMap<String, Object>() {{
+            put("email", "email@testemail.com");
+        }});
+
+        PersonInformation result = personInformationMapper.map(mockNode);
+        assertThat(result.getPicture(), is("email@testemail.com"));
+    }
+
+    @Test
     public void map_null_to_no_person_information() throws Exception {
         PersonInformation result = personInformationMapper.map(null);
 

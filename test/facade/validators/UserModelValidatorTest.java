@@ -11,8 +11,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.List;
-
 import static data.datatype.PersonId.noPersonId;
 import static data.dto.PersonInformationMatcher.aPersonInformation;
 import static domain.QueryMatcher.aQuery;
@@ -22,9 +20,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.argThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserModelValidatorTest {
@@ -60,6 +56,20 @@ public class UserModelValidatorTest {
 
         assertThat(result, is(aPersonInformation()
                 .withPicture("img.url")
+        ));
+    }
+
+    @Test
+    public void creates_personInformation_email_from_valid_user_model_email() throws Exception {
+        stubTeamRepository();
+
+        UserModel userModel = new UserModel();
+        userModel.email = "email@testemail.com";
+
+        PersonInformation result = userModelValidator.validate(userModel).getPersonInformation();
+
+        assertThat(result, is(aPersonInformation()
+                .withEmail("email@testemail.com")
         ));
     }
 

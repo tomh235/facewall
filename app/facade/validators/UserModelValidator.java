@@ -2,13 +2,11 @@ package facade.validators;
 
 import data.TeamRepository;
 import data.dto.PersonInformation;
-import domain.Query;
 import domain.Team;
 import model.UserModel;
 
 import static data.dto.PersonInformation.newPersonInformation;
 import static domain.Query.newExactQuery;
-import static java.util.UUID.randomUUID;
 
 public class UserModelValidator {
 
@@ -27,9 +25,13 @@ public class UserModelValidator {
 
     public PersonInformation createPersonInformation(UserModel userModel) {
         return newPersonInformation()
-                .withId(randomUUID().toString())
+                .withId(userModel.email) // TODO: change to user-chosen permalink
                 .named(userModel.name)
                 .withPicture(userModel.imgURL)
+                .withEmail(userModel.email)
+                //.withRole(userModel.role)
+                //.withLocation(userModel.location)
+                //.withScrum(userModel.scrum)
                 .build();
     }
 }
