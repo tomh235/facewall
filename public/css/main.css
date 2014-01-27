@@ -30,6 +30,7 @@ h1, h2, h3, h4, h5, h6 {
 .entry { text-align: center; border-bottom: 1px solid #ccc; margin-bottom: 30px; padding-bottom: 20px;}
 .entry h5.teamName { height: 1.1em; }
 .entry .imgWrapper { margin: 15px 0 0 0; border-radius: 200px; display: inline-block; box-sizing: content-box; border: 15px solid #fff; overflow:hidden;}
+.entry .imgWrapper img {min-height: 200px; min-width: 200px;}
 .entry h3.entryName { height: 2.2em;}
 
 /* Register/Confirmation  */
