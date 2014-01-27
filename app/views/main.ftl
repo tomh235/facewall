@@ -24,7 +24,7 @@
             $("ul.nav").children().eq(${activeTabIndex}).addClass("active");
         </script>
 
-        <#nested/>
+        <#nested>
     </body>
 </html>
 
