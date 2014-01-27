@@ -30,7 +30,7 @@ public class HomePage {
             String currentName = element.findElement(By.className("entryName")).getText();
             String currentTeam = element.findElement(By.className("teamName")).getText();
             String currentImgUrl  = element.findElement(By.cssSelector("img")).getAttribute("src");
-            if(currentName.equals(name) && currentTeam.equals(team) && currentImgUrl.equals(imgUrl)) {
+            if (currentName.equals(name) && currentTeam.equals(team) && currentImgUrl.equals(imgUrl)) {
                 return true;
             }
         }
@@ -38,27 +38,22 @@ public class HomePage {
     }
 
     public boolean hasTitle() {
-        if (WebBrowser.findElement(By.id("homeTitle")).isDisplayed()) {
-            return true;
-
-        } else return false;
+        return WebBrowser.findElement(By.id("homeTitle")).isDisplayed();
     }
 
     public Boolean hasNavbar() {
-        if (WebBrowser.findElement(By.className("nav")).isDisplayed()){
-            return  true;
-        } else return false;
+        return WebBrowser.findElement(By.className("nav")).isDisplayed();
     }
 
     public Boolean hasPeople() {
-        if (WebBrowser.findElement(By.className("entry")).isDisplayed())   {
-            return true;
-        } else return false;
+        return WebBrowser.findElement(By.className("entry")).isDisplayed();
+    }
+
+    public Boolean peopleHaveImages() {
+        return WebBrowser.findElement(By.className("avatar")).isDisplayed();
     }
 
     public Boolean hasFooter() {
-        if (WebBrowser.findElement(By.className("footer")).isDisplayed()){
-            return true;
-        } else return false;
+        return WebBrowser.findElement(By.className("footer")).isDisplayed();
     }
 }

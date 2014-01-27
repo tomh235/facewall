@@ -73,7 +73,7 @@ public class SearchTest extends SeleniumBase {
 
     @Test
     public void noTeamSearchResults() throws Exception {
-        facewallDb.seedFixtures(newFixtures().withTeams(defaultTeamWithDefaultMembers().withProperty("name", "ecom")));
+        facewallDb.seedFixtures(newFixtures().withTeams(defaultTeamWithDefaultMembers().withProperty("name", "Ecom Ars")));
         searchResultsPage = searchPage.searchTeam("Team unknown");
         assertThat(searchResultsPage.teamExists("Team unknown"), is(false));
     }
