@@ -43,6 +43,13 @@ form[role=form] .submit{
     width: 320px;
 }
 
+/* Search */
+
+.results-counter {
+    text-align: center;
+    font-size: 1em;
+}
+
 /* Search - User entries */
 
 .user-entry-teamname {
