@@ -6,7 +6,7 @@ import uk.co.o2.selenium.common.WebBrowser;
 public class SinglePersonPage {
 
     public String getPersonName() {
-        return WebBrowser.findElement(By.className("personName")).getText();
+        return WebBrowser.findElement(By.className("person-details-name")).getText();
     }
 
     public Boolean personExists(String personName) {

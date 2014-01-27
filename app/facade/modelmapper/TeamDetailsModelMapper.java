@@ -5,6 +5,6 @@ import model.TeamDetailsModel;
 
 public class TeamDetailsModelMapper {
     public TeamDetailsModel map(Team team) {
-        return new TeamDetailsModel(team.name());
+        return new TeamDetailsModel(team.name(), team.colour());
     }
 }
