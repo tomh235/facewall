@@ -62,11 +62,13 @@ abstract public class PersonDataFactory {
 
     public static PersonData.Builder defaultPerson() {
         final String name = randomName();
+        final String email = randomEmail();
 
         return newPersonData()
             .withProperty("id", randomUUID().toString())
             .withProperty("name", name)
-            .withProperty("picture", "http://dummyimage.com/200x200/000/fff.png&text=" + name);
+            .withProperty("picture", "http://dummyimage.com/200x200/000/fff.png&text=" + name)
+            .withProperty("email", email);
     }
 
     private static String randomName() {
@@ -77,5 +79,12 @@ abstract public class PersonDataFactory {
 
     private static int randomInt(int bound) {
         return current().nextInt(bound);
+    }
+
+    private static String randomEmail() {
+        String firstName = firstNames.get(randomInt(firstNames.size()));
+        String lastName = lastNames.get(randomInt(lastNames.size()));
+        return firstName + "@" + lastName + ".org.uk";
+
     }
 }

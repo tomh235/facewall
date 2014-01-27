@@ -41,4 +41,14 @@ public class MutablePersonTest {
 
         assertThat(mutablePerson.picture(), is("img"));
     }
+
+    @Test
+    public void email_delegates_to_personInformation() throws Exception {
+        PersonInformation personInformation = mock(PersonInformation.class);
+        when(personInformation.getEmail()).thenReturn("email@testemail.com");
+
+        MutablePerson mutablePerson = new MutablePerson(personInformation);
+
+        assertThat(mutablePerson.email(), is("email@testemail.com"));
+    }
 }

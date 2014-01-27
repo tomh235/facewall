@@ -53,7 +53,7 @@ public class PersonInformationMapperTest {
         }});
 
         PersonInformation result = personInformationMapper.map(mockNode);
-        assertThat(result.getPicture(), is("email@testemail.com"));
+        assertThat(result.getEmail(), is("email@testemail.com"));
     }
 
     @Test

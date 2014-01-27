@@ -41,6 +41,20 @@ public class PersonSearchResultMatcher extends CompositeMatcher<PersonSearchResu
         return this;
     }
 
+    public PersonSearchResultMatcher withEmail(final String email) {
+        add(new TypeSafeMatcher<PersonSearchResult>() {
+            @Override
+            public boolean matchesSafely(PersonSearchResult target) {
+                return target.email.equals(email);
+            }
+            @Override
+            public void describeTo(Description description) {
+                description.appendText(String.format("whose has email  %s", email));
+            }
+        });
+        return this;
+    }
+
     public PersonSearchResultMatcher inTeam(final String teamName) {
         add(new TypeSafeMatcher<PersonSearchResult>() {
             @Override

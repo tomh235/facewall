@@ -78,6 +78,27 @@ public class PersonRepositoryTest {
     }
 
     @Test
+    public void list_persons_retrieves_person_emails_from_db() {
+        facewallTestDatabase.seedFixtures(newFixtures()
+                .withTeamlessPersons(defaultPerson()
+                        .withProperty("email", "email1@testemail.com")
+                ).withTeams(defaultTeam()
+                        .withMembers(defaultPerson()
+                                .withProperty("email", "email2@testemail.com")
+                        )
+                )
+        );
+
+        List<Person> result = repository.listPersons();
+        assertThat(result, arePersons()
+                .whichContainExhaustively(
+                        aPerson().withEmail("email1@testemail.com"),
+                        aPerson().withEmail("email2@testemail.com")
+                )
+        );
+    }
+
+    @Test
     public void list_persons_lists_all_persons_in_db() {
         facewallTestDatabase.seedFixtures(newFixtures()
                 .withTeams(
@@ -119,16 +140,19 @@ public class PersonRepositoryTest {
                                 .withMembers(
                                         defaultPerson()
                                                 .withProperty("name", "Earl Grey")
-                                                .withProperty("picture", "whittard-earl-grey.png"),
+                                                .withProperty("picture", "whittard-earl-grey.png")
+                                                .withProperty("email", "email1@testemail.com"),
                                         defaultPerson()
                                                 .withProperty("name", "Yorkshire Tea")
                                                 .withProperty("picture", "The North.png")
+                                                .withProperty("email", "email2@testemail.com")
                                 ),
                         defaultTeam()
                                 .withMembers(
                                         defaultPerson()
                                                 .withProperty("name", "Gold blend")
                                                 .withProperty("picture", "nescafe-gold-blend.img")
+                                                .withProperty("email", "email3@testemail.com")
                                 )
                 )
         );
@@ -138,13 +162,17 @@ public class PersonRepositoryTest {
         assertThat(result, arePersons()
                 .whichContains(aPerson()
                         .named("Earl Grey")
-                        .withPicture("whittard-earl-grey.png"))
+                        .withPicture("whittard-earl-grey.png")
+                        .withEmail("email1@testemail.com"))
                 .whichContains(aPerson()
                         .named("Yorkshire Tea")
-                        .withPicture("The North.png"))
+                        .withPicture("The North.png")
+                        .withEmail("email2@testemail.com"))
+
                 .whichContains(aPerson()
                         .named("Gold blend")
-                        .withPicture("nescafe-gold-blend.img"))
+                        .withPicture("nescafe-gold-blend.img")
+                        .withEmail("email3@testemail.com"))
         );
     }
 
@@ -188,10 +216,12 @@ public class PersonRepositoryTest {
                 .withTeamlessPersons(
                         defaultPerson()
                                 .withProperty("name", "development manager")
-                                .withProperty("picture", "important-looking-person1.img"),
+                                .withProperty("picture", "important-looking-person1.img")
+                                .withProperty("email", "email1@testemail.com"),
                         defaultPerson()
                                 .withProperty("name", "delivery manager")
                                 .withProperty("picture", "important-looking-person2.img")
+                                .withProperty("email", "email2@testemail.com")
                 )
         );
 
@@ -201,10 +231,12 @@ public class PersonRepositoryTest {
                 .whichContains(aPerson()
                         .named("development manager")
                         .withPicture("important-looking-person1.img")
+                        .withEmail("email1@testemail.com")
                         .whoIsNotInATeam())
                 .whichContains(aPerson()
                         .named("delivery manager")
                         .withPicture("important-looking-person2.img")
+                        .withEmail("email2@testemail.com")
                         .whoIsNotInATeam())
         );
     }

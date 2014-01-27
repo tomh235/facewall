@@ -26,6 +26,10 @@ class MutablePerson implements Person {
         return personInformation.getPicture();
     }
 
+    @Override final public String email() {
+        return personInformation.getEmail();
+    }
+
     @Override public Team team() {
         return team;
     }

@@ -20,6 +20,11 @@ public class PersonMapper {
             }
 
             @Override
+            public String email() {
+                return userModel.email;
+            }
+
+            @Override
             public Team team() {
                 return team;
             }

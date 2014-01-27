@@ -43,6 +43,16 @@ public class PersonNodeMapperTest {
     }
 
     @Test
+    public void map_node_properties_maps_email_to_email_property() {
+        Person mockPerson = mock(Person.class);
+        when(mockPerson.email()).thenReturn("email@testemail.com");
+
+        Map<String, String> result = personNodeMapper.mapNodeProperties(mockPerson);
+
+        assertThat(result.get("email"), is("email@testemail.com"));
+    }
+
+    @Test
     public void map_node_relationships_maps_team_to_HAS_TEAM_relationship_with_teams_node() {
         Node mockTeamNode = mock(Node.class);
         Map<Node, RelationshipTypes> result = personNodeMapper.mapNodeRelationships(mockTeamNode);

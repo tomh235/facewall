@@ -13,6 +13,7 @@ public class PersonNodeMapper {
         Map<String, String> propertyList = new HashMap<>();
         propertyList.put("name", person.name());
         propertyList.put("imageURL", person.picture());
+        propertyList.put("email", person.email());
 
         return propertyList;
     }

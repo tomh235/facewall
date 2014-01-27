@@ -7,6 +7,7 @@ import model.UserModel;
 
 import static data.dto.PersonInformation.newPersonInformation;
 import static domain.Query.newExactQuery;
+import static java.util.UUID.randomUUID;
 
 public class UserModelValidator {
 
@@ -25,7 +26,7 @@ public class UserModelValidator {
 
     public PersonInformation createPersonInformation(UserModel userModel) {
         return newPersonInformation()
-                .withId(userModel.email) // TODO: change to user-chosen permalink
+                .withId(randomUUID().toString()) // TODO: change to user-chosen permalink (or email)
                 .named(userModel.name)
                 .withPicture(userModel.imgURL)
                 .withEmail(userModel.email)
