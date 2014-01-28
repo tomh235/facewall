@@ -6,7 +6,6 @@ import domain.Team;
 import model.UserModel;
 
 public class PersonMapper {
-
     public Person map(final UserModel userModel, final Team team) {
         return new Person() {
             @Override

@@ -1,5 +1,6 @@
 package uk.co.o2.selenium.common;
 
+import com.google.common.base.Function;
 import com.thoughtworks.selenium.DefaultSelenium;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
@@ -8,6 +9,8 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
@@ -18,6 +21,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
+import static java.util.concurrent.TimeUnit.*;
 
 public class WebBrowser {
 
@@ -212,6 +218,29 @@ public class WebBrowser {
 
     public static WebElement findElement(final By by) {
         return driver.findElement(by);
+    }
+
+    public static WebElement findElementWithFluidWait(final By by) {
+        Wait<WebDriver> wait = new FluentWait<>(driver)
+                .withTimeout(5000, MILLISECONDS)
+                .pollingEvery(250, MILLISECONDS)
+                .ignoring(NoSuchElementException.class);
+
+        WebElement foo = wait.until(new Function<WebDriver, WebElement>() {
+            public WebElement apply(WebDriver driver) {
+                return driver.findElement(by);
+            }
+        });
+        return  foo;
+    };
+
+    public static boolean elementExists(final By by) {
+        try {
+            findElementWithFluidWait(by);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public static void switchTo(String frameName) {

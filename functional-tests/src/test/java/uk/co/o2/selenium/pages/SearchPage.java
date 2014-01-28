@@ -7,13 +7,11 @@ public class SearchPage {
 
     public SinglePersonPage searchPerson(String personName) throws InterruptedException {
         WebBrowser.findElement(By.name("keywords")).sendKeys(personName);
-        Thread.sleep(3000);
         return new SinglePersonPage();
     }
 
     public SearchResultsPage searchTeam(String teamName) throws InterruptedException {
         WebBrowser.findElement(By.name("keywords")).sendKeys(teamName);
-        Thread.sleep(1000);
         return new SearchResultsPage();
     }
 }

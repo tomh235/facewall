@@ -39,6 +39,8 @@ public class SearchTest extends SeleniumBase {
 
     @Before
     public void beforeTest() {
+        facewallDb.clear();
+        facewallDb.initialise();
         homePage = new HomePage();
         homePage.navigateToHomePage();  //Initial landing on homepage
         searchPage = homePage.clickSearchTab(); //Now on search page
@@ -59,9 +61,9 @@ public class SearchTest extends SeleniumBase {
 
     @Test
     public void searchForPersonWithDifferentCasing() throws Exception {
-        facewallDb.seedFixtures(newFixtures().withTeamlessPersons(defaultPerson().withProperty("name", "Fred Jimmeny Weasley")));
-        singlePersonPage = searchPage.searchPerson("fReD JiMMenY WeAsLeY");
-        assertThat(singlePersonPage.getPersonName(), is("Fred Jimmeny Weasley"));
+        facewallDb.seedFixtures(newFixtures().withTeamlessPersons(defaultPerson().withProperty("name", "Fred Jimmy Weasley")));
+        singlePersonPage = searchPage.searchPerson("fReD JiMMY WeasLeY");
+        assertThat(singlePersonPage.getPersonName(), is("Fred Jimmy Weasley"));
     }
 
     @Test

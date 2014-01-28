@@ -6,13 +6,10 @@ import uk.co.o2.selenium.common.WebBrowser;
 public class SinglePersonPage {
 
     public String getPersonName() {
-        return WebBrowser.findElement(By.className("person-details-name")).getText();
+        return WebBrowser.findElementWithFluidWait(By.className("person-details-name")).getText();
     }
 
     public Boolean personExists(String personName) {
-        if(WebBrowser.findElements(By.xpath("//*[contains(text(), '" + personName + "')]")).size() > 0) {
-            return true;
-        }
-        else return false;
+        return WebBrowser.elementExists(By.xpath("//*[contains(text(), '" + personName + "')]"));
     }
 }

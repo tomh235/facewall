@@ -19,7 +19,6 @@ public class SignUpController extends Controller {
     private static final SignUpFacade signUpFacade = facewall().signUpFacade;
     private static final UserModelValidator userModelValidator = facewall().userModelValidator;
 
-    // TODO - Charlie : Implement a list of teams in the database on the signUpForm
         public static Result blankSignUpForm() {
             List<String> teamNamesList = signUpFacade.getSortedAvailableTeamNames();
             return ok(view("signupform.ftl",

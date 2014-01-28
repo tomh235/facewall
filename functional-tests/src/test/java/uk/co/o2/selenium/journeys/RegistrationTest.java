@@ -20,18 +20,17 @@ public class RegistrationTest extends SeleniumBase {
     private static FacewallTestDatabase facewallDb;
     private HomePage homePage;
     private RegisterPage registerPage;
-    private final String NAME = "George Weasley";
-    private final String EMPTY_NAME ="";
-    private final String IMGURL = "http://theweasleys.com/george.jpg";
-    private final String INVALID_IMGURL = "notaurl";
-    private final String EMAIL = "george@theweasleys.com";
-    private final String INVALID_EMAIL = "notanemail.com";
-    private final String TEAM = "ecom";
-    private final String SCRUM = "weasleys";
-    private final String ROLE = "Developer";
-    private final String LOCATION = "Bath Road";
+    private static final String NAME = "George Weasley";
+    private static final String EMPTY_NAME ="";
+    private static final String IMGURL = "http://theweasleys.com/george.jpg";
+    private static final String INVALID_IMGURL = "notaurl";
+    private static final String EMAIL = "george@theweasleys.com";
+    private static final String INVALID_EMAIL = "notanemail.com";
+    private static final String TEAM = "ecom";
+    private static final String SCRUM = "weasleys";
+    private static final String ROLE = "Developer";
+    private static final String LOCATION = "Bath Road";
 
-    // TODO - embedded/single-use dBs for tests?
     @BeforeClass
     public static void beforeClass(){
         neoDb = databaseFor("http://localhost:7474/db/data/");

@@ -6,16 +6,16 @@ import uk.co.o2.selenium.common.WebBrowser;
 public class SearchResultsPage {
 
     public Boolean teamExists(String teamName) {
-        if(WebBrowser.findElements(By.xpath("//*[contains(text(), '" + teamName + "')]")).size() > 0) {
+        if (WebBrowser.elementExists(By.xpath("//*[contains(text(), '" + teamName + "')]"))) {
             return true;
         }
-        else return false;
+        return false;
     }
 
     public Boolean hasNoResultsMessage() {
-        if(WebBrowser.findElement(By.className("no-results")).isDisplayed()) {
+        if(WebBrowser.findElementWithFluidWait(By.className("no-results")).isDisplayed()) {
             return true;
         }
-        else return false;
+        return false;
     }
 }
