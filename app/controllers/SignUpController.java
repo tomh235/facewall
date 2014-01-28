@@ -1,7 +1,5 @@
 package controllers;
 
-import data.TeamRepository;
-import domain.Team;
 import facade.SignUpFacade;
 import facade.validators.UserModelValidator;
 import facade.validators.ValidatedUserModel;
@@ -23,9 +21,9 @@ public class SignUpController extends Controller {
 
     // TODO - Charlie : Implement a list of teams in the database on the signUpForm
         public static Result blankSignUpForm() {
-            List<Team> teamList= signUpFacade.getAvailableTeams();
+            List<String> teamNamesList = signUpFacade.getSortedAvailableTeamNames();
             return ok(view("signupform.ftl",
-                    withArgs("teamList", teamList),
+                    withArgs("teamNamesList", teamNamesList),
                     withArgs("userForm", signUpForm)
                     ));
         }

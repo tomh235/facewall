@@ -46,8 +46,8 @@
 
                     <label>Team name</label>
                     <select class="form-control" name="team" required>
-                        <#list teamList as team>
-                            <option value="${team.name()}">${team.name()}</option>
+                        <#list teamNamesList as teamName>
+                            <option value="${teamName}">${teamName}</option>
                         </#list>
                     </select>
                 </div>

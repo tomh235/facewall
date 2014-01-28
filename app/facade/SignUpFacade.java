@@ -7,7 +7,12 @@ import data.dto.PersonInformation;
 import domain.Person;
 import domain.Team;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+
+import static java.lang.String.CASE_INSENSITIVE_ORDER;
 
 public class SignUpFacade {
 
@@ -28,7 +33,30 @@ public class SignUpFacade {
         team.addMember(person);
     }
 
-    public List<Team> getAvailableTeams() {
+    public List<Team> getSortedAvailableTeams() {
+        List<Team> availableTeams = getAvailableTeams();
+        Collections.sort(availableTeams, new Comparator<Team>() {
+            @Override
+            public int compare(Team team1, Team team2) {
+                int result = 0;
+                if (team1.name() != null && team2.name() != null) {
+                    result = CASE_INSENSITIVE_ORDER.compare(team1.name(), team2.name());
+                }
+                return result;
+            }
+        });
+        return availableTeams;
+    }
+
+    public List<String> getSortedAvailableTeamNames() {
+        List<String> teamNamesList = new ArrayList<>();
+        for ( Team team : getSortedAvailableTeams()) {
+            teamNamesList.add(team.name());
+        }
+        return teamNamesList;
+    }
+
+    private List<Team> getAvailableTeams() {
         return teamRepository.listTeams();
     }
 }
