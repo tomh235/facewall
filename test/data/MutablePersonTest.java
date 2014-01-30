@@ -12,11 +12,14 @@ import static org.mockito.Mockito.when;
 
 public class MutablePersonTest {
 
+    private PersonInformation personInformation;
+    private MutablePerson mutablePerson;
+
     @Test
     public void get_set_team() throws Exception {
         Team expectedTeam = mock(Team.class);
         
-        MutablePerson mutablePerson = new MutablePerson(mock(PersonInformation.class));
+        mutablePerson = new MutablePerson(mock(PersonInformation.class));
         mutablePerson.setTeam(expectedTeam);
         
         assertThat(mutablePerson.team(), is(sameInstance(expectedTeam)));
@@ -24,30 +27,30 @@ public class MutablePersonTest {
     
     @Test
     public void name_delegates_to_personInformation() throws Exception {
-        PersonInformation personInformation = mock(PersonInformation.class);
+        personInformation = mock(PersonInformation.class);
         when(personInformation.getName()).thenReturn("hewett");
 
-        MutablePerson mutablePerson = new MutablePerson(personInformation);
+        mutablePerson = new MutablePerson(personInformation);
 
         assertThat(mutablePerson.name(), is("hewett"));
     }
 
     @Test
     public void colour_delegates_to_personInformation() throws Exception {
-        PersonInformation personInformation = mock(PersonInformation.class);
+        personInformation = mock(PersonInformation.class);
         when(personInformation.getPicture()).thenReturn("img");
 
-        MutablePerson mutablePerson = new MutablePerson(personInformation);
+        mutablePerson = new MutablePerson(personInformation);
 
         assertThat(mutablePerson.picture(), is("img"));
     }
 
     @Test
     public void email_delegates_to_personInformation() throws Exception {
-        PersonInformation personInformation = mock(PersonInformation.class);
+        personInformation = mock(PersonInformation.class);
         when(personInformation.getEmail()).thenReturn("email@testemail.com");
 
-        MutablePerson mutablePerson = new MutablePerson(personInformation);
+        mutablePerson = new MutablePerson(personInformation);
 
         assertThat(mutablePerson.email(), is("email@testemail.com"));
     }

@@ -27,22 +27,23 @@ public class MutableTeamTest {
 
     @Mock private AdminDAO mockAdminDAO;
 
+    private final TeamInformation teamInformation = mock(TeamInformation.class);
+    private MutableTeam mutableTeam;
+
     @Test
     public void name_delegates_to_teamInformation() throws Exception {
-        TeamInformation teamInformation = mock(TeamInformation.class);
         when(teamInformation.getName()).thenReturn("hyper");
 
-        MutableTeam mutableTeam = new MutableTeam(mockAdminDAO, teamInformation);
+        mutableTeam = new MutableTeam(mockAdminDAO, teamInformation);
 
         assertThat(mutableTeam.name(), is("hyper"));
     }
 
     @Test
     public void colour_delegates_to_teamInformation() throws Exception {
-        TeamInformation teamInformation = mock(TeamInformation.class);
         when(teamInformation.getColour()).thenReturn("blue");
 
-        MutableTeam mutableTeam = new MutableTeam(mockAdminDAO, teamInformation);
+        mutableTeam = new MutableTeam(mockAdminDAO, teamInformation);
 
         assertThat(mutableTeam.colour(), is("blue"));
     }
@@ -51,7 +52,7 @@ public class MutableTeamTest {
     public void get_set_members() throws Exception {
         List<Person> expectedMembers = mock(List.class);
 
-        MutableTeam mutableTeam = new MutableTeam(mockAdminDAO, mock(TeamInformation.class));
+        mutableTeam = new MutableTeam(mockAdminDAO, mock(TeamInformation.class));
 
         mutableTeam.setMembers(expectedMembers);
 
@@ -60,7 +61,7 @@ public class MutableTeamTest {
 
     @Test(expected = RuntimeException.class)
     public void add_member_throws_runtime_exception_when_team_or_person_not_found() throws Exception {
-        MutableTeam mutableTeam = new MutableTeam(mockAdminDAO, noTeamInformation());
+        mutableTeam = new MutableTeam(mockAdminDAO, noTeamInformation());
 
         doThrow(new ItemNotFoundException(""))
                 .when(mockAdminDAO).addPersonToTeam(any(PersonId.class), any(TeamId.class));

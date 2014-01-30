@@ -32,13 +32,15 @@ import static util.IterableMatchers.contains;
 public class TeamRepositoryTest {
 
     private FacewallTestDatabase facewallTestDatabase;
+    private DataModule dataModule;
     private TeamRepository teamRepository;
     private PersonRepository personRepository;
+    private List<Team> result;
 
     @Before
     public void setUp() throws Exception {
         facewallTestDatabase = createImpermanentFacewallTestDatabase();
-        DataModule dataModule = createDataModule(facewallTestDatabase.createQueryEngine(), facewallTestDatabase);
+        dataModule = createDataModule(facewallTestDatabase.createQueryEngine(), facewallTestDatabase);
         teamRepository = dataModule.teamRepository;
         personRepository = dataModule.personRepository;
     }
@@ -54,7 +56,7 @@ public class TeamRepositoryTest {
                 )
         );
 
-        List<Team> result = teamRepository.listTeams();
+        result = teamRepository.listTeams();
         assertThat(result, areTeams()
                 .whichContainExhaustively(
                         aTeam().named("Ecom"),
@@ -74,7 +76,7 @@ public class TeamRepositoryTest {
                 )
         );
 
-        List<Team> result = teamRepository.listTeams();
+        result = teamRepository.listTeams();
         assertThat(result, areTeams()
                 .whichContainExhaustively(
                         aTeam().withColour("blue"),
@@ -93,7 +95,7 @@ public class TeamRepositoryTest {
                 )
         );
 
-        List<Team> result = teamRepository.listTeams();
+        result = teamRepository.listTeams();
 
         assertThat(result, areTeams().numbering(3));
     }
@@ -111,7 +113,7 @@ public class TeamRepositoryTest {
                 )
         );
 
-        List<Team> result = teamRepository.listTeams();
+        result = teamRepository.listTeams();
 
         assertThat(result, areTeams()
                 .whichContains(aTeam()
@@ -142,7 +144,7 @@ public class TeamRepositoryTest {
                 )
         );
 
-        List<Team> result = teamRepository.listTeams();
+        result = teamRepository.listTeams();
 
         assertThat(result, areTeams()
                 .whichContains(aTeam()
@@ -170,7 +172,7 @@ public class TeamRepositoryTest {
                 )
         );
 
-        List<Team> result = teamRepository.listTeams();
+        result = teamRepository.listTeams();
 
         assertThat(result, areTeams()
                 .whichContains(aTeam()
@@ -201,7 +203,7 @@ public class TeamRepositoryTest {
         Query query = mock(Query.class);
         when(query.queryString()).thenReturn(newQueryString(".*should match.*"));
 
-        List<Team> result = teamRepository.queryTeams(query);
+        result = teamRepository.queryTeams(query);
         assertThat(result, areTeams().whichContainExhaustively(
                 aTeam().named("should match this team"),
                 aTeam().named("should match this team as well")

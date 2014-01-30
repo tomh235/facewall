@@ -39,6 +39,7 @@ public class InsertFixturesUtility {
                                 .withMembers(defaultPerson()
                                         .withProperty("name", "DOGE")
                                         .withProperty("picture", "http://i.huffpost.com/gen/1451579/thumbs/o-DOGE-facebook.jpg")
+                                        .withProperty("email", "doge@veryemail.com")
                                 ),
                         defaultTeam()
                                 .withProperty("name", "OPP Accounts")
@@ -50,11 +51,8 @@ public class InsertFixturesUtility {
                                 .withProperty("name", "Portal Scrum")
                                 .withMembers(defaultPerson()
                                         .withProperty("name", "Luke Langfield")
-                                        .withProperty("picture", "https://pbs.twimg.com/profile_images/1480549921/Board.jpg")
-                                ),
-                        defaultTeam()
-                                .withProperty("name", "Portal Scrum")
-                                .withMembers(defaultPerson()
+                                        .withProperty("picture", "https://pbs.twimg.com/profile_images/1480549921/Board.jpg"),
+                                        defaultPerson()
                                         .withProperty("name", "Charlie Briggs")
                                         .withProperty("picture", "http://www.wallneer.com/wp-content/uploads/2013/06/Adventure-Time-Jake-Iphone-HD-Wallpaper.jpg")
                                 )

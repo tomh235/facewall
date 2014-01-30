@@ -5,6 +5,7 @@ import data.dto.PersonInformation;
 import domain.Query;
 import domain.Team;
 import model.UserModel;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -29,16 +30,22 @@ public class UserModelValidatorTest {
     private TeamRepository mockTeamRepository;
 
     @InjectMocks
-    UserModelValidator userModelValidator;
+    private UserModelValidator userModelValidator;
+
+    private UserModel userModel;
+    private PersonInformation result;
+
+    @Before
+    public void beforeTest() {
+        stubTeamRepository();
+        userModel = new UserModel();
+    }
 
     @Test
     public void creates_personInformation_name_from_valid_user_model_name() throws Exception {
-        stubTeamRepository();
-
-        UserModel userModel = new UserModel();
         userModel.name = "Charlie";
 
-        PersonInformation result = userModelValidator.validate(userModel).getPersonInformation();
+        result = userModelValidator.validate(userModel).getPersonInformation();
 
         assertThat(result, is(aPersonInformation()
                 .named("Charlie")
@@ -47,12 +54,9 @@ public class UserModelValidatorTest {
 
     @Test
     public void creates_personInformation_picture_from_valid_user_model_picture() throws Exception {
-        stubTeamRepository();
-
-        UserModel userModel = new UserModel();
         userModel.imgURL = "img.url";
 
-        PersonInformation result = userModelValidator.validate(userModel).getPersonInformation();
+        result = userModelValidator.validate(userModel).getPersonInformation();
 
         assertThat(result, is(aPersonInformation()
                 .withPicture("img.url")
@@ -61,12 +65,9 @@ public class UserModelValidatorTest {
 
     @Test
     public void creates_personInformation_email_from_valid_user_model_email() throws Exception {
-        stubTeamRepository();
-
-        UserModel userModel = new UserModel();
         userModel.email = "email@testemail.com";
 
-        PersonInformation result = userModelValidator.validate(userModel).getPersonInformation();
+        result = userModelValidator.validate(userModel).getPersonInformation();
 
         assertThat(result, is(aPersonInformation()
                 .withEmail("email@testemail.com")
@@ -75,16 +76,13 @@ public class UserModelValidatorTest {
 
     @Test
     public void creates_unique_personInformation_id_from_valid_user_model() throws Exception {
-        stubTeamRepository();
-
-        PersonInformation result = userModelValidator.validate(new UserModel()).getPersonInformation();
+        result = userModelValidator.validate(new UserModel()).getPersonInformation();
 
         assertThat(result.getId(), is(not(noPersonId())));
     }
 
     @Test
     public void creates_team_from_user_model() throws Exception {
-        UserModel userModel = new UserModel();
         userModel.team = "teamName";
 
         Team expectedTeam = mock(Team.class);

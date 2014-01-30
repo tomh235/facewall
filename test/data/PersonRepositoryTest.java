@@ -28,6 +28,7 @@ public class PersonRepositoryTest {
 
     private FacewallTestDatabase facewallTestDatabase;
     private PersonRepository repository;
+    private List<Person> result;
 
     @Before
     public void setUp() throws Exception {
@@ -47,7 +48,7 @@ public class PersonRepositoryTest {
                 )
         );
 
-        List<Person> result = repository.listPersons();
+        result = repository.listPersons();
         assertThat(result, arePersons()
                 .whichContainExhaustively(
                         aPerson().named("Bill"),
@@ -68,7 +69,7 @@ public class PersonRepositoryTest {
                 )
         );
 
-        List<Person> result = repository.listPersons();
+        result = repository.listPersons();
         assertThat(result, arePersons()
                 .whichContainExhaustively(
                         aPerson().withPicture("Bill.img"),
@@ -89,7 +90,7 @@ public class PersonRepositoryTest {
                 )
         );
 
-        List<Person> result = repository.listPersons();
+        result = repository.listPersons();
         assertThat(result, arePersons()
                 .whichContainExhaustively(
                         aPerson().withEmail("email1@testemail.com"),
@@ -111,7 +112,7 @@ public class PersonRepositoryTest {
                 )
         );
 
-        List<Person> result = repository.listPersons();
+        result = repository.listPersons();
 
         assertThat(result, arePersons().numbering(16));
     }
@@ -127,7 +128,7 @@ public class PersonRepositoryTest {
                 )
         );
 
-        List<Person> result = repository.listPersons();
+        result = repository.listPersons();
 
         assertThat(result, arePersons().numbering(10));
     }
@@ -157,7 +158,7 @@ public class PersonRepositoryTest {
                 )
         );
 
-        List<Person> result = repository.listPersons();
+        result = repository.listPersons();
 
         assertThat(result, arePersons()
                 .whichContains(aPerson()
@@ -196,7 +197,7 @@ public class PersonRepositoryTest {
                 )
         );
 
-        List<Person> result = repository.listPersons();
+        result = repository.listPersons();
 
         assertThat(result, arePersons()
                 .whichContains(aPerson()
@@ -225,7 +226,7 @@ public class PersonRepositoryTest {
                 )
         );
 
-        List<Person> result = repository.listPersons();
+        result = repository.listPersons();
 
         assertThat(result, arePersons()
                 .whichContains(aPerson()
@@ -254,7 +255,7 @@ public class PersonRepositoryTest {
                 )
         );
 
-        List<Person> result = repository.listPersons();
+        result = repository.listPersons();
 
         assertThat(result, arePersons()
                 .whichContains(aPerson()
@@ -287,7 +288,7 @@ public class PersonRepositoryTest {
         Query query = mock(Query.class);
         when(query.queryString()).thenReturn(newQueryString(".*oodle.*"));
 
-        List<Person> result = repository.queryPersons(query);
+        result = repository.queryPersons(query);
         assertThat(result, arePersons().whichContainExhaustively(
                 aPerson().named("rickety doodle"),
                 aPerson().named("poodle do")
