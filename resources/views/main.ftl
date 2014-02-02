@@ -5,13 +5,13 @@
 <html>
     <head>
         <title>${title}</title>
-        <link rel="stylesheet" media="screen" href="/assets/css/main.css">
-        <script src="/assets/javascripts/jquery-1.9.0.min.js"></script>
+        <link rel="stylesheet" media="screen" href="/facewall/assets/css/main.css">
+        <script src="/facewall/assets/javascripts/jquery-1.9.0.min.js"></script>
     </head>
     <body>
         <div class="jumbotron">
             <div class="container">
-                <h1 id="homeTitle" class="text-center"><img class="smiley" src="/assets/images/smiley_happy.png" />Facewall</h1>
+                <h1 id="homeTitle" class="text-center"><img class="smiley" src="/facewall/assets/images/smiley_happy.png" />Facewall</h1>
                 <ul class="nav nav-tabs nav-justified">
                     <li><a id="home" href="/">Overview</a></li>
                     <li><a id="search" href="/search">Search</a></li>

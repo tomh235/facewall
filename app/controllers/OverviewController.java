@@ -1,17 +1,29 @@
 package controllers;
 
 import facade.OverviewFacade;
-import play.mvc.Controller;
-import play.mvc.Result;
+import model.OverviewEntryModel;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.core.Response;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static application.Facewall.facewall;
-import static util.freemarker.TemplateHelper.view;
-import static util.freemarker.TemplateHelper.withArgs;
+import static javax.ws.rs.core.Response.ok;
+import static views.TemplateHelper.renderTemplate;
 
-public class OverviewController extends Controller {
-    private static final OverviewFacade overviewFacade = facewall().overviewFacade;
+@Path("/")
+public class OverviewController {
+    private final OverviewFacade overviewFacade = facewall().overviewFacade;
 
-    public static Result overview() {
-        return ok(view("overview.ftl", withArgs("entries", overviewFacade.createOverviewModel())));
+
+    @GET
+    public Response overview() {
+        Map entries = new HashMap<String, List<OverviewEntryModel>>() {{
+            put("entries", overviewFacade.createOverviewModel());
+        }};
+        return ok(renderTemplate("overview.ftl", entries)).build();
     }
 }

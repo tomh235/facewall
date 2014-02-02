@@ -3,7 +3,7 @@
     <#if !results.persons?has_content && !results.teams?has_content>
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <h1 class="no-results search"><img src="/assets/images/smiley_sad.png" height="55" />No results found!</h1>
+                <h1 class="no-results search"><img src="/facewall/assets/images/smiley_sad.png" height="55" />No results found!</h1>
             </div>
         </div>
     <#else>

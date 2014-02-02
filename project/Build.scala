@@ -58,11 +58,13 @@ object ApplicationBuild extends Build {
         anorm,
         javaCore,
         "org.scala-lang" % "scala-compiler" % "2.10.0",
-        "com.sun.jersey.contribs" % "jersey-simple-server" % "1.9.1",
         "com.sun.jersey" % "jersey-core" % "1.9",
         "org.neo4j" % "neo4j-rest-graphdb" % "1.9",
         "org.neo4j" % "neo4j-kernel" % "1.9.5",
         "org.freemarker" % "freemarker" % "2.3.19",
+
+        "com.sun.jersey.contribs" % "jersey-freemarker" % "1.17",
+        "com.sun.jersey" % "jersey-server" % "1.17",
 
         "org.hamcrest" % "hamcrest-all" % "1.1" % "test",
         "junit" % "junit" %"4.11" % "test",

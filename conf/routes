@@ -2,9 +2,6 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page (Overview Page)
-GET     /                           controllers.OverviewController.overview
-
 # Search page
 GET     /search                     controllers.SearchController.search
 
