@@ -7,13 +7,10 @@ version = 'SNAPSHOT'
 allprojects {
     repositories {
         mavenCentral()
-        maven { url "http://repo.typesafe.com/typesafe/releases/" }
         maven { url "http://m2.neo4j.org/content/repositories/releases/" }
         maven { url "http://mvnrepository.com" }
 
         maven { url "http://repo.anormcypher.org/" }
-        maven { url "https://github.com/mandubian/mandubian-mvn/raw/master/releases/" }
-        maven { url "https://github.com/mandubian/mandubian-mvn/raw/master/snapshots/" }
     }
 }
 
@@ -30,9 +27,6 @@ idea {
 }
 
 dependencies {
-    compile "play:play_2.10:2.1.5"
-    compile "play:play-java_2.10:2.1.5"
-    compile "org.scala-lang:scala-compiler:2.10.0"
     compile "org.neo4j:neo4j-rest-graphdb:1.9"
     compile "org.neo4j:neo4j-kernel:1.9.5"
     compile "org.freemarker:freemarker:2.3.20"
@@ -42,14 +36,11 @@ dependencies {
 
     compile 'org.glassfish.jersey.containers:jersey-container-servlet:2.5.1'
 
-    compile "org.anormcypher:anormcypher_2.10:0.4.1"
-
     testCompile "junit:junit:4.11"
     testCompile "org.hamcrest:hamcrest-all:1.1"
     testCompile "org.mockito:mockito-all:1.9.5"
 
     testCompile "org.neo4j:neo4j-kernel:1.9.5:tests"
-    testCompile "org.scalatest:scalatest_2.10:1.9.1"
     testCompile "org.neo4j.app:neo4j-server:1.9.5"
     testCompile "org.neo4j.app:neo4j-server:1.9.5:static-web"
 
