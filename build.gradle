@@ -1,16 +1,11 @@
 apply plugin: 'idea'
 apply plugin: 'war'
 
-group = 'facewall'
-version = 'SNAPSHOT'
-
 allprojects {
     repositories {
         mavenCentral()
         maven { url "http://m2.neo4j.org/content/repositories/releases/" }
         maven { url "http://mvnrepository.com" }
-
-        maven { url "http://repo.anormcypher.org/" }
     }
 }
 
@@ -29,11 +24,11 @@ idea {
 dependencies {
     compile "org.neo4j:neo4j-rest-graphdb:1.9"
     compile "org.neo4j:neo4j-kernel:1.9.5"
+
     compile "org.freemarker:freemarker:2.3.20"
 
     compile "org.glassfish.jersey.ext:jersey-mvc-freemarker:2.5.1"
     compile "org.glassfish.jersey.core:jersey-server:2.5.1"
-
     compile 'org.glassfish.jersey.containers:jersey-container-servlet:2.5.1'
 
     testCompile "junit:junit:4.11"
@@ -51,21 +46,4 @@ war {
     archiveName = "facewall.war"
     from 'public'
     webXml = file('webapp/web.xml')
-}
-
-sourceSets {
-    main {
-        java {
-            srcDirs = ['app']
-        }
-        resources {
-            srcDir 'resources'
-        }
-    }
-
-    test {
-        java {
-            srcDirs = ['test', 'app']
-        }
-    }
 }
