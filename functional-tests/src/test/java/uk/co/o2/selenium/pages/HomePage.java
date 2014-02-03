@@ -23,6 +23,11 @@ public class HomePage {
         return new SearchPage();
     }
 
+    public PersonDetailsPage clickPerson(String personName) {
+        WebBrowser.findElement(By.linkText(personName)).click();
+        return new PersonDetailsPage();
+    }
+
     public boolean personExists(String name, String team, String imgUrl) {
         List<WebElement> elements = WebBrowser.findElements(By.className("entry"));
 

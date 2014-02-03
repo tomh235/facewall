@@ -44,12 +44,13 @@ public class PersonInformation {
         return picture;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public String getRole(){
         return role;
     }
-
-    public String getEmail() { return email; }
-
 
     public static class Builder {
         private PersonId id = noPersonId();

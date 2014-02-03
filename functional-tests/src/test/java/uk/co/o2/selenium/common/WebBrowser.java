@@ -222,7 +222,7 @@ public class WebBrowser {
 
     public static WebElement findElementWithFluidWait(final By by) {
         Wait<WebDriver> wait = new FluentWait<>(driver)
-                .withTimeout(5000, MILLISECONDS)
+                .withTimeout(6000, MILLISECONDS)
                 .pollingEvery(250, MILLISECONDS)
                 .ignoring(NoSuchElementException.class);
 

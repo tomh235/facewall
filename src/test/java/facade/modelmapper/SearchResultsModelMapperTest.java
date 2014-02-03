@@ -1,6 +1,7 @@
 package facade.modelmapper;
 
-import domain.MockPerson;
+import domain.PersonStub;
+import domain.StubbedTeam;
 import domain.Person;
 import domain.StubbedTeam;
 import domain.Team;
@@ -28,8 +29,8 @@ public class SearchResultsModelMapperTest {
         Team team = mock(Team.class);
         when(team.name()).thenReturn("a team");
 
-        MockPerson fred1 = new MockPerson(newPersonId("1"), "fred smith", "pic1.img", "email1@testemail.com", "Developer", team);
-        MockPerson fred2 = new MockPerson(newPersonId("2"), "fred bailey", "pic3.img", "email2@testemail.com", "BA", team);
+        PersonStub fred1 = new PersonStub(newPersonId("1"), "fred smith", "pic1.img", "email1@testemail.com", "Developer", team);
+        PersonStub fred2 = new PersonStub(newPersonId("2"), "fred bailey", "pic3.img", "email2@testemail.com", "BA", team);
 
         List<Person> personList = new ArrayList<>();
         personList.add(fred1);
@@ -71,7 +72,7 @@ public class SearchResultsModelMapperTest {
         Team team = mock(Team.class);
         when(team.name()).thenReturn("");
 
-        MockPerson teamless = new MockPerson(newPersonId("1"), "teamless", "teamless.img", "email@testemail.com", "BA", team);
+        PersonStub teamless = new PersonStub(newPersonId("1"), "teamless", "teamless.img", "email@testemail.com", "BA", team);
 
         List teamlessList = new ArrayList<>();
         List<Team> emptyTeamList = new ArrayList<>();

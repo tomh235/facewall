@@ -33,6 +33,11 @@ public class PersonInformationMapper {
                 personInformation.withEmail(email);
             }
 
+            String role = (String) personNode.getProperty("role");
+            if (role != null) {
+                personInformation.withRole(role);
+            }
+
             result = personInformation.build();
         }
         return result;

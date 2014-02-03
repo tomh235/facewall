@@ -5,9 +5,9 @@ import uk.co.o2.selenium.common.WebBrowser;
 
 public class SearchPage {
 
-    public SinglePersonPage searchPerson(String personName) throws InterruptedException {
+    public SinglePersonSearchResultsPage searchPerson(String personName) throws InterruptedException {
         WebBrowser.findElement(By.name("keywords")).sendKeys(personName);
-        return new SinglePersonPage();
+        return new SinglePersonSearchResultsPage();
     }
 
     public SearchResultsPage searchTeam(String teamName) throws InterruptedException {

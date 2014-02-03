@@ -1,6 +1,7 @@
 package model;
 
 public class UserModelBuilder {
+
     private String name;
     private String imgURL;
     private String role;

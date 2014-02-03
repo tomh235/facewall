@@ -60,7 +60,7 @@ public class RegistrationTest extends SeleniumBase {
     }
 
     @Test
-    public void canRegisterUser() {
+    public void can_complete_register_user_journey() {
         //Fill in form
         registerPage.enterFieldInForm("name", NAME);
         registerPage.enterFieldInForm("imgURL", IMGURL);
@@ -86,7 +86,7 @@ public class RegistrationTest extends SeleniumBase {
     }
 
     @Test
-    public void formRejectsInvalidEmail() {
+    public void form_rejects_invalid_email_field() {
         //Fill in form
         registerPage.enterFieldInForm("name", NAME);
         registerPage.enterFieldInForm("imgURL", IMGURL);
@@ -105,7 +105,7 @@ public class RegistrationTest extends SeleniumBase {
     }
 
     @Test
-    public void formRejectsInvalidImgUrl() {
+    public void form_rejects_invalid_url_field() {
         //Fill in form
         registerPage.enterFieldInForm("name", NAME);
         registerPage.enterFieldInForm("imgURL", INVALID_IMGURL);
@@ -124,7 +124,7 @@ public class RegistrationTest extends SeleniumBase {
     }
 
     @Test
-    public void formRejectsEmptyName() {
+    public void for_rejects_empty_name_field() {
         //Fill in form
         registerPage.enterFieldInForm("name", EMPTY_NAME);
         registerPage.enterFieldInForm("imgURL", IMGURL);

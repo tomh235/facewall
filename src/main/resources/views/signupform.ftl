@@ -70,11 +70,11 @@
                     </#if>
                     <label>Job role</label>
                     <select class="form-control" name="role" required>
-                        <option value="ba">Business Analyst</option>
-                        <option value="developer">Developer</option>
-                        <option value="manager">Management</option>
-                        <option value="scrum_master">Scrum Master</option>
-                        <option value="qa">QA</option>
+                        <option value="Business Analyst">Business Analyst</option>
+                        <option value="Developer">Developer</option>
+                        <option value="Manager">Management</option>
+                        <option value="Scrum Master">Scrum Master</option>
+                        <option value="QA">QA</option>
                     </select>
                 </div>
 
@@ -86,10 +86,10 @@
                     </#if>
                     <label>Work location</label>
                     <select class="form-control" name="location" required >
-                        <option value="bath_road">Bath Road</option>
-                        <option value="buckingham_avenue">Buckingham Avenue</option>
-                        <option value="leeds">Leeds</option>
-                        <option value="pune">Pune</option>
+                        <option value="Bath Road">Bath Road</option>
+                        <option value="Buckingham Avenue">Buckingham Avenue</option>
+                        <option value="Leeds">Leeds</option>
+                        <option value="Pune">Pune</option>
                     </select>
                 </div>
 

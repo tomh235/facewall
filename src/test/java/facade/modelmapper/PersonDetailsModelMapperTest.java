@@ -1,7 +1,8 @@
 package facade.modelmapper;
 
 import data.datatype.PersonId;
-import domain.MockPerson;
+import domain.PersonStub;
+import domain.StubbedTeam;
 import domain.Person;
 import domain.StubbedTeam;
 import model.PersonDetailsModel;
@@ -18,7 +19,7 @@ public class PersonDetailsModelMapperTest{
 
     @Test
     public void should_map_person() {
-       MockPerson person = new MockPerson(PersonId.newPersonId("id"), "Hello World", "picture", "email@testemail.com", "BA", null);
+       PersonStub person = new PersonStub(PersonId.newPersonId("id"), "Hello World", "picture", "email@testemail.com", "BA", null);
        person.setTeam(new StubbedTeam("blah", "blah", Arrays.<Person>asList(person)));
 
        PersonDetailsModel result = personDetailsModelMapper.map(person);

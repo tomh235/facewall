@@ -59,6 +59,16 @@ public class PersonInformationMapperTest {
     }
 
     @Test
+    public void map_role() throws Exception {
+        mockNode = createMockNodeWithProperties(new HashMap<String, Object>() {{
+            put("role", "baker");
+        }});
+
+        result = personInformationMapper.map(mockNode);
+        assertThat(result.getRole(), is("baker"));
+    }
+
+    @Test
     public void map_null_to_no_person_information() throws Exception {
         result = personInformationMapper.map(null);
 

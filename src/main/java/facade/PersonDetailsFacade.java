@@ -17,7 +17,7 @@ public class PersonDetailsFacade {
     }
 
     public PersonDetailsModel createPersonDetailsModel(PersonId id) {
-        Person person = repository.findPersonById(id);
-        return personDetailsModelMapper.map(person);
+       Person person = repository.findPersonById(id);
+       return personDetailsModelMapper.map(person);
     }
 }

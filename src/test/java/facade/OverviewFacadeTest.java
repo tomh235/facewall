@@ -1,7 +1,8 @@
 package facade;
 
 import data.PersonRepository;
-import domain.MockPerson;
+import domain.PersonStub;
+import domain.StubbedTeam;
 import domain.Person;
 import domain.StubbedTeam;
 import domain.Team;
@@ -38,9 +39,9 @@ public class OverviewFacadeTest {
 
     @Test
     public void map_repo_to_domain_objects_to_overview_model_test() {
-        MockPerson ecom_member1 = new MockPerson(newPersonId("3"), "ecom_member1", "pic1.img", "email1@testemail.com", "BA", null);
-        MockPerson ecom_member2 = new MockPerson(newPersonId("4"), "ecom_member2", "pic2.img", "email2@testemail.com", "BA", null);
-        MockPerson pr_member    = new MockPerson(newPersonId("5"), "pr_member", "pic3.img", "email3@testemail.com", "BA", null);
+        PersonStub ecom_member1 = new PersonStub(newPersonId("3"), "ecom_member1", "pic1.img", "email1@testemail.com", "BA", null);
+        PersonStub ecom_member2 = new PersonStub(newPersonId("4"), "ecom_member2", "pic2.img", "email2@testemail.com", "BA", null);
+        PersonStub pr_member    = new PersonStub(newPersonId("5"), "pr_member", "pic3.img", "email3@testemail.com", "BA", null);
 
         Team ecom = new StubbedTeam("ecom", "blue", new ArrayList<Person>(Arrays.asList(ecom_member1, ecom_member2)));
         Team productResources = new StubbedTeam("productResources", "green", new ArrayList<Person>(Arrays.asList(pr_member)));
@@ -64,10 +65,10 @@ public class OverviewFacadeTest {
 
     @Test
     public void orders_overview_alphabetically_by_name_when_same_team(){
-        MockPerson ecom_member1 = new MockPerson(newPersonId("3"), "bob", "pic1.img", "email1@testemail.com", "BA", null);
-        MockPerson ecom_member2 = new MockPerson(newPersonId("4"), "dave", "pic2.img", "email2@testemail.com", "BA", null);
-        MockPerson ecom_member3 = new MockPerson(newPersonId("4"), "dave2", "pic2.img", "email3@testemail.com", "BA", null);
-        MockPerson ecom_member4 = new MockPerson(newPersonId("7"), "rick", "pic5.img", "email4@testemail.com", "BA", null);
+        PersonStub ecom_member1 = new PersonStub(newPersonId("3"), "bob", "pic1.img", "email1@testemail.com", "BA", null);
+        PersonStub ecom_member2 = new PersonStub(newPersonId("4"), "dave", "pic2.img", "email2@testemail.com", "BA", null);
+        PersonStub ecom_member3 = new PersonStub(newPersonId("4"), "dave2", "pic2.img", "email3@testemail.com", "BA", null);
+        PersonStub ecom_member4 = new PersonStub(newPersonId("7"), "rick", "pic5.img", "email4@testemail.com", "BA", null);
 
         Team ecom = new StubbedTeam("ecom", "blue", new ArrayList<Person>(Arrays.asList(ecom_member1)));
 
@@ -93,9 +94,9 @@ public class OverviewFacadeTest {
 
     @Test
     public void orders_overviews_alphabetically_by_team_test() {
-        MockPerson ecom_member1 = new MockPerson(newPersonId("3"), "ecom_member1", "pic1.img", "email1@testemail.com", "BA", null);
-        MockPerson ecom_member2 = new MockPerson(newPersonId("7"), "ecom_member2", "pic5.img", "email2@testemail.com", "BA", null);
-        MockPerson pr_member = new MockPerson(newPersonId("4"), "pr_member", "pic2.img", "email3@testemail.com", "BA", null);
+        PersonStub ecom_member1 = new PersonStub(newPersonId("3"), "ecom_member1", "pic1.img", "email1@testemail.com", "BA", null);
+        PersonStub ecom_member2 = new PersonStub(newPersonId("7"), "ecom_member2", "pic5.img", "email2@testemail.com", "BA", null);
+        PersonStub pr_member = new PersonStub(newPersonId("4"), "pr_member", "pic2.img", "email3@testemail.com", "BA", null);
 
         Team ecom = new StubbedTeam("ecom", "blue", new ArrayList<Person>(Arrays.asList(ecom_member1)));
         Team productResources = new StubbedTeam("productResources", "green", new ArrayList<Person>(Arrays.asList(pr_member)));
@@ -119,11 +120,11 @@ public class OverviewFacadeTest {
 
     @Test
     public void orders_overview_alphabetically_by_team_with_teamless_last_test() {
-        MockPerson ecom_member1 = new MockPerson(newPersonId("3"), "ecom_member1", "pic1.img", "email1@testemail.com", "BA", null);
-        MockPerson ecom_member2 = new MockPerson(newPersonId("7"), "ecom_member2", "pic5.img", "email2@testemail.com", "BA", null);
-        MockPerson pr_member = new MockPerson(newPersonId("4"), "pr_member", "pic2.img", "email3@testemail.com", "BA", null);
-        MockPerson teamless_member1 = new MockPerson(newPersonId("5"), "teamless_member1", "pic3.img", "email4@testemail.com", "BA", null);
-        MockPerson teamless_member2 = new MockPerson(newPersonId("6"), "teamless_member2", "pic4.img", "email5@testemail.com", "BA", null);
+        PersonStub ecom_member1 = new PersonStub(newPersonId("3"), "ecom_member1", "pic1.img", "email1@testemail.com", "BA", null);
+        PersonStub ecom_member2 = new PersonStub(newPersonId("7"), "ecom_member2", "pic5.img", "email2@testemail.com", "BA", null);
+        PersonStub pr_member = new PersonStub(newPersonId("4"), "pr_member", "pic2.img", "email3@testemail.com", "BA", null);
+        PersonStub teamless_member1 = new PersonStub(newPersonId("5"), "teamless_member1", "pic3.img", "email4@testemail.com", "BA", null);
+        PersonStub teamless_member2 = new PersonStub(newPersonId("6"), "teamless_member2", "pic4.img", "email5@testemail.com", "BA", null);
 
         Team ecom = new StubbedTeam("ecom", "blue", new ArrayList<Person>(Arrays.asList(ecom_member1)));
         Team productResources = new StubbedTeam("productResources", "green", new ArrayList<Person>(Arrays.asList(pr_member)));
