@@ -1,1 +1,0 @@
-play "idea with-sources=yes no-sbt-build-module"

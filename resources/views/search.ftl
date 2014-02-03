@@ -23,7 +23,7 @@
     var searchInput = $("#searchInput");
     var result = $("#result");
     searchInput.focus();
-    autoSearchOnKeyUp(searchInput, "/facewall/search/results", result);
+    autoSearchOnKeyUp(searchInput, "/facewall/search/resultsz", result);
 </script>
 
 </@main.main>

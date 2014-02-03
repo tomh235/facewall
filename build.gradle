@@ -1,4 +1,3 @@
-apply plugin: 'scala'
 apply plugin: 'idea'
 apply plugin: 'war'
 
@@ -66,7 +65,7 @@ war {
 sourceSets {
     main {
         java {
-            srcDirs = []
+            srcDirs = ['app']
         }
         resources {
             srcDir 'resources'
@@ -75,19 +74,7 @@ sourceSets {
 
     test {
         java {
-            srcDirs = []
-        }
-    }
-
-    main {
-        scala {
-            srcDirs = ['app', 'conf', 'target/scala-2.10/src_managed/main', 'target/scala-2.10/classes', 'target/scala-2.10/classes_managed']
-        }
-    }
-
-    test {
-        scala {
-            srcDirs = ['test', 'app', 'conf', 'target/scala-2.10/src_managed/main', 'target/scala-2.10/classes', 'target/scala-2.10/classes_managed']
+            srcDirs = ['test', 'app']
         }
     }
 }
