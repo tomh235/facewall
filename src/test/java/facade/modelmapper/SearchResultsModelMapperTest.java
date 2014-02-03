@@ -28,8 +28,8 @@ public class SearchResultsModelMapperTest {
         Team team = mock(Team.class);
         when(team.name()).thenReturn("a team");
 
-        MockPerson fred1 = new MockPerson(newPersonId("1"), "fred smith", "pic1.img", team, "email1@testemail.com");
-        MockPerson fred2 = new MockPerson(newPersonId("2"), "fred bailey", "pic3.img", team, "email2@testemail.com");
+        MockPerson fred1 = new MockPerson(newPersonId("1"), "fred smith", "pic1.img", "email1@testemail.com", "Developer", team);
+        MockPerson fred2 = new MockPerson(newPersonId("2"), "fred bailey", "pic3.img", "email2@testemail.com", "BA", team);
 
         List<Person> personList = new ArrayList<>();
         personList.add(fred1);
@@ -38,8 +38,8 @@ public class SearchResultsModelMapperTest {
 
         DefaultSearchResultsModel result = searchResultsModelMapper.map(personList, teamList);
         assertThat(result.persons, containsExhaustivelyInOrder(
-            aPersonSearchResult().named("fred smith").withPicture("pic1.img").inTeam("a team").withEmail("email1@testemail.com"),
-            aPersonSearchResult().named("fred bailey").withPicture("pic3.img").inTeam("a team").withEmail("email2@testemail.com")
+            aPersonSearchResult().named("fred smith").withPicture("pic1.img").inTeam("a team").withEmail("email1@testemail.com").withRole("Developer"),
+            aPersonSearchResult().named("fred bailey").withPicture("pic3.img").inTeam("a team").withEmail("email2@testemail.com").withRole("BA")
         ));
     }
 
@@ -71,7 +71,7 @@ public class SearchResultsModelMapperTest {
         Team team = mock(Team.class);
         when(team.name()).thenReturn("");
 
-        MockPerson teamless = new MockPerson(newPersonId("1"), "teamless", "teamless.img", team, "email@testemail.com");
+        MockPerson teamless = new MockPerson(newPersonId("1"), "teamless", "teamless.img", "email@testemail.com", "BA", team);
 
         List teamlessList = new ArrayList<>();
         List<Team> emptyTeamList = new ArrayList<>();

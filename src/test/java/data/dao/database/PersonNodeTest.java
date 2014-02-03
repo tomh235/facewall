@@ -59,4 +59,14 @@ public class PersonNodeTest {
         verify(wrappedNode).setProperty("email", "email@testemail.com");
     }
 
+    @Test
+    public void setProperties_copies_role_from_person_information() throws Exception {
+        PersonInformation personInformation = newPersonInformation()
+                .withRole("BA")
+                .build();
+
+        personNode.setProperties(personInformation);
+        verify(wrappedNode).setProperty("role", "BA");
+    }
+
 }

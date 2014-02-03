@@ -54,4 +54,14 @@ public class MutablePersonTest {
 
         assertThat(mutablePerson.email(), is("email@testemail.com"));
     }
+
+    @Test
+    public void role_delegates_to_personInformation() throws Exception {
+        personInformation = mock(PersonInformation.class);
+        when(personInformation.getRole()).thenReturn("BA");
+
+        mutablePerson = new MutablePerson(personInformation);
+
+        assertThat(mutablePerson.role(), is("BA"));
+    }
 }

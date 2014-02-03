@@ -27,6 +27,7 @@ public class InsertFixturesUtility {
                                 .withMembers(defaultPerson()
                                         .withProperty("name", "Hugo Wainwright")
                                         .withProperty("picture", "https://fbcdn-sphotos-c-a.akamaihd.net/hphotos-ak-frc1/300430_4471674470606_1745866994_n.jpg")
+                                        .withProperty("role", "Developer")
                                 ),
                         defaultTeam()
                                 .withProperty("name", "Ecom Ars")

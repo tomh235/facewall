@@ -30,7 +30,7 @@ public class UserModelValidator {
                 .named(userModel.name)
                 .withPicture(userModel.imgURL)
                 .withEmail(userModel.email)
-                //.withRole(userModel.role)
+                .withRole(userModel.role)
                 //.withLocation(userModel.location)
                 //.withScrum(userModel.scrum)
                 .build();

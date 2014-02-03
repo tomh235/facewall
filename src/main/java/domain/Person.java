@@ -8,4 +8,5 @@ public interface Person {
     String email();
     Team team();
     PersonId getId();
+    String role();
 }

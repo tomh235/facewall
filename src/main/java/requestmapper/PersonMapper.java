@@ -24,6 +24,11 @@ public class PersonMapper {
             }
 
             @Override
+            public String role() {
+                return userModel.role;
+            }
+
+            @Override
             public Team team() {
                 return team;
             }

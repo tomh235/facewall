@@ -7,13 +7,15 @@ public class MockPerson implements Person {
     public final String name;
     public final String picture;
     public final String email;
+    public final String role;
     public Team team;
 
-    public MockPerson(PersonId id, String name, String picture,  Team team, String email) {
+    public MockPerson(PersonId id, String name, String picture, String email, String role, Team team) {
         this.id = id;
         this.name = name;
         this.picture = picture;
         this.email = email;
+        this.role = role;
         this.team = team;
     }
 
@@ -33,6 +35,11 @@ public class MockPerson implements Person {
     }
 
     @Override
+    public String role() {
+        return role;
+    }
+
+    @Override
     public String picture() {
         return picture;
     }
@@ -45,4 +52,6 @@ public class MockPerson implements Person {
     public void setTeam(Team team) {
         this.team = team;
     }
+
+
 }

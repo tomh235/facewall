@@ -30,6 +30,10 @@ class MutablePerson implements Person {
         return personInformation.getEmail();
     }
 
+    @Override final public String role(){
+        return personInformation.getRole();
+    }
+
     @Override public Team team() {
         return team;
     }

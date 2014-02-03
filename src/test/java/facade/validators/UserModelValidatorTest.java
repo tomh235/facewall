@@ -75,6 +75,17 @@ public class UserModelValidatorTest {
     }
 
     @Test
+    public void creates_personInformation_role_from_valid_user_model_email() throws Exception {
+        userModel.role = "BA";
+
+        result = userModelValidator.validate(userModel).getPersonInformation();
+
+        assertThat(result, is(aPersonInformation()
+                .withRole("BA")
+        ));
+    }
+
+    @Test
     public void creates_unique_personInformation_id_from_valid_user_model() throws Exception {
         result = userModelValidator.validate(new UserModel()).getPersonInformation();
 

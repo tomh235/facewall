@@ -13,6 +13,7 @@ public class PersonInformation {
     private final String name;
     private final String picture;
     private final String email;
+    private final String role;
 
 
     private PersonInformation(Builder builder) {
@@ -20,6 +21,7 @@ public class PersonInformation {
         name = builder.name;
         picture = builder.picture;
         email = builder.email;
+        role = builder.role;
     }
 
     public static Builder newPersonInformation() {
@@ -42,6 +44,10 @@ public class PersonInformation {
         return picture;
     }
 
+    public String getRole(){
+        return role;
+    }
+
     public String getEmail() { return email; }
 
 
@@ -50,6 +56,7 @@ public class PersonInformation {
         private String name = "";
         private String picture = "";
         private String email = "";
+        private String role = "";
 
         public PersonInformation build() {
             return new PersonInformation(this);
@@ -72,6 +79,11 @@ public class PersonInformation {
 
         public Builder withEmail(String email) {
             this.email = email;
+            return this;
+        }
+
+        public Builder withRole(String role) {
+            this.role = role;
             return this;
         }
     }

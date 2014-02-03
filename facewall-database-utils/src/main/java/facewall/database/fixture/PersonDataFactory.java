@@ -48,6 +48,20 @@ abstract public class PersonDataFactory {
         "Carnap"
     );
 
+    private static final List<String> roles = asList(
+        "Happy",
+        "Space",
+        "Black",
+        "Negative",
+        "Positive",
+        "Cynical",
+        "Daring",
+        "Useless",
+        "Crazy",
+        "Outcast"
+    );
+
+
     private PersonDataFactory() {
     }
 
@@ -63,12 +77,19 @@ abstract public class PersonDataFactory {
     public static PersonData.Builder defaultPerson() {
         final String name = randomName();
         final String email = emailFromName(name);
+        final String role = randomRole();
 
         return newPersonData()
             .withProperty("id", randomUUID().toString())
             .withProperty("name", name)
             .withProperty("picture", "http://dummyimage.com/200x200/000/fff.png&text=" + name)
-            .withProperty("email", email);
+            .withProperty("email", email)
+            .withProperty("role", role);
+    }
+
+    private static String randomRole() {
+        return roles.get(randomInt(roles.size())) + " Philosopher";
+
     }
 
     private static String randomName() {

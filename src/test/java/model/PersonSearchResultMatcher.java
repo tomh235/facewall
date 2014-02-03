@@ -55,6 +55,20 @@ public class PersonSearchResultMatcher extends CompositeMatcher<PersonSearchResu
         return this;
     }
 
+    public PersonSearchResultMatcher withRole(final String role) {
+        add(new TypeSafeMatcher<PersonSearchResult>() {
+            @Override
+            public boolean matchesSafely(PersonSearchResult target) {
+                return target.role.equals(role);
+            }
+            @Override
+            public void describeTo(Description description) {
+                description.appendText(String.format("whose has role  %s", role));
+            }
+        });
+        return this;
+    }
+
     public PersonSearchResultMatcher inTeam(final String teamName) {
         add(new TypeSafeMatcher<PersonSearchResult>() {
             @Override

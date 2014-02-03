@@ -73,4 +73,19 @@ public class PersonInformationMatcher extends CompositeMatcher<PersonInformation
         });
         return this;
     }
+
+    public PersonInformationMatcher withRole(final String role) {
+        add(new TypeSafeMatcher<PersonInformation>() {
+            @Override
+            public boolean matchesSafely(PersonInformation personInformation) {
+                return role.equals(personInformation.getRole());
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText(" with the role ").appendValue(role);
+            }
+        });
+        return this;
+    }
 }

@@ -67,6 +67,23 @@ public class PersonMatcher extends CompositeMatcher<Person> {
 
     }
 
+    public PersonMatcher withRole(final String role) {
+        add(new TypeSafeMatcher<Person>() {
+
+            @Override
+            public boolean matchesSafely(Person target) {
+                return role.equals(target.role());
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("whose role is ").appendValue(role);
+            }
+        });
+        return this;
+
+    }
+
     public PersonMatcher inTeam(final Matcher<Team> team) {
         add(new TypeSafeMatcher<Person>() {
 
