@@ -1,11 +1,11 @@
 <#import 'main.ftl' as main>
 
 <@main.main title = "Input your details" activeTabIndex = 2>
-        
+
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3 form">
-            <form role="form" method="post" action="/signupform">
+            <form role="form" method="post" action="/facewall/signup/summary">
                 <div class="form-group">
                     <#if userForm.error("name")??>
                         <#list userForm.error("name") as error>

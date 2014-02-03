@@ -2,19 +2,5 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Search page
-GET     /search                     controllers.SearchController.search
-
-# Search Results page
-GET     /search-results             controllers.SearchController.searchResults
-
-# Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
-
 # New userModel registration form
-GET     /signupform                 controllers.SignUpController.blankSignUpForm
-POST    /signupform                 controllers.SignUpController.submitSignUpForm
-
-GET     /signupsummary              controllers.SignUpController.submitSignUpForm
-
-GET     /person/:id                 controllers.PersonController.getPerson(id: String)
+GET     /      controllers.PlayController.blankPage

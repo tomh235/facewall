@@ -12,12 +12,11 @@ import java.util.Map;
 
 import static application.Facewall.facewall;
 import static javax.ws.rs.core.Response.ok;
-import static views.TemplateHelper.renderTemplate;
+import static views.TemplateRenderer.renderTemplate;
 
 @Path("/")
 public class OverviewController {
     private final OverviewFacade overviewFacade = facewall().overviewFacade;
-
 
     @GET
     public Response overview() {

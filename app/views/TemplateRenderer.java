@@ -6,14 +6,15 @@ import freemarker.template.TemplateException;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.Map;
 
-public class TemplateHelper {
+public class TemplateRenderer {
 
     private final static Configuration configuration = initConfig();
 
     private static Configuration initConfig() {
         Configuration configuration = new Configuration();
-        configuration.setClassForTemplateLoading(TemplateHelper.class, "");
+        configuration.setClassForTemplateLoading(TemplateRenderer.class, "");
 
         DefaultObjectWrapper objectWrapper = new DefaultObjectWrapper();
         objectWrapper.setExposeFields(true);
@@ -22,6 +23,10 @@ public class TemplateHelper {
         configuration.setDefaultEncoding("UTF-8");
 
         return configuration;
+    }
+
+    public static String renderTemplate(String templateName) {
+        return renderTemplate(templateName, null);
     }
 
     public static String renderTemplate(String templateName, Object dataModel) {

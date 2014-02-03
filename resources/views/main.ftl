@@ -11,11 +11,14 @@
     <body>
         <div class="jumbotron">
             <div class="container">
-                <h1 id="homeTitle" class="text-center"><img class="smiley" src="/facewall/assets/images/smiley_happy.png" />Facewall</h1>
+                <h1 id="homeTitle" class="text-center">
+                    <img class="smiley" src="/facewall/assets/images/smiley_happy.png"/>Facewall
+                </h1>
+
                 <ul class="nav nav-tabs nav-justified">
-                    <li><a id="home" href="/">Overview</a></li>
-                    <li><a id="search" href="/search">Search</a></li>
-                    <li><a id="register" href="/signupform">Register</a></li>
+                    <li><a id="home" href="/facewall/">Overview</a></li>
+                    <li><a id="search" href="/facewall/search">Search</a></li>
+                    <li><a id="register" href="/facewall/signup">Register</a></li>
                 </ul>
             </div>
         </div>

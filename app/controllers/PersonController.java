@@ -2,19 +2,33 @@ package controllers;
 
 import data.datatype.PersonId;
 import facade.PersonDetailsFacade;
-import play.mvc.Controller;
-import play.mvc.Result;
+import model.PersonDetailsModel;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Response;
+import java.util.HashMap;
+import java.util.Map;
 
 import static application.Facewall.facewall;
-import static util.freemarker.TemplateHelper.view;
-import static util.freemarker.TemplateHelper.withArgs;
+import static data.datatype.PersonId.newPersonId;
+import static javax.ws.rs.core.Response.ok;
+import static views.TemplateRenderer.renderTemplate;
 
-public class PersonController extends Controller {
+@Path("/person")
+public class PersonController {
 
-    private static final PersonDetailsFacade personDetailsFacade = facewall().personDetailsFacade;
+    private final PersonDetailsFacade personDetailsFacade = facewall().personDetailsFacade;
 
-    public static Result getPerson(String id) {
-        PersonId personId = PersonId.newPersonId(id);
-        return ok(view("singleperson.ftl", withArgs("person", personDetailsFacade.createPersonDetailsModel(personId))));
+    @GET
+    @Path("/{id}")
+    public Response getPerson(@PathParam("id") String id) {
+        final PersonDetailsModel person = personDetailsFacade.createPersonDetailsModel(newPersonId(id));
+
+        Map model = new HashMap<String, PersonDetailsModel>() {{
+            put("person", person);
+        }};
+        return ok(renderTemplate("singleperson.ftl", model)).build();
     }
 }
