@@ -7,18 +7,20 @@
             <#list entries as entry>
                 <div class="col-md-3 col-sm-4 entry">
                     <h5 class="text-center teamName">${entry.teamHeader}</h5>
-                    <div class="imgWrapper ${entry.colour}" style="border: 15px solid #${entry.colour}">
-                        <a href="/person/${entry.link}"><img class="avatar" src="${entry.picture}"/></a>
-                    </div>
+                        <a href="/facewall/person/${entry.link}">
+                            <div class="imgWrapper ${entry.colour}" style="border: 15px solid #${entry.colour}">
+                                <img class="avatar" src="${entry.picture}"/>
+                            </div>
+                        </a>
 
                     <h3 class="text-center entryName">
-                        <a href="/person/${entry.link}">${entry.name}</a>
+                        <a href="/facewall/person/${entry.link}">${entry.name}</a>
                     </h3>
                 </div>
             </#list>
         </div>
     <#else>
-        <h1 class="no-results main text-center"><img class="smiley" src="/facewall/assets/images/smiley_sad.png" />There are no faces here!</h1>
+        <h1 class="no-results main text-center"><img class="smiley" src="/facewall/assets/images/smiley_sad.png"/>There are no faces here!</h1>
     </#if>
 </div>
 <script src="/facewall/assets/javascripts/snake-order.js"></script>

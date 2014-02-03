@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static application.Facewall.facewall;
-import static domain.Query.newQuery;
+import static domain.Query.newCaseInsensitiveQuery;
 import static javax.ws.rs.core.Response.ok;
 import static javax.ws.rs.core.Response.serverError;
 import static views.TemplateRenderer.renderTemplate;
@@ -33,7 +33,7 @@ public class SearchController {
     @GET
     @Path("/results")
     public Response searchResults(@DefaultValue("") @QueryParam("keywords") String keywords) {
-        final SearchResultsModel searchResults = searchFacade.createSearchResultsModel(newQuery(keywords));
+        final SearchResultsModel searchResults = searchFacade.createSearchResultsModel(newCaseInsensitiveQuery(keywords));
 
         //This looks like scala code that has been translated into java. That's fine, but this kind of java code
         //should be avoided if possible. Hopefully we can design it away.
