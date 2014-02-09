@@ -29,7 +29,7 @@
     $(document).ready(function () {
         $('img.avatar').fakecrop();
         var overviewEntries = $("div.col-md-4").detach();
-        var snakeOrdered = snakeOrder(overviewEntries.get(), 3);
+        var snakeOrdered = snakeOrder(overviewEntries.get(), 4);
         $("div.row").append(snakeOrdered);
     });
 </script>
