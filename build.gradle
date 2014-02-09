@@ -4,7 +4,7 @@ apply plugin: 'tomcat'
 
 buildscript {
     repositories {
-        jcenter()
+        maven { url "http://jcenter.bintray.com/" }
     }
 
     dependencies {
@@ -35,7 +35,7 @@ idea {
 dependencies {
 
     // start Embedded Tomcat dependencies
-    def tomcatVersion = '7.0.11'
+    def tomcatVersion = '7.0.50'
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
         "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
     tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
