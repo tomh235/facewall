@@ -1,14 +1,11 @@
 package uk.co.o2.facewall.view;
 
-import com.google.common.base.Charsets;
 import freemarker.template.Template;
 import org.glassfish.jersey.server.mvc.Viewable;
 import org.junit.Test;
 
 import javax.ws.rs.core.MediaType;
-
 import java.io.ByteArrayOutputStream;
-import java.nio.charset.Charset;
 import java.util.HashMap;
 
 import static com.google.common.base.Charsets.UTF_8;

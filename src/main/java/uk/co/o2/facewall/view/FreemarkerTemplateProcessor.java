@@ -6,14 +6,14 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import org.glassfish.jersey.server.ContainerException;
 import org.glassfish.jersey.server.mvc.Viewable;
-import org.glassfish.jersey.server.mvc.spi.AbstractTemplateProcessor;
 import org.glassfish.jersey.server.mvc.spi.TemplateProcessor;
 
-import javax.servlet.ServletContext;
 import javax.ws.rs.core.MediaType;
-import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+
+import static com.google.common.base.Charsets.UTF_8;
 
 public class FreemarkerTemplateProcessor implements TemplateProcessor<Template> {
 
@@ -27,7 +27,7 @@ public class FreemarkerTemplateProcessor implements TemplateProcessor<Template> 
         objectWrapper.setExposeFields(true);
 
         configuration.setObjectWrapper(objectWrapper);
-        configuration.setDefaultEncoding("UTF-8");
+        configuration.setDefaultEncoding(UTF_8.name());
 
         return configuration;
     }
