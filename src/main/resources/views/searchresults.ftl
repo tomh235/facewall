@@ -1,6 +1,6 @@
-<#assign resultsCount = model.persons?size + model.teams?size>
+<#assign resultsCount = persons?size + teams?size>
 <div class="container">
-    <#if !model.persons?has_content && !model.teams?has_content>
+    <#if !persons?has_content && !teams?has_content>
             <div class="col-md-8 col-md-offset-2">
                 <h1 class="no-results search"><img src="/facewall/assets/images/smiley_sad.png" height="55" />No results found!</h1>
             </div>
@@ -9,12 +9,12 @@
         <div>
             <h3 class="results-counter">There were ${resultsCount} matching results</h3>
         </div>
-        <#if model.persons?has_content>
+        <#if persons?has_content>
             <div>
                 <h1>People</h1>
             </div>
             <div class="row">
-                <#list model.persons as result>
+                <#list persons as result>
                     <div class="col-md-4 user-entry">
                         <div class="thumbnail">
                             <h5 class="user-entry-teamname">${result.teamName}</h5>
@@ -26,12 +26,12 @@
             </div>
         </#if>
 
-        <#if model.teams?has_content>
+        <#if teams?has_content>
             <div>
                 <h1>Teams</h1>
             </div>
             <div class="row">
-                <#list model.teams as result>
+                <#list teams as result>
                     <div class="col-md-4 col-md-offset-4 team-entry">
                         <div class="thumbnail">
                             <h3 class="text-center">${result.name}</h3>

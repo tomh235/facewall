@@ -43,13 +43,7 @@ public class FreemarkerTemplateProcessor implements TemplateProcessor<Template> 
     @Override
     public void writeTo(Template template, final Viewable viewable, MediaType mediaType, OutputStream out) throws IOException {
         try {
-            Object model = viewable.getModel();
-            if (!(model instanceof Map)) {
-                model = new HashMap<String, Object>() {{
-                    put("model", viewable.getModel());
-                }};
-            }
-            template.process(model, new OutputStreamWriter(out));
+            template.process(viewable.getModel(), new OutputStreamWriter(out));
         } catch (TemplateException te) {
             throw new ContainerException(te);
         }

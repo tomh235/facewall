@@ -2,9 +2,9 @@
 
 <@main.main title = "Search the facewall app" activeTabIndex = 0>
 <div class="container">
-    <#if model.entries?has_content>
+    <#if entries?has_content>
         <div class="row">
-            <#list model.entries as entry>
+            <#list entries as entry>
                 <div class="col-md-3 col-sm-4 entry">
                     <h5 class="text-center teamName">${entry.teamHeader}</h5>
                         <a href="/facewall/person/${entry.link}">
