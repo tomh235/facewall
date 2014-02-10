@@ -1,5 +1,6 @@
-package uk.co.o2.facewall.controllers;
+package uk.co.o2.facewall.web;
 
+import org.glassfish.jersey.server.mvc.Viewable;
 import uk.co.o2.facewall.facade.SearchFacade;
 import uk.co.o2.facewall.model.DefaultSearchResultsModel;
 import uk.co.o2.facewall.model.PersonDetailsModel;
@@ -14,11 +15,10 @@ import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.Map;
 
-import static uk.co.o2.facewall.application.Facewall.facewall;
-import static uk.co.o2.facewall.domain.Query.newCaseInsensitiveQuery;
 import static javax.ws.rs.core.Response.ok;
 import static javax.ws.rs.core.Response.serverError;
-import static uk.co.o2.facewall.views.TemplateRenderer.renderTemplate;
+import static uk.co.o2.facewall.application.Facewall.facewall;
+import static uk.co.o2.facewall.domain.Query.newCaseInsensitiveQuery;
 
 @Path("/search")
 public class SearchController {
@@ -26,8 +26,8 @@ public class SearchController {
     private final SearchFacade searchFacade = facewall().searchFacade;
 
     @GET
-    public Response search() {
-        return ok(renderTemplate("search.ftl")).build();
+    public Viewable search() {
+        return new Viewable("/search.ftl");
     }
 
     @GET
@@ -40,23 +40,11 @@ public class SearchController {
         Response.ResponseBuilder response = serverError();
 
         if(searchResults instanceof DefaultSearchResultsModel) {
-            Map model = new HashMap<String, SearchResultsModel>() {{
-                put("results", searchResults);
-            }};
-
-            response = ok(renderTemplate("searchresults.ftl", model));
+            response = ok(new Viewable("/searchresults.ftl", searchResults));
         } else if(searchResults instanceof PersonDetailsModel) {
-            Map model = new HashMap<String, SearchResultsModel>() {{
-                put("person", searchResults);
-            }};
-
-            response = ok(renderTemplate("persondetails.ftl", model));
+            response = ok(new Viewable("/persondetails.ftl", searchResults));
         } else if(searchResults instanceof TeamDetailsModel) {
-            Map model = new HashMap<String, SearchResultsModel>() {{
-                put("team", searchResults);
-            }};
-
-            response = ok(renderTemplate("teamdetails.ftl", model));
+            response = ok(new Viewable("/teamdetails.ftl", searchResults));
         }
         return response.build();
     }

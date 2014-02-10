@@ -5,6 +5,7 @@ import uk.co.o2.facewall.domain.Person;
 import uk.co.o2.facewall.domain.Persons;
 import uk.co.o2.facewall.facade.modelmapper.OverviewModelMapper;
 import uk.co.o2.facewall.model.OverviewEntryModel;
+import uk.co.o2.facewall.model.OverviewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class OverviewFacade {
         this.overviewModelMapper = overviewModelMapper;
     }
 
-    public List<OverviewEntryModel> createOverviewModel() {
+    public OverviewModel createOverviewModel() {
         List<OverviewEntryModel> overviewEntryModels = new ArrayList<>();
 
         Persons persons = newPersons(repository.listPersons());
@@ -30,6 +31,6 @@ public class OverviewFacade {
         for(Person person : persons) {
             overviewEntryModels.add(overviewModelMapper.map(person));
         }
-        return overviewEntryModels;
+        return new OverviewModel(overviewEntryModels);
     }
 }

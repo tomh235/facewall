@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.co.o2.facewall.model.OverviewModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,8 +57,8 @@ public class OverviewFacadeTest {
         OverviewEntryModelMatcher ecom2Matcher = anOverviewEntryModel().withTeamHeader("ecom").named("ecom_member2");
         OverviewEntryModelMatcher productResourcesMatcher = anOverviewEntryModel().withTeamHeader("productResources").named("pr_member");
 
-        List<OverviewEntryModel> result = overviewFacade.createOverviewModel();
-        assertThat(result, containsExhaustivelyInOrder(ecom1Matcher, ecom2Matcher, productResourcesMatcher));
+        OverviewModel result = overviewFacade.createOverviewModel();
+        assertThat(result.entries, containsExhaustivelyInOrder(ecom1Matcher, ecom2Matcher, productResourcesMatcher));
 
         verify(mockRepo).listPersons();
     }
@@ -84,8 +85,8 @@ public class OverviewFacadeTest {
         OverviewEntryModelMatcher ecom3Matcher = anOverviewEntryModel().withTeamHeader("ecom").named("dave2");
         OverviewEntryModelMatcher ecom4Matcher = anOverviewEntryModel().withTeamHeader("ecom").named("rick");
 
-        List<OverviewEntryModel> result = overviewFacade.createOverviewModel();
-        assertThat(result, containsExhaustivelyInOrder(ecom1Matcher, ecom2Matcher, ecom3Matcher, ecom4Matcher));
+        OverviewModel result = overviewFacade.createOverviewModel();
+        assertThat(result.entries, containsExhaustivelyInOrder(ecom1Matcher, ecom2Matcher, ecom3Matcher, ecom4Matcher));
 
         verify(mockRepo).listPersons();
 
@@ -111,8 +112,8 @@ public class OverviewFacadeTest {
         OverviewEntryModelMatcher ecom2Matcher = anOverviewEntryModel().withTeamHeader("ecom").named("ecom_member2");
         OverviewEntryModelMatcher productResourcesMatcher = anOverviewEntryModel().withTeamHeader("productResources").named("pr_member");
 
-        List<OverviewEntryModel> result = overviewFacade.createOverviewModel();
-        assertThat(result, containsExhaustivelyInOrder(ecom1Matcher, ecom2Matcher, productResourcesMatcher));
+        OverviewModel result = overviewFacade.createOverviewModel();
+        assertThat(result.entries, containsExhaustivelyInOrder(ecom1Matcher, ecom2Matcher, productResourcesMatcher));
 
         verify(mockRepo).listPersons();
     }
@@ -143,8 +144,8 @@ public class OverviewFacadeTest {
         OverviewEntryModelMatcher teamless1Matcher = anOverviewEntryModel().withTeamHeader("").named("teamless_member1");
         OverviewEntryModelMatcher teamless2Matcher = anOverviewEntryModel().withTeamHeader("").named("teamless_member2");
 
-        List<OverviewEntryModel> result = overviewFacade.createOverviewModel();
-        assertThat(result, containsExhaustivelyInOrder(ecom1Matcher, ecom2Matcher, productResourcesMatcher, teamless1Matcher, teamless2Matcher));
+        OverviewModel result = overviewFacade.createOverviewModel();
+        assertThat(result.entries, containsExhaustivelyInOrder(ecom1Matcher, ecom2Matcher, productResourcesMatcher, teamless1Matcher, teamless2Matcher));
 
         verify(mockRepo).listPersons();
     }
