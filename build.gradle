@@ -65,6 +65,7 @@ dependencies {
 
 tomcatRunWar {
     httpPort = 9000
+    daemon = true
 }
 
 war {
