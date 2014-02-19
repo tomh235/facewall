@@ -1,6 +1,7 @@
 package uk.co.o2.facewall.functionaltests.selenium.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import uk.co.o2.facewall.functionaltests.selenium.common.WebBrowser;
 
@@ -25,5 +26,10 @@ public class RegisterPage {
 
     public boolean onRegistrationPage() {
         return WebBrowser.getUrl().matches(".*\\/signupform$");
+    }
+
+    public String getInputTag(String fieldName) {
+        WebElement inputField = WebBrowser.findElement(By.xpath("//*[@name='" + fieldName + "']"));
+        return inputField.getTagName();
     }
 }

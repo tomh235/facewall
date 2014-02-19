@@ -10,6 +10,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static uk.co.o2.facewall.application.Facewall.facewall;
@@ -17,15 +18,15 @@ import static uk.co.o2.facewall.application.Facewall.facewall;
 @Path("/signup")
 public class SignUpController {
 
-    private final SignUpFacade signUpFacade = facewall().signUpFacade;
+    private static final SignUpFacade signUpFacade = facewall().signUpFacade;
     private final UserModelValidator userModelValidator = facewall().userModelValidator;
 
-        // TODO - Charlie : Implement a list of teams in the database on the signUpForm
         @GET
         public static Viewable blankSignUpForm() {
+            final List<String> teamNamesList = signUpFacade.getSortedAvailableTeamNames();
             Map model = new HashMap<String, Object>() {{
                 put("userForm", new UserModel());
-                put("teamExists", true);
+                put("teamNamesList", teamNamesList);
             }};
 
             return new Viewable("/signupform.ftl", model);

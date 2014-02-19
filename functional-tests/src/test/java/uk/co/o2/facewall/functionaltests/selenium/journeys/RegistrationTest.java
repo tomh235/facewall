@@ -45,6 +45,12 @@ public class RegistrationTest extends SeleniumBase {
 
     @Before
     public void beforeTest(){
+        facewallDb.clear();
+        facewallDb.initialise();
+        facewallDb.seedFixtures(newFixtures().withTeams(
+                defaultTeamWithDefaultMembers()
+                        .withProperty("name", "ecom")
+        ));
         homePage = new HomePage();
         homePage.navigateToHomePage();
         //Initial landing on homepage
@@ -57,6 +63,21 @@ public class RegistrationTest extends SeleniumBase {
     public static void afterTest(){
         facewallDb.clear();
         facewallDb.initialise();
+    }
+
+
+    @Test
+    public void form_has_input_for_teams_when_no_team_in_db() {
+        facewallDb.clear();
+        facewallDb.initialise();
+        homePage.navigateToHomePage();
+        homePage.clickRegistrationTab();
+        assertThat(registerPage.getInputTag("team"), is("input"));
+    }
+
+    @Test
+    public void form_has_dropdown_for_teams_when_teams_in_db() {
+        assertThat(registerPage.getInputTag("team"), is("select"));
     }
 
     @Test

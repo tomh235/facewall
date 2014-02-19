@@ -45,14 +45,14 @@
                     </#if>
 
                     <label>Team name</label>
-                    <#if teamNamesList??>
-                    <select class="form-control" name="team" required>
+                    <#if teamNamesList?size=0>
+                        <input class="form-control" type="text" name="team" placeholder="Enter team name" required>                    <select class="form-control" name="team" required>
+                    </select>
+                    <#else>
+                        <select class="form-control" name="team" required>
                         <#list teamNamesList as teamName>
                             <option value="${teamName}">${teamName}</option>
                         </#list>
-                    </select>
-                    <#else>
-                        <input class="form-control" type="text" name="team" placeholder="Enter team name" required>
                     </#if>
                 </div>
 
