@@ -7,7 +7,7 @@
         <div class="col-md-6 col-md-offset-3 form">
             <form role="form" method="post" action="/facewall/signup/summary">
                 <div class="form-group">
-                    <#if userForm.error("name")??>
+                    <#if (userForm.error("name"))??>
                         <#list userForm.error("name") as error>
                         <h4>${error.message}</h4>
                         </#list>
@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="form-group">
-                    <#if userForm.error("imgURL")??>
+                    <#if (userForm.error("imgURL"))??>
                         <#list userForm.error("imgURL") as error>
                         <h4>${error.message}</h4>
                         </#list>
@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="form-group">
-                    <#if userForm.error("email")??>
+                    <#if (userForm.error("email"))??>
                         <#list userForm.error("email") as error>
                         <h4>${error.message}</h4>
                         </#list>
@@ -38,22 +38,26 @@
                 </div>
 
                 <div class="form-group">
-                    <#if userForm.error("team")??>
+                    <#if (userForm.error("team"))??>
                         <#list userForm.error("team") as error>
                         <h4>${error.message}</h4>
                         </#list>
                     </#if>
 
                     <label>Team name</label>
+                    <#if teamNamesList??>
                     <select class="form-control" name="team" required>
                         <#list teamNamesList as teamName>
                             <option value="${teamName}">${teamName}</option>
                         </#list>
                     </select>
+                    <#else>
+                        <input class="form-control" type="text" name="team" placeholder="Enter team name" required>
+                    </#if>
                 </div>
 
                 <div class="form-group">
-                    <#if userForm.error("scrum")??>
+                    <#if (userForm.error("scrum"))??>
                         <#list userForm.error("scrum") as error>
                         <h4>${error.message}</h4>
                         </#list>
@@ -63,7 +67,7 @@
                 </div>
 
                 <div class="form-group">
-                    <#if userForm.error("role")??>
+                    <#if (userForm.error("role"))??>
                         <#list userForm.error("role") as error>
                         <h4>${error.message}</h4>
                         </#list>
@@ -79,7 +83,7 @@
                 </div>
 
                 <div class="form-group">
-                    <#if userForm.error("location")??>
+                    <#if (userForm.error("location"))??>
                         <#list userForm.error("location") as error>
                         <h4>${error.message}</h4>
                         </#list>
