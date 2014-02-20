@@ -3,10 +3,12 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <title>${title}</title>
+    <head profile="http://www.w3.org/2005/10/profile">
+        <title>Facewall | ${title}</title>
+        <link rel="icon" type="image/ico" href="/facewall/assets/images/favicon.ico" />
         <link rel="stylesheet" media="screen" href="/facewall/assets/css/main.css">
         <script src="/facewall/assets/javascripts/jquery-1.9.0.min.js"></script>
+    </head>
     </head>
     <body>
         <div class="jumbotron">

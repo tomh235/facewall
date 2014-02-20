@@ -6,9 +6,8 @@ import uk.co.o2.facewall.facade.validators.UserModelValidator;
 import uk.co.o2.facewall.facade.validators.ValidatedUserModel;
 import uk.co.o2.facewall.model.UserModel;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,10 +23,9 @@ public class SignUpController {
         @GET
         public static Viewable blankSignUpForm() {
             final List<String> teamNamesList = signUpFacade.getSortedAvailableTeamNames();
-            Map model = new HashMap<String, Object>() {{
-                put("userForm", new UserModel());
-                put("teamNamesList", teamNamesList);
-            }};
+            Map<String, Object> model = new HashMap<>();
+            model.put("userForm", new UserModel());
+            model.put("teamNamesList", teamNamesList);
 
             return new Viewable("/signupform.ftl", model);
         }
@@ -36,14 +34,26 @@ public class SignUpController {
         //if (Validator<Team>.isValid && Validator<Person>.isValid) then do
         //facade.addPersonToTeam(Validator<Team>.validatedTeam, Validator<Person>.validatedPerson)
         //otherwise signupform.render(Validator<Team>, Validator<Person>)
+
         @Path("/summary")
         @POST
-        public Viewable submitSignUpForm() {
-            final UserModel newUserModel = new UserModel();
+        @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+        public Viewable submitSignUpForm(@FormParam("name") String name,
+                                         @FormParam("imgUrl") String imgUrl,
+                                         @FormParam("email") String email,
+                                         @FormParam("team") String team,
+                                         @FormParam("scrum") String scrum,
+                                         @FormParam("role") String role,
+                                         @FormParam("location") String location) {
 
-            ValidatedUserModel validatedUserModel = userModelValidator.validate(newUserModel);
+            UserModel userModel = signUpFacade.mapUserModel(name, imgUrl, email, team, scrum, role, location);
+            ValidatedUserModel validatedUserModel = userModelValidator.validate(userModel);
             signUpFacade.registerPerson(validatedUserModel.getPersonInformation(), validatedUserModel.getTeam());
 
-            return new Viewable("/signupsummary.ftl", newUserModel);
+            Map<String, Object> model = new HashMap<>();
+            model.put("userModel", validatedUserModel.getPersonInformation());
+            model.put("userModelsTeam", validatedUserModel.getTeam());
+
+            return new Viewable("/signupsummary.ftl", validatedUserModel);
         }
 }

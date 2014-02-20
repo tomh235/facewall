@@ -1,6 +1,6 @@
 <#import 'main.ftl' as main>
 
-<@main.main title = "Search the facewall app" activeTabIndex = 1>
+<@main.main title = "Search the Facewall App" activeTabIndex = 1>
 
 <div class="container">
     <div class="row">

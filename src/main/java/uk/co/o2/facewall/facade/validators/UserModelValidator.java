@@ -2,10 +2,15 @@ package uk.co.o2.facewall.facade.validators;
 
 import uk.co.o2.facewall.data.TeamRepository;
 import uk.co.o2.facewall.data.dto.PersonInformation;
+import uk.co.o2.facewall.domain.NoTeam;
 import uk.co.o2.facewall.domain.Team;
 import uk.co.o2.facewall.model.UserModel;
 
+import javax.ws.rs.FormParam;
+import java.util.List;
+
 import static uk.co.o2.facewall.data.dto.PersonInformation.newPersonInformation;
+import static uk.co.o2.facewall.domain.NoTeam.noTeam;
 import static uk.co.o2.facewall.domain.Query.newExactQuery;
 import static java.util.UUID.randomUUID;
 
@@ -19,7 +24,13 @@ public class UserModelValidator {
 
     public ValidatedUserModel validate(UserModel userModel) {
         PersonInformation personInformation = createPersonInformation(userModel);
-        Team team = teamRepository.queryTeams(newExactQuery(userModel.team)).get(0);
+        Team team;
+        List<Team> teamsList = teamRepository.queryTeams(newExactQuery(userModel.team));
+        if(teamsList.isEmpty()) {
+            team = noTeam();
+        } else {
+            team = teamsList.get(0);
+        }
 
         return new ValidatedUserModel(personInformation, team);
     }

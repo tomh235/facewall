@@ -4,6 +4,7 @@ import uk.co.o2.facewall.data.dto.PersonInformation;
 import uk.co.o2.facewall.domain.Team;
 
 public class ValidatedUserModel {
+
     private final PersonInformation personInformation;
     private final Team team;
 

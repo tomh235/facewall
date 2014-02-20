@@ -1,6 +1,6 @@
 <#import 'main.ftl' as main>
 
-<@main.main title = "Summary of new userModel" activeTabIndex = 2>
+<@main.main title = "${userModel.name}'s details" activeTabIndex = 2>
     
     <div class="container">
         <div class="row">
@@ -25,16 +25,16 @@
     
                 <h3>Team</h3>
                 <p class="team">
-                    <#if !userModel.team?? || userModel.team == "">
+                    <#if !userModelsTeam?? || userModelsTeam == "">
                     <em>Not specified</em>
                     <#else>
-                    ${userModel.team}
+                    ${userModelsTeam}
                     </#if>
                 </p>
     
                 <h3>Scrum</h3>
                 <p class="scrum">
-                    <#if !userModel.scrum?? || userModel.scrum == "">
+                    <#if !(userModel.scrum)?? || userModel.scrum == "">
                         <em>Not specified</em>
                     <#else>
                         ${userModel.scrum}
