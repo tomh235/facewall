@@ -1,6 +1,6 @@
 <#import 'main.ftl' as main>
 
-<@main.main title = "${userModel.name}'s details" activeTabIndex = 2>
+<@main.main title = "${personInformation.name}'s details" activeTabIndex = 2>
     
     <div class="container">
         <div class="row">
@@ -12,44 +12,46 @@
             <div class="col-md-4 col-md-offset-2">
     
                 <h3>Name</h3>
-                <p class="name">${userModel.name}</p>
+                <p class="name">${personInformation.name}</p>
     
                 <h3>Email</h3>
-                <p class="email">${userModel.email}</p>
+                <p class="email">${personInformation.email}</p>
     
                 <h3>Role</h3>
-                <p class="role">${userModel.prettifyString(userModel.role)}</p>
+                <p class="role">${personInformation.role}</p>
     
                 <h3>Location</h3>
-                <p class="location">${userModel.prettifyString(userModel.location)}</p>
+                <!--<#--<p class="location">${personInformation.location}</p>-->-->
+                <p>Sorry, this field has not been implemented yet.</p>
     
                 <h3>Team</h3>
                 <p class="team">
-                    <#if !userModelsTeam?? || userModelsTeam == "">
+                    <#if !personInformationsTeam?? || personInformationsTeam == "">
                     <em>Not specified</em>
                     <#else>
-                    ${userModelsTeam}
+                    ${team}
                     </#if>
                 </p>
     
                 <h3>Scrum</h3>
-                <p class="scrum">
-                    <#if !(userModel.scrum)?? || userModel.scrum == "">
+                <!--<#--<p class="scrum">
+                    <#if !(personInformation.scrum)?? || personInformation.scrum == "">
                         <em>Not specified</em>
                     <#else>
-                        ${userModel.scrum}
+                        ${personInformation.scrum}
                     </#if>
-                </p>
+                </p>-->-->
+                <p>Sorry, this field has not been implemented yet.</p>
             </div>
     
             <div class="col-md-4">
     
                 <h3>Picture</h3>
                 <h5>url:</h5>
-                <p class="imgUrl">${userModel.imgURL}</p>
+                <p class="imgURL">${personInformation.picture}</p>
     
                 <a href="#">
-                    <img class="signup-pic" src="${userModel.imgURL}" alt="">
+                    <img class="signup-pic" src="${personInformation.picture}" alt="">
                 </a>
     
             </div>

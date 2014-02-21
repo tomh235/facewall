@@ -19,7 +19,7 @@ public class UserModelBuilder {
     public UserModel build() {
         UserModel userModel = new UserModel();
         userModel.name = name;
-        userModel.imgURL = imgURL;
+        userModel.imgUrl = imgURL;
         userModel.role = role;
         userModel.email = email;
         userModel.team = team;

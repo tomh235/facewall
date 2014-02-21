@@ -4,6 +4,6 @@ import uk.co.o2.facewall.model.UserModel;
 
 public class UserModelMapper {
     public UserModel map(String name, String imgUrl, String email, String team, String scrum, String role, String location) {
-        return new UserModel(email, imgUrl, location, name, role, scrum, team);
+        return new UserModel(email, imgUrl, name, role, location, team, scrum);
     }
 }

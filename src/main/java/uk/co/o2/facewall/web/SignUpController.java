@@ -24,7 +24,6 @@ public class SignUpController {
         public static Viewable blankSignUpForm() {
             final List<String> teamNamesList = signUpFacade.getSortedAvailableTeamNames();
             Map<String, Object> model = new HashMap<>();
-            model.put("userForm", new UserModel());
             model.put("teamNamesList", teamNamesList);
 
             return new Viewable("/signupform.ftl", model);
@@ -51,8 +50,8 @@ public class SignUpController {
             signUpFacade.registerPerson(validatedUserModel.getPersonInformation(), validatedUserModel.getTeam());
 
             Map<String, Object> model = new HashMap<>();
-            model.put("userModel", validatedUserModel.getPersonInformation());
-            model.put("userModelsTeam", validatedUserModel.getTeam());
+            model.put("personInformation", validatedUserModel.getPersonInformation());
+            model.put("team", validatedUserModel.getTeam());
 
             return new Viewable("/signupsummary.ftl", validatedUserModel);
         }

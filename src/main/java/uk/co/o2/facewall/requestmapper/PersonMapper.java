@@ -15,7 +15,7 @@ public class PersonMapper {
 
             @Override
             public String picture() {
-                return userModel.imgURL;
+                return userModel.imgUrl;
             }
 
             @Override

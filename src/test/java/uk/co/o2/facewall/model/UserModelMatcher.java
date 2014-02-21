@@ -4,8 +4,7 @@ import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 import uk.co.o2.facewall.util.CompositeMatcher;
 
-public class UserModelMatcher extends  CompositeMatcher<UserModel> {
-
+public class UserModelMatcher extends CompositeMatcher<UserModel> {
 
     private UserModelMatcher(){
         super();
@@ -33,7 +32,7 @@ public class UserModelMatcher extends  CompositeMatcher<UserModel> {
         add(new TypeSafeMatcher<UserModel>() {
             @Override
             public boolean matchesSafely(UserModel target) {
-                return target.imgURL.equals(imgUrl);
+                return target.imgUrl.equals(imgUrl);
             }
             @Override
             public void describeTo(Description description) {
@@ -42,7 +41,6 @@ public class UserModelMatcher extends  CompositeMatcher<UserModel> {
         });
         return this;
     }
-
 
     public UserModelMatcher withEmail(final String email) {
         add(new TypeSafeMatcher<UserModel>() {

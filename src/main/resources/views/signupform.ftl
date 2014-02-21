@@ -18,13 +18,13 @@
                 </div>
 
                 <div class="form-group">
-                    <#if (userForm.error("imgURL"))??>
-                        <#list userForm.error("imgURL") as error>
+                    <#if (userForm.error("imgUrl"))??>
+                        <#list userForm.error("imgUrl") as error>
                         <h4>${error.message}</h4>
                         </#list>
                     </#if>
                     <label>Url to picture</label>
-                    <input class="form-control" type="url" name="imgURL" placeholder="Enter url" required>
+                    <input class="form-control" type="url" name="imgUrl" placeholder="Enter url" required>
                 </div>
 
                 <div class="form-group">

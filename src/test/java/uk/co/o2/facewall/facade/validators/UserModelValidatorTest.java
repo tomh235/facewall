@@ -54,7 +54,7 @@ public class UserModelValidatorTest {
 
     @Test
     public void creates_personInformation_picture_from_valid_user_model_picture() throws Exception {
-        userModel.imgURL = "img.url";
+        userModel.imgUrl = "img.url";
 
         result = userModelValidator.validate(userModel).getPersonInformation();
 

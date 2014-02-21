@@ -8,10 +8,7 @@ import uk.co.o2.facewall.facade.OverviewFacade;
 import uk.co.o2.facewall.facade.PersonDetailsFacade;
 import uk.co.o2.facewall.facade.SearchFacade;
 import uk.co.o2.facewall.facade.SignUpFacade;
-import uk.co.o2.facewall.facade.modelmapper.OverviewModelMapper;
-import uk.co.o2.facewall.facade.modelmapper.PersonDetailsModelMapper;
-import uk.co.o2.facewall.facade.modelmapper.SearchResultsModelMapper;
-import uk.co.o2.facewall.facade.modelmapper.TeamDetailsModelMapper;
+import uk.co.o2.facewall.facade.modelmapper.*;
 import uk.co.o2.facewall.facade.validators.UserModelValidator;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.rest.graphdb.RestAPIFacade;
@@ -62,6 +59,7 @@ final public class Facewall {
         SearchResultsModelMapper searchResultsModelMapper = new SearchResultsModelMapper();
         PersonDetailsModelMapper personDetailsModelMapper = new PersonDetailsModelMapper();
         TeamDetailsModelMapper teamDetailsModelMapper = new TeamDetailsModelMapper();
+        UserModelMapper userModelMapper = new UserModelMapper();
 
         PersonDetailsFacade personDetailsFacade = new PersonDetailsFacade(personRepository, personDetailsModelMapper);
 
@@ -76,7 +74,7 @@ final public class Facewall {
         SignUpFacade signUpFacade = new SignUpFacade(
                 adminDAO,
                 personRepository,
-                teamRepository);
+                teamRepository, userModelMapper);
         UserModelValidator userModelValidator = new UserModelValidator(teamRepository);
 
         return new Facewall(overviewFacade, searchFacade, personDetailsFacade, signUpFacade, userModelValidator);

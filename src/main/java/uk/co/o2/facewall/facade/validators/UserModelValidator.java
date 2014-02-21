@@ -2,11 +2,9 @@ package uk.co.o2.facewall.facade.validators;
 
 import uk.co.o2.facewall.data.TeamRepository;
 import uk.co.o2.facewall.data.dto.PersonInformation;
-import uk.co.o2.facewall.domain.NoTeam;
 import uk.co.o2.facewall.domain.Team;
 import uk.co.o2.facewall.model.UserModel;
 
-import javax.ws.rs.FormParam;
 import java.util.List;
 
 import static uk.co.o2.facewall.data.dto.PersonInformation.newPersonInformation;
@@ -39,7 +37,7 @@ public class UserModelValidator {
         return newPersonInformation()
                 .withId(randomUUID().toString()) // TODO: change to user-chosen permalink (or email)
                 .named(userModel.name)
-                .withPicture(userModel.imgURL)
+                .withPicture(userModel.imgUrl)
                 .withEmail(userModel.email)
                 .withRole(userModel.role)
                 //.withLocation(userModel.location)

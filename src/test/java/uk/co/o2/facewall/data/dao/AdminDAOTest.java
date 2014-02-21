@@ -45,12 +45,12 @@ public class AdminDAOTest {
         Node mockNode = mock(Node.class);
         Map<String, String> stubProperties = new HashMap<>();
         stubProperties.put("name", "bob");
-        stubProperties.put("imgURL", "http://www.image.jpeg");
+        stubProperties.put("imgUrl", "http://www.image.jpeg");
 
         adminDAO.addPropertiesToNode(mockNode, stubProperties);
 
         verify(mockNode).setProperty("name", "bob");
-        verify(mockNode).setProperty("imgURL", "http://www.image.jpeg");
+        verify(mockNode).setProperty("imgUrl", "http://www.image.jpeg");
     }
 
     @Test
