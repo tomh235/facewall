@@ -14,7 +14,6 @@
         </div>
     </div>
     <div id="result"></div>
-    <div></div>
 </div>
 
 <script src="/facewall/assets/javascripts/search-box.js"></script>

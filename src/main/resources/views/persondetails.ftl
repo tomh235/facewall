@@ -3,6 +3,6 @@
     <h5 class="person-details-name">${name}</h5>
     <h5 class="personEmail">${email}</h5>
     <h5 class="person-details-role">${role}</h5>
-    <img class="person-details-img" src="${picture}"></img>
+    <img class="person-details-img" src="${picture}" />
     <h5 class="person-details-teamName">${teamName}</h5>
 </div>

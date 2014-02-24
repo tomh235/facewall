@@ -11,14 +11,13 @@ var autoSearchOnKeyUp = function (input, target, result) {
 
                                    var updateResultWithMostRecent = function (data) {
                                        if (recentness == requestRecentness) {
-                                           result.empty();
-                                           result.append(data);
+                                           result.html(data);
                                        }
                                    };
 
             }  else if (searchstring.length == 0) {result.empty();}
 
 
-        $.get(target, params).done(updateResultWithMostRecent);
+        $.get(target, params, updateResultWithMostRecent, "html");
     });
 };
