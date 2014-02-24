@@ -29,11 +29,6 @@ public class SignUpController {
             return new Viewable("/signupform.ftl", model);
         }
 
-        //How about using decorator pattern to chain together Validator<Team> and Validator<Person>, and then
-        //if (Validator<Team>.isValid && Validator<Person>.isValid) then do
-        //facade.addPersonToTeam(Validator<Team>.validatedTeam, Validator<Person>.validatedPerson)
-        //otherwise signupform.render(Validator<Team>, Validator<Person>)
-
         @Path("/summary")
         @POST
         @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -45,7 +40,7 @@ public class SignUpController {
                                          @FormParam("role") String role,
                                          @FormParam("location") String location) {
 
-            UserModel userModel = signUpFacade.mapUserModel(name, imgUrl, email, team, scrum, role, location);
+            UserModel userModel = new UserModel(email, imgUrl, name, role, location, team, scrum);
             ValidatedUserModel validatedUserModel = userModelValidator.validate(userModel);
             signUpFacade.registerPerson(validatedUserModel.getPersonInformation(), validatedUserModel.getTeam());
 

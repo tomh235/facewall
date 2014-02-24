@@ -59,7 +59,6 @@ final public class Facewall {
         SearchResultsModelMapper searchResultsModelMapper = new SearchResultsModelMapper();
         PersonDetailsModelMapper personDetailsModelMapper = new PersonDetailsModelMapper();
         TeamDetailsModelMapper teamDetailsModelMapper = new TeamDetailsModelMapper();
-        UserModelMapper userModelMapper = new UserModelMapper();
 
         PersonDetailsFacade personDetailsFacade = new PersonDetailsFacade(personRepository, personDetailsModelMapper);
 
@@ -74,7 +73,7 @@ final public class Facewall {
         SignUpFacade signUpFacade = new SignUpFacade(
                 adminDAO,
                 personRepository,
-                teamRepository, userModelMapper);
+                teamRepository);
         UserModelValidator userModelValidator = new UserModelValidator(teamRepository);
 
         return new Facewall(overviewFacade, searchFacade, personDetailsFacade, signUpFacade, userModelValidator);

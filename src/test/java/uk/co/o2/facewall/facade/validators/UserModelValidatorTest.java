@@ -2,6 +2,7 @@ package uk.co.o2.facewall.facade.validators;
 
 import uk.co.o2.facewall.data.TeamRepository;
 import uk.co.o2.facewall.data.dto.PersonInformation;
+import uk.co.o2.facewall.domain.NoTeam;
 import uk.co.o2.facewall.domain.Query;
 import uk.co.o2.facewall.domain.Team;
 import uk.co.o2.facewall.model.UserModel;
@@ -12,8 +13,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.ArrayList;
+
+import static junit.framework.Assert.assertTrue;
 import static uk.co.o2.facewall.data.datatype.PersonId.noPersonId;
 import static uk.co.o2.facewall.data.dto.PersonInformationMatcher.aPersonInformation;
+import static uk.co.o2.facewall.domain.NoTeam.noTeam;
 import static uk.co.o2.facewall.domain.QueryMatcher.aQuery;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.not;
@@ -103,6 +108,18 @@ public class UserModelValidatorTest {
         assertThat(result.getTeam(), is(expectedTeam));
 
         verify(mockTeamRepository).queryTeams(argThat(is(aQuery().withQueryString("teamName"))));
+    }
+
+    @Test
+    public void invalid_team_adds_to_error_map_and_assigns_no_team() throws Exception {
+        userModel.team = "teamName";
+
+        Team expectedTeam = noTeam();
+        when(mockTeamRepository.queryTeams(any(Query.class))).thenReturn(new ArrayList<Team>());
+
+        ValidatedUserModel result = userModelValidator.validate(userModel);
+        assertThat(result.getTeam(), is(expectedTeam));
+        assertTrue(result.getErrors().containsKey("team"));
     }
 
     private void stubTeamRepository() {
