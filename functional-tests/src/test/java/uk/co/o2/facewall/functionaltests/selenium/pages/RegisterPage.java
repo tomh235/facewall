@@ -25,7 +25,7 @@ public class RegisterPage {
     }
 
     public boolean onRegistrationPage() {
-        return WebBrowser.getUrl().matches(".*\\/signupform$");
+        return WebBrowser.getUrl().matches(".*\\/signup");
     }
 
     public String getInputTag(String fieldName) {

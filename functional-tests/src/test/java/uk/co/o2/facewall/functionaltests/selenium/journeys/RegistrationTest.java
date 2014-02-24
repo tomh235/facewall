@@ -84,7 +84,7 @@ public class RegistrationTest extends SeleniumBase {
     public void can_complete_register_user_journey() {
         //Fill in form
         registerPage.enterFieldInForm("name", NAME);
-        registerPage.enterFieldInForm("imgURL", IMGURL);
+        registerPage.enterFieldInForm("imgUrl", IMGURL);
         registerPage.enterFieldInForm("email", EMAIL);
         registerPage.selectDropdown("team", TEAM);
         registerPage.enterFieldInForm("scrum", SCRUM);
@@ -97,9 +97,31 @@ public class RegistrationTest extends SeleniumBase {
         assertThat(registerPage.getSummaryItem("imgUrl"), is(IMGURL));
         assertThat(registerPage.getSummaryItem("email"), is(EMAIL));
         assertThat(registerPage.getSummaryItem("team"), is(TEAM));
-        assertThat(registerPage.getSummaryItem("scrum"), is(SCRUM));
         assertThat(registerPage.getSummaryItem("role"), is(ROLE));
-        assertThat(registerPage.getSummaryItem("location"), is(LOCATION));
+
+        //Go to overview to check person is showing
+        homePage.navigateToHomePage();
+        assertThat(homePage.personExists(NAME, TEAM, IMGURL), is(true));
+    }
+
+    @Test
+    public void sign_up_summary_displays_inputted_data() {
+        //Fill in form
+        registerPage.enterFieldInForm("name", NAME);
+        registerPage.enterFieldInForm("imgUrl", IMGURL);
+        registerPage.enterFieldInForm("email", EMAIL);
+        registerPage.selectDropdown("team", TEAM);
+        registerPage.enterFieldInForm("scrum", SCRUM);
+        registerPage.selectDropdown("role", ROLE);
+        registerPage.selectDropdown("location", LOCATION);
+        registerPage.clickSubmit();
+
+        //Check all details submitted are returned
+        assertThat(registerPage.getSummaryItem("name"), is(NAME));
+        assertThat(registerPage.getSummaryItem("imgUrl"), is(IMGURL));
+        assertThat(registerPage.getSummaryItem("email"), is(EMAIL));
+        assertThat(registerPage.getSummaryItem("team"), is(TEAM));
+        assertThat(registerPage.getSummaryItem("role"), is(ROLE));
 
         //Go to overview to check person is showing
         homePage.navigateToHomePage();
@@ -110,7 +132,7 @@ public class RegistrationTest extends SeleniumBase {
     public void form_rejects_invalid_email_field() {
         //Fill in form
         registerPage.enterFieldInForm("name", NAME);
-        registerPage.enterFieldInForm("imgURL", IMGURL);
+        registerPage.enterFieldInForm("imgUrl", IMGURL);
         registerPage.enterFieldInForm("email", INVALID_EMAIL);
         registerPage.selectDropdown("team", TEAM);
         registerPage.enterFieldInForm("scrum", SCRUM);
@@ -129,7 +151,7 @@ public class RegistrationTest extends SeleniumBase {
     public void form_rejects_invalid_url_field() {
         //Fill in form
         registerPage.enterFieldInForm("name", NAME);
-        registerPage.enterFieldInForm("imgURL", INVALID_IMGURL);
+        registerPage.enterFieldInForm("imgUrl", INVALID_IMGURL);
         registerPage.enterFieldInForm("email", EMAIL);
         registerPage.selectDropdown("team", TEAM);
         registerPage.enterFieldInForm("scrum", SCRUM);
@@ -148,7 +170,7 @@ public class RegistrationTest extends SeleniumBase {
     public void for_rejects_empty_name_field() {
         //Fill in form
         registerPage.enterFieldInForm("name", EMPTY_NAME);
-        registerPage.enterFieldInForm("imgURL", IMGURL);
+        registerPage.enterFieldInForm("imgUrl", IMGURL);
         registerPage.enterFieldInForm("email", EMAIL);
         registerPage.selectDropdown("team", TEAM);
         registerPage.enterFieldInForm("scrum", SCRUM);

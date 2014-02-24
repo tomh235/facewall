@@ -26,10 +26,10 @@
     
                 <h3>Team</h3>
                 <p class="team">
-                    <#if !personInformationsTeam?? || personInformationsTeam == "">
-                    <em>Not specified</em>
+                    <#if !team?? || team.name()=="">
+                        <em>Not specified</em>
                     <#else>
-                    ${team}
+                        ${team.name()}
                     </#if>
                 </p>
     
@@ -48,7 +48,7 @@
     
                 <h3>Picture</h3>
                 <h5>url:</h5>
-                <p class="imgURL">${personInformation.picture}</p>
+                <p class="imgUrl">${personInformation.picture}</p>
     
                 <a href="#">
                     <img class="signup-pic" src="${personInformation.picture}" alt="">
