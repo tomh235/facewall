@@ -6,7 +6,6 @@ import uk.co.o2.facewall.data.dao.AdminDAO;
 import uk.co.o2.facewall.data.dto.PersonInformation;
 import uk.co.o2.facewall.domain.Person;
 import uk.co.o2.facewall.domain.Team;
-import uk.co.o2.facewall.model.UserModel;
 
 import java.util.ArrayList;
 import java.util.Collections;

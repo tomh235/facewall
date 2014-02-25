@@ -1,5 +1,10 @@
 package uk.co.o2.facewall.data.dao;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import uk.co.o2.facewall.data.dao.database.query.DatabaseQueryBuilder;
 import uk.co.o2.facewall.data.dao.database.query.DatabaseQueryFactory;
 import uk.co.o2.facewall.data.dao.database.query.FacewallQueryResultsMapper;
@@ -8,18 +13,7 @@ import uk.co.o2.facewall.data.datatype.TeamId;
 import uk.co.o2.facewall.data.dto.PersonDTO;
 import uk.co.o2.facewall.data.dto.TeamDTO;
 import uk.co.o2.facewall.domain.Query;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
-import static uk.co.o2.facewall.data.dao.database.DatabaseQueryBuilderMatcher.aDatabaseQueryBuilder;
-import static uk.co.o2.facewall.data.dao.database.DatabaseQueryMatchers.*;
-import static uk.co.o2.facewall.data.datatype.PersonId.newPersonId;
-import static uk.co.o2.facewall.data.datatype.TeamId.newTeamId;
-import static uk.co.o2.facewall.domain.Query.newCaseSensitiveQuery;
-import static uk.co.o2.facewall.domain.datatype.QueryString.newQueryString;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -27,6 +21,12 @@ import static org.hamcrest.core.Is.is;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Mockito.*;
+import static uk.co.o2.facewall.data.dao.database.DatabaseQueryBuilderMatcher.aDatabaseQueryBuilder;
+import static uk.co.o2.facewall.data.dao.database.DatabaseQueryMatchers.*;
+import static uk.co.o2.facewall.data.datatype.PersonId.newPersonId;
+import static uk.co.o2.facewall.data.datatype.TeamId.newTeamId;
+import static uk.co.o2.facewall.domain.Query.newCaseSensitiveQuery;
+import static uk.co.o2.facewall.domain.datatype.QueryString.newQueryString;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FacewallDAOTest {

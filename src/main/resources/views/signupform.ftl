@@ -7,51 +7,51 @@
         <div class="col-md-6 col-md-offset-3 form">
             <form role="form" method="post" action="/facewall/signup/summary">
                 <div class="form-group">
-                    <#if (userForm.error("name"))??>
-                        <#list userForm.error("name") as error>
-                        <h4>${error.message}</h4>
-                        </#list>
+                    <#if (errors["personInformation.name"])??>
+                        <div class="alert alert-danger">
+                            <span class="glyphicon glyphicon-remove"></span>${errors["personInformation.name"]}
+                        </div>
                     </#if>
 
                     <label>Full name</label>
-                    <input class="form-control" type="text" name="name" placeholder="Enter name" required>
+                    <input class="form-control" type="text" name="name" placeholder="Enter name" value="${(personInformation.name)!""}" required>
                 </div>
 
                 <div class="form-group">
-                    <#if (userForm.error("imgUrl"))??>
-                        <#list userForm.error("imgUrl") as error>
-                        <h4>${error.message}</h4>
-                        </#list>
+                    <#if (errors["personInformation.picture"])??>
+                        <div class="alert alert-danger">
+                            <span class="glyphicon glyphicon-remove"></span>${errors["personInformation.picture"]}
+                        </div>
                     </#if>
                     <label>Url to picture</label>
-                    <input class="form-control" type="url" name="imgUrl" placeholder="Enter url" required>
+                    <input class="form-control" type="text" name="imgUrl" placeholder="Enter url" value="${(personInformation.picture)!""}">
                 </div>
 
                 <div class="form-group">
-                    <#if (userForm.error("email"))??>
-                        <#list userForm.error("email") as error>
-                        <h4>${error.message}</h4>
-                        </#list>
+                    <#if (errors["personInformation.email"])??>
+                        <div class="alert alert-danger">
+                            <span class="glyphicon glyphicon-remove"></span>${errors["personInformation.email"]}
+                        </div>
                     </#if>
                     <label>Email address</label>
-                    <input class="form-control" type="email" name="email" placeholder="Enter email" required>
+                    <input class="form-control" type="email" name="email" placeholder="Enter email" value="${(personInformation.email)!""}" required>
                 </div>
 
                 <div class="form-group">
-                    <#if (userForm.error("team"))??>
-                        <#list userForm.error("team") as error>
-                        <h4>${error.message}</h4>
-                        </#list>
+                    <#if (errors["team"])??>
+                        <div class="alert alert-danger">
+                            <span class="glyphicon glyphicon-remove"></span>${errors["team"]}
+                        </div>
                     </#if>
 
                     <label>Team name</label>
                     <#if teamNamesList?size==0>
-                        <input class="form-control" type="text" name="team" placeholder="Enter team name" required>
+                        <input class="form-control" type="text" name="team" placeholder="Enter team name" value="${(team.name())!""}" required>
                     <#else>
                         <select class="form-control" name="team" required>
                             <#list teamNamesList as teamName>
                                 <#if teamName==''>
-                                    <option value="">No Team</option>
+                                    <option value="">Unassigned</option>
                                 </#if>
                                 <option value="${teamName}">${teamName}</option>
                             </#list>
@@ -60,20 +60,20 @@
                 </div>
 
                 <div class="form-group">
-                    <#if (userForm.error("scrum"))??>
-                        <#list userForm.error("scrum") as error>
-                        <h4>${error.message}</h4>
-                        </#list>
+                    <#if (errors["personInformation.scrum"])??>
+                        <div class="alert alert-danger">
+                            <span class="glyphicon glyphicon-remove"></span>${errors["personInformation.scrum"]}
+                        </div>
                     </#if>
                     <label>Scrum name</label>
-                    <input class="form-control" type="text" name="scrum" placeholder="Enter scrum name" required>
+                    <input class="form-control" type="text" name="scrum" placeholder="Enter scrum name" value="${(personInformation.scrum)!""}" required>
                 </div>
 
                 <div class="form-group">
-                    <#if (userForm.error("role"))??>
-                        <#list userForm.error("role") as error>
-                        <h4>${error.message}</h4>
-                        </#list>
+                    <#if (errors["personInformation.role"])??>
+                        <div class="alert alert-danger">
+                            <span class="glyphicon glyphicon-remove"></span>${errors["personInformation.role"]}
+                        </div>
                     </#if>
                     <label>Job role</label>
                     <select class="form-control" name="role" required>
@@ -86,10 +86,10 @@
                 </div>
 
                 <div class="form-group">
-                    <#if (userForm.error("location"))??>
-                        <#list userForm.error("location") as error>
-                        <h4>${error.message}</h4>
-                        </#list>
+                    <#if (errors["personInformation.location"])??>
+                        <div class="alert alert-danger">
+                            <span class="glyphicon glyphicon-remove"></span>${errors["personInformation.location"]}
+                        </div>
                     </#if>
                     <label>Work location</label>
                     <select class="form-control" name="location" required >

@@ -1,7 +1,5 @@
 package uk.co.o2.facewall.data.dao.database;
 
-import uk.co.o2.facewall.data.dao.database.query.DatabaseQuery;
-import uk.co.o2.facewall.data.dao.database.query.DatabaseQueryBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,17 +12,19 @@ import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.index.Index;
 import org.neo4j.graphdb.index.IndexManager;
 import org.neo4j.rest.graphdb.query.QueryEngine;
+import uk.co.o2.facewall.data.dao.database.query.DatabaseQuery;
+import uk.co.o2.facewall.data.dao.database.query.DatabaseQueryBuilder;
 
 import java.util.Map;
 
-import static uk.co.o2.facewall.data.dao.database.NodeIndex.Persons;
-import static uk.co.o2.facewall.data.dao.database.NodeIndex.Teams;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
+import static uk.co.o2.facewall.data.dao.database.NodeIndex.Persons;
+import static uk.co.o2.facewall.data.dao.database.NodeIndex.Teams;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FacewallDBTest {

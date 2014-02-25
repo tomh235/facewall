@@ -1,15 +1,15 @@
 package uk.co.o2.facewall.data.dao.database;
 
-import uk.co.o2.facewall.data.dto.PersonInformation;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.neo4j.graphdb.Node;
+import uk.co.o2.facewall.data.dto.PersonInformation;
 
-import static uk.co.o2.facewall.data.dto.PersonInformation.newPersonInformation;
 import static org.mockito.Mockito.verify;
+import static uk.co.o2.facewall.data.dto.PersonInformation.newPersonInformation;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PersonNodeTest {
