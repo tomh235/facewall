@@ -96,7 +96,7 @@ public class ValidatedUserModelTest {
 
 
         Map<String, String> resultMap = validatedUserModel.getErrors();
-        assertThat(resultMap.get("personInformation.email"), containsString("email address"));
+        assertThat(resultMap.get("personInformation.email"), containsString("Email is invalid"));
     }
 
     @Test
