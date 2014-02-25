@@ -24,7 +24,7 @@
                         </div>
                     </#if>
                     <label>Url to picture</label>
-                    <input class="form-control" type="text" name="imgUrl" placeholder="Enter url" value="${(personInformation.picture)!""}">
+                    <input class="form-control" type="url" name="imgUrl" placeholder="Enter url" value="${(personInformation.picture)!""}" required>
                 </div>
 
                 <div class="form-group">
