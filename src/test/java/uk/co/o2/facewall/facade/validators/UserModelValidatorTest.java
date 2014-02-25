@@ -3,6 +3,7 @@ package uk.co.o2.facewall.facade.validators;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.co.o2.facewall.data.TeamRepository;
@@ -31,13 +32,15 @@ public class UserModelValidatorTest {
     @Mock UserModel mockUserModel;
     @Mock TeamRepository mockTeamRepository;
 
-    private final UserModelValidator userModelValidator = new UserModelValidator(mockTeamRepository);
+    @InjectMocks
+    private UserModelValidator userModelValidator;
 
     @Test
     public void validate_returns_validated_user_model_with_correct_person_information() {
         UserModel userModel = aUserModel()
                 .withEmail("email@email.com")
                 .withImageURL("http://www.image.com")
+                .named("fred")
                 .withRole("pilot").build();
 
         when(mockTeamRepository.queryTeams(any(Query.class)))
