@@ -44,6 +44,7 @@ public class InsertFixturesUtility {
                                         .withProperty("name", "DOGE")
                                         .withProperty("picture", "http://i.huffpost.com/gen/1451579/thumbs/o-DOGE-facebook.jpg")
                                         .withProperty("email", "doge@veryemail.com")
+                                        .withProperty("role", "such DOGE")
                                 ),
                         defaultTeam()
                                 .withProperty("name", "OPP Accounts")
@@ -57,7 +58,8 @@ public class InsertFixturesUtility {
                                 .withMembers(
                                         defaultPerson()
                                         .withProperty("name", "Luke Langfield")
-                                        .withProperty("picture", "https://pbs.twimg.com/profile_images/1480549921/Board.jpg"),
+                                        .withProperty("picture", "https://pbs.twimg.com/profile_images/1480549921/Board.jpg")
+                                        .withProperty("role", "Wannabe Gangsta"),
                                         defaultPerson()
                                         .withProperty("name", "Charlie Briggs")
                                         .withProperty("picture", "http://hd.wallpaperswide.com/thumbs/adventure_time___jake-t2.jpg")

@@ -43,6 +43,11 @@ form[role=form] .submit{
     width: 320px;
 }
 
+.glyphicon-remove {
+    padding-right: 25px;
+    top: 3px;
+}
+
 /* Search */
 
 .results-counter {

@@ -1,18 +1,23 @@
 package uk.co.o2.facewall.data.dao;
 
-import uk.co.o2.facewall.data.dao.database.ItemNotFoundException;
-import uk.co.o2.facewall.data.dao.database.RelationshipTypes;
-import uk.co.o2.facewall.data.dto.PersonInformation;
-import uk.co.o2.facewall.databaseutils.FacewallTestDatabase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.neo4j.graphdb.Node;
+import uk.co.o2.facewall.data.dao.database.ItemNotFoundException;
+import uk.co.o2.facewall.data.dao.database.RelationshipTypes;
+import uk.co.o2.facewall.data.dto.PersonInformation;
+import uk.co.o2.facewall.databaseutils.FacewallTestDatabase;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static uk.co.o2.facewall.data.dao.PersonNodeMatcher.aPersonNode;
 import static uk.co.o2.facewall.data.dao.TeamNodeMatcher.aTeamNode;
 import static uk.co.o2.facewall.data.datatype.PersonId.newPersonId;
@@ -22,11 +27,6 @@ import static uk.co.o2.facewall.databaseutils.FacewallTestDatabaseFactory.create
 import static uk.co.o2.facewall.databaseutils.fixture.Fixtures.newFixtures;
 import static uk.co.o2.facewall.databaseutils.fixture.PersonDataFactory.defaultPerson;
 import static uk.co.o2.facewall.databaseutils.fixture.TeamDataFactory.defaultTeam;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AdminDAOTest {

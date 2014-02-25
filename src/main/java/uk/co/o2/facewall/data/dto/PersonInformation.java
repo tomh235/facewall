@@ -1,5 +1,10 @@
 package uk.co.o2.facewall.data.dto;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.URL;
 import uk.co.o2.facewall.data.datatype.PersonId;
 
 import static uk.co.o2.facewall.data.datatype.PersonId.newPersonId;
@@ -10,10 +15,17 @@ public class PersonInformation {
     private static final PersonInformation noPersonInformation = newPersonInformation().build();
 
     private final PersonId id;
+    @NotBlank(message = "Name must not be blank")
+    @Length(max=50, message = "Length must be less than 50 characters")
     private final String name;
-    private final String picture;
+    @NotBlank(message = "Email must not be blank")
+    @Email(message = "Email is invalid")
     private final String email;
+    @NotBlank(message = "Role must not be blank")
     private final String role;
+    @NotBlank(message = "Picture must not be blank")
+    @URL(message = "The URL is invalid")
+    private final String picture;
 
 
     private PersonInformation(Builder builder) {
