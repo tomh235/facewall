@@ -1,5 +1,6 @@
 package uk.co.o2.facewall.view;
 
+import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
@@ -21,7 +22,8 @@ public class FreemarkerTemplateProcessor implements TemplateProcessor<Template> 
 
     private static Configuration initConfig() {
         Configuration configuration = new Configuration();
-        configuration.setClassForTemplateLoading(FreemarkerTemplateProcessor.class, "/views");
+        configuration.setTemplateLoader(new HtmlTemplateLoader(
+                new ClassTemplateLoader(FreemarkerTemplateProcessor.class, "/views")));
 
         DefaultObjectWrapper objectWrapper = new DefaultObjectWrapper();
         objectWrapper.setExposeFields(true);

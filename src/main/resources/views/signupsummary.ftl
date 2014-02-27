@@ -53,7 +53,6 @@
                 <a href="#">
                     <img class="signup-pic" src="${personInformation.picture}" alt="">
                 </a>
-    
             </div>
         </div>
     </div>
