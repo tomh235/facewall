@@ -1,16 +1,13 @@
 package uk.co.o2.facewall.web;
 
+import org.glassfish.jersey.server.mvc.Template;
 import org.glassfish.jersey.server.mvc.Viewable;
 import uk.co.o2.facewall.facade.SignUpFacade;
 import uk.co.o2.facewall.facade.validators.UserModelValidator;
 import uk.co.o2.facewall.facade.validators.ValidatedUserModel;
 import uk.co.o2.facewall.model.UserModel;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.HashMap;
 import java.util.List;
@@ -25,17 +22,14 @@ public class SignUpController {
     private final UserModelValidator userModelValidator = facewall().userModelValidator;
 
     @GET
-    public static Viewable blankSignUpForm() {
+    @Template(name = "/signupform.ftl")
+    public Map<String, Object> blankSignUpForm() {
         final List<String> teamNamesList = signUpFacade.getSortedAvailableTeamNames();
         Map<String, Object> model = new HashMap<>();
         model.put("teamNamesList", teamNamesList);
-
-        return new Viewable("/signupform.ftl", model);
+        return model;
     }
 
-
-    // FIXME - Charlie: When the page returns with errors it still navigates to /signup/summary rather than staying on /signup
-    @Path("/summary")
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Viewable submitSignUpForm(@FormParam("name") String name,
