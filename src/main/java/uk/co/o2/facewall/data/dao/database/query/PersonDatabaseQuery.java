@@ -5,6 +5,7 @@ import org.neo4j.rest.graphdb.query.QueryEngine;
 import org.neo4j.rest.graphdb.util.QueryResult;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import static uk.co.o2.facewall.data.dao.database.NodeIndex.Persons;
@@ -24,20 +25,25 @@ public class PersonDatabaseQuery implements DatabaseQuery {
     }
 
     @Override public Iterable<QueryResultRow> execute(QueryEngine<Map<String, Object>> queryEngine) {
+        Map<String, Object> parameters = new HashMap<>();
         String cypherQuery =
             "START person = node:" + Persons.getName() + "('" + Persons.getKey() + ':' + id + "') " +
             "MATCH (person)-[r?]->(team) " +
             "WHERE 1=1 ";
 
+        int i = 0;
         for (Map.Entry<String, String> entry : propertyCriteria.entrySet()) {
+            parameters.put("propertyKey" + i, entry.getKey());
+            parameters.put("propertyValue" + i, entry.getValue());
             cypherQuery +=
-                "AND person." + entry.getKey() + " =~ '" + entry.getValue() + "' ";
+                "AND person." + "{ propertyKey" + i + " } " + " =~ { propertyValue" + i + " } ";
+            i++;
         }
 
         cypherQuery +=
             "RETURN person, team";
 
-        QueryResult<Map<String, Object>> cypherResults = queryEngine.query(cypherQuery, Collections.<String, Object>emptyMap());
+        QueryResult<Map<String, Object>> cypherResults = queryEngine.query(cypherQuery, parameters);
         return queryResultsMapper.map(newPersonNodeKey("person"), newTeamNodeKey("team"), cypherResults);
     }
 }
