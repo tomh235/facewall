@@ -12,19 +12,7 @@ dependencies {
 }
 
 task 'integration'(type: Test, dependsOn: testClasses) {
-    include '**/selenium/**'
-
-    useJUnit {
-        minHeapSize = "128m"
-        maxHeapSize = "1024m"
-//        maxParallelForks = 3
-
-        // set JVM arguments for the test JVM(s)
-//        jvmArgs "-Dbrowser=${System.getProperty('browser', 'firefox')}"
-//        jvmArgs "-DappServer=${System.getProperty('appServer', 'localhost')}"
-//        jvmArgs "-DappPort=${System.getProperty('appPort', '8090')}"
-//        jvmArgs "-DmcsPort=${System.getProperty('mcsPort', '8080')}"
-    }
+    dependsOn ':tomcatDaemonRunWar'
 }
 
 test {
