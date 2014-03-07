@@ -15,8 +15,8 @@ public class TeamDTOs implements Iterable<TeamDTO> {
             teamsToMembers.get(team).add(member);
         } else {
             teamsToMembers.put(
-                team,
-                new ArrayList<PersonInformation>() {{ add(member); }}
+                    team,
+                    members(member)
             );
         }
     }
@@ -28,5 +28,9 @@ public class TeamDTOs implements Iterable<TeamDTO> {
             dtos.add(new TeamDTO(entry.getKey(), entry.getValue()));
         }
         return dtos.iterator();
+    }
+
+    private ArrayList<PersonInformation> members(final PersonInformation member) {
+        return new ArrayList<PersonInformation>() {{ add(member); }};
     }
 }
