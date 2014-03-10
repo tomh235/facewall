@@ -41,6 +41,13 @@ public class FacewallDAO {
         ).iterator().next();
     }
 
+    public TeamDTO fetchTeam(Query name) {
+        return dao.queryTeams(
+                databaseQueryFactory.forTeams()
+                        .named(name.queryString())
+        ).iterator().next();
+    }
+
     public Iterable<PersonDTO> queryPersons(Query query) {
         return dao.queryPersons(
                 databaseQueryFactory.forPersons()

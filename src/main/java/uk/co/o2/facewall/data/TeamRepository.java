@@ -27,4 +27,8 @@ public class TeamRepository {
     public Team findTeamById(TeamId id) {
         return teamsFactory.createTeam(dao.fetchTeam(id));
     }
+
+    public Team findTeamByName(Query name) {
+        return teamsFactory.createTeam(dao.fetchTeam(name));
+    }
 }

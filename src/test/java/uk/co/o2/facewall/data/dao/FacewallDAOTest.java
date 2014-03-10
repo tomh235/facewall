@@ -69,6 +69,17 @@ public class FacewallDAOTest {
     }
 
     @Test
+    public void fetch_team_queries_for_name() {
+        stubDAO();
+
+        facewallDAO.fetchTeam(Query.newExactQuery("teamname"));
+
+        verify(mockQueryingDAO).queryTeams(argThat(is(aDatabaseQueryBuilder()
+            .whichBuilds(aQueryForTeamsWithName("teamname"))
+        )));
+    }
+
+    @Test
     public void fetch_person_retrieves_person_dto() {
         PersonDTO expectedPersonDTO = mock(PersonDTO.class);
         when(mockQueryingDAO.queryPersons(any(DatabaseQueryBuilder.class)))

@@ -47,7 +47,7 @@ public class InsertFixturesUtility {
                                         .withProperty("role", "such DOGE")
                                 ),
                         defaultTeam()
-                                .withProperty("name", "OPP Accounts")
+                                .withProperty("name", "OPP")
                                 .withMembers(
                                         defaultPerson()
                                         .withProperty("name", "Stuart Gray")

@@ -1,6 +1,6 @@
 <#import 'main.ftl' as main>
 
-<@main.main title = "Input your details" activeTabIndex = 2>
+<@main.main title = "Input your details" activeTabIndex = 3>
 
 <div class="container">
     <div class="row">

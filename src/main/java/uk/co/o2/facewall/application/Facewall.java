@@ -4,10 +4,7 @@ import uk.co.o2.facewall.data.DataModule;
 import uk.co.o2.facewall.data.PersonRepository;
 import uk.co.o2.facewall.data.TeamRepository;
 import uk.co.o2.facewall.data.dao.AdminDAO;
-import uk.co.o2.facewall.facade.OverviewFacade;
-import uk.co.o2.facewall.facade.PersonDetailsFacade;
-import uk.co.o2.facewall.facade.SearchFacade;
-import uk.co.o2.facewall.facade.SignUpFacade;
+import uk.co.o2.facewall.facade.*;
 import uk.co.o2.facewall.facade.modelmapper.*;
 import uk.co.o2.facewall.facade.validators.UserModelValidator;
 import org.neo4j.graphdb.GraphDatabaseService;
@@ -24,6 +21,8 @@ final public class Facewall {
     public final OverviewFacade overviewFacade;
     public final SearchFacade searchFacade;
     public final PersonDetailsFacade personDetailsFacade;
+    public final TeamDetailsFacade teamDetailsFacade;
+    public final TeamFacade teamFacade;
     public final SignUpFacade signUpFacade;
     public final UserModelValidator userModelValidator;
 
@@ -31,11 +30,15 @@ final public class Facewall {
             OverviewFacade overviewFacade,
             SearchFacade searchFacade,
             PersonDetailsFacade personDetailsFacade,
+            TeamDetailsFacade teamDetailsFacade,
+            TeamFacade teamFacade,
             SignUpFacade signUpFacade, UserModelValidator userModelValidator)
     {
         this.overviewFacade = overviewFacade;
         this.searchFacade = searchFacade;
         this.personDetailsFacade = personDetailsFacade;
+        this.teamDetailsFacade = teamDetailsFacade;
+        this.teamFacade = teamFacade;
         this.signUpFacade = signUpFacade;
         this.userModelValidator = userModelValidator;
     }
@@ -61,6 +64,8 @@ final public class Facewall {
         TeamDetailsModelMapper teamDetailsModelMapper = new TeamDetailsModelMapper();
 
         PersonDetailsFacade personDetailsFacade = new PersonDetailsFacade(personRepository, personDetailsModelMapper);
+        TeamDetailsFacade teamDetailsFacade = new TeamDetailsFacade(teamRepository, teamDetailsModelMapper, new OverviewModelMapper());
+        TeamFacade teamFacade = new TeamFacade(teamRepository, teamDetailsModelMapper);
 
         SearchFacade searchFacade = new SearchFacade(
             personRepository,
@@ -76,6 +81,6 @@ final public class Facewall {
                 teamRepository);
         UserModelValidator userModelValidator = new UserModelValidator(teamRepository);
 
-        return new Facewall(overviewFacade, searchFacade, personDetailsFacade, signUpFacade, userModelValidator);
+        return new Facewall(overviewFacade, searchFacade, personDetailsFacade, teamDetailsFacade, teamFacade, signUpFacade, userModelValidator);
     }
 }

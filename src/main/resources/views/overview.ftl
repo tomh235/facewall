@@ -6,7 +6,9 @@
         <div class="row">
             <#list entries as entry>
                 <div class="col-md-3 col-sm-4 entry">
-                    <h5 class="text-center teamName">${entry.teamHeader}</h5>
+                    <h5 class="text-center teamName">
+                        <a href="/facewall/team/${entry.teamHeader}">${entry.teamHeader}</a>
+                    </h5>
                         <a href="/facewall/person/${entry.link}">
                             <div class="imgWrapper ${entry.colour}" style="border: 15px solid #${entry.colour}">
                                 <img class="avatar" src="${entry.picture}"/>

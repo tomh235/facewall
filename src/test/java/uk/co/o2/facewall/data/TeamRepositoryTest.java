@@ -237,4 +237,32 @@ public class TeamRepositoryTest {
                 ))
         ));
     }
+
+    @Test
+    public void findTeamByName_with_member_added() {
+        facewallTestDatabase.seedFixtures(defaultFixtures()
+                .withTeams(
+                        defaultTeamWithDefaultMembers()
+                                .withProperty("id", "simpsons-id")
+                                .withProperty("name", "simpsons"))
+                .withTeamlessPersons(
+                        defaultPerson()
+                                .withProperty("id", "homer-id")
+                                .withProperty("name", "homer")
+                )
+        );
+
+        Team team = teamRepository.findTeamByName(Query.newExactQuery("simpsons"));
+        Person member = personRepository.findPersonById(newPersonId("homer-id"));
+
+        team.addMember(member);
+
+        Team result = teamRepository.findTeamByName(Query.newExactQuery("simpsons"));
+        assertThat(result, is(aTeam()
+                .named("simpsons")
+                .whereMembers(contains(
+                        aPerson().named("homer")
+                ))
+        ));
+    }
 }
