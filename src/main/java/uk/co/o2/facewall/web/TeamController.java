@@ -30,10 +30,10 @@ public class TeamController {
     public Viewable getTeam(@PathParam("teamName") String teamName) {
         final TeamDetailsWithPersonsModel team = teamDetailsFacade.createTeamDetailsModel(Query.newExactQuery(teamName));
         if(!team.equals(null)){
-            return new Viewable("/team-details.ftl", team);
+            return new Viewable("/teamdetails.ftl", team);
         }
         else {
-            return new Viewable("/no-team.ftl");
+            return new Viewable("/noteam.ftl");
         }
     }
 }
