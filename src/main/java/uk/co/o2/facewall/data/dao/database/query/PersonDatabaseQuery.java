@@ -1,10 +1,9 @@
 package uk.co.o2.facewall.data.dao.database.query;
 
-import uk.co.o2.facewall.data.dao.database.QueryResultRow;
 import org.neo4j.rest.graphdb.query.QueryEngine;
 import org.neo4j.rest.graphdb.util.QueryResult;
+import uk.co.o2.facewall.data.dao.database.QueryResultRow;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,7 +35,7 @@ public class PersonDatabaseQuery implements DatabaseQuery {
             parameters.put("propertyKey" + i, entry.getKey());
             parameters.put("propertyValue" + i, entry.getValue());
             cypherQuery +=
-                "AND person." + "{ propertyKey" + i + " } " + " =~ { propertyValue" + i + " } ";
+                "AND person."  + parameters.get("propertyKey" + i) + " =~ '" + parameters.get("propertyValue" + i) + "' ";
             i++;
         }
 
