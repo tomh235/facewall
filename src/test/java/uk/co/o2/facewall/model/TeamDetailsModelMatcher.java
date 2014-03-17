@@ -41,4 +41,19 @@ public class TeamDetailsModelMatcher extends CompositeMatcher<TeamDetailsModel> 
         });
         return this;
     }
+
+    public TeamDetailsModelMatcher sized(final int size) {
+        add(new TypeSafeMatcher<TeamDetailsModel>() {
+            @Override
+            public boolean matchesSafely(TeamDetailsModel target) {
+                return target.size == size;
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText(String.format("whose size is %s", size));
+            }
+        });
+        return this;
+    }
 }

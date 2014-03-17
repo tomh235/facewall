@@ -15,12 +15,18 @@
             </div>
             <div class="row">
                 <#list persons as result>
-                    <div class="col-md-4 user-entry">
-                        <div class="thumbnail">
-                            <h5 class="user-entry-teamname">${result.teamName}</h5>
-                            <img class="user-entry-image" src="${result.picture}"/>
-                            <h3 class="text-center user-entry-name">${result.name}</h3>
-                        </div>
+                    <div class="col-md-3 col-sm-4 entry">
+                        <h5 class="text-center teamName">
+                            <a href="/facewall/team/${result.teamName}">${result.teamName}</a>
+                        </h5>
+                        <a href="#">
+                            <div class="imgWrapper">
+                                <img class="avatar" src="${result.picture}"/>
+                            </div>
+                        </a>
+                        <h3 class="text-center entryName">
+                            <a href="#">${result.name}</a>
+                        </h3>
                     </div>
                 </#list>
             </div>
@@ -42,3 +48,9 @@
         </#if>
     </#if>
 </div>
+<script src="/facewall/assets/javascripts/jquery.fakecrop.js"></script>
+<script>
+    $(document).ready(function () {
+        $('img.avatar').fakecrop();
+    });
+</script>

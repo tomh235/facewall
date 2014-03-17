@@ -19,6 +19,7 @@
 
                 <ul class="nav nav-tabs nav-justified">
                     <li><a id="home" href="/facewall/">Overview</a></li>
+                    <li><a id="teams" href="/facewall/team">Teams</a></li>
                     <li><a id="search" href="/facewall/search">Search</a></li>
                     <li><a id="register" href="/facewall/signup">Register</a></li>
                 </ul>
