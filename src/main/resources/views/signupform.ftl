@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3 form">
-            <form role="form" method="post" action="/facewall/signup/summary">
+            <form role="form" method="post" action="/facewall/signup">
                 <div class="form-group">
                     <#if (errors["personInformation.name"])??>
                         <div class="alert alert-danger">
