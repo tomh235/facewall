@@ -33,9 +33,6 @@ public class SignUpController {
         return new Viewable("/signupform.ftl", model);
     }
 
-
-    // FIXME - Charlie: When the page returns with errors it still navigates to /signup/summary rather than staying on /signup
-    @Path("/summary")
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Viewable submitSignUpForm(@FormParam("name") String name,
