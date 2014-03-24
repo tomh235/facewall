@@ -2,14 +2,10 @@ package uk.co.o2.facewall.web;
 
 import org.glassfish.jersey.server.mvc.Viewable;
 import uk.co.o2.facewall.facade.OverviewFacade;
-import uk.co.o2.facewall.model.OverviewEntryModel;
 import uk.co.o2.facewall.model.OverviewModel;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static uk.co.o2.facewall.application.Facewall.facewall;
 
