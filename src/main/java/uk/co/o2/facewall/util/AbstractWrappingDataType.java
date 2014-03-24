@@ -1,5 +1,8 @@
 package uk.co.o2.facewall.util;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+
 public abstract class AbstractWrappingDataType<T> {
     public final T value;
 

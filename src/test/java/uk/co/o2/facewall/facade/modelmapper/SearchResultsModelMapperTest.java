@@ -28,8 +28,8 @@ public class SearchResultsModelMapperTest {
         Team team = mock(Team.class);
         when(team.name()).thenReturn("a team");
 
-        PersonStub fred1 = new PersonStub(newPersonId("1"), "fred smith", "pic1.img", "email1@testemail.com", "Developer", team);
-        PersonStub fred2 = new PersonStub(newPersonId("2"), "fred bailey", "pic3.img", "email2@testemail.com", "BA", team);
+        PersonStub fred1 = new PersonStub(newPersonId("email1@testemail.com"), "fred smith", "pic1.img", "Developer", team);
+        PersonStub fred2 = new PersonStub(newPersonId("email2@testemail.com"), "fred bailey", "pic3.img", "BA", team);
 
         List<Person> personList = new ArrayList<>();
         personList.add(fred1);
@@ -54,7 +54,7 @@ public class SearchResultsModelMapperTest {
         StubbedTeam anotherTeam = new StubbedTeam("another team", "red", list2);
 
         List<Person> list3 = new ArrayList<>();
-        List list4 = new ArrayList<>();
+        List<Team> list4 = new ArrayList<>();
 
         list4.add(ecom);
         list4.add(anotherTeam);
@@ -71,9 +71,9 @@ public class SearchResultsModelMapperTest {
         Team team = mock(Team.class);
         when(team.name()).thenReturn("");
 
-        PersonStub teamless = new PersonStub(newPersonId("1"), "teamless", "teamless.img", "email@testemail.com", "BA", team);
+        PersonStub teamless = new PersonStub(newPersonId("email@testemail.com"), "teamless", "teamless.img", "BA", team);
 
-        List teamlessList = new ArrayList<>();
+        List<Person> teamlessList = new ArrayList<>();
         List<Team> emptyTeamList = new ArrayList<>();
 
         teamlessList.add(teamless);

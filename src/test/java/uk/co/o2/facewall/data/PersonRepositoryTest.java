@@ -82,10 +82,10 @@ public class PersonRepositoryTest {
     public void list_persons_retrieves_persons_with_emails_from_db() {
         facewallTestDatabase.seedFixtures(newFixtures()
                 .withTeamlessPersons(defaultPerson()
-                        .withProperty("email", "email1@testemail.com")
+                        .withProperty("id", "email1@testemail.com")
                 ).withTeams(defaultTeam()
                         .withMembers(defaultPerson()
-                                .withProperty("email", "email2@testemail.com")
+                                .withProperty("id", "email2@testemail.com")
                         )
                 )
         );
@@ -164,12 +164,12 @@ public class PersonRepositoryTest {
                                         defaultPerson()
                                                 .withProperty("name", "Earl Grey")
                                                 .withProperty("picture", "whittard-earl-grey.png")
-                                                .withProperty("email", "email1@testemail.com")
+                                                .withProperty("id", "email1@testemail.com")
                                                 .withProperty("role", "a poor tea"),
                                         defaultPerson()
                                                 .withProperty("name", "Yorkshire Tea")
                                                 .withProperty("picture", "The North.png")
-                                                .withProperty("email", "email2@testemail.com")
+                                                .withProperty("id", "email2@testemail.com")
                                                 .withProperty("role", "a good tea")
                                 ),
                         defaultTeam()
@@ -177,7 +177,7 @@ public class PersonRepositoryTest {
                                         defaultPerson()
                                                 .withProperty("name", "Gold blend")
                                                 .withProperty("picture", "nescafe-gold-blend.img")
-                                                .withProperty("email", "email3@testemail.com")
+                                                .withProperty("id", "email3@testemail.com")
                                                 .withProperty("role", "awakeness")
                                 )
                 )
@@ -246,11 +246,11 @@ public class PersonRepositoryTest {
                         defaultPerson()
                                 .withProperty("name", "development manager")
                                 .withProperty("picture", "important-looking-person1.img")
-                                .withProperty("email", "email1@testemail.com"),
+                                .withProperty("id", "email1@testemail.com"),
                         defaultPerson()
                                 .withProperty("name", "delivery manager")
                                 .withProperty("picture", "important-looking-person2.img")
-                                .withProperty("email", "email2@testemail.com")
+                                .withProperty("id", "email2@testemail.com")
                 )
         );
 

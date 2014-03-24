@@ -1,5 +1,6 @@
 package uk.co.o2.facewall.data;
 
+import uk.co.o2.facewall.data.datatype.PersonId;
 import uk.co.o2.facewall.data.dto.PersonInformation;
 import uk.co.o2.facewall.domain.Team;
 import org.junit.Test;
@@ -9,6 +10,7 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static uk.co.o2.facewall.data.datatype.PersonId.*;
 
 public class MutablePersonTest {
 
@@ -48,11 +50,12 @@ public class MutablePersonTest {
     @Test
     public void email_delegates_to_personInformation() throws Exception {
         personInformation = mock(PersonInformation.class);
-        when(personInformation.getEmail()).thenReturn("email@testemail.com");
+        PersonId expectedId = newPersonId("email@testemail.com");
+        when(personInformation.getId()).thenReturn(expectedId);
 
         mutablePerson = new MutablePerson(personInformation);
 
-        assertThat(mutablePerson.email(), is("email@testemail.com"));
+        assertThat(mutablePerson.getId(), is(expectedId));
     }
 
     @Test

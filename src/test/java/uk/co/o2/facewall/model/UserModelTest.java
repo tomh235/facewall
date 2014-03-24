@@ -1,56 +1,43 @@
-package uk.co.o2.facewall.facade.validators;
+package uk.co.o2.facewall.model;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 import uk.co.o2.facewall.data.dto.PersonInformation;
-import uk.co.o2.facewall.domain.Person;
-import uk.co.o2.facewall.domain.StubbedTeam;
 import uk.co.o2.facewall.domain.Team;
+import uk.co.o2.facewall.facade.validators.UserModelValidator;
+import uk.co.o2.facewall.facade.validators.ValidatedUserModel;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static uk.co.o2.facewall.data.dto.PersonInformation.newPersonInformation;
 import static uk.co.o2.facewall.data.dto.PersonInformation.noPersonInformation;
 import static uk.co.o2.facewall.domain.NoTeam.noTeam;
 
-public class ValidatedUserModelTest {
-    private static Validator validator;
-    private static final Team VALID_TEAM = new StubbedTeam("The Goonies", "Red", new ArrayList<Person>());
-    private static final PersonInformation VALID_PERSONINFORMATION = newPersonInformation()
-        .named("Jim Ribber")
-        .withRole("Developer")
-        .withId("AnEmail@Email.com")
-        .withPicture("http:/www.aUrl.net").build();
+public class UserModelTest {
 
+    private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     @BeforeClass
-    public static void setup() {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
+    public void setUp() {
     }
 
     @Test
     public void two_invalid_personinformation_fields_are_invalid_and_have_two_violations() {
-        Team team = VALID_TEAM;
-        PersonInformation PersonInformation = newPersonInformation()
-                .named("Jim")
-                .withId("NotAnEmail")
-                .withPicture("NotAUrl")
-                .withRole("Job").build();
-        ValidatedUserModel validatedUserModel = new ValidatedUserModel(PersonInformation, team);
+        UserModel userModel = new UserModel();
+        userModel.email = "not an email address";
 
-        Set<ConstraintViolation<ValidatedUserModel>> constraintViolations = validator.validate(validatedUserModel);
-        assertEquals(2, constraintViolations.size());
+        Set<ConstraintViolation<UserModel>> constraintViolations = validator.validate(userModel);
+        assertThat(constraintViolations, )
     }
 
     @Test

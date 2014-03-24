@@ -50,7 +50,7 @@ public class UserModelValidatorTest {
         PersonInformation result = validatedUserModel.getPersonInformation();
 
         assertThat(result, is(aPersonInformation()
-                .withEmail("email@email.com")
+                .withId("email@email.com")
                 .withPicture("http://www.image.com")
                 .named("fred")
                 .withRole("pilot")));

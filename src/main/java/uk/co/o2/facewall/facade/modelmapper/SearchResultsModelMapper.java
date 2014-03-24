@@ -28,7 +28,7 @@ public class SearchResultsModelMapper {
 
     private static class PersonSearchResultMapper {
         public static PersonSearchResult map(Person person) {
-            return new PersonSearchResult(person.name(), person.team().name(), person.picture(), person.email(), person.role());
+            return new PersonSearchResult(person.name(), person.team().name(), person.picture(), person.getId().value, person.role());
         }
     }
 

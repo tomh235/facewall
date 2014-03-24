@@ -76,14 +76,13 @@ abstract public class PersonDataFactory {
 
     public static PersonData.Builder defaultPerson() {
         final String name = randomName();
-        final String email = emailFromName(name);
         final String role = randomRole();
 
+
         return newPersonData()
-            .withProperty("id", randomUUID().toString())
+            .withProperty("id", uniqueEmail())
             .withProperty("name", name)
             .withProperty("picture", "http://dummyimage.com/200x200/000/fff.png&text=" + name)
-            .withProperty("email", email)
             .withProperty("role", role);
     }
 
@@ -102,8 +101,8 @@ abstract public class PersonDataFactory {
         return current().nextInt(bound);
     }
 
-    private static String emailFromName(String name) {
-        String names[] = name.split(" ");
-        return names[0] + "@" + names[1] + ".edu.net";
+    //TODO: implement name based unique email
+    private static String uniqueEmail() {
+        return randomUUID() + "@email.com";
     }
 }

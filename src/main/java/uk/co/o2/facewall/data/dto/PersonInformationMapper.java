@@ -28,11 +28,6 @@ public class PersonInformationMapper {
                 personInformation.withPicture(picture);
             }
 
-            String email = (String) personNode.getProperty("email");
-            if (email != null) {
-                personInformation.withEmail(email);
-            }
-
             String role = (String) personNode.getProperty("role");
             if (role != null) {
                 personInformation.withRole(role);

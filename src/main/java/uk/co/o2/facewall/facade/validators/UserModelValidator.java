@@ -5,14 +5,19 @@ import uk.co.o2.facewall.data.dto.PersonInformation;
 import uk.co.o2.facewall.domain.Team;
 import uk.co.o2.facewall.model.UserModel;
 
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.util.List;
 
 import static uk.co.o2.facewall.data.dto.PersonInformation.newPersonInformation;
 import static uk.co.o2.facewall.domain.NoTeam.noTeam;
 import static uk.co.o2.facewall.domain.Query.newExactQuery;
-import static java.util.UUID.randomUUID;
 
 public class UserModelValidator {
+
+    private final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+    private final Validator validator = validatorFactory.getValidator();
 
     private final TeamRepository teamRepository;
 
@@ -21,6 +26,8 @@ public class UserModelValidator {
     }
 
     public ValidatedUserModel validate(UserModel userModel) {
+
+
         PersonInformation personInformation = createPersonInformation(userModel);
         Team team = createTeam(userModel);
         return new ValidatedUserModel(personInformation, team);
@@ -40,10 +47,9 @@ public class UserModelValidator {
 
     private PersonInformation createPersonInformation(UserModel userModel) {
         return newPersonInformation()
-                .withId(randomUUID().toString()) // TODO: change to user-chosen permalink (or email)
+                .withId(userModel.email)
                 .named(userModel.name)
                 .withPicture(userModel.imgUrl)
-                .withEmail(userModel.email)
                 .withRole(userModel.role)
                 //.withLocation(userModel.location)
                 //.withScrum(userModel.scrum)

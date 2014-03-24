@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="form-group">
-                    <#if (errors["personInformation.email"])??>
+                    <#if (errors["personInformation.id"])??>
                         <div class="alert alert-danger">
                             <span class="glyphicon glyphicon-remove"></span>${errors["personInformation.email"]}
                         </div>

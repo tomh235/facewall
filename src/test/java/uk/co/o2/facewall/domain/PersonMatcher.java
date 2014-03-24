@@ -3,8 +3,10 @@ package uk.co.o2.facewall.domain;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import uk.co.o2.facewall.data.datatype.PersonId;
 import uk.co.o2.facewall.util.CompositeMatcher;
 
+import static uk.co.o2.facewall.data.datatype.PersonId.*;
 import static uk.co.o2.facewall.domain.NoTeam.noTeam;
 
 public class PersonMatcher extends CompositeMatcher<Person> {
@@ -55,7 +57,7 @@ public class PersonMatcher extends CompositeMatcher<Person> {
 
             @Override
             public boolean matchesSafely(Person target) {
-                return email.equals(target.email());
+                return newPersonId(email).equals(target.getId());
             }
 
             @Override

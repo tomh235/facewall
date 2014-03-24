@@ -21,11 +21,11 @@ public class PersonInformationMapperTest {
     @Test
     public void map_id() throws Exception {
         mockNode = createMockNodeWithProperties(new HashMap<String, Object>() {{
-            put("id", "some-id");
+            put("id", "some@email.com");
         }});
 
         result = personInformationMapper.map(mockNode);
-        assertThat(result.getId(), is(newPersonId("some-id")));
+        assertThat(result.getId(), is(newPersonId("some@email.com")));
     }
 
     @Test
@@ -46,16 +46,6 @@ public class PersonInformationMapperTest {
 
         result = personInformationMapper.map(mockNode);
         assertThat(result.getPicture(), is("blinky.img"));
-    }
-
-    @Test
-    public void map_email() throws Exception {
-        mockNode = createMockNodeWithProperties(new HashMap<String, Object>() {{
-            put("email", "email@testemail.com");
-        }});
-
-        result = personInformationMapper.map(mockNode);
-        assertThat(result.getEmail(), is("email@testemail.com"));
     }
 
     @Test

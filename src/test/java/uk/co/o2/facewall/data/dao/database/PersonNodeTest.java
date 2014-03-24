@@ -22,11 +22,11 @@ public class PersonNodeTest {
     @Test
     public void setProperties_copies_id_from_person_information() throws Exception {
         PersonInformation personInformation = newPersonInformation()
-                .withId("some-id")
+                .withId("some-email@email.com")
                 .build();
 
         personNode.setProperties(personInformation);
-        verify(wrappedNode).setProperty("id", "some-id");
+        verify(wrappedNode).setProperty("id", "some-email@email.com");
     }
 
     @Test
@@ -47,16 +47,6 @@ public class PersonNodeTest {
 
         personNode.setProperties(personInformation);
         verify(wrappedNode).setProperty("picture", "billy.img");
-    }
-
-    @Test
-    public void setProperties_copies_email_from_person_information() throws Exception {
-        PersonInformation personInformation = newPersonInformation()
-                .withEmail("email@testemail.com")
-                .build();
-
-        personNode.setProperties(personInformation);
-        verify(wrappedNode).setProperty("email", "email@testemail.com");
     }
 
     @Test

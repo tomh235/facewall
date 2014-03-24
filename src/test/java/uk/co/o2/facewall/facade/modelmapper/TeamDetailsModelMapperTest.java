@@ -24,7 +24,7 @@ public class TeamDetailsModelMapperTest {
 
     @Test
     public void should_map_team() {
-        PersonStub ecom_member1 = new PersonStub(newPersonId("3"), "ecom_member1", "pic1.img", "email1@testemail.com", "BA", null);
+        PersonStub ecom_member1 = new PersonStub(newPersonId("3"), "ecom_member1", "pic1.img", "BA", null);
         Team ecom = new StubbedTeam("ecom", "blue", new ArrayList<Person>(Arrays.asList(ecom_member1)));
 
         TeamDetailsModel result = teamDetailsModelMapper.map(ecom);
@@ -33,8 +33,8 @@ public class TeamDetailsModelMapperTest {
 
     @Test
     public void should_map_team_with_persons() {
-        PersonStub person1 = new PersonStub(newPersonId("1"), "person1", "pic1.img", "email1@testemail.com", "BA", null);
-        PersonStub person2 = new PersonStub(newPersonId("2"), "person2", "pic2.img", "email2@testemail.com", "BA", null);
+        PersonStub person1 = new PersonStub(newPersonId("1"), "person1", "pic1.img", "BA", null);
+        PersonStub person2 = new PersonStub(newPersonId("2"), "person2", "pic2.img", "BA", null);
 
         List<Person> persons = new ArrayList<Person>(Arrays.asList(person1, person2));
 

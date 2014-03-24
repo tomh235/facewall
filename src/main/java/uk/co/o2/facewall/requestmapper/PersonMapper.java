@@ -5,6 +5,8 @@ import uk.co.o2.facewall.domain.Person;
 import uk.co.o2.facewall.domain.Team;
 import uk.co.o2.facewall.model.UserModel;
 
+import static uk.co.o2.facewall.data.datatype.PersonId.*;
+
 public class PersonMapper {
     public Person map(final UserModel userModel, final Team team) {
         return new Person() {
@@ -19,11 +21,6 @@ public class PersonMapper {
             }
 
             @Override
-            public String email() {
-                return userModel.email;
-            }
-
-            @Override
             public String role() {
                 return userModel.role;
             }
@@ -35,7 +32,7 @@ public class PersonMapper {
 
             @Override
             public PersonId getId() {
-                return null;
+                return newPersonId(userModel.email);
             }
 
         };

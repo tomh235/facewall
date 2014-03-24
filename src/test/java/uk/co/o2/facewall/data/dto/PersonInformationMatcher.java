@@ -59,21 +59,6 @@ public class PersonInformationMatcher extends CompositeMatcher<PersonInformation
         return this;
     }
 
-    public PersonInformationMatcher withEmail(final String email) {
-        add(new TypeSafeMatcher<PersonInformation>() {
-            @Override
-            public boolean matchesSafely(PersonInformation personInformation) {
-                return email.equals(personInformation.getEmail());
-            }
-
-            @Override
-            public void describeTo(Description description) {
-                description.appendText(" with the email ").appendValue(email);
-            }
-        });
-        return this;
-    }
-
     public PersonInformationMatcher withRole(final String role) {
         add(new TypeSafeMatcher<PersonInformation>() {
             @Override

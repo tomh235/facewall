@@ -18,11 +18,16 @@ public class PersonDetailsModelMapperTest{
 
     @Test
     public void should_map_person() {
-       PersonStub person = new PersonStub(PersonId.newPersonId("id"), "Hello World", "picture", "email@testemail.com", "BA", null);
+       PersonStub person = new PersonStub(PersonId.newPersonId("email@example.com"), "Hello World", "picture", "BA", null);
        person.setTeam(new StubbedTeam("blah", "blah", Arrays.<Person>asList(person)));
 
        PersonDetailsModel result = personDetailsModelMapper.map(person);
 
-       assertThat(result, is(aPersonDetailsModel().named("Hello World")));
+       assertThat(result, is(aPersonDetailsModel()
+               .withEmail("email@example.com")
+               .named("Hello World")
+               .withPicture("picture")
+               .withRole("BA")
+       ));
     }
 }

@@ -3,9 +3,10 @@ package uk.co.o2.facewall.data.dto;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.URL;
 import uk.co.o2.facewall.data.datatype.PersonId;
+
+import javax.validation.Valid;
 
 import static uk.co.o2.facewall.data.datatype.PersonId.newPersonId;
 import static uk.co.o2.facewall.data.datatype.PersonId.noPersonId;
@@ -14,12 +15,15 @@ public class PersonInformation {
 
     private static final PersonInformation noPersonInformation = newPersonInformation().build();
 
+
+    @NotBlank(message = "Email must not be blank")
+    @Email(message = "Email is invalid")
     private final PersonId id;
     @NotBlank(message = "Name must not be blank")
     @Length(max=50, message = "Length must be less than 50 characters")
     private final String name;
-    @NotBlank(message = "Email must not be blank")
-    @Email(message = "Email is invalid")
+
+
     private final String email;
     @NotBlank(message = "Role must not be blank")
     private final String role;
@@ -32,7 +36,7 @@ public class PersonInformation {
         id = builder.id;
         name = builder.name;
         picture = builder.picture;
-        email = builder.email;
+        email = null;
         role = builder.role;
     }
 
@@ -68,7 +72,6 @@ public class PersonInformation {
         private PersonId id = noPersonId();
         private String name = "";
         private String picture = "";
-        private String email = "";
         private String role = "";
 
         public PersonInformation build() {
@@ -87,11 +90,6 @@ public class PersonInformation {
 
         public Builder withPicture(String picture) {
             this.picture = picture;
-            return this;
-        }
-
-        public Builder withEmail(String email) {
-            this.email = email;
             return this;
         }
 
