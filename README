@@ -1,4 +1,19 @@
 This is your face. On a wall. 
 =====================================
+Project is hosted at: https://github.com/fahran/facewall
 
+Prequisites:
+
+Intellij IDEA 
+Gradle 1.6
+JVM 1.7
+neo4j 1.9.8 (on Windows, download the .zip version, extract and add the directory to your path.)
+
+-----------------------------------------------------------------------------------------
+
+To Run:
+
+Start neo4j using "neo4j start"
 Deploy the application on a local TomCat server using "gradle tomcatRunWar". It can then be accessed on "localhost:9000/facewall"
+Open the project it Intellij, and run "insertFixturesUtility" to populate the database with the test data. 
+
