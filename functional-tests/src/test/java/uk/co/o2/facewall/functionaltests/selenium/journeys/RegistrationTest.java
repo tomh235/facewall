@@ -167,7 +167,7 @@ public class RegistrationTest extends SeleniumBase {
     }
 
     @Test
-    public void for_rejects_empty_name_field() {
+    public void form_rejects_empty_name_field() {
         //Fill in form
         registerPage.enterFieldInForm("name", EMPTY_NAME);
         registerPage.enterFieldInForm("imgUrl", IMGURL);

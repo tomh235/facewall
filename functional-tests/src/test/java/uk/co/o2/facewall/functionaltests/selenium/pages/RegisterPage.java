@@ -1,11 +1,15 @@
 package uk.co.o2.facewall.functionaltests.selenium.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.internal.seleniumemulation.WaitForPageToLoad;
 import uk.co.o2.facewall.functionaltests.selenium.common.WebBrowser;
 
 public class RegisterPage {
+
 
     public void enterFieldInForm(String name, String value) {
         WebBrowser.findElement(By.name(name)).sendKeys(value);
