@@ -102,5 +102,5 @@ war {
 }
 
 task stage {
-    dependsOn 'tomcatRunWar'
+    dependsOn 'build'
 }
