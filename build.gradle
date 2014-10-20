@@ -93,10 +93,14 @@ tomcatRunWar {
 
 task tomcatDaemonRunWar(type: org.gradle.api.plugins.tomcat.TomcatRunWar) {
     httpPort = 9001
-    daemon = true
+    daemon = true //this does not work
 }
 
 war {
     archiveName = "facewall.war"
     from 'public'
+}
+
+task stage {
+    dependsOn 'tomcatRunWar'
 }
