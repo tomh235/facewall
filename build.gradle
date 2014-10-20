@@ -97,7 +97,7 @@ task tomcatDaemonRunWar(type: org.gradle.api.plugins.tomcat.TomcatRunWar) {
     daemon = true
 }
 
-task stage(dependsOn: ['clean','tomcatRunWar'])
+task stage(dependsOn: ['clean','build','tomcatRunWar'])
 
 war {
     archiveName = "facewall.war"
