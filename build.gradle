@@ -13,11 +13,13 @@ buildscript {
     }
 }
 
+/*
 // gradle wrapper
 task wrapper(type: Wrapper) {
     gradleVersion = '2.0'
     //distributionPath = "gradle/distribution" // for local distribution of gradle included in the project
 }
+*/
 
 allprojects {
     repositories {
