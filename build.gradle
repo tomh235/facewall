@@ -3,6 +3,7 @@ apply plugin: 'war'
 apply plugin: 'tomcat'
 apply plugin: 'java'
 
+
 buildscript {
     repositories {
         maven { url "http://jcenter.bintray.com/" }
@@ -88,13 +89,16 @@ dependencies {
 }
 
 tomcatRunWar {
-        httpPort = 9000
+    httpPort = 9000
 }
 
 task tomcatDaemonRunWar(type: org.gradle.api.plugins.tomcat.TomcatRunWar) {
     httpPort = 9001
     daemon = true //this does not work
 }
+
+//task stage(dependsOn: ['clean','build','tomcatRunWar'])
+task stage(dependsOn: ['tomcatRunWar'])
 
 war {
     archiveName = "facewall.war"

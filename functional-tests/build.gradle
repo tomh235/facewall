@@ -17,5 +17,5 @@ task 'integration'(type: Test, dependsOn: testClasses) {
 
 test {
     // Excludes functional tests from running during build.
-    excludes = ["*"]
+    //excludes = ["*"]
 }

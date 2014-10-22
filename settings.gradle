@@ -1,1 +1,2 @@
 include 'functional-tests', 'facewall-database-utils'
+rootProject.name = "facewall"
