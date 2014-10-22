@@ -104,3 +104,7 @@ war {
     archiveName = "facewall.war"
     from 'public'
 }
+
+task stage {
+    dependsOn 'build'
+}
