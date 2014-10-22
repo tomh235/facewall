@@ -92,10 +92,10 @@ tomcatRunWar {
     httpPort = 9000
 }
 
-//task tomcatDaemonRunWar(type: org.gradle.api.plugins.tomcat.TomcatRunWar) {
-//    httpPort = 9001
-//    daemon = true //this does not work
-//}
+task tomcatDaemonRunWar(type: org.gradle.api.plugins.tomcat.TomcatRunWar) {
+    httpPort = 9001
+    daemon = true //this does not work
+}
 
 //task stage(dependsOn: ['clean','build','tomcatRunWar'])
 task stage(dependsOn: ['build'])
