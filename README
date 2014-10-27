@@ -5,6 +5,8 @@ An updated version is hosted at: https://github.com/tomh235/facewall
 
 Follow Instructions to get up and running: 
 
+FOR WINDOWS:
+
 1.	Neo4j .
 a.	Download Neo4j 1.9.8 (zip) at http://neo4j.com/download/other-releases/ .
 b.	Extract folder to program files.
