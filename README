@@ -3,18 +3,44 @@ This is your face. On a wall.
 Project is hosted at: https://github.com/fahran/facewall
 An updated version is hosted at: https://github.com/tomh235/facewall
 
-Prequisites:
+Follow Instructions to get up and running: 
 
-Intellij IDEA (13.1.5)
-Gradle 1.6
-JRE 1.7, JDK 1.7/1.8
-neo4j 1.9.8 (on Windows, download the .zip version, extract and add the directory to your path.)
+1.	Neo4j .
+a.	Download Neo4j 1.9.8 (zip) at http://neo4j.com/download/other-releases/ .
+b.	Extract folder to program files.
+c.	Open neo4j-community-1.9.8 folder in program files .
+d.	Right click on address bar → copy address as text.
+e.	Open control panel → system → advanced system settings.
+f.	Open environment variables.
+g.	Scroll down system variables and find “path” → double click (edit system variable box appears.) .
+h.	Add a “;” to the end of the current variable value → paste the address bar you copied for the location of Neo4j files. 
+i.	Make sure at the end of each path before the “;” that “\bin” is written.
+j.	Click ok, ok and ok again.
 
------------------------------------------------------------------------------------------
+2.	IntelliJ.
+a.	https://www.jetbrains.com/idea/download/ → download intelliJ community edition.
+b.	Open and run the .exe file. 
+c.	Follow through the setup wizard and install.
 
-To Run:
+3.	JDK 7 .
+a.	Download → http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html .
+b.	Run .exe file and install appropriate version (32-bit/64-bit) .
+c.	Follow through install wizard.
 
-Start neo4j using "neo4j start"
-Deploy the application on a local TomCat server using "gradle tomcatRunWar". It can then be accessed on "localhost:9000/facewall"
-Open the project it Intellij, and run "insertFixturesUtility" to populate the database with the test data. 
+4.	GIT.
+a.	Download GIT → http://git-scm.com/downloads .
+b.	Run .exe file and install.
+c.	Follow through the wizard and click option for “Use Git from the Windows Command Prompt".
 
+5.	Java SE Runtime Environment 7.
+a.	Ensure you have this version of Java, if not then download it here http://www.oracle.com/technetwork/java/javase/downloads/java-se-jre-7-download-432155.html .
+b.	Run .exe file and install using wizard.
+
+6.	Startup.
+a.	Run Neo4j → open as administrator (used powershell, right click and click open as administrator) in command box type “neo4j start”. 
+b.	In command prompt, type “cd..” till you push back to just windows.
+c.	Then type the path to where you want to run the application from. Eg “cd .\Users\ckang1\Documents\Facewall”.
+d.	Once you have accessed this type “git clone https://github.com/tomh235/facewall.git”.
+e.	Deploy the application on a local Tomcat server by typing “gradle tomcatRunwar”. 
+f.	It can then be accessed on “localhost:9000/facewall”
+g.	Open the project in IntelliJ, and run “insertFixturesUltility” to produce the database with the test data. 
