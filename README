@@ -18,6 +18,10 @@ g.	Scroll down system variables and find “path” → double click (edit syste
 h.	Add a “;” to the end of the current variable value → paste the address bar you copied for the location of Neo4j files. 
 i.	Make sure at the end of each path before the “;” that “\bin” is written.
 j.	Click ok, ok and ok again.
+k.  Start menu → cmd → right click and open as administrator.
+l.  type "neo4j install". 
+m.  After install is complete type "neo4j status"
+n.  If "RUNNING" appears then neo4j has been successfully installed.
 
 2.	IntelliJ.
 a.	https://www.jetbrains.com/idea/download/ → download intelliJ community edition.
