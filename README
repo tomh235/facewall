@@ -9,7 +9,12 @@ Follow Instructions to get up and running:
 
 FOR WINDOWS:
 
-1.	Neo4j .
+1.	JDK 7 .
+a.	Download → http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html .
+b.	Run .exe file and install appropriate version (32-bit/64-bit) .
+c.	Follow through install wizard.
+
+2.	Neo4j .
 a.	Download Neo4j 1.9.8 (zip) at http://neo4j.com/download/other-releases/ .
 b.	Extract folder to program files.
 c.	Open unzipped neo4j-community-1.9.8 folder in program files .
@@ -25,15 +30,10 @@ l.  type "neo4j install".
 m.  After install is complete type "neo4j status"
 n.  If "RUNNING" appears then neo4j has been successfully installed.
 
-2.	IntelliJ.
+3.	IntelliJ.
 a.	https://www.jetbrains.com/idea/download/ → download intelliJ community edition.
 b.	Open and run the .exe file. 
 c.	Follow through the setup wizard and install.
-
-3.	JDK 7 .
-a.	Download → http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html .
-b.	Run .exe file and install appropriate version (32-bit/64-bit) .
-c.	Follow through install wizard.
 
 4.	GIT.
 a.	Download GIT → http://git-scm.com/downloads .
