@@ -12,7 +12,7 @@ FOR WINDOWS:
 1.	Neo4j .
 a.	Download Neo4j 1.9.8 (zip) at http://neo4j.com/download/other-releases/ .
 b.	Extract folder to program files.
-c.	Open neo4j-community-1.9.8 folder in program files .
+c.	Open unzipped neo4j-community-1.9.8 folder in program files .
 d.	Right click on address bar → copy address as text.
 e.	Open control panel → system → advanced system settings.
 f.	Open environment variables.
