@@ -44,7 +44,7 @@ c.	Follow through the wizard and click option for “Use Git from the Windows Co
 a.	Ensure you have this version of Java, if not then download it here http://www.oracle.com/technetwork/java/javase/downloads/java-se-jre-7-download-432155.html .
 b.	Run .exe file and install using wizard.
 
-6.	Startup.
+6.	Startup. 
 a.	Run Neo4j → open as administrator (used powershell, right click and click open as administrator) in command box type “neo4j start”. 
 b.	In command prompt, type “cd..” till you push back to just windows.
 c.	Then type the path to where you want to run the application from. Eg “cd .\Users\ckang1\Documents\Facewall”.
